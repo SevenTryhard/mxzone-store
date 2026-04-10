@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MXZONE CMS - Panel Administrativo</title>
+    <meta name="description" content="Panel de administración para MXZONE STORE">
+  </head>
+  <body>
+    <!-- Include the script that builds the page and triggers Netlify Identity -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+    <script>
+      // Personalizar el CMS
+      window.CMS_CONFIG = {
+        backend: {
+          name: 'git-gateway',
+          branch: 'main'
+        },
+        media_folder: 'assets/images/cms',
+        public_folder: 'assets/images/cms',
+        collections: []
+      };
+    </script>
+
+    <!-- Custom Styles -->
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .cms-header {
+        background: linear-gradient(135deg, #FF6600 0%, #CC5200 100%);
+        padding: 1rem 2rem;
+        color: white;
+      }
+      .cms-header h1 {
+        margin: 0;
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.8rem;
+        letter-spacing: 2px;
+      }
+    </style>
+
+    <div class="cms-header">
+      <h1>🏍️ MXZONE STORE - Panel Administrativo</h1>
+    </div>
+  </body>
+</html>

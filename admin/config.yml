@@ -1,0 +1,120 @@
+backend:
+  name: git-gateway
+  branch: main
+  commit_messages:
+    create: "CMS: Crear {{collection}} {{slug}}"
+    update: "CMS: Actualizar {{collection}} {{slug}}"
+    delete: "CMS: Eliminar {{collection}} {{slug}}"
+
+media_folder: "assets/images/cms"
+public_folder: "assets/images/cms"
+
+local_backend:
+  url: http://localhost:8081/api/v1
+
+collections:
+  # =====================
+  # PRODUCTOS - CASCOS
+  # =====================
+  - name: "cascos"
+    label: "🪖 Cascos"
+    folder: "cms/cascos"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Nombre del Producto", name: "name", widget: "string" }
+      - { label: "Precio (formato: $1.234.567)", name: "price", widget: "string" }
+      - { label: "Tallas Disponibles", name: "sizes", widget: "string" }
+      - { label: "Imagen", name: "image", widget: "image" }
+      - { label: "Badge (opcional)", name: "badge", widget: "string", required: false, hint: "Ej: Premium, Top Ventas, Edición Limitada" }
+      - { label: "Categoría", name: "category", widget: "hidden", default: "cascos" }
+
+  # =====================
+  # PRODUCTOS - UNIFORMES
+  # =====================
+  - name: "uniformes"
+    label: "👕 Uniformes"
+    folder: "cms/uniformes"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Nombre del Producto", name: "name", widget: "string" }
+      - { label: "Precio (formato: $1.234.567)", name: "price", widget: "string" }
+      - { label: "Tallas Disponibles", name: "sizes", widget: "string" }
+      - { label: "Imagen", name: "image", widget: "image" }
+      - { label: "Badge (opcional)", name: "badge", widget: "string", required: false }
+      - { label: "Categoría", name: "category", widget: "hidden", default: "uniformes" }
+
+  # =====================
+  # PRODUCTOS - BOTAS
+  # =====================
+  - name: "botas"
+    label: "👢 Botas"
+    folder: "cms/botas"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Nombre del Producto", name: "name", widget: "string" }
+      - { label: "Precio (formato: $1.234.567)", name: "price", widget: "string" }
+      - { label: "Tallas Disponibles", name: "sizes", widget: "string" }
+      - { label: "Imagen", name: "image", widget: "image" }
+      - { label: "Badge (opcional)", name: "badge", widget: "string", required: false }
+      - { label: "Categoría", name: "category", widget: "hidden", default: "botas" }
+
+  # =====================
+  # PRODUCTOS - PROTECCIONES
+  # =====================
+  - name: "protecciones"
+    label: "🛡️ Protecciones"
+    folder: "cms/protecciones"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Nombre del Producto", name: "name", widget: "string" }
+      - { label: "Precio (formato: $1.234.567)", name: "price", widget: "string" }
+      - { label: "Tallas Disponibles", name: "sizes", widget: "string" }
+      - { label: "Imagen", name: "image", widget: "image" }
+      - { label: "Badge (opcional)", name: "badge", widget: "string", required: false }
+      - { label: "Categoría", name: "category", widget: "hidden", default: "protecciones" }
+
+  # =====================
+  # PÁGINA - TESTIMONIOS
+  # =====================
+  - name: "testimonials"
+    label: "⭐ Testimonios"
+    folder: "cms/testimonials"
+    create: true
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Nombre del Cliente", name: "name", widget: "string" }
+      - { label: "Ciudad, Departamento", name: "location", widget: "string" }
+      - { label: "Testimonio", name: "text", widget: "text" }
+      - { label: "Iniciales (para avatar)", name: "avatar", widget: "string", hint: "Ej: CR, JM, DG" }
+
+  # =====================
+  # CONFIGURACIÓN GENERAL
+  # =====================
+  - name: "settings"
+    label: "⚙️ Configuración"
+    editor:
+      preview: false
+    files:
+      - name: "general"
+        label: "Configuración General"
+        file: "cms/settings/general.yml"
+        fields:
+          - { label: "Número de WhatsApp", name: "whatsapp", widget: "string", hint: "Solo números, con código de país. Ej: 573176692997" }
+          - { label: "Dirección Física", name: "address", widget: "string" }
+          - { label: "Email de Contacto", name: "email", widget: "string" }
+          - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
+          - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
+          - { label: "TikTok URL", name: "tiktok", widget: "string", required: false }
