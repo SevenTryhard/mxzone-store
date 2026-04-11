@@ -3,34 +3,241 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MXZONE CMS - Panel Administrativo</title>
+    <title>MXZONE CMS | Panel Administrativo</title>
     <meta name="description" content="Panel de administración para MXZONE STORE">
-  </head>
-  <body>
-    <!-- Decap CMS con Git Gateway -->
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
     <!-- Custom Styles -->
     <style>
-      body {
+      :root {
+        --orange-primary: #FF6600;
+        --orange-dark: #CC5200;
+        --gray-dark: #1A1A1A;
+        --gray-medium: #2D2D2D;
+        --white: #FFFFFF;
+      }
+
+      * {
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
       }
+
+      body {
+        font-family: 'Montserrat', sans-serif;
+        background: var(--gray-dark);
+      }
+
+      /* Header del CMS */
       .cms-header {
-        background: linear-gradient(135deg, #FF6600 0%, #CC5200 100%);
-        padding: 1rem 2rem;
-        color: white;
+        background: linear-gradient(135deg, var(--orange-primary) 0%, var(--orange-dark) 100%);
+        padding: 1.25rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 4px 20px rgba(255, 102, 0, 0.3);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
       }
-      .cms-header h1 {
-        margin: 0;
+
+      .cms-header-content {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .cms-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .cms-logo img {
+        height: 45px;
+        width: auto;
+      }
+
+      .cms-logo-text {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .cms-logo-text h1 {
         font-family: 'Bebas Neue', sans-serif;
         font-size: 1.8rem;
-        letter-spacing: 2px;
+        letter-spacing: 3px;
+        color: var(--white);
+        margin: 0;
+        line-height: 1;
+      }
+
+      .cms-logo-text span {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.85);
+        font-weight: 500;
+        letter-spacing: 1px;
+      }
+
+      .cms-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .cms-user-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--white);
+        font-size: 0.9rem;
+      }
+
+      .cms-user-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.8rem;
+      }
+
+      /* Contenedor principal del CMS */
+      #nc-root {
+        min-height: calc(100vh - 80px);
+      }
+
+      /* Personalización de botones */
+      .cms-header button,
+      #nc-root button {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      /* Loading State */
+      .cms-loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+        gap: 1.5rem;
+      }
+
+      .cms-loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(255, 102, 0, 0.2);
+        border-top-color: var(--orange-primary);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      .cms-loading-text {
+        color: var(--gray-light-text);
+        font-size: 1rem;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .cms-header {
+          padding: 1rem;
+        }
+
+        .cms-logo-text h1 {
+          font-size: 1.4rem;
+        }
+
+        .cms-logo-text span {
+          font-size: 0.65rem;
+        }
       }
     </style>
+  </head>
+  <body>
+    <!-- Header Personalizado -->
+    <header class="cms-header">
+      <div class="cms-header-content">
+        <div class="cms-logo">
+          <img src="../assets/logo/logo.png" alt="MXZONE" />
+          <div class="cms-logo-text">
+            <h1>MXZONE CMS</h1>
+            <span>PANEL ADMINISTRATIVO</span>
+          </div>
+        </div>
+      </div>
+      <div class="cms-header-actions">
+        <div class="cms-user-info" id="userInfo" style="display: none;">
+          <div class="cms-user-avatar" id="userAvatar"></div>
+          <span id="userEmail"></span>
+        </div>
+      </div>
+    </header>
 
-    <div class="cms-header">
-      <h1>🏍️ MXZONE STORE - Panel Administrativo</h1>
+    <!-- Contenedor del CMS -->
+    <div id="nc-root">
+      <div class="cms-loading">
+        <div class="cms-loading-spinner"></div>
+        <p class="cms-loading-text">Cargando panel administrativo...</p>
+      </div>
     </div>
+
+    <!-- Scripts -->
+    <script>
+      // Inicializar Decap CMS
+      window.CMS_CONFIG = {
+        backend: {
+          name: 'git-gateway',
+          branch: 'main'
+        },
+        media_folder: 'assets/images/cms',
+        public_folder: 'assets/images/cms',
+        locale: 'es',
+        slug: {
+          encoding: 'ascii',
+          clean_accents: true,
+          sanitize_replacement: '-'
+        }
+      };
+
+      // Mostrar información del usuario cuando inicia sesión
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', function(user) {
+          if (user) {
+            document.getElementById('userInfo').style.display = 'flex';
+            document.getElementById('userEmail').textContent = user.email.split('@')[0];
+            document.getElementById('userAvatar').textContent = user.email.charAt(0).toUpperCase();
+          }
+        });
+
+        window.netlifyIdentity.on('login', function(user) {
+          if (user) {
+            document.getElementById('userInfo').style.display = 'flex';
+            document.getElementById('userEmail').textContent = user.email.split('@')[0];
+            document.getElementById('userAvatar').textContent = user.email.charAt(0).toUpperCase();
+          }
+        });
+
+        window.netlifyIdentity.on('logout', function() {
+          document.getElementById('userInfo').style.display = 'none';
+        });
+      }
+    </script>
   </body>
 </html>
