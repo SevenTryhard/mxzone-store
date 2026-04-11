@@ -191,6 +191,46 @@
         font-size: 0.85rem;
       }
 
+      /* Editor controls - IMPORTANT for save buttons */
+      #nc-root .editor-control-bar {
+        background: #2D2D2D;
+        border-bottom: 1px solid #404040;
+      }
+
+      #nc-root .editor-control-bar-btn {
+        color: #fff;
+      }
+
+      /* Save button container */
+      #nc-root .publish-controls {
+        position: sticky;
+        bottom: 0;
+        background: #1A1A1A;
+        padding: 1rem;
+        border-top: 1px solid #404040;
+        z-index: 100;
+      }
+
+      #nc-root .publish-controls button {
+        min-width: 120px;
+        padding: 0.75rem 1.5rem;
+      }
+
+      /* Editor container */
+      #nc-root .editor-editor {
+        background: #1A1A1A;
+      }
+
+      /* Ensure buttons are visible */
+      #nc-root button:not(:disabled) {
+        cursor: pointer;
+      }
+
+      #nc-root button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
       /* Responsive */
       @media (max-width: 768px) {
         .cms-header {
@@ -233,6 +273,16 @@
 
     <!-- Decap CMS - Al final para que el DOM esté listo -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script>
+      // Inicializar Decap CMS manualmente
+      if (window.CMS) {
+        window.CMS.init({
+          config_url: 'admin/config.yml',
+          public_folder: '../assets/images/cms',
+          media_folder: 'assets/images/cms'
+        });
+      }
+    </script>
 
     <!-- Scripts -->
     <script>
