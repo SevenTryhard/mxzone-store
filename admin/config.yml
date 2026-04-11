@@ -1,6 +1,5 @@
 # ============================================
 # MXZONE STORE - Decap CMS Configuration
-# Panel Administrativo Intuitivo
 # ============================================
 
 backend:
@@ -14,17 +13,11 @@ backend:
 media_folder: "assets/images/cms"
 public_folder: "assets/images/cms"
 
-# ============================================
-# COLECCIONES - ORGANIZADAS POR CATEGORÍA
-# ============================================
 collections:
-
-  # ──────────────────────────────────────────
-  # 📦 PRODUCTOS
-  # ──────────────────────────────────────────
+  # PRODUCTOS
   - name: "productos"
-    label: "📦 Productos"
-    description: "Gestiona todo el catálogo de productos"
+    label: "Productos"
+    description: "Gestiona todo el catalogo de productos"
     folder: "cms/productos"
     create: true
     slug: "{{slug}}"
@@ -33,27 +26,25 @@ collections:
     editor:
       preview: true
     fields:
-      - label: "🏷️ Nombre del Producto"
+      - label: "Nombre del Producto"
         name: "name"
         widget: "string"
         required: true
         hint: "Ej: CASCO FOX V1 TOXSYK NEGRO"
-        pattern: ['^[A-Z0-9\s\-\.]+$', "Debe estar en MAYÚSCULAS"]
 
-      - label: "💰 Precio"
+      - label: "Precio"
         name: "price"
         widget: "string"
         required: true
         hint: "Formato: $1.234.567 (sin decimales)"
-        pattern: ['^\$\d{1,3}(\.\d{3})*$', "Formato inválido. Usa: $1.234.567"]
 
-      - label: "📏 Tallas Disponibles"
+      - label: "Tallas Disponibles"
         name: "sizes"
         widget: "string"
         required: true
         hint: "Ej: S/M/L/XL o 38/39/40/41 o 7-11 US"
 
-      - label: "🖼️ Imagen del Producto"
+      - label: "Imagen del Producto"
         name: "image"
         widget: "image"
         required: true
@@ -62,49 +53,50 @@ collections:
           config:
             multiple: true
 
-      - label: "🏷️ Etiqueta Destacada (Opcional)"
+      - label: "Etiqueta Destacada (Opcional)"
         name: "badge"
         widget: "select"
         required: false
         options:
-          - { label: "Ninguna", value: "" }
-          - { label: "⭐ Premium", value: "Premium" }
-          - { label: "🔥 Top Ventas", value: "Top Ventas" }
-          - { label: "✨ Nuevo", value: "Nuevo" }
-          - { label: "📦 Edición Limitada", value: "Edición Limitada" }
-          - { label: "💰 Oferta", value: "Oferta" }
+          - label: "Ninguna"
+            value: ""
+          - label: "Premium"
+            value: "Premium"
+          - label: "Top Ventas"
+            value: "Top Ventas"
+          - label: "Nuevo"
+            value: "Nuevo"
+          - label: "Edicion Limitada"
+            value: "Edicion Limitada"
+          - label: "Oferta"
+            value: "Oferta"
         hint: "Etiqueta que aparece en la esquina del producto"
 
-      - label: "📂 Categoría"
+      - label: "Categoria"
         name: "category"
         widget: "select"
         required: true
         options:
-          - { label: "🪖 Cascos", value: "cascos" }
-          - { label: "👕 Uniformes", value: "uniformes" }
-          - { label: "👢 Botas", value: "botas" }
-          - { label: "🛡️ Protecciones", value: "protecciones" }
-        hint: "Selecciona la categoría del producto"
+          - label: "Cascos"
+            value: "cascos"
+          - label: "Uniformes"
+            value: "uniformes"
+          - label: "Botas"
+            value: "botas"
+          - label: "Protecciones"
+            value: "protecciones"
+        hint: "Selecciona la categoria del producto"
 
-      - label: "📝 Descripción Corta"
+      - label: "Descripcion Corta"
         name: "description"
         widget: "text"
         required: false
-        hint: "Breve descripción para SEO (máx 160 caracteres)"
+        hint: "Breve descripcion para SEO (max 160 caracteres)"
         max_length: 160
 
-    # Vista previa personalizada
-    preview:
-      fields:
-        - { label: "Producto", widget: "string" }
-        - { label: "Precio", widget: "string" }
-        - { label: "Imagen", widget: "image" }
-
-  # ──────────────────────────────────────────
-  # ⭐ TESTIMONIOS
-  # ──────────────────────────────────────────
+  # TESTIMONIOS
   - name: "testimonials"
-    label: "⭐ Testimonios"
+    label: "Testimonios"
     description: "Opiniones de clientes satisfechos"
     folder: "cms/testimonials"
     create: true
@@ -112,77 +104,72 @@ collections:
     extension: "json"
     format: "json"
     fields:
-      - label: "👤 Nombre del Cliente"
+      - label: "Nombre del Cliente"
         name: "name"
         widget: "string"
         required: true
         hint: "Nombre completo o como quiere aparecer"
 
-      - label: "📍 Ciudad, Departamento"
+      - label: "Ciudad, Departamento"
         name: "location"
         widget: "string"
         required: true
-        hint: "Ej: Medellín, Antioquia"
+        hint: "Ej: Medellin, Antioquia"
 
-      - label: "💬 Testimonio"
+      - label: "Testimonio"
         name: "text"
         widget: "text"
         required: true
-        hint: "La opinión completa del cliente"
+        hint: "La opinion completa del cliente"
 
-      - label: "🔤 Iniciales (Avatar)"
+      - label: "Iniciales (Avatar)"
         name: "avatar"
         widget: "string"
         required: true
         hint: "2 letras para el avatar. Ej: CR, JM, DG"
-        pattern: ['^[A-Z]{2}$', "Debe ser exactamente 2 letras mayúsculas"]
 
-  # ──────────────────────────────────────────
-  # ⚙️ CONFIGURACIÓN GENERAL
-  # ──────────────────────────────────────────
+  # CONFIGURACION GENERAL
   - name: "settings"
-    label: "⚙️ Configuración"
+    label: "Configuracion"
     description: "Datos de contacto y redes sociales"
     editor:
       preview: false
     files:
       - name: "general"
-        label: "📋 Datos Generales"
+        label: "Datos Generales"
         file: "cms/settings/general.yml"
         fields:
-          - label: "📱 Número de WhatsApp"
+          - label: "Numero de WhatsApp"
             name: "whatsapp"
             widget: "string"
             required: true
-            hint: "Solo números con código de país. Ej: 573176692997"
-            pattern: ['^\d{10,15}$', "Ingresa solo números (10-15 dígitos)"]
+            hint: "Solo numeros con codigo de pais. Ej: 573176692997"
 
-          - label: "📍 Dirección Física"
+          - label: "Direccion Fisica"
             name: "address"
             widget: "string"
             required: true
-            hint: "Dirección completa de la tienda"
+            hint: "Direccion completa de la tienda"
 
-          - label: "✉️ Email de Contacto"
+          - label: "Email de Contacto"
             name: "email"
             widget: "string"
             required: true
             hint: "Email para consultas"
-            pattern: ['^[^@]+@[^@]+\.[^@]+$', "Formato de email inválido"]
 
-          - label: "📘 Facebook URL"
+          - label: "Facebook URL"
             name: "facebook"
             widget: "string"
             required: false
-            hint: "Link completo a tu página de Facebook"
+            hint: "Link completo a tu pagina de Facebook"
 
-          - label: "📸 Instagram URL"
+          - label: "Instagram URL"
             name: "instagram"
             widget: "string"
             required: false
             hint: "Link completo a tu perfil de Instagram"
 
-          - label: "🎵 TikTok URL"
+          - label: "TikTok URL"
             name: "tiktok"
             widget: "string"
             required: false
