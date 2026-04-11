@@ -14,6 +14,22 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Netlify Identity Widget -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    // Manejar recovery tokens y redirecciones
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', function(user) {
+        if (!user) {
+          const hash = window.location.hash;
+          if (hash.includes('recovery_token') || hash.includes('invite_token')) {
+            window.netlifyIdentity.open('login');
+          }
+        }
+      });
+    }
+  </script>
 </head>
 <body>
 
