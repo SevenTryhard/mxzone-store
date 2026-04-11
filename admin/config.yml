@@ -11,7 +11,9 @@ backend:
     delete: "CMS: Eliminar {{collection}} - {{slug}}"
 
 media_folder: "assets/images/cms"
-public_folder: "assets/images/cms"
+public_folder: "/assets/images/cms"
+local_backend:
+  url: http://localhost:8081/api/v1
 
 collections:
   # PRODUCTOS
