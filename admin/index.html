@@ -126,34 +126,6 @@
         transition: all 0.3s ease;
       }
 
-      /* Loading State */
-      .cms-loading {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 400px;
-        gap: 1.5rem;
-      }
-
-      .cms-loading-spinner {
-        width: 50px;
-        height: 50px;
-        border: 4px solid rgba(255, 102, 0, 0.2);
-        border-top-color: var(--orange-primary);
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-      }
-
-      @keyframes spin {
-        to { transform: rotate(360deg); }
-      }
-
-      .cms-loading-text {
-        color: var(--gray-light-text);
-        font-size: 1rem;
-      }
-
       /* Responsive */
       @media (max-width: 768px) {
         .cms-header {
@@ -190,32 +162,8 @@
       </div>
     </header>
 
-    <!-- Contenedor del CMS -->
-    <div id="nc-root">
-      <div class="cms-loading">
-        <div class="cms-loading-spinner"></div>
-        <p class="cms-loading-text">Cargando panel administrativo...</p>
-      </div>
-    </div>
-
     <!-- Scripts -->
     <script>
-      // Inicializar Decap CMS
-      window.CMS_CONFIG = {
-        backend: {
-          name: 'git-gateway',
-          branch: 'main'
-        },
-        media_folder: 'assets/images/cms',
-        public_folder: 'assets/images/cms',
-        locale: 'es',
-        slug: {
-          encoding: 'ascii',
-          clean_accents: true,
-          sanitize_replacement: '-'
-        }
-      };
-
       // Mostrar información del usuario cuando inicia sesión
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on('init', function(user) {
