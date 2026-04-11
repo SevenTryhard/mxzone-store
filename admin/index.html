@@ -332,6 +332,53 @@
         padding-bottom: 80px !important;
       }
 
+      /* ==========================================
+         BARRA SUPERIOR DE GUARDAR (FIX ADICIONAL)
+         ========================================== */
+
+      /* Barra superior fija para botones de acción */
+      .mxzone-editor-toolbar {
+        position: fixed !important;
+        top: 60px !important;
+        right: 20px !important;
+        background: #1A1A1A !important;
+        border: 2px solid #FF6600 !important;
+        border-radius: 8px !important;
+        padding: 1rem !important;
+        display: flex !important;
+        gap: 1rem !important;
+        z-index: 9998 !important;
+        box-shadow: 0 4px 20px rgba(255, 102, 0, 0.4) !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+
+      .mxzone-save-btn {
+        background: linear-gradient(135deg, #FF6600 0%, #CC5200 100%) !important;
+        color: #ffffff !important;
+        border: none !important;
+        padding: 12px 24px !important;
+        border-radius: 6px !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        cursor: pointer !important;
+        font-size: 14px !important;
+      }
+
+      .mxzone-save-btn:hover {
+        background: linear-gradient(135deg, #FF8533 0%, #FF6600 100%) !important;
+      }
+
+      .mxzone-delete-btn {
+        background: linear-gradient(135deg, #E63946 0%, #9B2226) !important;
+        color: #ffffff !important;
+        border: none !important;
+        padding: 12px 24px !important;
+        border-radius: 6px !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+      }
+
       /* Responsive */
       @media (max-width: 768px) {
         .cms-header {
@@ -433,6 +480,79 @@
           console.warn('[CMS] CMS object not found!');
         }
 
+        // ==========================================
+        // INYECTAR BARRA DE GUARDAR MANUALMENTE
+        // ==========================================
+        function injectSaveToolbar() {
+          // Verificar si ya existe
+          if (document.querySelector('.mxzone-editor-toolbar')) {
+            return;
+          }
+
+          // Crear toolbar
+          const toolbar = document.createElement('div');
+          toolbar.className = 'mxzone-editor-toolbar';
+          toolbar.innerHTML = `
+            <button class="mxzone-save-btn" id="mxzoneSaveBtn">
+              💾 Guardar Cambios
+            </button>
+            <button class="mxzone-delete-btn" id="mxzoneDeleteBtn">
+              🗑️ Eliminar
+            </button>
+          `;
+          document.body.appendChild(toolbar);
+
+          console.log('[CMS] Toolbar inyectada:', toolbar);
+
+          // Simular click en el botón Save original de Decap
+          document.getElementById('mxzoneSaveBtn').addEventListener('click', function() {
+            const originalSaveBtn = document.querySelector('button[class*="primary"], button[type="submit"], button[class*="Save"]');
+            if (originalSaveBtn) {
+              originalSaveBtn.click();
+              console.log('[CMS] Click simulado en Save original');
+            } else {
+              // Fallback: intentar guardar via CMS API
+              if (window.CMS && window.CMS.save) {
+                window.CMS.save();
+                console.log('[CMS] Guardado via CMS API');
+              } else {
+                alert('No se encontró el botón de guardar. Intenta recargar la página.');
+              }
+            }
+          });
+
+          // Simular click en el botón Delete original
+          document.getElementById('mxzoneDeleteBtn').addEventListener('click', function() {
+            const originalDeleteBtn = document.querySelector('button[class*="delete"], button[class*="Delete"]');
+            if (originalDeleteBtn) {
+              originalDeleteBtn.click();
+              console.log('[CMS] Click simulado en Delete original');
+            } else {
+              alert('No se encontró el botón de eliminar.');
+            }
+          });
+        }
+
+        // Inyectar toolbar cuando se cargue un entry
+        const entryObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.addedNodes.length) {
+              mutation.addedNodes.forEach(function(node) {
+                if (node.nodeType === 1 && node.querySelector('[class*="entry-editor"], [class*="EntryEditor"]')) {
+                  setTimeout(injectSaveToolbar, 500);
+                }
+              });
+            }
+          });
+        });
+
+        const ncRoot = document.getElementById('nc-root');
+        if (ncRoot) {
+          entryObserver.observe(ncRoot, { childList: true, subtree: true });
+          // Intentar inyectar inmediatamente si ya hay un entry abierto
+          setTimeout(injectSaveToolbar, 1000);
+        }
+
         // Monitor for save button
         const observer = new MutationObserver(function(mutations) {
           mutations.forEach(function(mutation) {
@@ -452,7 +572,6 @@
           });
         });
 
-        const ncRoot = document.getElementById('nc-root');
         if (ncRoot) {
           observer.observe(ncRoot, { childList: true, subtree: true });
         }
