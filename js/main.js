@@ -126,6 +126,19 @@ function initSmoothScroll() {
  * Advanced Shop Filters
  */
 function initShopFilters() {
+  // Si no hay productos aún, esperar a que se carguen
+  const productCards = document.querySelectorAll('.product-card');
+  if (!productCards.length) {
+    console.log('No hay productos aún, esperando carga del CMS...');
+    return;
+  }
+
+  initShopFiltersInternal();
+}
+
+function initShopFiltersInternal() {
+  const productCards = document.querySelectorAll('.product-card');
+  if (!productCards.length) return;
   const productCards = document.querySelectorAll('.product-card');
   if (!productCards.length) return;
 
@@ -650,6 +663,17 @@ function initSearch() {
  * Product Modal / Lightbox
  */
 function initProductModal() {
+  // Si no hay productos aún, esperar a que se carguen
+  const productCards = document.querySelectorAll('.product-card');
+  if (!productCards.length) {
+    console.log('No hay productos aún, esperando carga del CMS...');
+    return;
+  }
+
+  initProductModalInternal();
+}
+
+function initProductModalInternal() {
   const modal = document.getElementById('productModal');
   const modalClose = document.getElementById('modalClose');
   const modalCloseBtn = document.getElementById('modalCloseBtn');
@@ -754,5 +778,7 @@ function initProductModal() {
 // Export functions for external use
 window.MXZONE = {
   addToCartAnimation,
-  showNotification
+  showNotification,
+  InitShopFilters: initShopFiltersInternal,
+  InitProductModal: initProductModalInternal
 };

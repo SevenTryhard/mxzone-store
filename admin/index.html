@@ -133,6 +133,64 @@
         min-height: calc(100vh - 80px);
       }
 
+      /* Mejorar visibilidad de botones del CMS */
+      #nc-root .Decap-btn {
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      #nc-root .Decap-btn-primary {
+        background: linear-gradient(135deg, #FF6600 0%, #CC5200 100%);
+        box-shadow: 0 4px 15px rgba(255, 102, 0, 0.4);
+      }
+
+      #nc-root .Decap-btn-primary:hover {
+        box-shadow: 0 6px 20px rgba(255, 102, 0, 0.6);
+      }
+
+      /* Mejorar preview de imágenes en el editor */
+      #nc-root .image-widget__image-wrapper {
+        background: #2D2D2D;
+        border-radius: 8px;
+        padding: 1rem;
+      }
+
+      #nc-root .image-widget__image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      }
+
+      /* Editor field styling */
+      #nc-root .Decap-input,
+      #nc-root .Decap-select {
+        background: #2D2D2D;
+        border: 1px solid #404040;
+        color: #fff;
+        border-radius: 6px;
+      }
+
+      #nc-root .Decap-input:focus,
+      #nc-root .Decap-select:focus {
+        border-color: #FF6600;
+        box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.2);
+      }
+
+      /* Label styling */
+      #nc-root .Decap-input-label,
+      #nc-root .Decap-select-label {
+        color: #fff;
+        font-weight: 600;
+      }
+
+      /* Hint text */
+      #nc-root .Decap-field-hint {
+        color: #aaa;
+        font-size: 0.85rem;
+      }
+
       /* Responsive */
       @media (max-width: 768px) {
         .cms-header {

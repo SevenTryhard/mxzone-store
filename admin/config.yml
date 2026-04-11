@@ -24,7 +24,7 @@ collections:
     extension: "json"
     format: "json"
     editor:
-      preview: true
+      preview: false
     fields:
       - label: "Nombre del Producto"
         name: "name"
@@ -51,7 +51,8 @@ collections:
         hint: "Sube una foto clara del producto. Tamaño recomendado: 800x800px"
         media_library:
           config:
-            multiple: true
+            multiple: false
+            max_file_size: 5000000
 
       - label: "Etiqueta Destacada (Opcional)"
         name: "badge"

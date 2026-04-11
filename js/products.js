@@ -5,10 +5,27 @@
 
 const WHATSAPP_NUMBER = '573176692997';
 
+// Mapeo de marcas basado en nombres de producto
+function getBrand(productName) {
+  const name = productName.toLowerCase();
+  if (name.includes('fox')) return 'fox';
+  if (name.includes('fly')) return 'fly';
+  if (name.includes('alpinestars') || name.includes('alpine')) return 'alpinestars';
+  if (name.includes('leatt')) return 'leatt';
+  if (name.includes('troy lee')) return 'troy-lee';
+  if (name.includes('oneal')) return 'oneal';
+  if (name.includes('airoh')) return 'airoh';
+  if (name.includes('acerbis')) return 'acerbis';
+  if (name.includes('gaerne')) return 'gaerne';
+  if (name.includes('fxr')) return 'fxr';
+  if (name.includes('thor')) return 'thor';
+  if (name.includes('ktm')) return 'ktm';
+  return 'other';
+}
+
 // Función para cargar productos desde JSON
 async function loadProducts() {
   try {
-    // Cargar todos los productos desde la carpeta cms/productos
     const productFiles = [
       'cms/productos/casco-fly-formula-cp.json',
       'cms/productos/casco-fox-v1-toxsyk-negro.json',
@@ -49,12 +66,18 @@ async function loadProducts() {
 function createProductCard(product) {
   const whatsappMessage = encodeURIComponent(`Estoy interesado en ${product.name}`);
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+  const brand = getBrand(product.name);
+  const priceNum = parseInt(product.price.replace(/[^0-9]/g, ''));
 
   const badgeHTML = product.badge ?
     `<span class="product-badge">${product.badge}</span>` : '';
 
   return `
-    <div class="product-card" data-category="${product.category}">
+    <div class="product-card"
+         data-category="${product.category}"
+         data-brand="${brand}"
+         data-price="${priceNum}"
+         data-image="${product.image}">
       <div class="product-image">
         <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <span class="product-image-placeholder" style="display:none;">MX</span>
@@ -90,7 +113,6 @@ function getCategoryLabel(category) {
 async function renderFeaturedProducts() {
   const products = await loadProducts();
 
-  // Renderizar productos destacados en home (primeros 3 de cada categoría)
   const categories = ['cascos', 'uniformes', 'botas', 'protecciones'];
 
   categories.forEach(category => {
@@ -110,80 +132,27 @@ async function renderShopProducts() {
 
   if (container && products.length > 0) {
     container.innerHTML = products.map(createProductCard).join('');
-    initializeFilters();
+
+    // Re-inicializar filtros y modal después de cargar productos
+    setTimeout(() => {
+      if (window.MXZONE_InitShopFilters) window.MXZONE_InitShopFilters();
+      if (window.MXZONE_InitProductModal) window.MXZONE_InitProductModal();
+      updateResultsCount();
+    }, 100);
   }
 }
 
-// Función para inicializar filtros de la tienda
-function initializeFilters() {
-  const searchInput = document.getElementById('productSearch');
-  const categoryFilters = document.querySelectorAll('.category-filter');
-
-  // Filtro de búsqueda
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      filterProducts(e.target.value, getSelectedCategories());
-    });
+// Actualizar contador de resultados
+function updateResultsCount() {
+  const resultsCount = document.getElementById('resultsCount');
+  const visibleCards = document.querySelectorAll('.product-card[style="display: block"], .product-card:not([style*="display"])').length;
+  if (resultsCount) {
+    resultsCount.textContent = visibleCards;
   }
-
-  // Filtros de categoría
-  categoryFilters.forEach(filter => {
-    filter.addEventListener('change', () => {
-      updateCategoryFilters();
-      filterProducts(searchInput?.value || '', getSelectedCategories());
-    });
-  });
-}
-
-// Función para actualizar checkboxes de categoría
-function updateCategoryFilters() {
-  const allCheckbox = document.querySelector('.category-filter[data-category="all"]');
-  const categoryCheckboxes = document.querySelectorAll('.category-filter:not([data-category="all"])');
-
-  if (allCheckbox.checked) {
-    categoryCheckboxes.forEach(cb => cb.checked = false);
-  } else {
-    const anyChecked = Array.from(categoryCheckboxes).some(cb => cb.checked);
-    if (!anyChecked) {
-      allCheckbox.checked = true;
-    }
-  }
-}
-
-// Función para obtener categorías seleccionadas
-function getSelectedCategories() {
-  const allCheckbox = document.querySelector('.category-filter[data-category="all"]');
-
-  if (allCheckbox.checked) {
-    return ['all'];
-  }
-
-  const selected = [];
-  document.querySelectorAll('.category-filter:checked').forEach(cb => {
-    selected.push(cb.dataset.category);
-  });
-
-  return selected;
-}
-
-// Función para filtrar productos
-function filterProducts(searchTerm, categories) {
-  const cards = document.querySelectorAll('.product-card');
-
-  cards.forEach(card => {
-    const name = card.querySelector('.product-name')?.textContent.toLowerCase() || '';
-    const category = card.dataset.category;
-
-    const matchesSearch = name.includes(searchTerm.toLowerCase());
-    const matchesCategory = categories.includes('all') || categories.includes(category);
-
-    card.style.display = matchesSearch && matchesCategory ? 'block' : 'none';
-  });
 }
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
-  // Verificar en qué página estamos
   const isHomePage = document.querySelector('[data-products]');
   const isShopPage = document.getElementById('productsGrid');
 
@@ -195,3 +164,10 @@ document.addEventListener('DOMContentLoaded', () => {
     renderShopProducts();
   }
 });
+
+// Exportar funciones para uso externo
+window.MXZONE_Products = {
+  loadProducts,
+  renderShopProducts,
+  renderFeaturedProducts
+};
