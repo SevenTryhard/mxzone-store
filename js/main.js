@@ -139,8 +139,6 @@ function initShopFilters() {
 function initShopFiltersInternal() {
   const productCards = document.querySelectorAll('.product-card');
   if (!productCards.length) return;
-  const productCards = document.querySelectorAll('.product-card');
-  if (!productCards.length) return;
 
   // Elements
   const searchInput = document.getElementById('productSearch');
