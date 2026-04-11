@@ -7,20 +7,18 @@
     <meta name="description" content="Panel de administración para MXZONE STORE">
   </head>
   <body>
-    <!-- Include the script that builds the page and triggers Netlify Identity -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <!-- Decap CMS con Git Gateway -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
     <script>
-      // Personalizar el CMS
+      // Inicializar antes de cargar el CMS
       window.CMS_CONFIG = {
         backend: {
           name: 'git-gateway',
           branch: 'main'
         },
         media_folder: 'assets/images/cms',
-        public_folder: 'assets/images/cms',
-        collections: []
+        public_folder: 'assets/images/cms'
       };
     </script>
 
