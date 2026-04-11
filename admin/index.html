@@ -4,12 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MXZONE CMS | Panel Administrativo</title>
-    <meta name="description" content="Panel de administración para MXZONE STORE">
+    <meta name="description" content="Panel de administracion para MXZONE STORE">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Netlify Identity -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
     <!-- Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
@@ -112,18 +115,25 @@
         font-size: 0.8rem;
       }
 
+      .cms-logout-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: background 0.3s ease;
+      }
+
+      .cms-logout-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
       /* Contenedor principal del CMS */
       #nc-root {
         min-height: calc(100vh - 80px);
-      }
-
-      /* Personalización de botones */
-      .cms-header button,
-      #nc-root button {
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 600;
-        border-radius: 8px;
-        transition: all 0.3s ease;
       }
 
       /* Responsive */
@@ -158,33 +168,44 @@
         <div class="cms-user-info" id="userInfo" style="display: none;">
           <div class="cms-user-avatar" id="userAvatar"></div>
           <span id="userEmail"></span>
+          <button class="cms-logout-btn" onclick="netlifyIdentity.logout()">Cerrar sesion</button>
         </div>
       </div>
     </header>
 
     <!-- Scripts -->
     <script>
-      // Mostrar información del usuario cuando inicia sesión
+      // Configurar Netlify Identity
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on('init', function(user) {
           if (user) {
-            document.getElementById('userInfo').style.display = 'flex';
-            document.getElementById('userEmail').textContent = user.email.split('@')[0];
-            document.getElementById('userAvatar').textContent = user.email.charAt(0).toUpperCase();
+            updateUserInfo(user);
           }
         });
 
         window.netlifyIdentity.on('login', function(user) {
           if (user) {
-            document.getElementById('userInfo').style.display = 'flex';
-            document.getElementById('userEmail').textContent = user.email.split('@')[0];
-            document.getElementById('userAvatar').textContent = user.email.charAt(0).toUpperCase();
+            updateUserInfo(user);
+            // Redirigir al admin despues del login
+            window.location.hash = '';
           }
         });
 
         window.netlifyIdentity.on('logout', function() {
           document.getElementById('userInfo').style.display = 'none';
         });
+
+        // Manejar tokens de recovery/invite
+        var hash = window.location.hash;
+        if (hash && (hash.indexOf('invite_token') !== -1 || hash.indexOf('recovery_token') !== -1)) {
+          window.netlifyIdentity.open('login');
+        }
+      }
+
+      function updateUserInfo(user) {
+        document.getElementById('userInfo').style.display = 'flex';
+        document.getElementById('userEmail').textContent = user.email.split('@')[0];
+        document.getElementById('userAvatar').textContent = user.email.charAt(0).toUpperCase();
       }
     </script>
   </body>
