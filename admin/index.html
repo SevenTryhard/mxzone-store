@@ -271,44 +271,46 @@
     <!-- Contenedor del CMS -->
     <div id="nc-root"></div>
 
-    <!-- Decap CMS - Al final para que el DOM esté listo -->
+    <!-- Decap CMS - Se auto-inicializa automáticamente -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <script>
-      // Inicializar Decap CMS manualmente
-      if (window.CMS) {
-        window.CMS.init({
-          config_url: 'admin/config.yml',
-          public_folder: '../assets/images/cms',
-          media_folder: 'assets/images/cms'
-        });
-      }
-    </script>
 
     <!-- Scripts -->
     <script>
+      // Debug: Log CMS errors
+      window.addEventListener('error', function(e) {
+        console.error('[CMS Error]', e.message, e.filename, e.lineno);
+      });
+
       // Configurar Netlify Identity
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on('init', function(user) {
+          console.log('[Identity] init', user ? 'user logged in' : 'no user');
           if (user) {
             updateUserInfo(user);
           }
         });
 
         window.netlifyIdentity.on('login', function(user) {
+          console.log('[Identity] login', user?.email);
           if (user) {
             updateUserInfo(user);
-            // Redirigir al admin despues del login
             window.location.hash = '';
           }
         });
 
         window.netlifyIdentity.on('logout', function() {
+          console.log('[Identity] logout');
           document.getElementById('userInfo').style.display = 'none';
+        });
+
+        window.netlifyIdentity.on('error', function(err) {
+          console.error('[Identity] error', err);
         });
 
         // Manejar tokens de recovery/invite
         var hash = window.location.hash;
         if (hash && (hash.indexOf('invite_token') !== -1 || hash.indexOf('recovery_token') !== -1)) {
+          console.log('[Identity] Found token in URL, opening login');
           window.netlifyIdentity.open('login');
         }
       }
@@ -318,6 +320,42 @@
         document.getElementById('userEmail').textContent = user.email.split('@')[0];
         document.getElementById('userAvatar').textContent = user.email.charAt(0).toUpperCase();
       }
+
+      // Decap CMS event listeners
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('[CMS] DOM ready, checking CMS status...');
+
+        // Check if CMS is loaded
+        if (window.CMS) {
+          console.log('[CMS] CMS object exists:', window.CMS);
+        } else {
+          console.warn('[CMS] CMS object not found!');
+        }
+
+        // Monitor for save button
+        const observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.addedNodes.length) {
+              mutation.addedNodes.forEach(function(node) {
+                if (node.nodeType === 1) {
+                  const saveBtn = node.querySelector('button[data-testid="save-button"]') ||
+                                  node.querySelector('button[class*="save"]') ||
+                                  node.querySelector('button[class*="publish"]');
+                  if (saveBtn) {
+                    console.log('[CMS] Save button found:', saveBtn);
+                    console.log('[CMS] Save button disabled:', saveBtn.disabled);
+                  }
+                }
+              });
+            }
+          });
+        });
+
+        const ncRoot = document.getElementById('nc-root');
+        if (ncRoot) {
+          observer.observe(ncRoot, { childList: true, subtree: true });
+        }
+      });
     </script>
   </body>
 </html>
