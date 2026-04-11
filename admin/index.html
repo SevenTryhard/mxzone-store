@@ -506,17 +506,77 @@
 
           // Simular click en el botón Save original de Decap
           document.getElementById('mxzoneSaveBtn').addEventListener('click', function() {
-            const originalSaveBtn = document.querySelector('button[class*="primary"], button[type="submit"], button[class*="Save"]');
+            // Listar todos los botones para debug
+            const allButtons = Array.from(document.querySelectorAll('button'));
+            console.log('[CMS] Todos los botones en página:', allButtons.map(b => ({
+              class: b.className,
+              text: b.textContent.trim(),
+              type: b.type,
+              tagName: b.tagName
+            })));
+
+            // Múltiples selectores para encontrar el botón de guardar
+            const selectors = [
+              'button[class*="Save"]',
+              'button[class*="save"]',
+              'button[class*="Publish"]',
+              'button[class*="publish"]',
+              'button[class*="primary"]',
+              'button[type="submit"]',
+              '[role="button"][class*="save"]',
+              '[data-testid="save-button"]',
+              'button:contains("Save")',
+              'button:contains("Guardar")',
+              'button:contains("Publish")'
+            ];
+
+            let originalSaveBtn = null;
+            for (const selector of selectors) {
+              try {
+                originalSaveBtn = document.querySelector(selector);
+                if (originalSaveBtn) {
+                  console.log('[CMS] Botón encontrado con selector:', selector);
+                  break;
+                }
+              } catch (e) {
+                // Ignorar selectores inválidos
+              }
+            }
+
+            // Buscar por texto del botón
+            if (!originalSaveBtn) {
+              allButtons.forEach(btn => {
+                const text = btn.textContent.toLowerCase();
+                if (text.includes('save') || text.includes('guardar') || text.includes('publish') || text.includes('publicar')) {
+                  originalSaveBtn = btn;
+                  console.log('[CMS] Botón encontrado por texto:', text);
+                }
+              });
+            }
+
+            // Buscar botones en la toolbar superior
+            if (!originalSaveBtn) {
+              const toolbar = document.querySelector('[class*="toolbar"], [class*="control-bar"]');
+              if (toolbar) {
+                originalSaveBtn = toolbar.querySelector('button');
+                console.log('[CMS] Botón encontrado en toolbar:', originalSaveBtn);
+              }
+            }
+
             if (originalSaveBtn) {
               originalSaveBtn.click();
-              console.log('[CMS] Click simulado en Save original');
+              console.log('[CMS] ✓ Click simulado en Save original');
+              alert('✓ Guardando cambios...');
             } else {
               // Fallback: intentar guardar via CMS API
               if (window.CMS && window.CMS.save) {
                 window.CMS.save();
-                console.log('[CMS] Guardado via CMS API');
+                console.log('[CMS] ✓ Guardado via CMS API');
+                alert('✓ Guardado via CMS API');
               } else {
-                alert('No se encontró el botón de guardar. Intenta recargar la página.');
+                console.error('[CMS] ERROR: No se encontró botón de guardar');
+                console.error('[CMS] Botones disponibles:', allButtons.map(b => b.className + ' - ' + b.textContent));
+                alert('❌ No se encontró el botón de guardar. Revisa la consola (F12) para más detalles.');
               }
             }
           });
