@@ -6,7 +6,7 @@
 # CONFIGURACIÓN PARA CLOUDCANNON - CMS VISUAL GRATIS
 # ============================================
 
-base_url: https://tu-sitio.netlify.app  # CAMBIAR después del deploy por tu URL real
+base_url: https://golden-macadamia.cloudvent.net
 
 collections:
   # ==========================================
