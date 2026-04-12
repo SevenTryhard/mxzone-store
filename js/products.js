@@ -124,7 +124,9 @@ async function renderFeaturedProducts() {
 
       // Re-inicializar modal después de cargar productos en home
       setTimeout(() => {
-        if (window.MXZONE_InitProductModal) window.MXZONE_InitProductModal();
+        if (window.MXZONE && window.MXZONE.InitProductModal) {
+          window.MXZONE.InitProductModal();
+        }
       }, 100);
     }
   });
@@ -140,8 +142,12 @@ async function renderShopProducts() {
 
     // Re-inicializar filtros y modal después de cargar productos
     setTimeout(() => {
-      if (window.MXZONE_InitShopFilters) window.MXZONE_InitShopFilters();
-      if (window.MXZONE_InitProductModal) window.MXZONE_InitProductModal();
+      if (window.MXZONE && window.MXZONE.InitShopFilters) {
+        window.MXZONE.InitShopFilters();
+      }
+      if (window.MXZONE && window.MXZONE.InitProductModal) {
+        window.MXZONE.InitProductModal();
+      }
       updateResultsCount();
     }, 100);
   }
