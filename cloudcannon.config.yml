@@ -10,18 +10,19 @@ base_url: https://golden-macadamia.cloudvent.net
 
 collections:
   # ==========================================
-  # PRODUCTOS - Todas las categorías
+  # PRODUCTOS - Todos en una sola colección
   # ==========================================
-  productos_cascos:
+  productos:
     _options:
       icon: shopping_bag
-      label: Cascos
+      label: Productos
       display:
         fields:
           - name
           - price
+          - category
           - badge
-    path: cms/cascos
+    path: cms/productos
     type: json
     fields:
       - name: name
@@ -54,132 +55,16 @@ collections:
             - "Edicion Limitada"
             - "Oferta"
         comment: "Etiqueta que aparece en la esquina"
-
-  productos_uniformes:
-    _options:
-      icon: shopping_bag
-      label: Uniformes
-      display:
-        fields:
-          - name
-          - price
-          - badge
-    path: cms/uniformes
-    type: json
-    fields:
-      - name: name
-        label: Nombre del Producto
-        type: text
-        required: true
-      - name: price
-        label: Precio
-        type: text
-        required: true
-        comment: "Formato: $1.234.567"
-      - name: sizes
-        label: Tallas Disponibles
-        type: text
-        required: true
-        comment: "Ej: S/M/L/XL"
-      - name: image
-        label: Imagen del Producto
-        type: image
-        required: true
-      - name: badge
-        label: Etiqueta Destacada
+      - name: category
+        label: Categoría
         type: select
+        required: true
         options:
           values:
-            - ""
-            - "Premium"
-            - "Top Ventas"
-            - "Nuevo"
-            - "Edicion Limitada"
-            - "Oferta"
-
-  productos_botas:
-    _options:
-      icon: shopping_bag
-      label: Botas
-      display:
-        fields:
-          - name
-          - price
-          - badge
-    path: cms/botas
-    type: json
-    fields:
-      - name: name
-        label: Nombre del Producto
-        type: text
-        required: true
-      - name: price
-        label: Precio
-        type: text
-        required: true
-        comment: "Formato: $1.234.567"
-      - name: sizes
-        label: Tallas Disponibles
-        type: text
-        required: true
-        comment: "Ej: 38/39/40/41 o 7-11 US"
-      - name: image
-        label: Imagen del Producto
-        type: image
-        required: true
-      - name: badge
-        label: Etiqueta Destacada
-        type: select
-        options:
-          values:
-            - ""
-            - "Premium"
-            - "Top Ventas"
-            - "Nuevo"
-            - "Edicion Limitada"
-            - "Oferta"
-
-  productos_protecciones:
-    _options:
-      icon: shopping_bag
-      label: Protecciones
-      display:
-        fields:
-          - name
-          - price
-          - badge
-    path: cms/protecciones
-    type: json
-    fields:
-      - name: name
-        label: Nombre del Producto
-        type: text
-        required: true
-      - name: price
-        label: Precio
-        type: text
-        required: true
-        comment: "Formato: $1.234.567"
-      - name: sizes
-        label: Tallas Disponibles
-        type: text
-        required: true
-        comment: "Ej: Única/S/M/L/XL"
-      - name: image
-        label: Imagen del Producto
-        type: image
-        required: true
-      - name: badge
-        label: Etiqueta Destacada
-        type: select
-        options:
-          values:
-            - ""
-            - "Premium"
-            - "Top Ventas"
-            - "Nuevo"
-            - "Edicion Limitada"
-            - "Oferta"
+            - cascos
+            - uniformes
+            - botas
+            - protecciones
 
   # ==========================================
   # TESTIMONIOS
