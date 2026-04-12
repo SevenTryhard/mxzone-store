@@ -121,6 +121,11 @@ async function renderFeaturedProducts() {
 
     if (container && categoryProducts.length > 0) {
       container.innerHTML = categoryProducts.map(createProductCard).join('');
+
+      // Re-inicializar modal después de cargar productos en home
+      setTimeout(() => {
+        if (window.MXZONE_InitProductModal) window.MXZONE_InitProductModal();
+      }, 100);
     }
   });
 }
