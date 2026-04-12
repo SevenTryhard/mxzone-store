@@ -237,9 +237,11 @@ function createProductCard(product) {
       <div class="product-info">
         <span class="product-category">${getCategoryLabel(product.category)}</span>
         <h3 class="product-name">${product.name}</h3>
+        <div class="product-price-wrapper">
+          <span class="product-price">${product.price}</span>
+        </div>
         <div class="product-meta">
           <span class="product-size">Talla: <span>${product.sizes}</span></span>
-          <span class="product-price">${product.price}</span>
         </div>
         <div class="product-actions">
           <a href="product.html?product=${productSlug}" class="btn btn-secondary" target="_blank">

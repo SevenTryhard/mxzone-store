@@ -562,12 +562,22 @@ a {
   background: #25D366;
   color: var(--white);
   box-shadow: 0 4px 20px rgba(37, 211, 101, 0.4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
 }
 
 .btn-whatsapp:hover {
   background: #1EBE57;
   transform: translateY(-3px);
   box-shadow: 0 8px 30px rgba(37, 211, 101, 0.5);
+}
+
+.btn-whatsapp img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 .btn-small {
@@ -654,6 +664,9 @@ a {
 
 .product-info {
   padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
 }
 
 .product-category {
@@ -662,28 +675,50 @@ a {
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 600;
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: 0;
 }
 
 .product-name {
-  font-size: 1.2rem;
-  margin-bottom: var(--spacing-sm);
+  font-size: 1.1rem;
+  margin-bottom: 0;
   color: var(--white);
   font-family: var(--font-primary);
   font-weight: 600;
   text-transform: none;
   letter-spacing: 0;
+  line-height: 1.3;
+}
+
+.product-price-wrapper {
+  margin-bottom: var(--spacing-xs);
+}
+
+.product-price {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--red-accent);
+  text-shadow: var(--glow-red);
+  display: block;
+}
+
+.product-price-old {
+  font-size: 0.9rem;
+  color: var(--gray-text);
+  text-decoration: line-through;
+  margin-left: var(--spacing-xs);
 }
 
 .product-meta {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .product-size {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--gray-text);
 }
 
@@ -692,23 +727,10 @@ a {
   font-weight: 600;
 }
 
-.product-price {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  color: var(--red-accent);
-  text-shadow: var(--glow-red);
-}
-
-.product-price-old {
-  font-size: 1rem;
-  color: var(--gray-text);
-  text-decoration: line-through;
-  margin-left: var(--spacing-xs);
-}
-
 .product-actions {
   display: flex;
   gap: var(--spacing-sm);
+  margin-top: auto;
 }
 
 .product-actions .btn {
@@ -1738,11 +1760,18 @@ a {
   z-index: 999;
   transition: var(--transition-base);
   animation: pulse 2s ease-in-out infinite;
+  padding: var(--spacing-sm);
 }
 
 .whatsapp-float:hover {
   transform: scale(1.1);
   box-shadow: 0 8px 30px rgba(37, 211, 101, 0.6);
+}
+
+.whatsapp-float .whatsapp-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 /* ================================
@@ -1898,25 +1927,27 @@ a {
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 600;
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: 0;
 }
 
 .modal-product-name {
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: var(--white);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-xs);
   font-family: var(--font-primary);
   font-weight: 700;
   text-transform: none;
   letter-spacing: 0;
+  line-height: 1.3;
 }
 
 .modal-product-price {
   font-family: var(--font-display);
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   color: var(--red-accent);
   text-shadow: var(--glow-red);
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  display: block;
 }
 
 .modal-product-description {

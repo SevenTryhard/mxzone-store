@@ -159,7 +159,7 @@ function createProductHTML(product) {
         <!-- Acciones -->
         <div class="product-actions-section">
           <a href="${whatsappUrl}" class="btn btn-whatsapp btn-large" target="_blank">
-            <span>💬</span> Comprar por WhatsApp
+            <img src="../assets/whatsapp-logo.webp" alt="WhatsApp" class="btn-whatsapp-icon"> Comprar por WhatsApp
           </a>
           <a href="shop.html" class="btn btn-secondary btn-large">
             <span>🛒</span> Volver a la Tienda
