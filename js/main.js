@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initCountUp();
   initProductModal();
+  initHeroParticles();
+  initHeroParallax();
 });
 
 /**
@@ -771,6 +773,60 @@ function initProductModalInternal() {
       closeModal();
     }
   });
+}
+
+/**
+ * Hero Particles Animation
+ */
+function initHeroParticles() {
+  const particlesContainer = document.getElementById('heroParticles');
+  if (!particlesContainer) return;
+
+  const particleCount = 30;
+
+  for (let i = 0; i < particleCount; i++) {
+    createParticle(particlesContainer, i);
+  }
+}
+
+function createParticle(container, index) {
+  const particle = document.createElement('div');
+  particle.className = 'particle';
+
+  // Random properties
+  const size = Math.random() * 20 + 5;
+  const left = Math.random() * 100;
+  const delay = Math.random() * 5;
+  const duration = Math.random() * 10 + 10;
+
+  particle.style.width = `${size}px`;
+  particle.style.height = `${size}px`;
+  particle.style.left = `${left}%`;
+  particle.style.animationDelay = `${delay}s`;
+  particle.style.animationDuration = `${duration}s`;
+
+  container.appendChild(particle);
+}
+
+/**
+ * Hero Parallax Effect
+ */
+function initHeroParallax() {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+
+  const content = hero.querySelector('.hero-content');
+  if (!content) return;
+
+  window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const heroHeight = hero.offsetHeight;
+
+    if (scrolled < heroHeight) {
+      content.style.transform = `translateY(${scrolled * 0.3}px)`;
+      content.style.opacity = 1 - (scrolled / heroHeight);
+    }
+  }, { passive: true });
 }
 
 // Export functions for external use
