@@ -1,17 +1,35 @@
-# ============================================
-# MXZONE STORE - CloudCannon Configuration
-# ============================================
-# Documentación: https://cloudcannon.com/documentation/
-#
-# CONFIGURACIÓN PARA CLOUDCANNON - CMS VISUAL GRATIS
-# ============================================
-
+collections_config:
+  pages:
+    path: ''
+    icon: wysiwyg
+    disable_url: false
+    disable_add: false
+    disable_add_folder: false
+    disable_file_actions: false
+  cms_settings:
+    path: cms/settings
+    icon: reset_settings
+    disable_url: false
+    disable_add: false
+    disable_add_folder: false
+    disable_file_actions: false
+  cms_productos:
+    path: cms/productos
+    icon: nest_protect
+    disable_url: false
+    disable_add: false
+    disable_add_folder: false
+    disable_file_actions: false
+  admin:
+    path: admin
+    icon: ad
+    disable_url: false
+    disable_add: false
+    disable_add_folder: false
+    disable_file_actions: false
 base_url: https://golden-macadamia.cloudvent.net
-
+timezone: Etc/UTC
 collections:
-  # ==========================================
-  # PRODUCTOS - Todas las categorías
-  # ==========================================
   productos_cascos:
     _options:
       icon: shopping_bag
@@ -32,12 +50,12 @@ collections:
         label: Precio
         type: text
         required: true
-        comment: "Formato: $1.234.567"
+        comment: 'Formato: $1.234.567'
       - name: sizes
         label: Tallas Disponibles
         type: text
         required: true
-        comment: "Ej: S/M/L/XL o 38/39/40/41"
+        comment: 'Ej: S/M/L/XL o 38/39/40/41'
       - name: image
         label: Imagen del Producto
         type: image
@@ -47,14 +65,13 @@ collections:
         type: select
         options:
           values:
-            - ""
-            - "Premium"
-            - "Top Ventas"
-            - "Nuevo"
-            - "Edicion Limitada"
-            - "Oferta"
-        comment: "Etiqueta que aparece en la esquina"
-
+            - ''
+            - Premium
+            - Top Ventas
+            - Nuevo
+            - Edicion Limitada
+            - Oferta
+        comment: Etiqueta que aparece en la esquina
   productos_uniformes:
     _options:
       icon: shopping_bag
@@ -75,12 +92,12 @@ collections:
         label: Precio
         type: text
         required: true
-        comment: "Formato: $1.234.567"
+        comment: 'Formato: $1.234.567'
       - name: sizes
         label: Tallas Disponibles
         type: text
         required: true
-        comment: "Ej: S/M/L/XL"
+        comment: 'Ej: S/M/L/XL'
       - name: image
         label: Imagen del Producto
         type: image
@@ -90,13 +107,12 @@ collections:
         type: select
         options:
           values:
-            - ""
-            - "Premium"
-            - "Top Ventas"
-            - "Nuevo"
-            - "Edicion Limitada"
-            - "Oferta"
-
+            - ''
+            - Premium
+            - Top Ventas
+            - Nuevo
+            - Edicion Limitada
+            - Oferta
   productos_botas:
     _options:
       icon: shopping_bag
@@ -117,12 +133,12 @@ collections:
         label: Precio
         type: text
         required: true
-        comment: "Formato: $1.234.567"
+        comment: 'Formato: $1.234.567'
       - name: sizes
         label: Tallas Disponibles
         type: text
         required: true
-        comment: "Ej: 38/39/40/41 o 7-11 US"
+        comment: 'Ej: 38/39/40/41 o 7-11 US'
       - name: image
         label: Imagen del Producto
         type: image
@@ -132,13 +148,12 @@ collections:
         type: select
         options:
           values:
-            - ""
-            - "Premium"
-            - "Top Ventas"
-            - "Nuevo"
-            - "Edicion Limitada"
-            - "Oferta"
-
+            - ''
+            - Premium
+            - Top Ventas
+            - Nuevo
+            - Edicion Limitada
+            - Oferta
   productos_protecciones:
     _options:
       icon: shopping_bag
@@ -159,12 +174,12 @@ collections:
         label: Precio
         type: text
         required: true
-        comment: "Formato: $1.234.567"
+        comment: 'Formato: $1.234.567'
       - name: sizes
         label: Tallas Disponibles
         type: text
         required: true
-        comment: "Ej: Única/S/M/L/XL"
+        comment: 'Ej: Única/S/M/L/XL'
       - name: image
         label: Imagen del Producto
         type: image
@@ -174,16 +189,12 @@ collections:
         type: select
         options:
           values:
-            - ""
-            - "Premium"
-            - "Top Ventas"
-            - "Nuevo"
-            - "Edicion Limitada"
-            - "Oferta"
-
-  # ==========================================
-  # TESTIMONIOS
-  # ==========================================
+            - ''
+            - Premium
+            - Top Ventas
+            - Nuevo
+            - Edicion Limitada
+            - Oferta
   testimonials:
     _options:
       icon: star
@@ -212,11 +223,7 @@ collections:
         label: Iniciales (Avatar)
         type: text
         required: true
-        comment: "2 letras. Ej: CR, JM"
-
-  # ==========================================
-  # CONFIGURACIÓN GENERAL
-  # ==========================================
+        comment: '2 letras. Ej: CR, JM'
   settings:
     _options:
       icon: settings
@@ -234,7 +241,7 @@ collections:
         label: Número de WhatsApp
         type: text
         required: true
-        comment: "Solo números. Ej: 573176692997"
+        comment: 'Solo números. Ej: 573176692997'
       - name: address
         label: Dirección Física
         type: text
@@ -246,19 +253,15 @@ collections:
       - name: facebook
         label: Facebook URL
         type: text
-        comment: "Link completo https://facebook.com/..."
+        comment: Link completo https://facebook.com/...
       - name: instagram
         label: Instagram URL
         type: text
-        comment: "Link completo https://instagram.com/..."
+        comment: Link completo https://instagram.com/...
       - name: tiktok
         label: TikTok URL
         type: text
-        comment: "Link completo https://tiktok.com/..."
-
-# ==========================================
-# MEDIOS - Imágenes y Archivos
-# ==========================================
+        comment: Link completo https://tiktok.com/...
 media:
   cloudcannon:
     - source: assets/images/cms
@@ -268,20 +271,12 @@ media:
     - source: assets/logo
       path: assets/logo
       optimize: true
-
-# ==========================================
-# SNIPPETS - Componentes Reutilizables
-# ==========================================
 snippets:
   - label: Producto Destacado
     template: |
       <div class="product-card featured">
         <span class="badge">Nuevo</span>
       </div>
-
-# ==========================================
-# VISTA PREVIA EN VIVO
-# ==========================================
 preview:
   enabled: true
   environment: production
