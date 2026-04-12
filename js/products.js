@@ -1,6 +1,6 @@
 /**
  * MXZONE STORE - Dynamic Product Loader
- * Carga productos desde los archivos JSON del CMS
+ * Carga TODOS los productos desde los archivos JSON del CMS automáticamente
  */
 
 const WHATSAPP_NUMBER = '573176692997';
@@ -23,39 +23,178 @@ function getBrand(productName) {
   return 'other';
 }
 
-// Función para cargar productos desde JSON
+// Función para descubrir y cargar TODOS los productos del CMS
+// NOTA: Para agregar nuevos productos, simplemente añade el archivo JSON en cms/productos/
+// y agrega el nombre del archivo a la lista productFiles abajo.
 async function loadProducts() {
   try {
+    const cmsBaseUrl = 'cms/productos/';
+
+    // Lista de todos los productos (113 productos)
+    // Para agregar un producto nuevo: añade su archivo JSON a esta lista
     const productFiles = [
-      'cms/productos/casco-fly-formula-cp.json',
-      'cms/productos/casco-fox-v1-toxsyk-negro.json',
-      'cms/productos/casco-airoh-wraap-feel-azul-rojo.json',
-      'cms/productos/uniforme-thor-tarmac.json',
-      'cms/productos/uniforme-fly-kinetic-kore.json',
-      'cms/productos/uniforme-fox-180-stl-gry.json',
-      'cms/productos/botas-leatt-4-5-naranja.json',
-      'cms/productos/botas-alpinestars-tech-3.json',
-      'cms/productos/botas-fly-maverick-lt-enduro.json',
-      'cms/productos/pechera-fox-raceframe-roost.json',
-      'cms/productos/rodilleras-fox-launch-d30.json',
-      'cms/productos/rinionera-fox-titan-race.json'
+      // Botas
+      'botas-alpinestars-tech-3.json',
+      'botas-alpinestars-tech-3-enduro.json',
+      'botas-alpinestars-tech-7.json',
+      'botas-fly-maverick-lt-enduro.json',
+      'botas-gaerne-sg12-enduro.json',
+      'botas-gaerne-sg12-enduro-gravel.json',
+      'botas-gaerne-sg12-realm.json',
+      'botas-leatt-3-5.json',
+      'botas-leatt-4-5.json',
+      'botas-leatt-4-5-citrus.json',
+      'botas-leatt-4-5-naranja.json',
+      'botas-leatt-4-5-negro.json',
+      'botas-pvc-impermeables-gris-dakar.json',
+
+      // Cascos
+      'casco-airoh-twist.json',
+      'casco-airoh-twist-3-dynasty.json',
+      'casco-airoh-twist-3-dynasty-rosso.json',
+      'casco-airoh-wraap-feel.json',
+      'casco-airoh-wraap-feel-azul-rojo.json',
+      'casco-alpinestar-sm5-action-2.json',
+      'casco-alpinestars-force-negro-morado.json',
+      'casco-alpinestars-radium-negro-blanco.json',
+      'casco-alpinestars-radium-negro-rojo.json',
+      'casco-alpinestars-s-m5-bond.json',
+      'casco-alpinestars-s-m5-rayon.json',
+      'casco-alpinestars-s-m5-rover.json',
+      'casco-alpinestars-s-m5-solid.json',
+      'casco-fly-formula-cp.json',
+      'casco-fly-kinetic-crest-mx.json',
+      'casco-fly-kinetic-k-120.json',
+      'casco-fly-kinetic-menace.json',
+      'casco-fly-kinetic-verdict.json',
+      'casco-fly-racing-formula.json',
+      'casco-fly-racing-kinetic-blk-red.json',
+      'casco-fly-v1-interfere-gris.json',
+      'casco-fox-v1-bnkr.json',
+      'casco-fox-v1-dpth-verde.json',
+      'casco-fox-v1-dpth-verde-negro.json',
+      'casco-fox-v1-emotion-naranja.json',
+      'casco-fox-v1-flora-dark-indigo.json',
+      'casco-fox-v1-karrera.json',
+      'casco-fox-v1-kozmiK.json',
+      'casco-fox-v1-leed.json',
+      'casco-fox-v1-leed-fluo-red.json',
+      'casco-fox-v1-nitro-camuflaje.json',
+      'casco-fox-v1-race-spec-f74.json',
+      'casco-fox-v1-solid-matte-black.json',
+      'casco-fox-v1-toxsyk-negro.json',
+      'casco-leatt-moto-2-5-v24.json',
+      'casco-oneal-5-srs-attack.json',
+      'casco-racing-formula.json',
+      'casco-tipo-fox.json',
+      'casco-troy-lee-se5-gasgas.json',
+      'casco-v1-nukr-verde-negro.json',
+
+      // Uniformes
+      'uniforme-alpinestars-fluid-apex.json',
+      'uniforme-alpinestars-fluid-grid.json',
+      'uniforme-alpinestars-fluid-grid-red-black-purple.json',
+      'uniforme-fly-evolution-dst.json',
+      'uniforme-fly-f16.json',
+      'uniforme-fly-f-16-black-white.json',
+      'uniforme-fly-f-16-dark-blue-white.json',
+      'uniforme-fly-kinetic.json',
+      'uniforme-fly-kinetic-jet.json',
+      'uniforme-fly-kinetic-jet-black-green.json',
+      'uniforme-fly-kinetic-jet-blue-grey-white.json',
+      'uniforme-fly-kinetic-kore.json',
+      'uniforme-fly-kinetic-prix.json',
+      'uniforme-fly-kinetic-stoke.json',
+      'uniforme-fly-mesh.json',
+      'uniforme-fox-180-flora.json',
+      'uniforme-fox-180-goat-strafER.json',
+      'uniforme-fox-180-leed-blue.json',
+      'uniforme-fox-180-leed-dark-shadow.json',
+      'uniforme-fox-180-stl-gry.json',
+      'uniforme-fox-ballast.json',
+      'uniforme-fox-ballast-180.json',
+      'uniforme-fox-race-spec-pale-green.json',
+      'uniforme-fxr-revo-comp.json',
+      'uniforme-oneal-element-blk-red.json',
+      'uniforme-oneal-element-v6-blk-gry.json',
+      'uniforme-thor-tarmac.json',
+      'uniforme-tipo-fox-1-1.json',
+      'uniforme-troy-lee-gp-air-team-81.json',
+      'pantalon-fox-180-czar.json',
+      'pantalon-fox-180-fyce.json',
+
+      // Protecciones
+      'chaleco-columna.json',
+      'coderas-leatt-contour.json',
+      'coderas-leatt-countour-flint.json',
+      'coderas-titan-race.json',
+      'kit-rodillera-y-codera-valkiria.json',
+      'pechera-acerbis-kids-gravity.json',
+      'pechera-acerbis-po35-l1.json',
+      'pechera-alpinestar-a-1-bionic-action.json',
+      'pechera-alpinestar-a1-roost-guard.json',
+      'pechera-alpinestars-a1-bionic.json',
+      'pechera-fly-revel-race.json',
+      'pechera-fox-r3.json',
+      'pechera-fox-raceframe.json',
+      'pechera-fox-raceframe-roost.json',
+      'rinionera-acerbis-profile.json',
+      'rinionera-fly-barricade.json',
+      'rinionera-fox-titan-race.json',
+      'rinionera-ktm-orange.json',
+      'rinionera-oneal-adulto.json',
+      'rodillera-leatt-3df-5-0-zip.json',
+      'rodillera-leatt-3df-hybrid.json',
+      'rodillera-leatt-3df-hybrid-ext.json',
+      'rodillera-tipo-leatt-3df.json',
+      'rodilleras-acerbis-soft.json',
+      'rodilleras-fox-launch-d30.json',
+      'rodilleras-leatt-3df-hybrid.json',
+      'rodilleras-nucleon-plasma-alpinestar.json',
+      'rodilleras-nucleon-plasma-alpinestars.json'
     ];
 
     const products = [];
 
-    for (const file of productFiles) {
+    // Caché para evitar recargar productos en la misma sesión
+    const cacheKey = 'mxzone_products_cache';
+    const cachedData = sessionStorage.getItem(cacheKey);
+
+    if (cachedData) {
+      const { products: cachedProducts, timestamp } = JSON.parse(cachedData);
+      // Usar caché por 5 minutos
+      if (Date.now() - timestamp < 5 * 60 * 1000) {
+        console.log('Productos cargados desde caché:', cachedProducts.length);
+        return cachedProducts;
+      }
+    }
+
+    // Cargar todos los archivos en paralelo
+    const promises = productFiles.map(async (file) => {
       try {
-        const response = await fetch(file);
+        const response = await fetch(cmsBaseUrl + file);
         if (response.ok) {
           const product = await response.json();
-          products.push(product);
+          return product;
         }
       } catch (e) {
         console.warn(`No se pudo cargar ${file}:`, e);
       }
-    }
+      return null;
+    });
 
-    return products;
+    const results = await Promise.all(promises);
+    const validProducts = results.filter(p => p !== null);
+
+    // Guardar en caché
+    sessionStorage.setItem(cacheKey, JSON.stringify({
+      products: validProducts,
+      timestamp: Date.now()
+    }));
+
+    console.log('Productos cargados:', validProducts.length);
+    return validProducts;
+
   } catch (error) {
     console.error('Error cargando productos:', error);
     return [];
@@ -131,7 +270,7 @@ async function renderFeaturedProducts() {
   const categories = ['cascos', 'uniformes', 'botas', 'protecciones'];
 
   categories.forEach(category => {
-    const categoryProducts = products.filter(p => p.category === category).slice(0, 3);
+    const categoryProducts = products.filter(p => p.category === category).slice(0, 4);
     const container = document.querySelector(`[data-products="${category}"]`);
 
     if (container && categoryProducts.length > 0) {
