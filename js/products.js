@@ -62,12 +62,23 @@ async function loadProducts() {
   }
 }
 
+// Función para crear el slug del producto (para la URL)
+function createProductSlug(productName) {
+  return productName
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 // Función para crear el HTML de una tarjeta de producto
 function createProductCard(product) {
   const whatsappMessage = encodeURIComponent(`Estoy interesado en ${product.name}`);
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
   const brand = getBrand(product.name);
   const priceNum = parseInt(product.price.replace(/[^0-9]/g, ''));
+  const productSlug = createProductSlug(product.name);
 
   const badgeHTML = product.badge ?
     `<span class="product-badge">${product.badge}</span>` : '';
@@ -77,7 +88,8 @@ function createProductCard(product) {
          data-category="${product.category}"
          data-brand="${brand}"
          data-price="${priceNum}"
-         data-image="${product.image}">
+         data-image="${product.image}"
+         data-slug="${productSlug}">
       <div class="product-image">
         <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <span class="product-image-placeholder" style="display:none;">MX</span>
@@ -91,6 +103,9 @@ function createProductCard(product) {
           <span class="product-price">${product.price}</span>
         </div>
         <div class="product-actions">
+          <a href="product.html?product=${productSlug}" class="btn btn-secondary" target="_blank">
+            Ver Detalles
+          </a>
           <a href="${whatsappUrl}" class="btn btn-whatsapp" target="_blank">Comprar</a>
         </div>
       </div>

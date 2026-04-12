@@ -14,6 +14,7 @@
 </head>
 <body>
 
+  <!-- Header -->
   <header class="header" id="header">
     <nav class="nav">
       <a href="index.html" class="logo">
@@ -31,150 +32,69 @@
       </ul>
 
       <div class="nav-cta">
-        <a href="https://wa.me/573176692997" class="btn btn-whatsapp btn-small" target="_blank">WhatsApp</a>
+        <a href="https://wa.me/573176692997" class="btn btn-whatsapp btn-small" target="_blank">
+          <span>WhatsApp</span>
+        </a>
         <button class="menu-toggle" id="menuToggle" aria-label="Menu">
-          <span></span><span></span><span></span>
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
       </div>
     </nav>
   </header>
 
-  <section class="page-header">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
     <div class="container">
-      <h1 class="page-title">Detalle del Producto</h1>
-      <p class="page-subtitle">Información completa antes de tu compra</p>
+      <a href="index.html">Inicio</a>
+      <span class="breadcrumb-separator">/</span>
+      <a href="shop.html">Tienda</a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-current" id="breadcrumbProduct">Producto</span>
     </div>
-  </section>
+  </nav>
 
+  <!-- Product Detail Section -->
   <section class="section">
     <div class="container">
-      <div class="product-detail">
-
-        <div class="product-gallery">
-          <div class="product-main-image">
-            <span class="product-image-placeholder" style="font-size: 6rem;">MX</span>
-          </div>
-          <div class="product-thumbnails">
-            <div class="thumbnail active"></div>
-            <div class="thumbnail"></div>
-            <div class="thumbnail"></div>
-            <div class="thumbnail"></div>
-          </div>
+      <div class="product-detail-layout" id="productDetailLayout">
+        <!-- Loading State -->
+        <div class="product-loading">
+          <div class="loading-spinner"></div>
+          <p>Cargando producto...</p>
         </div>
-
-        <div class="product-detail-info">
-          <span class="product-category">Cascos</span>
-          <h1 class="product-detail-name">CASCO FOX V1 TOXSYK NEGRO</h1>
-          <div class="product-detail-price">$1.429.900</div>
-
-          <p class="product-detail-description">
-            El casco FOX V1 TOXSYK es la elección de los pilotos profesionales.
-            Diseñado para ofrecer máxima protección y ventilación, con un diseño
-            agresivo que destaca en cualquier pista. Certificación DOT y ECE.
-          </p>
-
-          <div style="margin-bottom: var(--spacing-lg);">
-            <h4 style="margin-bottom: var(--spacing-sm); font-family: var(--font-primary);">Tallas Disponibles:</h4>
-            <div class="size-selector">
-              <button class="size-btn">S</button>
-              <button class="size-btn">M</button>
-              <button class="size-btn">L</button>
-              <button class="size-btn">XL</button>
-            </div>
-          </div>
-
-          <ul class="product-detail-features">
-            <li>Calota de policarbonato de alta resistencia</li>
-            <li>Sistema de ventilación avanzado con múltiples entradas</li>
-            <li>Forro interior desmontable y lavable</li>
-            <li>Sistema de retención de doble anillo en D</li>
-            <li>Visera ajustable con tornillos de desplazamiento</li>
-            <li>Certificación DOT y ECE 22.05</li>
-            <li>Peso aproximado: 1200g (talla M)</li>
-          </ul>
-
-          <div class="product-detail-actions">
-            <a href="https://wa.me/573176692997?text=Estoy%20interesado%20en%20CASCO%20FOX%20V1%20TOXSYK%20NEGRO" class="btn btn-whatsapp btn-large" target="_blank">
-              Comprar por WhatsApp
-            </a>
-            <a href="shop.html" class="btn btn-secondary btn-large">
-              Volver a la Tienda
-            </a>
-          </div>
-
-          <div style="margin-top: var(--spacing-xl); padding-top: var(--spacing-lg); border-top: 1px solid rgba(255,255,255,0.1);">
-            <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap;">
-              <span style="color: var(--gray-text); font-size: 0.9rem;">🚚 Envíos a todo Colombia</span>
-              <span style="color: var(--gray-text); font-size: 0.9rem;">✓ Producto 100% Original</span>
-              <span style="color: var(--gray-text); font-size: 0.9rem;">🛡️ Garantía Oficial</span>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
 
+  <!-- Related Products Section -->
   <section class="section" style="background: var(--gray-medium);">
     <div class="container">
       <h2 class="section-title">Productos Relacionados</h2>
-      <div class="products-grid">
-
-        <div class="product-card">
-          <div class="product-image">
-            <span class="product-image-placeholder">MX</span>
-          </div>
-          <div class="product-info">
-            <span class="product-category">Cascos</span>
-            <h3 class="product-name">CASCO FOX V1 BNKR</h3>
-            <div class="product-meta">
-              <span class="product-size">Talla: <span>S</span></span>
-              <span class="product-price">$1.429.900</span>
-            </div>
-            <div class="product-actions">
-              <a href="https://wa.me/573176692997?text=Estoy%20interesado%20en%20CASCO%20FOX%20V1%20BNKR" class="btn btn-whatsapp" target="_blank">Comprar</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="product-card">
-          <div class="product-image">
-            <span class="product-image-placeholder">MX</span>
-          </div>
-          <div class="product-info">
-            <span class="product-category">Cascos</span>
-            <h3 class="product-name">CASCO FOX V1 KOZMIK</h3>
-            <div class="product-meta">
-              <span class="product-size">Talla: <span>M/XL</span></span>
-              <span class="product-price">$1.429.000</span>
-            </div>
-            <div class="product-actions">
-              <a href="https://wa.me/573176692997?text=Estoy%20interesado%20en%20CASCO%20FOX%20V1%20KOZMIK" class="btn btn-whatsapp" target="_blank">Comprar</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="product-card">
-          <div class="product-image">
-            <span class="product-image-placeholder">MX</span>
-          </div>
-          <div class="product-info">
-            <span class="product-category">Cascos</span>
-            <h3 class="product-name">CASCO FLY FORMULA CP</h3>
-            <div class="product-meta">
-              <span class="product-size">Talla: <span>S</span></span>
-              <span class="product-price">$1.450.000</span>
-            </div>
-            <div class="product-actions">
-              <a href="https://wa.me/573176692997?text=Estoy%20interesado%20en%20CASCO%20FLY%20FORMULA%20CP" class="btn btn-whatsapp" target="_blank">Comprar</a>
-            </div>
-          </div>
-        </div>
-
+      <div class="products-grid" id="relatedProducts">
+        <!-- Productos relacionados cargados dinámicamente -->
+      </div>
+      <div class="text-center" style="margin-top: var(--spacing-xl);">
+        <a href="shop.html" class="btn btn-secondary btn-large">Ver Todos los Productos</a>
       </div>
     </div>
   </section>
 
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2 class="cta-title">¿Tienes dudas sobre este producto?</h2>
+      <p class="cta-text">
+        Escríbenos por WhatsApp y te ayudamos con tallas, disponibilidad y más.
+      </p>
+      <a href="https://wa.me/573176692997" class="btn btn-large" target="_blank">
+        Consultar por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
@@ -183,12 +103,15 @@
             <img src="assets/logo/logo.png" alt="MXZONE" class="logo-image" style="height: 40px;">
             <span>MX ZONE</span>
           </div>
-          <p class="footer-description">Tienda especializada en equipamiento premium para motocross.</p>
+          <p class="footer-description">
+            Tienda especializada en equipamiento premium para motocross y enduro.
+            Las mejores marcas, los mejores precios.
+          </p>
           <div class="footer-social">
-            <a href="#" class="social-link">FB</a>
-            <a href="#" class="social-link">IG</a>
-            <a href="#" class="social-link">TT</a>
-            <a href="https://wa.me/573176692997" class="social-link">WA</a>
+            <a href="#" class="social-link" aria-label="Facebook">FB</a>
+            <a href="#" class="social-link" aria-label="Instagram">IG</a>
+            <a href="#" class="social-link" aria-label="TikTok">TT</a>
+            <a href="https://wa.me/573176692997" class="social-link" aria-label="WhatsApp">WA</a>
           </div>
         </div>
 
@@ -206,30 +129,52 @@
           <h4 class="footer-title">Información</h4>
           <ul class="footer-links">
             <li><a href="about.html">Nosotros</a></li>
+            <li><a href="sizes.html">Guía de Tallas</a></li>
             <li><a href="shipping.html">Envíos</a></li>
             <li><a href="returns.html">Devoluciones</a></li>
-            <li><a href="faq.html">Preguntas Frecuentes</a></li>
           </ul>
         </div>
 
         <div>
           <h4 class="footer-title">Contacto</h4>
           <ul class="footer-links footer-contact">
-            <li><span>📍</span><span>Calle 36N # 3N-56</span></li>
-            <li><span>📱</span><span>+57 317 669 2997</span></li>
-            <li><span>✉️</span><span>MXZONEOFICIAL</span></li>
+            <li>
+              <span>📍</span>
+              <span>Calle 36N # 3N-56</span>
+            </li>
+            <li>
+              <span>📱</span>
+              <span>+57 317 669 2997</span>
+            </li>
+            <li>
+              <span>✉️</span>
+              <span>MXZONEOFICIAL</span>
+            </li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p class="footer-copyright">© 2026 MXZONE STORE. Todos los derechos reservados.</p>
+        <p class="footer-copyright">
+          © 2026 MXZONE STORE. Todos los derechos reservados.
+        </p>
+        <div class="footer-payment">
+          <div class="payment-icon">VISA</div>
+          <div class="payment-icon">MC</div>
+          <div class="payment-icon">EFECTY</div>
+          <div class="payment-icon">TRANSFER</div>
+        </div>
       </div>
     </div>
   </footer>
 
-  <a href="https://wa.me/573176692997" class="whatsapp-float" target="_blank">💬</a>
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/573176692997" class="whatsapp-float" target="_blank" aria-label="Chat WhatsApp">
+    💬
+  </a>
 
+  <!-- Scripts -->
   <script src="js/main.js"></script>
+  <script src="js/product-detail.js"></script>
 </body>
 </html>
