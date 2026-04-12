@@ -776,13 +776,14 @@ function initProductModalInternal() {
 }
 
 /**
- * Hero Particles Animation
+ * Hero Particles Animation - Optimized
  */
 function initHeroParticles() {
   const particlesContainer = document.getElementById('heroParticles');
   if (!particlesContainer) return;
 
-  const particleCount = 30;
+  // Reduced particle count for performance
+  const particleCount = 15;
 
   for (let i = 0; i < particleCount; i++) {
     createParticle(particlesContainer, i);
@@ -793,17 +794,18 @@ function createParticle(container, index) {
   const particle = document.createElement('div');
   particle.className = 'particle';
 
-  // Random properties
-  const size = Math.random() * 20 + 5;
+  // Random properties - smaller particles for better performance
+  const size = Math.random() * 8 + 2;
   const left = Math.random() * 100;
   const delay = Math.random() * 5;
-  const duration = Math.random() * 10 + 10;
+  const duration = Math.random() * 15 + 15;
 
   particle.style.width = `${size}px`;
   particle.style.height = `${size}px`;
   particle.style.left = `${left}%`;
   particle.style.animationDelay = `${delay}s`;
   particle.style.animationDuration = `${duration}s`;
+  particle.style.willChange = 'transform, opacity';
 
   container.appendChild(particle);
 }
