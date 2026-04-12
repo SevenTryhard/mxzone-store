@@ -2892,3 +2892,337 @@ a {
     padding: var(--spacing-md);
   }
 }
+
+/* ================================
+   LEGAL PAGES (terms.html, privacy.html)
+   ================================ */
+
+/* Last Update Banner */
+.last-update {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: rgba(255, 102, 0, 0.1);
+  border: 1px solid var(--orange-primary);
+  border-radius: var(--radius-md);
+  color: var(--gray-light-text);
+}
+
+.update-icon {
+  font-size: 1.3rem;
+}
+
+.update-text strong {
+  color: var(--orange-primary);
+}
+
+/* Legal Introduction */
+.legal-intro {
+  text-align: center;
+}
+
+.legal-intro .lead-paragraph {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  color: var(--gray-light-text);
+  margin-bottom: var(--spacing-md);
+}
+
+.legal-intro p {
+  color: var(--gray-text);
+  line-height: 1.8;
+}
+
+/* Table of Contents */
+.table-of-contents {
+  background: var(--gray-dark);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--gray-light);
+}
+
+.table-of-contents ol {
+  list-style: none;
+  counter-reset: toc-counter;
+}
+
+.table-of-contents li {
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.table-of-contents li:last-child {
+  border-bottom: none;
+}
+
+.table-of-contents a {
+  color: var(--gray-light-text);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  display: block;
+}
+
+.table-of-contents a::before {
+  counter-increment: toc-counter;
+  content: counter(toc-counter) ". ";
+  color: var(--orange-primary);
+  font-weight: 600;
+}
+
+.table-of-contents a:hover {
+  color: var(--orange-primary);
+  padding-left: var(--spacing-sm);
+}
+
+/* Legal Sections */
+.legal-section {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.legal-section-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  color: var(--white);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--orange-primary);
+}
+
+.legal-content h3 {
+  font-family: var(--font-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--orange-primary);
+  margin: var(--spacing-lg) 0 var(--spacing-md);
+}
+
+.legal-content p {
+  color: var(--gray-light-text);
+  line-height: 1.8;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Legal Lists */
+.legal-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.legal-list li {
+  position: relative;
+  padding-left: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
+  color: var(--gray-light-text);
+  line-height: 1.7;
+}
+
+.legal-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--orange-primary);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+/* Info Box */
+.info-box {
+  background: var(--gray-medium);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--orange-primary);
+  margin: var(--spacing-md) 0;
+}
+
+.info-box p {
+  margin-bottom: var(--spacing-sm);
+}
+
+.info-box p:last-child {
+  margin-bottom: 0;
+}
+
+/* Payment Methods */
+.payment-methods {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+  margin: var(--spacing-md) 0;
+}
+
+.method-card {
+  background: var(--gray-dark);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--gray-light);
+  text-align: center;
+  transition: all var(--transition-base);
+}
+
+.method-card:hover {
+  border-color: var(--orange-primary);
+  transform: translateY(-2px);
+}
+
+.method-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: var(--spacing-sm);
+}
+
+.method-card h4 {
+  font-family: var(--font-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: var(--spacing-xs);
+}
+
+.method-card p {
+  font-size: 0.85rem;
+  color: var(--gray-text);
+  margin: 0;
+}
+
+/* Delivery Info */
+.delivery-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-md);
+  margin: var(--spacing-md) 0;
+}
+
+.delivery-card {
+  background: var(--gray-dark);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--gray-light);
+  text-align: center;
+}
+
+.delivery-card h4 {
+  font-family: var(--font-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: var(--spacing-xs);
+}
+
+.delivery-card p {
+  font-size: 0.9rem;
+  color: var(--orange-primary);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Contact Info Box */
+.contact-info-box {
+  background: var(--gray-medium);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  margin: var(--spacing-lg) 0;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.contact-item:last-child {
+  border-bottom: none;
+}
+
+.contact-icon {
+  font-size: 1.5rem;
+}
+
+.contact-item strong {
+  display: block;
+  color: var(--white);
+  margin-bottom: var(--spacing-xs);
+}
+
+.contact-item p {
+  margin: 0;
+  color: var(--gray-light-text);
+}
+
+/* CTA Box */
+.cta-box {
+  background: linear-gradient(135deg, rgba(255, 102, 0, 0.1) 0%, rgba(204, 82, 0, 0.1) 100%);
+  border: 2px solid var(--orange-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  text-align: center;
+  margin-top: var(--spacing-xl);
+}
+
+.cta-box h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  color: var(--white);
+  margin-bottom: var(--spacing-md);
+}
+
+.cta-box p {
+  color: var(--gray-light-text);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Text Orange Link */
+.text-orange {
+  color: var(--orange-primary);
+  text-decoration: none;
+}
+
+.text-orange:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Legal Pages */
+@media (max-width: 768px) {
+  .legal-section-title {
+    font-size: 1.4rem;
+  }
+
+  .table-of-contents {
+    padding: var(--spacing-md);
+  }
+
+  .payment-methods,
+  .delivery-info {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-info-box {
+    padding: var(--spacing-md);
+  }
+
+  .contact-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .cta-box {
+    padding: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .legal-intro .lead-paragraph {
+    font-size: 1rem;
+  }
+
+  .last-update {
+    flex-direction: column;
+    text-align: center;
+  }
+}
