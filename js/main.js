@@ -811,19 +811,41 @@ function createParticle(container, index) {
 }
 
 /**
- * Hero Parallax Effect
+ * Hero Parallax Effect & Video Toggle
  */
 function initHeroParallax() {
   const hero = document.querySelector('.hero');
   if (!hero) return;
 
+  const videoContainer = hero.querySelector('.hero-video-container');
+  const video = hero.querySelector('.hero-video');
   const content = hero.querySelector('.hero-content');
-  if (!content) return;
+
+  if (!videoContainer || !content) return;
+
+  let videoEnabled = true;
 
   window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const heroHeight = hero.offsetHeight;
+    const triggerPoint = heroHeight * 0.3;
 
+    // Hide video when scrolling down (performance optimization)
+    if (scrolled > triggerPoint) {
+      if (videoEnabled) {
+        videoContainer.classList.add('hidden');
+        video.pause();
+        videoEnabled = false;
+      }
+    } else {
+      if (!videoEnabled) {
+        videoContainer.classList.remove('hidden');
+        video.play();
+        videoEnabled = true;
+      }
+    }
+
+    // Parallax effect for content
     if (scrolled < heroHeight) {
       content.style.transform = `translateY(${scrolled * 0.3}px)`;
       content.style.opacity = 1 - (scrolled / heroHeight);
