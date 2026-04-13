@@ -60,9 +60,18 @@ collections:
         required: true
         comment: 'Ej: S/M/L/XL o 38/39/40/41'
       - name: image
-        label: Imagen del Producto
+        label: Imagen Principal del Producto
         type: image
         required: true
+        comment: 'Imagen que se muestra en el catálogo'
+      - name: images
+        label: Galería de Imágenes
+        type: array
+        required: false
+        comment: 'Imágenes adicionales del producto (máximo 5). La primera imagen debe ser igual al campo "Imagen Principal"'
+        array_item:
+          - name: image
+            type: image
       - name: badge
         label: Etiqueta Destacada
         type: select
@@ -164,6 +173,22 @@ media:
     - source: assets/logo
       path: assets/logo
       optimize: true
+    - source: assets/images/cascos
+      path: assets/images/cascos
+      optimize: true
+      max_size: 5MB
+    - source: assets/images/uniformes
+      path: assets/images/uniformes
+      optimize: true
+      max_size: 5MB
+    - source: assets/images/botas
+      path: assets/images/botas
+      optimize: true
+      max_size: 5MB
+    - source: assets/images/protecciones
+      path: assets/images/protecciones
+      optimize: true
+      max_size: 5MB
 
 preview:
   enabled: true
