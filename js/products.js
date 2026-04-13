@@ -280,13 +280,16 @@ function getCategoryLabel(category) {
 
 // Función para renderizar productos en la página principal
 async function renderFeaturedProducts() {
+  console.log('renderFeaturedProducts: iniciando...');
   const products = await loadProducts();
+  console.log('renderFeaturedProducts:', products.length, 'productos cargados');
 
   const categories = ['cascos', 'uniformes', 'botas', 'protecciones'];
 
   categories.forEach(category => {
     const categoryProducts = products.filter(p => p.category === category).slice(0, 4);
     const container = document.querySelector(`[data-products="${category}"]`);
+    console.log(`renderFeaturedProducts: ${category} tiene ${categoryProducts.length} productos, container:`, container);
 
     if (container && categoryProducts.length > 0) {
       container.innerHTML = categoryProducts.map(createProductCard).join('');
@@ -303,11 +306,16 @@ async function renderFeaturedProducts() {
 
 // Función para renderizar todos los productos en la tienda
 async function renderShopProducts() {
+  console.log('renderShopProducts: iniciando...');
   const products = await loadProducts();
+  console.log('renderShopProducts:', products.length, 'productos cargados');
+
   const container = document.getElementById('productsGrid');
+  console.log('renderShopProducts: container productsGrid:', container);
 
   if (container && products.length > 0) {
     container.innerHTML = products.map(createProductCard).join('');
+    console.log('renderShopProducts: productos renderizados en el grid');
 
     // Re-inicializar filtros y modal después de cargar productos
     setTimeout(() => {
