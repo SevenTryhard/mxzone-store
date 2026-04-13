@@ -5,5 +5,8 @@
   "image": "assets/images/botas/BOTAS ALPINESTARS TECH 3 ENDURO.jpg",
   "badge": "",
   "category": "botas",
-  "description": "Botas ALPINESTARS TECH 3 para enduro"
+  "description": "Botas ALPINESTARS TECH 3 para enduro",
+  "images": [
+    "assets/images/botas/BOTAS ALPINESTARS TECH 3 ENDURO.jpg"
+  ]
 }

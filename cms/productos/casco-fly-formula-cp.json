@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO FLY FORMULA CP.jpg",
   "badge": "Premium",
   "category": "cascos",
-  "description": "Casco premium para motocross de alto rendimiento"
+  "description": "Casco premium para motocross de alto rendimiento",
+  "images": [
+    "assets/images/cascos/CASCO FLY FORMULA CP.jpg"
+  ]
 }

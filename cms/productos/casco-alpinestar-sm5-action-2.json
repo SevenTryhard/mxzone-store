@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO ALPINESTAR SM5 ACTION 2.jpg",
   "badge": "Top Ventas",
   "category": "cascos",
-  "description": "Casco ALPINESTARS SM5 con gráfico action"
+  "description": "Casco ALPINESTARS SM5 con gráfico action",
+  "images": [
+    "assets/images/cascos/CASCO ALPINESTAR SM5 ACTION 2.jpg"
+  ]
 }

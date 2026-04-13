@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO FOX V1 FLORA DARK INDIGO.jpg",
   "badge": "Nuevo",
   "category": "cascos",
-  "description": "Casco FOX V1 FLORA en dark indigo"
+  "description": "Casco FOX V1 FLORA en dark indigo",
+  "images": [
+    "assets/images/cascos/CASCO FOX V1 FLORA DARK INDIGO.jpg"
+  ]
 }

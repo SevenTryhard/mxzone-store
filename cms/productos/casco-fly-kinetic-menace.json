@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO FLY KINETIC MENACE.jpg",
   "badge": "",
   "category": "cascos",
-  "description": "Casco FLY KINETIC MENACE con diseño agresivo"
+  "description": "Casco FLY KINETIC MENACE con diseño agresivo",
+  "images": [
+    "assets/images/cascos/CASCO FLY KINETIC MENACE.jpg"
+  ]
 }

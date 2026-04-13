@@ -5,5 +5,8 @@
   "image": "assets/images/botas/BOTAS LEATT 3.5.jpg",
   "badge": "Oferta",
   "category": "botas",
-  "description": "Botas LEATT 3.5 de entrada, excelente relación calidad-precio"
+  "description": "Botas LEATT 3.5 de entrada, excelente relación calidad-precio",
+  "images": [
+    "assets/images/botas/BOTAS LEATT 3.5.jpg"
+  ]
 }

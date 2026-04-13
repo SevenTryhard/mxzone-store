@@ -5,5 +5,8 @@
   "image": "assets/images/botas/BOTAS GAERNE SG12 ENDURO GRAVEL.jpg",
   "badge": "Premium",
   "category": "botas",
-  "description": "Botas GAERNE SG12 para enduro, calidad italiana"
+  "description": "Botas GAERNE SG12 para enduro, calidad italiana",
+  "images": [
+    "assets/images/botas/BOTAS GAERNE SG12 ENDURO GRAVEL.jpg"
+  ]
 }

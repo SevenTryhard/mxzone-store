@@ -5,5 +5,8 @@
   "image": "assets/images/protecciones/PECHERA FOX RACEFRAME ROOST.jpg",
   "badge": "",
   "category": "protecciones",
-  "description": "Pechera protectora FOX RACEFRAME ROOST"
+  "description": "Pechera protectora FOX RACEFRAME ROOST",
+  "images": [
+    "assets/images/protecciones/PECHERA FOX RACEFRAME ROOST.jpg"
+  ]
 }

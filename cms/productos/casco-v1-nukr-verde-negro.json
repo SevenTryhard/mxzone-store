@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO V1 NUKR VERDE NEGRO.jpg",
   "badge": "",
   "category": "cascos",
-  "description": "Casco V1 NUKR en verde negro"
+  "description": "Casco V1 NUKR en verde negro",
+  "images": [
+    "assets/images/cascos/CASCO V1 NUKR VERDE NEGRO.jpg"
+  ]
 }

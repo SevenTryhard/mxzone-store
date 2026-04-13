@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO ONEAL 5 SRS ATTACK.jpg",
   "badge": "",
   "category": "cascos",
-  "description": "Casco ONEAL 5 SRS ATTACK de alta gama"
+  "description": "Casco ONEAL 5 SRS ATTACK de alta gama",
+  "images": [
+    "assets/images/cascos/CASCO ONEAL 5 SRS ATTACK.jpg"
+  ]
 }

@@ -5,5 +5,8 @@
   "image": "assets/images/uniformes/UNIFORME TIPO FOX 1.1.jpg",
   "badge": "Oferta",
   "category": "uniformes",
-  "description": "Uniforme estilo FOX 1.1 de entrada"
+  "description": "Uniforme estilo FOX 1.1 de entrada",
+  "images": [
+    "assets/images/uniformes/UNIFORME TIPO FOX 1.1.jpg"
+  ]
 }

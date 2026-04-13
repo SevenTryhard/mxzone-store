@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO FOX V1 SOLID MATTE BLACK.jpg",
   "badge": "",
   "category": "cascos",
-  "description": "Casco FOX V1 SOLID en negro mate"
+  "description": "Casco FOX V1 SOLID en negro mate",
+  "images": [
+    "assets/images/cascos/CASCO FOX V1 SOLID MATTE BLACK.jpg"
+  ]
 }

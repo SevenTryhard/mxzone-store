@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO LEATT MOTO 2.5 V24.jpg",
   "badge": "Nuevo",
   "category": "cascos",
-  "description": "Casco LEATT MOTO 2.5 V24 con tecnología avanzada"
+  "description": "Casco LEATT MOTO 2.5 V24 con tecnología avanzada",
+  "images": [
+    "assets/images/cascos/CASCO LEATT MOTO 2.5 V24.jpg"
+  ]
 }

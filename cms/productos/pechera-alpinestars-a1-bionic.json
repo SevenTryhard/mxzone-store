@@ -5,5 +5,8 @@
   "image": "assets/images/protecciones/PECHERA ALPINESTAR A-1 BIONIC ACTION.jpg",
   "badge": "Premium",
   "category": "protecciones",
-  "description": "Pechera ALPINESTAR A-1 BIONIC de protección completa"
+  "description": "Pechera ALPINESTAR A-1 BIONIC de protección completa",
+  "images": [
+    "assets/images/protecciones/PECHERA ALPINESTAR A-1 BIONIC ACTION.jpg"
+  ]
 }

@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO TIPO FOX.jpg",
   "badge": "Oferta",
   "category": "cascos",
-  "description": "Casco estilo FOX de entrada"
+  "description": "Casco estilo FOX de entrada",
+  "images": [
+    "assets/images/cascos/CASCO TIPO FOX.jpg"
+  ]
 }

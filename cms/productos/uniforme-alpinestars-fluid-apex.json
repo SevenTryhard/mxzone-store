@@ -5,5 +5,8 @@
   "image": "assets/images/uniformes/UNIFORME ALPINESTAR FLUD APEX.jpg",
   "badge": "Premium",
   "category": "uniformes",
-  "description": "Uniforme ALPINESTARS FLUID APEX de competición"
+  "description": "Uniforme ALPINESTARS FLUID APEX de competición",
+  "images": [
+    "assets/images/uniformes/UNIFORME ALPINESTAR FLUD APEX.jpg"
+  ]
 }

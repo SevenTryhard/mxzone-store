@@ -5,5 +5,8 @@
   "image": "assets/images/protecciones/CHALECO COLUMNA.jpg",
   "badge": "",
   "category": "protecciones",
-  "description": "Chaleco de protección para columna"
+  "description": "Chaleco de protección para columna",
+  "images": [
+    "assets/images/protecciones/CHALECO COLUMNA.jpg"
+  ]
 }

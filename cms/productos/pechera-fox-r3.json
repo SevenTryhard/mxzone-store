@@ -5,5 +5,8 @@
   "image": "assets/images/protecciones/PECHERA FOX R3.jpg",
   "badge": "",
   "category": "protecciones",
-  "description": "Pechera FOX R3 de protección completa"
+  "description": "Pechera FOX R3 de protección completa",
+  "images": [
+    "assets/images/protecciones/PECHERA FOX R3.jpg"
+  ]
 }

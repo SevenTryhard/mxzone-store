@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO AIROH TWIST.jpg",
   "badge": "Premium",
   "category": "cascos",
-  "description": "Casco AIROH TWIST de diseño italiano"
+  "description": "Casco AIROH TWIST de diseño italiano",
+  "images": [
+    "assets/images/cascos/CASCO AIROH TWIST.jpg"
+  ]
 }

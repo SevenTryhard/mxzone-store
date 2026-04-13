@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO RACING FORMULA.jpg",
   "badge": "Premium",
   "category": "cascos",
-  "description": "Casco RACING FORMULA de competición"
+  "description": "Casco RACING FORMULA de competición",
+  "images": [
+    "assets/images/cascos/CASCO RACING FORMULA.jpg"
+  ]
 }

@@ -5,5 +5,8 @@
   "image": "assets/images/botas/BOTAS FLY MAVERICK LT ENDURO.jpg",
   "badge": "",
   "category": "botas",
-  "description": "Botas FLY MAVERICK LT para enduro"
+  "description": "Botas FLY MAVERICK LT para enduro",
+  "images": [
+    "assets/images/botas/BOTAS FLY MAVERICK LT ENDURO.jpg"
+  ]
 }

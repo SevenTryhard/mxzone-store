@@ -5,5 +5,8 @@
   "image": "assets/images/uniformes/PANTALON FOX 180 CZAR.jpg",
   "badge": "",
   "category": "uniformes",
-  "description": "Pantalón FOX 180 CZAR de competición"
+  "description": "Pantalón FOX 180 CZAR de competición",
+  "images": [
+    "assets/images/uniformes/PANTALON FOX 180 CZAR.jpg"
+  ]
 }

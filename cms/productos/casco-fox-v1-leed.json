@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO FOX V1 LEED.jpg",
   "badge": "",
   "category": "cascos",
-  "description": "Casco FOX V1 LEED clásico"
+  "description": "Casco FOX V1 LEED clásico",
+  "images": [
+    "assets/images/cascos/CASCO FOX V1 LEED.jpg"
+  ]
 }

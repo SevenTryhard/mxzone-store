@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO AIROH WRAAP FEEL.jpg",
   "badge": "Premium",
   "category": "cascos",
-  "description": "Casco AIROH WRAAP FEEL con diseño exclusivo"
+  "description": "Casco AIROH WRAAP FEEL con diseño exclusivo",
+  "images": [
+    "assets/images/cascos/CASCO AIROH WRAAP FEEL.jpg"
+  ]
 }

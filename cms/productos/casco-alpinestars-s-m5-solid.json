@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO ALPINESTARS S-M5 SOLID.jpg",
   "badge": "Premium",
   "category": "cascos",
-  "description": "Casco ALPINESTARS S-M5 SOLID color sólido"
+  "description": "Casco ALPINESTARS S-M5 SOLID color sólido",
+  "images": [
+    "assets/images/cascos/CASCO ALPINESTARS S-M5 SOLID.jpg"
+  ]
 }

@@ -5,5 +5,8 @@
   "image": "assets/images/uniformes/UNIFORME FLY F16.jpg",
   "badge": "Top Ventas",
   "category": "uniformes",
-  "description": "Uniforme FLY F16 clásico"
+  "description": "Uniforme FLY F16 clásico",
+  "images": [
+    "assets/images/uniformes/UNIFORME FLY F16.jpg"
+  ]
 }

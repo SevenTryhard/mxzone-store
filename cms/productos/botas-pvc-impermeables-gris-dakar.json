@@ -5,5 +5,8 @@
   "image": "assets/images/botas/BOTAS PVC IMPERMEABLES GRIS DAKAR.jpg",
   "badge": "Oferta",
   "category": "botas",
-  "description": "Botas impermeables de PVC para enduro y lluvia"
+  "description": "Botas impermeables de PVC para enduro y lluvia",
+  "images": [
+    "assets/images/botas/BOTAS PVC IMPERMEABLES GRIS DAKAR.jpg"
+  ]
 }

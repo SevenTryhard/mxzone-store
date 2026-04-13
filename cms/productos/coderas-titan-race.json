@@ -5,5 +5,8 @@
   "image": "assets/images/protecciones/CODERAS TITAN RACE.jpg",
   "badge": "",
   "category": "protecciones",
-  "description": "Coderas TITAN RACE de protección"
+  "description": "Coderas TITAN RACE de protección",
+  "images": [
+    "assets/images/protecciones/CODERAS TITAN RACE.jpg"
+  ]
 }

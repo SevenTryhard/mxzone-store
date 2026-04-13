@@ -5,5 +5,8 @@
   "image": "assets/images/uniformes/UNIFORME TROY LEE GP AIR TEAM 81.jpg",
   "badge": "Edicion Limitada",
   "category": "uniformes",
-  "description": "Uniforme TROY LEE GP AIR TEAM 81 edición especial"
+  "description": "Uniforme TROY LEE GP AIR TEAM 81 edición especial",
+  "images": [
+    "assets/images/uniformes/UNIFORME TROY LEE GP AIR TEAM 81.jpg"
+  ]
 }

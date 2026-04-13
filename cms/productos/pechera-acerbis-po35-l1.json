@@ -5,5 +5,8 @@
   "image": "assets/images/protecciones/PECHERA ACERBIS PO35-L1.jpg",
   "badge": "",
   "category": "protecciones",
-  "description": "Pechera ACERBIS PO35-L1 de protección completa"
+  "description": "Pechera ACERBIS PO35-L1 de protección completa",
+  "images": [
+    "assets/images/protecciones/PECHERA ACERBIS PO35-L1.jpg"
+  ]
 }

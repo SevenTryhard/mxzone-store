@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO FOX V1 RACE SPEC F74.jpg",
   "badge": "Premium",
   "category": "cascos",
-  "description": "Casco FOX V1 RACE SPEC F74 edición especial"
+  "description": "Casco FOX V1 RACE SPEC F74 edición especial",
+  "images": [
+    "assets/images/cascos/CASCO FOX V1 RACE SPEC F74.jpg"
+  ]
 }

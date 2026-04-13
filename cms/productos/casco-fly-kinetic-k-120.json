@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO FLY KINETIC K 120.jpg",
   "badge": "Top Ventas",
   "category": "cascos",
-  "description": "Casco FLY KINETIC K 120 de entrada"
+  "description": "Casco FLY KINETIC K 120 de entrada",
+  "images": [
+    "assets/images/cascos/CASCO FLY KINETIC K 120.jpg"
+  ]
 }

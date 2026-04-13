@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO AIROH TWIST 3 DYNASTY ROSSO.jpg",
   "badge": "Premium",
   "category": "cascos",
-  "description": "Casco AIROH TWIST 3 DYNASTY en color rosso"
+  "description": "Casco AIROH TWIST 3 DYNASTY en color rosso",
+  "images": [
+    "assets/images/cascos/CASCO AIROH TWIST 3 DYNASTY ROSSO.jpg"
+  ]
 }

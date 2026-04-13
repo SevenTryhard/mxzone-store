@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO ALPINESTARS RADIUM NEGRO ROJO.jpg",
   "badge": "",
   "category": "cascos",
-  "description": "Casco ALPINESTARS RADIUM en color negro y rojo"
+  "description": "Casco ALPINESTARS RADIUM en color negro y rojo",
+  "images": [
+    "assets/images/cascos/CASCO ALPINESTARS RADIUM NEGRO ROJO.jpg"
+  ]
 }

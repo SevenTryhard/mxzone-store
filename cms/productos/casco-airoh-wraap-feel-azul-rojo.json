@@ -5,5 +5,8 @@
   "image": "assets/images/cascos/CASCO AIROH WRAAP FEEL AZUL ROJO.jpg",
   "badge": "",
   "category": "cascos",
-  "description": "Casco AIROH WRAAP con diseño FEEL en azul y rojo"
+  "description": "Casco AIROH WRAAP con diseño FEEL en azul y rojo",
+  "images": [
+    "assets/images/cascos/CASCO AIROH WRAAP FEEL AZUL ROJO.jpg"
+  ]
 }

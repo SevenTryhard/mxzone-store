@@ -5,5 +5,8 @@
   "image": "assets/images/protecciones/PECHERA FOX RACEFRAME.jpg",
   "badge": "Premium",
   "category": "protecciones",
-  "description": "Pechera FOX RACEFRAME de alta gama"
+  "description": "Pechera FOX RACEFRAME de alta gama",
+  "images": [
+    "assets/images/protecciones/PECHERA FOX RACEFRAME.jpg"
+  ]
 }

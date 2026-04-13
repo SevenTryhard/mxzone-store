@@ -5,5 +5,8 @@
   "image": "assets/images/botas/BOTAS LEATT 4.5 NARANJA.jpg",
   "badge": "Top",
   "category": "botas",
-  "description": "Botas LEATT 4.5 en color naranja de alto rendimiento"
+  "description": "Botas LEATT 4.5 en color naranja de alto rendimiento",
+  "images": [
+    "assets/images/botas/BOTAS LEATT 4.5 NARANJA.jpg"
+  ]
 }
