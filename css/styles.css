@@ -3987,38 +3987,56 @@ a {
   pointer-events: none;
 }
 
-.promo-particle {
+/* Partículas de tierra/polvo interactivas */
+.dust-particle {
   position: absolute;
-  width: 4px;
-  height: 4px;
-  background: var(--orange-primary);
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #C4A574 0%, #8B7355 100%);
   border-radius: 50%;
-  box-shadow: 0 0 10px var(--orange-glow);
-  animation: floatParticle linear infinite;
+  opacity: 0.6;
+  box-shadow: 0 0 8px rgba(196, 165, 116, 0.5);
+  animation: dustFloat linear infinite;
+  transform: translate(var(--mouse-x, 0), var(--mouse-y, 0));
+  transition: transform 0.3s ease-out;
 }
 
-@keyframes floatParticle {
+@keyframes dustFloat {
   0% {
-    transform: translateY(100vh) rotate(0deg);
+    transform: translateY(0) translateX(0) rotate(0deg);
     opacity: 0;
   }
   10% {
-    opacity: 1;
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-30px) translateX(20px) rotate(180deg);
   }
   90% {
-    opacity: 1;
+    opacity: 0.6;
   }
   100% {
-    transform: translateY(-100vh) rotate(720deg);
+    transform: translateY(-60px) translateX(-20px) rotate(360deg);
     opacity: 0;
   }
 }
 
-.promo-hero-content {
+.promo-hero-layout {
   position: relative;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.promo-hero-content {
   text-align: center;
   max-width: 800px;
+  margin-bottom: var(--spacing-xl);
+  flex-shrink: 0;
 }
 
 .promo-hero-title {

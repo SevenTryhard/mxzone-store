@@ -396,15 +396,17 @@ function initPromoParticles() {
   const container = document.getElementById('promoParticles');
   if (!container) return;
 
-  const particleCount = 30;
+  const particleCount = 40;
 
   for (let i = 0; i < particleCount; i++) {
     const particle = document.createElement('div');
-    particle.className = 'promo-particle';
+    particle.className = 'dust-particle';
     particle.style.left = Math.random() * 100 + '%';
     particle.style.top = Math.random() * 100 + '%';
     particle.style.animationDelay = Math.random() * 5 + 's';
     particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+    particle.style.setProperty('--mouse-x', '0');
+    particle.style.setProperty('--mouse-y', '0');
     container.appendChild(particle);
   }
 }
@@ -413,16 +415,54 @@ function initBikerParticles() {
   const container = document.getElementById('bikerParticles');
   if (!container) return;
 
-  const particleCount = 15;
+  const particleCount = 20;
 
   for (let i = 0; i < particleCount; i++) {
     const particle = document.createElement('div');
-    particle.className = 'biker-particle';
+    particle.className = 'dust-particle';
     particle.style.left = Math.random() * 100 + '%';
     particle.style.top = Math.random() * 100 + '%';
     particle.style.animationDelay = Math.random() * 3 + 's';
+    particle.style.setProperty('--mouse-x', '0');
+    particle.style.setProperty('--mouse-y', '0');
     container.appendChild(particle);
   }
+}
+
+// Efecto interactivo de partículas con el mouse
+function initParticleInteraction() {
+  const heroSection = document.querySelector('.promo-hero');
+  if (!heroSection) return;
+
+  heroSection.addEventListener('mousemove', (e) => {
+    const rect = heroSection.getBoundingClientRect();
+    const mouseX = (e.clientX - rect.left) / rect.width;
+    const mouseY = (e.clientY - rect.top) / rect.height;
+
+    // Actualizar todas las partículas
+    document.querySelectorAll('.dust-particle').forEach(particle => {
+      const particleX = parseFloat(particle.style.left) / 100;
+      const particleY = parseFloat(particle.style.top) / 100;
+
+      // Calcular distancia desde el mouse
+      const dx = mouseX - particleX;
+      const dy = mouseY - particleY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      // Si el mouse está cerca, empujar la partícula
+      const maxDistance = 0.3;
+      if (distance < maxDistance) {
+        const force = (maxDistance - distance) / maxDistance;
+        const moveX = dx * force * 100;
+        const moveY = dy * force * 100;
+        particle.style.setProperty('--mouse-x', `${moveX}px`);
+        particle.style.setProperty('--mouse-y', `${moveY}px`);
+      } else {
+        particle.style.setProperty('--mouse-x', '0');
+        particle.style.setProperty('--mouse-y', '0');
+      }
+    });
+  });
 }
 
 // ==================== COUNT UP ANIMATION ====================
@@ -478,6 +518,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initBiker3DEffect();
   initPromoParticles();
   initBikerParticles();
+  initParticleInteraction();
   initCountUp();
 
   // Modal handlers
