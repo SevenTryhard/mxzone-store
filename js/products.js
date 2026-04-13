@@ -3,7 +3,7 @@
  * Carga TODOS los productos desde los archivos JSON del CMS automáticamente
  */
 
-const WHATSAPP_NUMBER = '573176692997';
+// WHATSAPP_NUMBER se define en cart.js - usar la variable global
 
 // Mapeo de marcas basado en nombres de producto
 function getBrand(productName) {
