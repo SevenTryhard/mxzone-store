@@ -119,59 +119,64 @@ function updateCartCount() {
 
 // Actualizar modal del carrito
 function updateCartModal() {
-  const cartItemsContainer = document.getElementById('cartItems');
-  const cartTotalEl = document.getElementById('cartTotal');
+  const cartItemsEl = document.getElementById('cartItems');
+  const cartTotalSection = document.getElementById('cartTotal');
   const cartEmptyEl = document.getElementById('cartEmpty');
   const cartContentEl = document.getElementById('cartContent');
+  const cartTotalValueEl = document.getElementById('cartTotalValue');
 
-  if (!cartItemsContainer) return;
+  if (!cartItemsEl) return;
 
   if (cart.length === 0) {
     if (cartEmptyEl) cartEmptyEl.style.display = 'block';
     if (cartContentEl) cartContentEl.style.display = 'none';
-    if (cartTotalEl) cartTotalEl.style.display = 'none';
+    if (cartTotalSection) cartTotalSection.style.display = 'none';
     return;
   }
 
   if (cartEmptyEl) cartEmptyEl.style.display = 'none';
   if (cartContentEl) cartContentEl.style.display = 'block';
-  if (cartTotalEl) cartTotalEl.style.display = 'block';
+  if (cartTotalSection) cartTotalSection.style.display = 'block';
 
-  cartItemsContainer.innerHTML = cart.map((item, index) => `
-    <div class="cart-item" data-index="${index}">
-      <div class="cart-item-image">
-        <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'">
-      </div>
-      <div class="cart-item-info">
-        <h4 class="cart-item-name">${item.name}</h4>
-        <p class="cart-item-category">${getCategoryLabel(item.category)}</p>
-        <div class="cart-item-details">
-          <div class="cart-item-size">
-            <span>Talla:</span>
-            <select class="size-select" onchange="updateSize(${index}, this.value)">
-              ${item.selectedSize.split('/').map(size => `
-                <option value="${size.trim()}" ${item.selectedSize === size.trim() ? 'selected' : ''}>
-                  ${size.trim()}
-                </option>
-              `).join('')}
-            </select>
-          </div>
-          <div class="cart-item-quantity">
-            <button class="qty-btn minus" onclick="updateQuantity(${index}, ${item.quantity - 1})">-</button>
-            <span class="qty-value">${item.quantity}</span>
-            <button class="qty-btn plus" onclick="updateQuantity(${index}, ${item.quantity + 1})">+</button>
-          </div>
+  // Renderizar items
+  cartItemsEl.innerHTML = cart.map((item, index) => {
+    const sizesArray = item.selectedSize ? item.selectedSize.split('/') : ['Única'];
+    const sizeOptions = sizesArray.map(size =>
+      `<option value="${size.trim()}" ${item.selectedSize === size.trim() ? 'selected' : ''}>${size.trim()}</option>`
+    ).join('');
+
+    return `
+      <div class="cart-item" data-index="${index}">
+        <div class="cart-item-image">
+          <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'">
         </div>
-        <p class="cart-item-price">${formatPrice(item.priceNum * item.quantity)}</p>
+        <div class="cart-item-info">
+          <h4 class="cart-item-name">${item.name}</h4>
+          <p class="cart-item-category">${getCategoryLabel(item.category)}</p>
+          <div class="cart-item-details">
+            <div class="cart-item-size">
+              <span>Talla:</span>
+              <select class="size-select" onchange="updateSize(${index}, this.value)">
+                ${sizeOptions}
+              </select>
+            </div>
+            <div class="cart-item-quantity">
+              <button class="qty-btn minus" onclick="updateQuantity(${index}, ${item.quantity - 1})">-</button>
+              <span class="qty-value">${item.quantity}</span>
+              <button class="qty-btn plus" onclick="updateQuantity(${index}, ${item.quantity + 1})">+</button>
+            </div>
+          </div>
+          <p class="cart-item-price">${formatPrice(item.priceNum * item.quantity)}</p>
+        </div>
+        <button class="cart-item-remove" onclick="removeFromCart(${index})" title="Eliminar">
+          <span>&times;</span>
+        </button>
       </div>
-      <button class="cart-item-remove" onclick="removeFromCart(${index})" title="Eliminar">
-        <span>&times;</span>
-      </button>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 
-  if (cartTotalEl) {
-    cartTotalEl.textContent = formatPrice(getCartTotal());
+  if (cartTotalValueEl) {
+    cartTotalValueEl.textContent = formatPrice(getCartTotal());
   }
 }
 
@@ -291,58 +296,63 @@ function showNotification(message, type = 'info') {
 
 // ==================== INICIALIZACIÓN ====================
 
+// Hacer funciones disponibles globalmente
+window.openCart = function() {
+  const cartModal = document.getElementById('cartModal');
+  if (cartModal) {
+    cartModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    updateCartModal();
+  }
+};
+
+window.closeCart = function() {
+  const cartModal = document.getElementById('cartModal');
+  if (cartModal) {
+    cartModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   loadCart();
 
-  // Abrir modal del carrito
-  const cartBtn = document.getElementById('cartBtn');
-  const cartModal = document.getElementById('cartModal');
-  const cartClose = document.getElementById('cartClose');
-  const cartOverlay = document.getElementById('cartOverlay');
+  // Abrir modal del carrito - usar delegación de eventos
+  document.addEventListener('click', (e) => {
+    if (e.target.id === 'cartBtn' || e.target.closest('#cartBtn')) {
+      e.preventDefault();
+      const cartModal = document.getElementById('cartModal');
+      if (cartModal) {
+        cartModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        updateCartModal();
+      }
+    }
 
-  if (cartBtn && cartModal) {
-    cartBtn.addEventListener('click', () => {
-      cartModal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      updateCartModal();
-    });
-  }
+    if (e.target.id === 'cartClose' || e.target.closest('#cartClose')) {
+      closeCart();
+    }
 
-  if (cartClose) {
-    cartClose.addEventListener('click', () => {
-      cartModal.classList.remove('active');
-      document.body.style.overflow = '';
-    });
-  }
+    if (e.target.id === 'cartOverlay' || e.target.closest('#cartOverlay')) {
+      closeCart();
+    }
 
-  if (cartOverlay) {
-    cartOverlay.addEventListener('click', () => {
-      cartModal.classList.remove('active');
-      document.body.style.overflow = '';
-    });
-  }
+    if (e.target.id === 'checkoutBtn' || e.target.closest('#checkoutBtn')) {
+      checkoutToWhatsApp();
+    }
 
-  // Botón de checkout
-  const checkoutBtn = document.getElementById('checkoutBtn');
-  if (checkoutBtn) {
-    checkoutBtn.addEventListener('click', checkoutToWhatsApp);
-  }
-
-  // Botón vaciar carrito
-  const clearCartBtn = document.getElementById('clearCartBtn');
-  if (clearCartBtn) {
-    clearCartBtn.addEventListener('click', () => {
+    if (e.target.id === 'clearCartBtn' || e.target.closest('#clearCartBtn')) {
       if (confirm('¿Estás seguro de vaciar el carrito?')) {
         clearCart();
       }
-    });
-  }
+    }
+  });
 
   // Cerrar con Escape
   document.addEventListener('keydown', (e) => {
+    const cartModal = document.getElementById('cartModal');
     if (e.key === 'Escape' && cartModal && cartModal.classList.contains('active')) {
-      cartModal.classList.remove('active');
-      document.body.style.overflow = '';
+      closeCart();
     }
   });
 });

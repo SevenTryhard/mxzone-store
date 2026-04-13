@@ -348,7 +348,10 @@ document.addEventListener('DOMContentLoaded', () => {
 // Función global para agregar producto al carrito desde la tarjeta
 function addProductToCart(slug) {
   const card = document.querySelector(`.product-card[data-slug="${slug}"]`);
-  if (!card) return;
+  if (!card) {
+    console.warn('Producto no encontrado:', slug);
+    return;
+  }
 
   const sizeSelect = card.querySelector('.card-size-select');
   const selectedSize = sizeSelect ? sizeSelect.value : 'Única';
@@ -358,12 +361,20 @@ function addProductToCart(slug) {
   const price = card.querySelector('.product-price').textContent;
   const category = card.dataset.category;
   const image = card.dataset.image;
+  const sizes = card.dataset.sizes || selectedSize;
 
-  const product = { name, price, category, image, sizes: selectedSize };
+  const product = { name, price, category, image, sizes };
+
+  console.log('Agregando al carrito:', product, 'Talla:', selectedSize);
 
   // Agregar al carrito
-  if (window.MXZONECart) {
+  if (window.MXZONECart && window.MXZONECart.addToCart) {
     window.MXZONECart.addToCart(product, selectedSize);
+  } else if (window.addToCart) {
+    window.addToCart(product, selectedSize);
+  } else {
+    console.warn('Función addToCart no disponible');
+    alert('El carrito aún no está disponible. Por favor recarga la página.');
   }
 }
 
