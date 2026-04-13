@@ -225,6 +225,10 @@ function createProductCard(product) {
   const badgeHTML = product.badge ?
     `<span class="product-badge">${product.badge}</span>` : '';
 
+  // Parsear tallas
+  const sizesArray = product.sizes.split('/').map(s => s.trim());
+  const sizeOptions = sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
+
   return `
     <div class="product-card"
          data-category="${product.category}"
@@ -232,7 +236,8 @@ function createProductCard(product) {
          data-price="${priceNum}"
          data-image="${mainImage}"
          data-images='${JSON.stringify(images).replace(/'/g, "&#39;")}'
-         data-slug="${productSlug}">
+         data-slug="${productSlug}"
+         data-sizes="${product.sizes}">
       <div class="product-image">
         <img src="${mainImage}" alt="${product.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <span class="product-image-placeholder" style="display:none;">MX</span>
@@ -244,14 +249,18 @@ function createProductCard(product) {
         <div class="product-price-wrapper">
           <span class="product-price">${product.price}</span>
         </div>
-        <div class="product-meta">
-          <span class="product-size">Talla: <span>${product.sizes}</span></span>
+        <div class="product-sizes-selector">
+          <select class="card-size-select" aria-label="Seleccionar talla">
+            ${sizeOptions}
+          </select>
         </div>
         <div class="product-actions">
           <a href="product.html?product=${productSlug}" class="btn btn-secondary" target="_blank">
-            Ver Detalles
+            Ver
           </a>
-          <a href="${whatsappUrl}" class="btn btn-whatsapp" target="_blank">Comprar</a>
+          <button class="btn btn-cart-add" onclick="addProductToCart('${productSlug}')">
+            Agregar
+          </button>
         </div>
       </div>
     </div>
@@ -335,6 +344,28 @@ document.addEventListener('DOMContentLoaded', () => {
     renderShopProducts();
   }
 });
+
+// Función global para agregar producto al carrito desde la tarjeta
+function addProductToCart(slug) {
+  const card = document.querySelector(`.product-card[data-slug="${slug}"]`);
+  if (!card) return;
+
+  const sizeSelect = card.querySelector('.card-size-select');
+  const selectedSize = sizeSelect ? sizeSelect.value : 'Única';
+
+  // Obtener datos del producto
+  const name = card.querySelector('.product-name').textContent;
+  const price = card.querySelector('.product-price').textContent;
+  const category = card.dataset.category;
+  const image = card.dataset.image;
+
+  const product = { name, price, category, image, sizes: selectedSize };
+
+  // Agregar al carrito
+  if (window.MXZONECart) {
+    window.MXZONECart.addToCart(product, selectedSize);
+  }
+}
 
 // Exportar funciones para uso externo
 window.MXZONE_Products = {

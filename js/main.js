@@ -689,7 +689,10 @@ function initProductModalInternal() {
   const modalPrice = document.getElementById('modalPrice');
   const modalDescription = document.getElementById('modalDescription');
   const modalSizes = document.getElementById('modalSizes');
+  const modalSizesContainer = document.getElementById('modalSizesContainer');
+  const modalSizeSelect = document.getElementById('modalSizeSelect');
   const modalWhatsapp = document.getElementById('modalWhatsapp');
+  const modalAddToCart = document.getElementById('modalAddToCart');
 
   // Product descriptions for different categories
   const descriptions = {
@@ -699,7 +702,8 @@ function initProductModalInternal() {
     protecciones: 'Equipo de protección certificado para máxima seguridad. Materiales impact-absorbentes y diseño ergonómico para comodidad en carrera.'
   };
 
-  // Current images array for the open modal
+  // Current product data
+  let currentProduct = null;
   let currentImages = [];
   let currentImageIndex = 0;
 
@@ -758,11 +762,53 @@ function initProductModalInternal() {
     });
   }
 
+  // Setup size selector in modal
+  function setupSizeSelector(sizes) {
+    if (!modalSizes || !modalSizeSelect) return;
+
+    const sizesArray = sizes.split('/').map(s => s.trim());
+
+    // Show selector for multiple sizes, tags for single size
+    if (sizesArray.length > 1) {
+      modalSizes.style.display = 'none';
+      modalSizeSelect.style.display = 'block';
+      modalSizeSelect.innerHTML = sizesArray.map(size =>
+        `<option value="${size}">${size}</option>`
+      ).join('');
+    } else {
+      modalSizes.style.display = 'flex';
+      modalSizeSelect.style.display = 'none';
+      modalSizes.innerHTML = '';
+      sizesArray.forEach(size => {
+        const sizeTag = document.createElement('span');
+        sizeTag.className = 'modal-size-tag';
+        sizeTag.textContent = size;
+        modalSizes.appendChild(sizeTag);
+      });
+    }
+  }
+
+  // Get selected size from modal
+  function getSelectedSize() {
+    if (modalSizeSelect && modalSizeSelect.style.display !== 'none') {
+      return modalSizeSelect.value;
+    }
+    const selectedTag = modalSizes.querySelector('.modal-size-tag.active');
+    if (selectedTag) {
+      return selectedTag.textContent;
+    }
+    const firstTag = modalSizes.querySelector('.modal-size-tag');
+    return firstTag ? firstTag.textContent : 'Única';
+  }
+
   // Open modal on product card click (anywhere on the card)
   document.querySelectorAll('.product-card').forEach(card => {
     card.addEventListener('click', (e) => {
-      // Don't open modal if clicking on WhatsApp button
-      if (e.target.closest('.btn-whatsapp')) return;
+      // Don't open modal if clicking on WhatsApp or Add to Cart button
+      if (e.target.closest('.btn-whatsapp') || e.target.closest('.btn-cart-add')) {
+        e.preventDefault();
+        return;
+      }
 
       e.preventDefault();
 
@@ -772,7 +818,7 @@ function initProductModalInternal() {
       const categoryEl = card.querySelector('.product-category').textContent;
       const category = categoryEl.toLowerCase();
       const sizesEl = card.querySelector('.product-size span');
-      const sizes = sizesEl ? sizesEl.textContent : 'Única';
+      const sizes = sizesEl ? sizesEl.textContent : card.dataset.sizes || 'Única';
 
       // Get images (support for multiple images)
       let images = [];
@@ -790,6 +836,17 @@ function initProductModalInternal() {
         images = [card.dataset.image];
       }
 
+      // Store current product data
+      currentProduct = {
+        name,
+        price,
+        priceNum: parseInt(price.replace(/[^0-9]/g, '')),
+        category,
+        image: images[0] || '',
+        images,
+        sizes
+      };
+
       currentImages = images;
       currentImageIndex = 0;
 
@@ -803,14 +860,8 @@ function initProductModalInternal() {
       setModalImage(images[0] || '');
       createThumbnails(images);
 
-      // Set sizes
-      modalSizes.innerHTML = '';
-      sizes.split('/').forEach(size => {
-        const sizeTag = document.createElement('span');
-        sizeTag.className = 'modal-size-tag';
-        sizeTag.textContent = size.trim();
-        modalSizes.appendChild(sizeTag);
-      });
+      // Setup size selector
+      setupSizeSelector(sizes);
 
       // Set WhatsApp link
       const whatsappMessage = `Estoy%20interesado%20en%20${encodeURIComponent(name)}`;
@@ -825,10 +876,37 @@ function initProductModalInternal() {
     card.style.cursor = 'pointer';
   });
 
+  // Add to Cart button in modal
+  if (modalAddToCart) {
+    modalAddToCart.addEventListener('click', () => {
+      if (!currentProduct) return;
+
+      const selectedSize = getSelectedSize();
+      window.MXZONECart.addToCart(currentProduct, selectedSize);
+
+      // Animation feedback
+      modalAddToCart.innerHTML = '✓ Agregado';
+      modalAddToCart.style.background = '#25D366';
+      setTimeout(() => {
+        modalAddToCart.innerHTML = '🛒 Agregar al Carrito';
+        modalAddToCart.style.background = '';
+      }, 1500);
+    });
+  }
+
+  // Size tag selection (for single size display)
+  modalSizes?.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal-size-tag')) {
+      modalSizes.querySelectorAll('.modal-size-tag').forEach(t => t.classList.remove('active'));
+      e.target.classList.add('active');
+    }
+  });
+
   // Close modal functions
   function closeModal() {
     modal.classList.remove('active');
     document.body.style.overflow = '';
+    currentProduct = null;
     currentImages = [];
     currentImageIndex = 0;
   }

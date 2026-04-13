@@ -51,6 +51,14 @@
       </ul>
 
       <div class="nav-cta">
+        <!-- Carrito Button -->
+        <div class="cart-btn-container">
+          <button class="cart-btn" id="cartBtn" aria-label="Ver carrito">
+            🛒
+          </button>
+          <span class="cart-badge" id="cartCount" style="display: none;">0</span>
+        </div>
+
         <a href="https://wa.me/573176692997" class="btn btn-whatsapp btn-small" target="_blank">
           <span>WhatsApp</span>
         </a>
@@ -395,8 +403,58 @@
     <img src="assets/whatsapp-logo.webp" alt="WhatsApp" class="whatsapp-icon">
   </a>
 
+  <!-- Shopping Cart Modal -->
+  <div class="cart-modal" id="cartModal">
+    <div class="cart-modal-overlay" id="cartOverlay"></div>
+    <div class="cart-modal-content">
+      <div class="cart-header">
+        <h3 class="cart-title">🛒 Tu Carrito</h3>
+        <button class="cart-close" id="cartClose">&times;</button>
+      </div>
+
+      <div class="cart-items" id="cartItemsContainer">
+        <div class="cart-empty" id="cartEmpty">
+          <div class="cart-empty-icon">🛒</div>
+          <p>Tu carrito está vacío</p>
+          <p style="font-size: 0.9rem; color: var(--gray-text);">Agrega productos para continuar</p>
+        </div>
+        <div id="cartContent" style="display: none;">
+          <div class="cart-items" id="cartItems"></div>
+        </div>
+      </div>
+
+      <div class="cart-footer" id="cartTotal" style="display: none;">
+        <div class="cart-total">
+          <span class="cart-total-label">Total:</span>
+          <span class="cart-total-value" id="cartTotalValue">$0</span>
+        </div>
+        <div class="cart-actions">
+          <button class="cart-checkout-btn" id="checkoutBtn">
+            <span>💬</span>
+            <span>Completar pedido por WhatsApp</span>
+          </button>
+          <button class="cart-clear-btn" id="clearCartBtn">
+            🗑️ Vaciar carrito
+          </button>
+        </div>
+        <div style="margin-top: var(--spacing-md); padding-top: var(--spacing-md); border-top: 1px solid rgba(255,255,255,0.1);">
+          <p style="font-size: 0.8rem; color: var(--gray-text); margin-bottom: var(--spacing-xs);">
+            💳 <strong>Métodos de pago:</strong>
+          </p>
+          <ul style="font-size: 0.75rem; color: var(--gray-text); margin: 0; padding-left: var(--spacing-md);">
+            <li>Transferencia bancaria</li>
+            <li>Nequi / Daviplata</li>
+            <li>Efectivo contra entrega</li>
+            <li style="color: var(--orange-primary);">Próximamente: Tarjeta en línea</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <script src="js/main.js"></script>
   <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
 </body>
 </html>
