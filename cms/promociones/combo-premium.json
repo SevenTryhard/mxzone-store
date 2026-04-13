@@ -1,0 +1,48 @@
+{
+  "name": "COMBO PREMIUM - ÉLITE",
+  "slug": "combo-premium",
+  "description": "Lo mejor de lo mejor. Equipamiento de élite usado por pilotos profesionales. Máxima tecnología en protección, ligereza y confort.",
+  "category": "premium",
+  "badge": "Edición Limitada",
+  "image": "assets/images/promociones/combo-premium.jpg",
+  "images": [],
+  "regularTotal": 7200000,
+  "promoPrice": 5400000,
+  "products": [
+    {
+      "name": "CASCO AIROH TWIST 3 DYNASTY",
+      "category": "cascos",
+      "price": 2200000,
+      "image": "assets/images/cascos/casco-airoh-twist-3-dynasty.jpg",
+      "sizes": "S/M/L/XL"
+    },
+    {
+      "name": "UNIFORME TROY LEE GP AIR TEAM 81",
+      "category": "uniformes",
+      "price": 900000,
+      "image": "assets/images/uniformes/uniforme-troy-lee-gp-air-team-81.jpg",
+      "sizes": "S/M/L/XL"
+    },
+    {
+      "name": "BOTAS GAERNE SG12 REALM",
+      "category": "botas",
+      "price": 2100000,
+      "image": "assets/images/botas/botas-gaerne-sg12-realm.jpg",
+      "sizes": "38/39/40/41/42/43/44/45"
+    },
+    {
+      "name": "PECHERA ALPINESTAR A-1 BIONIC ACTION",
+      "category": "protecciones",
+      "price": 1000000,
+      "image": "assets/images/protecciones/pechera-alpinestar-a1-bionic-action.jpg",
+      "sizes": "S/M/L/XL"
+    },
+    {
+      "name": "RODILLERAS LEATT 3DF HYBRID EXT",
+      "category": "protecciones",
+      "price": 1000000,
+      "image": "assets/images/protecciones/rodillera-leatt-3df-hybrid-ext.jpg",
+      "sizes": "S/M/L/XL"
+    }
+  ]
+}

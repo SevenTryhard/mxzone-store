@@ -8,6 +8,7 @@ const WHATSAPP_NUMBER = '573176692997';
 
 // Estado del carrito
 let cart = [];
+let selectedPaymentMethod = '';
 
 // ==================== FUNCIONES DEL CARRITO ====================
 
@@ -185,6 +186,11 @@ function checkoutToWhatsApp() {
     return;
   }
 
+  if (!selectedPaymentMethod) {
+    showNotification('Por favor selecciona un método de pago', 'error');
+    return;
+  }
+
   const message = buildWhatsAppMessage();
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   window.open(url, '_blank');
@@ -227,16 +233,42 @@ function buildWhatsAppMessage() {
   message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
   message += `*TOTAL DEL PEDIDO: ${formatPrice(getCartTotal())}*\n\n`;
   message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
-  message += `*MÉTODOS DE PAGO:*\n`;
-  message += `💳 Tarjeta de crédito/débito\n`;
-  message += `🏦 Transferencia bancaria\n`;
-  message += `💵 Efectivo contra entrega\n`;
-  message += `📱 Nequi / Daviplata\n\n`;
-  message += `*Próximamente:* Pasarela de pagos en línea con tarjeta.\n\n`;
-  message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+
+  // Método de pago seleccionado
+  const paymentMethodNames = {
+    'nequi': '📱 Nequi',
+    'daviplata': '📱 Daviplata',
+    'transferencia': '🏦 Transferencia bancaria',
+    'efectivo': '💵 Efectivo contra entrega',
+    'tarjeta': '💳 Tarjeta de crédito/débito (Próximamente)'
+  };
+
+  message += `*MÉTODO DE PAGO SELECCIONADO:*\n`;
+  message += `${paymentMethodNames[selectedPaymentMethod] || selectedPaymentMethod}\n\n`;
+
+  if (selectedPaymentMethod === 'tarjeta') {
+    message += `⚠️ *Nota:* El pago con tarjeta estará disponible próximamente. Por favor coordina otro método de pago con la tienda.\n\n`;
+    message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  }
+
   message += `Por favor, confirmen disponibilidad y me indican los pasos a seguir para completar mi compra. ¡Gracias! 🙌`;
 
   return message;
+}
+
+// Seleccionar método de pago
+function selectPaymentMethod(method) {
+  selectedPaymentMethod = method;
+  console.log('Método de pago seleccionado:', method);
+
+  // Actualizar UI - remover clase active de todos y agregar al seleccionado
+  document.querySelectorAll('.payment-method-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  const activeBtn = document.querySelector(`.payment-method-btn[data-method="${method}"]`);
+  if (activeBtn) {
+    activeBtn.classList.add('active');
+  }
 }
 
 // ==================== UTILIDADES ====================

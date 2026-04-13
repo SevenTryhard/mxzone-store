@@ -1,0 +1,48 @@
+{
+  "name": "COMBO PROFESIONAL - COMPETICIÓN",
+  "slug": "combo-profesional",
+  "description": "Equipamiento de nivel competitivo para pilotos exigentes. Máxima protección y rendimiento en cada componente.",
+  "category": "profesional",
+  "badge": "Top Descuento",
+  "image": "assets/images/promociones/combo-profesional.jpg",
+  "images": [],
+  "regularTotal": 4500000,
+  "promoPrice": 3600000,
+  "products": [
+    {
+      "name": "CASCO LEATT MOTO 2.5 V24",
+      "category": "cascos",
+      "price": 1400000,
+      "image": "assets/images/cascos/casco-leatt-moto-2-5-v24.jpg",
+      "sizes": "S/M/L/XL"
+    },
+    {
+      "name": "UNIFORME FOX 180 FLORA",
+      "category": "uniformes",
+      "price": 700000,
+      "image": "assets/images/uniformes/uniforme-fox-180-flora.jpg",
+      "sizes": "S/M/L/XL"
+    },
+    {
+      "name": "BOTAS ALPINESTARS TECH 3",
+      "category": "botas",
+      "price": 1200000,
+      "image": "assets/images/botas/botas-alpinestars-tech-3.jpg",
+      "sizes": "38/39/40/41/42/43/44/45"
+    },
+    {
+      "name": "CODERAS LEATT CONTOUR",
+      "category": "protecciones",
+      "price": 600000,
+      "image": "assets/images/protecciones/coderas-leatt-contour.jpg",
+      "sizes": "S/M/L"
+    },
+    {
+      "name": "RODILLERAS LEATT 3DF 5.0 ZIP",
+      "category": "protecciones",
+      "price": 600000,
+      "image": "assets/images/protecciones/rodillera-leatt-3df-5-0-zip.jpg",
+      "sizes": "S/M/L/XL"
+    }
+  ]
+}

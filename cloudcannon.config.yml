@@ -163,6 +163,116 @@ collections:
         type: text
         comment: 'Link completo https://tiktok.com/...'
 
+  promociones:
+    _options:
+      icon: local_offer
+      label: Promociones / Combos
+      display:
+        fields:
+          - name
+          - category
+          - promoPrice
+          - regularTotal
+          - badge
+    path: cms/promociones
+    type: json
+    fields:
+      - name: name
+        label: Nombre del Combo
+        type: text
+        required: true
+        comment: 'Ej: Combo Principiante - Kit Completo'
+      - name: slug
+        label: Slug (URL)
+        type: text
+        required: false
+        comment: 'Opcional. Si se deja vacío se genera automáticamente'
+      - name: description
+        label: Descripción
+        type: text
+        required: false
+        comment: 'Descripción corta del combo'
+      - name: category
+        label: Categoría
+        type: select
+        required: true
+        options:
+          values:
+            - principiante
+            - intermedio
+            - profesional
+            - premium
+        comment: 'Nivel del combo'
+      - name: badge
+        label: Etiqueta Destacada
+        type: select
+        options:
+          values:
+            - ''
+            - Más Vendido
+            - Nuevo
+            - Recomendado
+            - Edición Limitada
+            - Top Descuento
+        comment: 'Etiqueta que aparece en la esquina'
+      - name: image
+        label: Imagen Principal
+        type: image
+        required: true
+        comment: 'Imagen que se muestra en el grid'
+      - name: images
+        label: Galería de Imágenes
+        type: array
+        required: false
+        comment: 'Imágenes adicionales del combo (máximo 5)'
+        array_item:
+          type: image
+      - name: regularTotal
+        label: Precio Regular (suma de productos)
+        type: number
+        required: true
+        comment: 'Precio total sin descuento (ej: 1500000)'
+      - name: promoPrice
+        label: Precio Promocional
+        type: number
+        required: true
+        comment: 'Precio con descuento (ej: 1200000)'
+      - name: products
+        label: Productos Incluidos
+        type: array
+        required: true
+        comment: 'Lista de productos que forman el combo'
+        array_item:
+          type: object
+          fields:
+            - name: name
+              label: Nombre del Producto
+              type: text
+              required: true
+            - name: category
+              label: Categoría
+              type: select
+              options:
+                values:
+                  - cascos
+                  - uniformes
+                  - botas
+                  - protecciones
+              required: true
+            - name: price
+              label: Precio Unitario
+              type: number
+              required: true
+            - name: image
+              label: Imagen del Producto
+              type: image
+              required: false
+            - name: sizes
+              label: Tallas Disponibles
+              type: text
+              required: false
+              comment: 'Ej: S/M/L/XL o 38/39/40/41'
+
 media:
   cloudcannon:
     - source: assets/images/cms

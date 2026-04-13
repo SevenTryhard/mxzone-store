@@ -1,0 +1,48 @@
+{
+  "name": "COMBO PRINCIPIANTE - KIT INICIAL",
+  "slug": "combo-principiante",
+  "description": "El kit perfecto para quienes inician en el motocross. Incluye casco, uniforme y protecciones básicas a un precio especial.",
+  "category": "principiante",
+  "badge": "Más Vendido",
+  "image": "assets/images/promociones/combo-principiante.jpg",
+  "images": [],
+  "regularTotal": 1850000,
+  "promoPrice": 1480000,
+  "products": [
+    {
+      "name": "CASCO FOX V1 SOLID",
+      "category": "cascos",
+      "price": 650000,
+      "image": "assets/images/cascos/casco-fox-v1-solid.jpg",
+      "sizes": "S/M/L/XL"
+    },
+    {
+      "name": "UNIFORME FOX 180 BASIC",
+      "category": "uniformes",
+      "price": 450000,
+      "image": "assets/images/uniformes/uniforme-fox-180-basic.jpg",
+      "sizes": "S/M/L/XL"
+    },
+    {
+      "name": "PECHERA FOX RACEFRAME",
+      "category": "protecciones",
+      "price": 350000,
+      "image": "assets/images/protecciones/pechera-fox-raceframe.jpg",
+      "sizes": "S/M/L"
+    },
+    {
+      "name": "RODILLERAS ACERBIS SOFT",
+      "category": "protecciones",
+      "price": 200000,
+      "image": "assets/images/protecciones/rodilleras-acerbis-soft.jpg",
+      "sizes": "Única"
+    },
+    {
+      "name": "GUANTES BASIC MX",
+      "category": "accesorios",
+      "price": 200000,
+      "image": "assets/images/accesorios/guantes-basic.jpg",
+      "sizes": "S/M/L/XL"
+    }
+  ]
+}

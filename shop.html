@@ -27,6 +27,7 @@
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Inicio</a></li>
         <li><a href="shop.html">Tienda</a></li>
+        <li><a href="promociones.html">Promociones</a></li>
         <li><a href="about.html">Nosotros</a></li>
         <li><a href="testimonials.html">Testimonios</a></li>
         <li><a href="faq.html">FAQ</a></li>
@@ -328,6 +329,29 @@
           <span class="cart-total-label">Total:</span>
           <span class="cart-total-value" id="cartTotalValue">$0</span>
         </div>
+        <div class="cart-payment-methods">
+          <p style="font-size: 0.85rem; color: var(--white); margin-bottom: var(--spacing-sm); font-weight: 600;">
+            💳 Selecciona método de pago:
+          </p>
+          <div class="payment-methods-grid">
+            <button class="payment-method-btn" onclick="selectPaymentMethod('nequi')" data-method="nequi">
+              📱 Nequi
+            </button>
+            <button class="payment-method-btn" onclick="selectPaymentMethod('daviplata')" data-method="daviplata">
+              📱 Daviplata
+            </button>
+            <button class="payment-method-btn" onclick="selectPaymentMethod('transferencia')" data-method="transferencia">
+              🏦 Transferencia
+            </button>
+            <button class="payment-method-btn" onclick="selectPaymentMethod('efectivo')" data-method="efectivo">
+              💵 Efectivo
+            </button>
+            <button class="payment-method-btn" onclick="selectPaymentMethod('tarjeta')" data-method="tarjeta">
+              💳 Tarjeta (Próximamente)
+            </button>
+          </div>
+        </div>
+
         <div class="cart-actions">
           <button class="cart-checkout-btn" id="checkoutBtn">
             <span>💬</span>
@@ -336,17 +360,6 @@
           <button class="cart-clear-btn" id="clearCartBtn">
             🗑️ Vaciar carrito
           </button>
-        </div>
-        <div style="margin-top: var(--spacing-md); padding-top: var(--spacing-md); border-top: 1px solid rgba(255,255,255,0.1);">
-          <p style="font-size: 0.8rem; color: var(--gray-text); margin-bottom: var(--spacing-xs);">
-            💳 <strong>Métodos de pago:</strong>
-          </p>
-          <ul style="font-size: 0.75rem; color: var(--gray-text); margin: 0; padding-left: var(--spacing-md);">
-            <li>Transferencia bancaria</li>
-            <li>Nequi / Daviplata</li>
-            <li>Efectivo contra entrega</li>
-            <li style="color: var(--orange-primary);">Próximamente: Tarjeta en línea</li>
-          </ul>
         </div>
       </div>
     </div>

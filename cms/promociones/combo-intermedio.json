@@ -1,0 +1,48 @@
+{
+  "name": "COMBO INTERMEDIO - PILOTO AVANZADO",
+  "slug": "combo-intermedio",
+  "description": "Para pilotos que ya tienen experiencia y buscan equipamiento de mayor calidad. Incluye botas de nivel intermedio y protecciones completas.",
+  "category": "intermedio",
+  "badge": "Recomendado",
+  "image": "assets/images/promociones/combo-intermedio.jpg",
+  "images": [],
+  "regularTotal": 2900000,
+  "promoPrice": 2320000,
+  "products": [
+    {
+      "name": "CASCO FLY KINETIC K-120",
+      "category": "cascos",
+      "price": 850000,
+      "image": "assets/images/cascos/casco-fly-kinetic-k120.jpg",
+      "sizes": "S/M/L/XL"
+    },
+    {
+      "name": "UNIFORME FLY KINETIC JET",
+      "category": "uniformes",
+      "price": 550000,
+      "image": "assets/images/uniformes/uniforme-fly-kinetic-jet.jpg",
+      "sizes": "S/M/L/XL"
+    },
+    {
+      "name": "BOTAS LEATT 3.5",
+      "category": "botas",
+      "price": 950000,
+      "image": "assets/images/botas/botas-leatt-3-5.jpg",
+      "sizes": "38/39/40/41/42/43/44"
+    },
+    {
+      "name": "PECHERA ALPINESTAR A-1 BIONIC",
+      "category": "protecciones",
+      "price": 350000,
+      "image": "assets/images/protecciones/pechera-alpinestar-a1-bionic.jpg",
+      "sizes": "S/M/L"
+    },
+    {
+      "name": "RODILLERAS LEATT 3DF HYBRID",
+      "category": "protecciones",
+      "price": 200000,
+      "image": "assets/images/protecciones/rodilleras-leatt-3df-hybrid.jpg",
+      "sizes": "S/M/L/XL"
+    }
+  ]
+}
