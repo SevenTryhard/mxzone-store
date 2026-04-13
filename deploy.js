@@ -1,9 +1,16 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
+
+console.log('🚀 Iniciando deploy limpio...');
+
+// Crear directorio temporal para deploy
+const tempDir = path.join(os.tmpdir(), 'mxzonestore-deploy-' + Date.now());
+fs.mkdirSync(tempDir, { recursive: true });
 
 // Archivos y carpetas a excluir
-const exclude = [
+const excludePatterns = [
   '.git',
   '.gitignore',
   '.wranglerignore',
@@ -13,10 +20,58 @@ const exclude = [
   'CANVAS',
   'package.json',
   'deploy.js',
-  '*.log'
+  '*.log',
+  '.github'
 ];
 
-// Crear wrangler.jsonc temporal sin referencia a .git
+// Copiar solo archivos necesarios
+const filesToCopy = [
+  'index.html',
+  'shop.html',
+  'promociones.html',
+  'about.html',
+  'testimonials.html',
+  'faq.html',
+  'contact.html',
+  'product.html',
+  'shipping.html',
+  'returns.html',
+  'sizes.html',
+  'terms.html',
+  'privacy.html',
+  'admin'
+];
+
+const foldersToCopy = [
+  'css',
+  'js',
+  'assets',
+  'cms'
+];
+
+console.log('📦 Copiando archivos al directorio temporal...');
+
+// Copiar archivos raiz
+filesToCopy.forEach(file => {
+  const src = path.join(process.cwd(), file);
+  const dest = path.join(tempDir, file);
+  if (fs.existsSync(src)) {
+    fs.cpSync(src, dest, { recursive: true });
+    console.log(`  ✓ ${file}`);
+  }
+});
+
+// Copiar carpetas
+foldersToCopy.forEach(folder => {
+  const src = path.join(process.cwd(), folder);
+  const dest = path.join(tempDir, folder);
+  if (fs.existsSync(src)) {
+    fs.cpSync(src, dest, { recursive: true });
+    console.log(`  ✓ ${folder}/`);
+  }
+});
+
+// Crear wrangler.jsonc en el directorio temporal
 const wranglerConfig = {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "mxzonestore",
@@ -32,22 +87,26 @@ const wranglerConfig = {
   ]
 };
 
-// Escribir wrangler.jsonc
 fs.writeFileSync(
-  path.join(process.cwd(), 'wrangler.jsonc'),
+  path.join(tempDir, 'wrangler.jsonc'),
   JSON.stringify(wranglerConfig, null, 2)
 );
 
-console.log('🚀 Iniciando deploy...');
+console.log('✨ Archivos copiados. Ejecutando wrangler deploy...');
 
-// Ejecutar wrangler deploy
+// Ejecutar wrangler deploy desde el directorio temporal
 try {
-  execSync('npx wrangler deploy', {
+  execSync(`npx wrangler deploy`, {
     stdio: 'inherit',
-    cwd: process.cwd()
+    cwd: tempDir,
+    env: { ...process.env, CLOUDFLARE_ACCOUNT_ID: process.env.CLOUDFLARE_ACCOUNT_ID }
   });
   console.log('✅ Deploy completado!');
 } catch (error) {
   console.error('❌ Error en deploy:', error.message);
   process.exit(1);
+} finally {
+  // Limpiar directorio temporal
+  console.log('🧹 Limpiando directorio temporal...');
+  fs.rmSync(tempDir, { recursive: true, force: true });
 }
