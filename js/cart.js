@@ -108,13 +108,6 @@ function updateCartCount() {
     countEl.textContent = totalItems;
     countEl.style.display = totalItems > 0 ? 'flex' : 'none';
   }
-
-  // Actualizar badge del header si existe
-  const headerBadge = document.querySelector('.cart-badge');
-  if (headerBadge) {
-    headerBadge.textContent = totalItems;
-    headerBadge.style.display = totalItems > 0 ? 'flex' : 'none';
-  }
 }
 
 // Actualizar modal del carrito
@@ -298,7 +291,7 @@ function showNotification(message, type = 'info') {
 
 // Hacer funciones disponibles globalmente INMEDIATAMENTE
 window.MXZONECart = {
-  loadCart,
+  loadCart: () => {}, // Se redefine después
   addToCart,
   removeFromCart,
   updateQuantity,
@@ -326,7 +319,12 @@ window.closeCart = function() {
   }
 };
 
+// Cargar carrito cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
+  // Redefinir loadCart en el objeto global
+  window.MXZONECart.loadCart = loadCart;
+
+  // Ejecutar carga inicial
   loadCart();
 
   // Abrir modal del carrito - usar delegación de eventos
