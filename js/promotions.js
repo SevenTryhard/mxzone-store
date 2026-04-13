@@ -151,23 +151,34 @@ function openPromoModal(promoSlug) {
     document.getElementById('galleryThumbnails').style.display = 'none';
   }
 
-  // Products List
+  // Products List con selector de tallas
   const productsList = document.getElementById('promoProductsList');
   if (promo.products && promo.products.length > 0) {
-    productsList.innerHTML = promo.products.map((product, idx) => `
-      <div class="promo-product-item">
-        <div class="product-item-image">
-          <img src="${product.image || ''}" alt="${product.name}" onerror="this.style.display='none'">
-          <span class="product-item-placeholder">${product.name.substring(0, 2).toUpperCase()}</span>
+    productsList.innerHTML = promo.products.map((product, idx) => {
+      const sizesArray = product.sizes ? product.sizes.split('/').map(s => s.trim()) : ['Única'];
+      const sizeOptions = sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
+
+      return `
+        <div class="promo-product-item" data-product-index="${idx}">
+          <div class="product-item-image">
+            <img src="${product.image || ''}" alt="${product.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <span class="product-item-placeholder" style="display:none;">${product.name.substring(0, 2).toUpperCase()}</span>
+          </div>
+          <div class="product-item-info">
+            <h4 class="product-item-name">${product.name}</h4>
+            <p class="product-item-category">${getCategoryLabel(product.category)}</p>
+            <div class="product-item-size-selector">
+              <label>Talla:</label>
+              <select class="promo-product-size-select" data-product="${idx}">
+                ${sizeOptions}
+              </select>
+            </div>
+            <span class="product-item-price">$${product.price?.toLocaleString('es-CO') || '0'}</span>
+          </div>
+          <div class="product-item-badge">Incluido</div>
         </div>
-        <div class="product-item-info">
-          <h4 class="product-item-name">${product.name}</h4>
-          <p class="product-item-category">${getCategoryLabel(product.category)}</p>
-          <span class="product-item-price">$${product.price?.toLocaleString('es-CO') || '0'}</span>
-        </div>
-        <div class="product-item-badge">Incluido</div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   // Pricing
@@ -202,11 +213,10 @@ function addPromoToCart(promoSlug) {
 
   if (!promo || !promo.products) return;
 
-  // Agregar cada producto del combo al carrito
-  promo.products.forEach(product => {
-    const sizes = product.sizes || 'Única';
-    const sizeArray = sizes.split('/').map(s => s.trim());
-    const selectedSize = sizeArray[0]; // Primera talla por defecto
+  // Agregar cada producto del combo al carrito con la talla seleccionada
+  promo.products.forEach((product, idx) => {
+    const sizeSelect = document.querySelector(`.promo-product-size-select[data-product="${idx}"]`);
+    const selectedSize = sizeSelect ? sizeSelect.value : (product.sizes || 'Única').split('/')[0].trim();
 
     window.MXZONECart.addToCart({
       name: product.name,
@@ -248,6 +258,79 @@ function getCategoryLabel(category) {
     'premium': 'Premium'
   };
   return labels[category] || category;
+}
+
+// ==================== WHATSAPP MESSAGE FOR COMBOS ====================
+
+function buildComboWhatsAppMessage(promo, selectedSizes) {
+  const discountPercent = Math.round(((promo.regularTotal - promo.promoPrice) / promo.regularTotal) * 100);
+
+  let message = `*¡Hola MXZONE STORE! 🏍️*\n\n`;
+  message += `*QUIERO EL SIGUIENTE COMBO:*\n\n`;
+  message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  message += `*🎁 ${promo.name}*\n\n`;
+  message += `${promo.description || 'Combo especial de productos'}\n\n`;
+  message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  message += `*PRODUCTOS INCLUIDOS:*\n\n`;
+
+  // Agrupar productos por categoría
+  const byCategory = {};
+  promo.products.forEach((product, idx) => {
+    if (!byCategory[product.category]) {
+      byCategory[product.category] = [];
+    }
+    byCategory[product.category].push({
+      ...product,
+      selectedSize: selectedSizes[idx] || 'Única'
+    });
+  });
+
+  const categoryNames = {
+    cascos: '*🪖 CASCOS*',
+    uniformes: '*👕 UNIFORMES*',
+    botas: '*👢 BOTAS*',
+    protecciones: '*🛡️ PROTECCIONES*',
+    accesorios: '*🧤 ACCESORIOS*'
+  };
+
+  Object.keys(byCategory).forEach(category => {
+    message += `${categoryNames[category] || category}:\n\n`;
+
+    byCategory[category].forEach((product) => {
+      message += `▫️ *${product.name}*\n`;
+      message += `   Talla: ${product.selectedSize}\n`;
+      message += `   Precio individual: $${product.price?.toLocaleString('es-CO') || '0'}\n\n`;
+    });
+  });
+
+  message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  message += `*RESUMEN DE PRECIOS:*\n\n`;
+  message += `Precio regular: *$${promo.regularTotal.toLocaleString('es-CO')}*\n`;
+  message += `Descuento (${discountPercent}%): *-$${(promo.regularTotal - promo.promoPrice).toLocaleString('es-CO')}*\n`;
+  message += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+  message += `*TOTAL COMBO: *$${promo.promoPrice.toLocaleString('es-CO')}*\n\n`;
+  message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  message += `*AHORRAS: $${(promo.regularTotal - promo.promoPrice).toLocaleString('es-CO')} 💰*\n\n`;
+  message += `Por favor, confírmenme disponibilidad de tallas y los pasos para completar mi pedido. ¡Gracias! 🙌`;
+
+  return message;
+}
+
+// ==================== WHATSAPP CHECKOUT FOR COMBOS ====================
+
+function checkoutComboToWhatsApp() {
+  if (!currentPromo) return;
+
+  // Obtener tallas seleccionadas
+  const selectedSizes = [];
+  currentPromo.products.forEach((product, idx) => {
+    const sizeSelect = document.querySelector(`.promo-product-size-select[data-product="${idx}"]`);
+    selectedSizes.push(sizeSelect ? sizeSelect.value : (product.sizes || 'Única').split('/')[0].trim());
+  });
+
+  const message = buildComboWhatsAppMessage(currentPromo, selectedSizes);
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(url, '_blank');
 }
 
 // ==================== FILTROS ====================
@@ -397,10 +480,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initBikerParticles();
   initCountUp();
 
-  // Modal close handlers
+  // Modal handlers
   const modalClose = document.getElementById('promoModalClose');
   const modalOverlay = document.getElementById('promoOverlay');
   const addToCartBtn = document.getElementById('addToCartComboBtn');
+  const checkoutComboBtn = document.getElementById('checkoutComboBtn');
 
   if (modalClose) {
     modalClose.addEventListener('click', closePromoModal);
@@ -418,6 +502,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Checkout combo to WhatsApp
+  if (checkoutComboBtn) {
+    checkoutComboBtn.addEventListener('click', () => {
+      if (currentPromo) {
+        checkoutComboToWhatsApp();
+      }
+    });
+  }
+
   // Escape key
   document.addEventListener('keydown', (e) => {
     const modal = document.getElementById('promoModal');
@@ -430,4 +523,5 @@ document.addEventListener('DOMContentLoaded', () => {
   window.openPromoModal = openPromoModal;
   window.addPromoToCart = addPromoToCart;
   window.changeGalleryImage = changeGalleryImage;
+  window.checkoutComboToWhatsApp = checkoutComboToWhatsApp;
 });

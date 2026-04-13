@@ -57,8 +57,27 @@
 
   <!-- Hero Section con Biker 3D -->
   <section class="promo-hero">
-    <div class="promo-hero-bg"></div>
+    <div class="promo-hero-bg-image"></div>
+    <div class="promo-hero-overlay"></div>
     <div class="promo-hero-particles" id="promoParticles"></div>
+
+    <!-- Biker 3D Interactive - AHORA ENCIMA DEL CONTENIDO -->
+    <div class="biker-3d-container" id="bikerContainer">
+      <div class="biker-3d-wrapper">
+        <div class="biker-3d" id="biker3D">
+          <div class="biker-image-container">
+            <img src="assets/images/promociones/nuevobikertresde.png" alt="MX Rider" class="biker-main-image" id="bikerImage">
+            <div class="biker-placeholder" id="bikerPlaceholder">
+              <span class="placeholder-icon">🏍️</span>
+              <span class="placeholder-text">MX RIDER</span>
+            </div>
+          </div>
+          <div class="biker-glow-effect"></div>
+          <div class="biker-particles" id="bikerParticles"></div>
+        </div>
+      </div>
+      <div class="biker-3d-shadow"></div>
+    </div>
 
     <div class="promo-hero-content">
       <span class="hero-badge glow-badge">🔥 OFERTAS ESPECIALES</span>
@@ -70,24 +89,6 @@
         <a href="#combos" class="btn btn-primary btn-large">Ver Combos</a>
         <a href="#como-funciona" class="btn btn-secondary btn-large">¿Cómo Funciona?</a>
       </div>
-    </div>
-
-    <!-- Biker 3D Interactive -->
-    <div class="biker-3d-container" id="bikerContainer">
-      <div class="biker-3d-wrapper">
-        <div class="biker-3d" id="biker3D">
-          <div class="biker-image-container">
-            <img src="assets/images/promociones/biker_efecto3D.avif" alt="MX Rider" class="biker-main-image" id="bikerImage">
-            <div class="biker-placeholder" id="bikerPlaceholder">
-              <span class="placeholder-icon">🏍️</span>
-              <span class="placeholder-text">MX RIDER</span>
-            </div>
-          </div>
-          <div class="biker-glow-effect"></div>
-          <div class="biker-particles" id="bikerParticles"></div>
-        </div>
-      </div>
-      <div class="biker-3d-shadow"></div>
     </div>
 
     <!-- Floating Elements -->
@@ -260,9 +261,9 @@
           <button class="btn btn-primary btn-large" id="addToCartComboBtn" style="flex:1;">
             🛒 Agregar Combo Completo
           </button>
-          <a href="https://wa.me/573176692997" class="btn btn-whatsapp btn-large" target="_blank">
-            Consultar
-          </a>
+          <button class="btn btn-whatsapp btn-large" id="checkoutComboBtn" style="flex:1;">
+            💬 Pedir por WhatsApp
+          </button>
         </div>
 
         <div class="promo-badges">

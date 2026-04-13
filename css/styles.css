@@ -3931,8 +3931,32 @@ a {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
   padding: var(--spacing-2xl) var(--spacing-lg);
+}
+
+.promo-hero-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/images/promociones/backgroundpromos.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.4);
+  transform: scale(1.1);
+  will-change: transform;
+}
+
+.promo-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(26,26,26,0.85) 0%, rgba(45,45,45,0.75) 50%, rgba(26,26,26,0.85) 100%);
+  z-index: 1;
 }
 
 .promo-hero-bg {
@@ -3945,6 +3969,7 @@ a {
     radial-gradient(ellipse at 20% 50%, rgba(255, 102, 0, 0.15) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 50%, rgba(230, 57, 70, 0.1) 0%, transparent 50%);
   animation: bgPulse 8s ease-in-out infinite;
+  z-index: 2;
 }
 
 @keyframes bgPulse {
@@ -4033,14 +4058,15 @@ a {
 /* Biker 3D Container */
 .biker-3d-container {
   position: absolute;
-  right: 5%;
   top: 50%;
-  transform: translateY(-50%);
-  width: 45%;
-  max-width: 600px;
-  height: 80vh;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 700px;
+  height: 90vh;
   perspective: 1000px;
-  z-index: 5;
+  z-index: 20;
+  pointer-events: none;
 }
 
 .biker-3d-wrapper {
@@ -4048,6 +4074,7 @@ a {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
+  pointer-events: auto;
 }
 
 .biker-3d {
@@ -4770,6 +4797,37 @@ a {
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--orange-primary);
+}
+
+.product-item-size-selector {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin: var(--spacing-xs) 0;
+}
+
+.product-item-size-selector label {
+  font-size: 0.75rem;
+  color: var(--gray-text);
+  font-weight: 600;
+}
+
+.promo-product-size-select {
+  background: var(--gray-dark);
+  border: 1px solid var(--gray-light);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  color: var(--white);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.promo-product-size-select:hover,
+.promo-product-size-select:focus {
+  border-color: var(--orange-primary);
+  outline: none;
 }
 
 .product-item-badge {
