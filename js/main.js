@@ -804,9 +804,8 @@ function initProductModalInternal() {
   // Open modal on product card click (anywhere on the card)
   document.querySelectorAll('.product-card').forEach(card => {
     card.addEventListener('click', (e) => {
-      // Don't open modal if clicking on WhatsApp or Add to Cart button
-      if (e.target.closest('.btn-whatsapp') || e.target.closest('.btn-cart-add')) {
-        e.preventDefault();
+      // Don't open modal if clicking on WhatsApp, Add to Cart, or Ver button
+      if (e.target.closest('.btn-whatsapp') || e.target.closest('.btn-cart-add') || e.target.closest('.btn-secondary')) {
         return;
       }
 
