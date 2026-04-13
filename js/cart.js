@@ -118,7 +118,10 @@ function updateCartModal() {
   const cartContentEl = document.getElementById('cartContent');
   const cartTotalValueEl = document.getElementById('cartTotalValue');
 
-  if (!cartItemsEl) return;
+  if (!cartItemsEl) {
+    console.log('updateCartModal: elementos del DOM no disponibles aún');
+    return;
+  }
 
   if (cart.length === 0) {
     if (cartEmptyEl) cartEmptyEl.style.display = 'block';
