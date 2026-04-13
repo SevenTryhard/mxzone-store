@@ -219,6 +219,9 @@ function createProductCard(product) {
   const priceNum = parseInt(product.price.replace(/[^0-9]/g, ''));
   const productSlug = createProductSlug(product.name);
 
+  // Soporte para múltiples imágenes o imagen única
+  const images = product.images || (product.image ? [product.image] : []);
+  const mainImage = images.length > 0 ? images[0] : product.image || '';
   const badgeHTML = product.badge ?
     `<span class="product-badge">${product.badge}</span>` : '';
 
@@ -227,10 +230,11 @@ function createProductCard(product) {
          data-category="${product.category}"
          data-brand="${brand}"
          data-price="${priceNum}"
-         data-image="${product.image}"
+         data-image="${mainImage}"
+         data-images='${JSON.stringify(images).replace(/'/g, "&#39;")}'
          data-slug="${productSlug}">
       <div class="product-image">
-        <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <img src="${mainImage}" alt="${product.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <span class="product-image-placeholder" style="display:none;">MX</span>
         ${badgeHTML}
       </div>

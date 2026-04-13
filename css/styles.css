@@ -595,8 +595,8 @@ a {
    ================================ */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: var(--spacing-lg);
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--spacing-md);
 }
 
 .product-card {
@@ -606,10 +606,12 @@ a {
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: var(--transition-base);
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .product-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-5px);
   box-shadow: var(--shadow-xl);
   border-color: rgba(255, 102, 0, 0.3);
 }
@@ -632,13 +634,20 @@ a {
 
 .product-image {
   width: 100%;
-  height: 280px;
+  height: 200px;
   background: linear-gradient(145deg, var(--gray-medium), var(--gray-dark));
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: var(--spacing-sm);
 }
 
 .product-image-placeholder {
@@ -663,23 +672,24 @@ a {
 }
 
 .product-info {
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-xs);
+  flex: 1;
 }
 
 .product-category {
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   color: var(--orange-primary);
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   font-weight: 600;
   margin-bottom: 0;
 }
 
 .product-name {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   margin-bottom: 0;
   color: var(--white);
   font-family: var(--font-primary);
@@ -687,15 +697,19 @@ a {
   text-transform: none;
   letter-spacing: 0;
   line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .product-price-wrapper {
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: 0;
 }
 
 .product-price {
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-size: 1.3rem;
   color: var(--red-accent);
   text-shadow: var(--glow-red);
   display: block;
@@ -712,13 +726,13 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--spacing-sm);
-  padding-top: var(--spacing-sm);
+  margin-top: auto;
+  padding-top: var(--spacing-xs);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .product-size {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: var(--gray-text);
 }
 
@@ -729,13 +743,15 @@ a {
 
 .product-actions {
   display: flex;
-  gap: var(--spacing-sm);
-  margin-top: auto;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-xs);
 }
 
 .product-actions .btn {
   flex: 1;
   justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 0.8rem;
 }
 
 /* ================================
@@ -1894,17 +1910,20 @@ a {
 .modal-image-container {
   background: var(--gray-dark);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-xl);
+  padding: var(--spacing-lg);
   position: relative;
+  gap: var(--spacing-md);
 }
 
 .modal-image {
   max-width: 100%;
-  max-height: 500px;
+  max-height: 400px;
   object-fit: contain;
   border-radius: var(--radius-md);
+  transition: opacity var(--transition-fast);
 }
 
 .modal-image-placeholder {
@@ -1912,6 +1931,52 @@ a {
   font-size: 8rem;
   color: var(--gray-lighter);
   opacity: 0.3;
+}
+
+/* Modal Image Thumbnails */
+.modal-thumbnails {
+  display: flex;
+  gap: var(--spacing-xs);
+  overflow-x: auto;
+  max-width: 100%;
+  padding: var(--spacing-xs);
+}
+
+.modal-thumbnail {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: var(--transition-fast);
+  flex-shrink: 0;
+  background: var(--gray-medium);
+}
+
+.modal-thumbnail:hover,
+.modal-thumbnail.active {
+  border-color: var(--orange-primary);
+  transform: scale(1.05);
+}
+
+.modal-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-thumbnail-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gray-lighter);
+  background: var(--gray-dark);
 }
 
 .modal-product-info {
@@ -2051,11 +2116,15 @@ a {
 
   .modal-image-container {
     padding: var(--spacing-lg);
-    max-height: 300px;
   }
 
   .modal-image {
-    max-height: 250px;
+    max-height: 300px;
+  }
+
+  .modal-thumbnail {
+    width: 50px;
+    height: 50px;
   }
 
   .modal-product-name {

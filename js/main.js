@@ -683,6 +683,7 @@ function initProductModalInternal() {
   // Modal elements
   const modalImage = document.getElementById('modalImage');
   const modalPlaceholder = document.getElementById('modalPlaceholder');
+  const modalThumbnails = document.getElementById('modalThumbnails');
   const modalCategory = document.getElementById('modalCategory');
   const modalName = document.getElementById('modalName');
   const modalPrice = document.getElementById('modalPrice');
@@ -697,6 +698,65 @@ function initProductModalInternal() {
     botas: 'Botas de motocross con sistema de protección avanzado. Suela antideslizante, cierre de hebillas y soporte de tobillo reforzado.',
     protecciones: 'Equipo de protección certificado para máxima seguridad. Materiales impact-absorbentes y diseño ergonómico para comodidad en carrera.'
   };
+
+  // Current images array for the open modal
+  let currentImages = [];
+  let currentImageIndex = 0;
+
+  // Function to update modal image
+  function setModalImage(imageSrc) {
+    if (imageSrc) {
+      modalImage.style.opacity = '0';
+      setTimeout(() => {
+        modalImage.src = imageSrc;
+        modalImage.style.display = 'block';
+        modalPlaceholder.style.display = 'none';
+        modalImage.style.opacity = '1';
+      }, 150);
+    } else {
+      modalImage.style.display = 'none';
+      modalPlaceholder.style.display = 'block';
+    }
+  }
+
+  // Function to create thumbnails
+  function createThumbnails(images) {
+    if (!modalThumbnails) return;
+
+    modalThumbnails.innerHTML = '';
+
+    if (images.length <= 1) {
+      modalThumbnails.style.display = 'none';
+      return;
+    }
+
+    modalThumbnails.style.display = 'flex';
+
+    images.forEach((imgSrc, index) => {
+      const thumb = document.createElement('div');
+      thumb.className = `modal-thumbnail${index === 0 ? ' active' : ''}`;
+
+      if (imgSrc) {
+        thumb.innerHTML = `<img src="${imgSrc}" alt="Vista ${index + 1}">`;
+      } else {
+        thumb.innerHTML = '<div class="modal-thumbnail-placeholder">MX</div>';
+      }
+
+      thumb.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentImageIndex = index;
+
+        // Update active state
+        modalThumbnails.querySelectorAll('.modal-thumbnail').forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
+
+        // Update main image
+        setModalImage(imgSrc);
+      });
+
+      modalThumbnails.appendChild(thumb);
+    });
+  }
 
   // Open modal on product card click (anywhere on the card)
   document.querySelectorAll('.product-card').forEach(card => {
@@ -713,7 +773,25 @@ function initProductModalInternal() {
       const category = categoryEl.toLowerCase();
       const sizesEl = card.querySelector('.product-size span');
       const sizes = sizesEl ? sizesEl.textContent : 'Única';
-      const imageSrc = card.dataset.image;
+
+      // Get images (support for multiple images)
+      let images = [];
+      try {
+        const imagesData = card.dataset.images;
+        if (imagesData) {
+          images = JSON.parse(imagesData.replace(/&#39;/g, "'"));
+        }
+      } catch (err) {
+        images = [];
+      }
+
+      // Fallback to single image if no images array
+      if (images.length === 0 && card.dataset.image) {
+        images = [card.dataset.image];
+      }
+
+      currentImages = images;
+      currentImageIndex = 0;
 
       // Populate modal
       modalCategory.textContent = categoryEl;
@@ -721,15 +799,9 @@ function initProductModalInternal() {
       modalPrice.textContent = price;
       modalDescription.textContent = descriptions[category] || descriptions.cascos;
 
-      // Set image
-      if (imageSrc) {
-        modalImage.src = imageSrc;
-        modalImage.style.display = 'block';
-        modalPlaceholder.style.display = 'none';
-      } else {
-        modalImage.style.display = 'none';
-        modalPlaceholder.style.display = 'block';
-      }
+      // Set main image and thumbnails
+      setModalImage(images[0] || '');
+      createThumbnails(images);
 
       // Set sizes
       modalSizes.innerHTML = '';
@@ -757,6 +829,8 @@ function initProductModalInternal() {
   function closeModal() {
     modal.classList.remove('active');
     document.body.style.overflow = '';
+    currentImages = [];
+    currentImageIndex = 0;
   }
 
   if (modalClose) modalClose.addEventListener('click', closeModal);
@@ -771,6 +845,33 @@ function initProductModalInternal() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal.classList.contains('active')) {
       closeModal();
+    }
+  });
+
+  // Navigate images with arrow keys
+  document.addEventListener('keydown', (e) => {
+    if (!modal.classList.contains('active') || currentImages.length <= 1) return;
+
+    if (e.key === 'ArrowLeft') {
+      currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+      setModalImage(currentImages[currentImageIndex]);
+
+      // Update thumbnail active state
+      if (modalThumbnails) {
+        modalThumbnails.querySelectorAll('.modal-thumbnail').forEach((t, i) => {
+          t.classList.toggle('active', i === currentImageIndex);
+        });
+      }
+    } else if (e.key === 'ArrowRight') {
+      currentImageIndex = (currentImageIndex + 1) % currentImages.length;
+      setModalImage(currentImages[currentImageIndex]);
+
+      // Update thumbnail active state
+      if (modalThumbnails) {
+        modalThumbnails.querySelectorAll('.modal-thumbnail').forEach((t, i) => {
+          t.classList.toggle('active', i === currentImageIndex);
+        });
+      }
     }
   });
 }
