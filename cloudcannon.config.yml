@@ -68,10 +68,9 @@ collections:
         label: Galería de Imágenes
         type: array
         required: false
-        comment: 'Imágenes adicionales del producto (máximo 5). La primera imagen debe ser igual al campo "Imagen Principal"'
+        comment: 'Imágenes adicionales del producto (máximo 5)'
         array_item:
-          - name: image
-            type: image
+          type: image
       - name: badge
         label: Etiqueta Destacada
         type: select
