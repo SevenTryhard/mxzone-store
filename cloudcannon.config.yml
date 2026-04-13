@@ -6,9 +6,9 @@ collections_config:
     disable_add: false
     disable_add_folder: false
     disable_file_actions: false
-  cms_settings:
-    path: cms/settings
-    icon: reset_settings
+  cms_promociones:
+    path: cms/promociones
+    icon: local_offer
     disable_url: false
     disable_add: false
     disable_add_folder: false
@@ -16,6 +16,13 @@ collections_config:
   cms_productos:
     path: cms/productos
     icon: nest_protect
+    disable_url: false
+    disable_add: false
+    disable_add_folder: false
+    disable_file_actions: false
+  cms_settings:
+    path: cms/settings
+    icon: reset_settings
     disable_url: false
     disable_add: false
     disable_add_folder: false
