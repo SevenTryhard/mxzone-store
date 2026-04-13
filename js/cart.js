@@ -296,7 +296,19 @@ function showNotification(message, type = 'info') {
 
 // ==================== INICIALIZACIÓN ====================
 
-// Hacer funciones disponibles globalmente
+// Hacer funciones disponibles globalmente INMEDIATAMENTE
+window.MXZONECart = {
+  loadCart,
+  addToCart,
+  removeFromCart,
+  updateQuantity,
+  updateSize,
+  clearCart,
+  getCartTotal,
+  getCartItems: () => cart
+};
+
+// Funciones de UI globales
 window.openCart = function() {
   const cartModal = document.getElementById('cartModal');
   if (cartModal) {

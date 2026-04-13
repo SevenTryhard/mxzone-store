@@ -367,14 +367,17 @@ function addProductToCart(slug) {
 
   console.log('Agregando al carrito:', product, 'Talla:', selectedSize);
 
-  // Agregar al carrito
-  if (window.MXZONECart && window.MXZONECart.addToCart) {
+  // Agregar al carrito - usar directamente la función global
+  if (typeof window.MXZONECart !== 'undefined' && typeof window.MXZONECart.addToCart === 'function') {
     window.MXZONECart.addToCart(product, selectedSize);
-  } else if (window.addToCart) {
-    window.addToCart(product, selectedSize);
   } else {
-    console.warn('Función addToCart no disponible');
-    alert('El carrito aún no está disponible. Por favor recarga la página.');
+    // Fallback: intentar con la función directa
+    try {
+      addToCart(product, selectedSize);
+    } catch (e) {
+      console.error('Error al agregar al carrito:', e);
+      alert('Hubo un error al agregar el producto. Por favor recarga la página.');
+    }
   }
 }
 
