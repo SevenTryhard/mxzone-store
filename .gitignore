@@ -25,3 +25,16 @@ npm-debug.log*
 # Temporary files
 *.tmp
 *.temp
+
+# Git internal (Cloudflare Pages)
+.git/
+.git
+
+# Wrangler
+.wrangler/
+
+# Claude
+.claude/
+
+# Canvas (local design files)
+CANVAS/

@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mxzonestore",
+  "compatibility_date": "2026-04-13",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": ".",
+    "exclude": [
+      ".git/**",
+      ".git",
+      "node_modules/**",
+      ".wrangler/**",
+      ".claude/**",
+      "CANVAS/**",
+      "*.log"
+    ]
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
