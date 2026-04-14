@@ -142,6 +142,29 @@
             </div>
           </div>
 
+          <!-- Price Range (moved up) -->
+          <div class="filter-group">
+            <label class="filter-label">Rango de precio</label>
+            <div class="price-slider">
+              <div class="price-inputs">
+                <div class="price-input">
+                  <span class="price-label">Mín</span>
+                  <input type="number" id="minPrice" class="price-field" value="0" min="0" max="3000000" step="50000">
+                </div>
+                <div class="price-input">
+                  <span class="price-label">Máx</span>
+                  <input type="number" id="maxPrice" class="price-field" value="3000000" min="0" max="3000000" step="50000">
+                </div>
+              </div>
+              <div class="slider-track">
+                <div class="slider-fill"></div>
+                <div class="slider-thumb" id="minThumb"></div>
+                <div class="slider-thumb" id="maxThumb"></div>
+              </div>
+            </div>
+            <button id="applyPriceFilter" class="btn btn-filter">Aplicar</button>
+          </div>
+
           <!-- Category Filter -->
           <div class="filter-group">
             <label class="filter-label">Categoría</label>
@@ -244,29 +267,6 @@
                 KTM
               </label>
             </div>
-          </div>
-
-          <!-- Price Range -->
-          <div class="filter-group">
-            <label class="filter-label">Rango de precio</label>
-            <div class="price-slider">
-              <div class="price-inputs">
-                <div class="price-input">
-                  <span class="price-label">Mín</span>
-                  <input type="number" id="minPrice" class="price-field" value="0" min="0" max="3000000" step="50000">
-                </div>
-                <div class="price-input">
-                  <span class="price-label">Máx</span>
-                  <input type="number" id="maxPrice" class="price-field" value="3000000" min="0" max="3000000" step="50000">
-                </div>
-              </div>
-              <div class="slider-track">
-                <div class="slider-fill"></div>
-                <div class="slider-thumb" id="minThumb"></div>
-                <div class="slider-thumb" id="maxThumb"></div>
-              </div>
-            </div>
-            <button id="applyPriceFilter" class="btn btn-filter">Aplicar</button>
           </div>
 
           <!-- Clear Filters -->
