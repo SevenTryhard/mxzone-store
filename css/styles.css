@@ -1724,11 +1724,21 @@ a {
   -webkit-backdrop-filter: blur(30px) saturate(200%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   position: fixed;
-  top: 115px; /* Below mobile search bar (60px header + ~55px search) */
+  top: 130px; /* Below mobile search bar (60px header + ~70px search) */
   left: 0;
   right: 0;
   z-index: 997;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Divider between categories and brands in mobile filters */
+.mobile-filter-divider {
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 102, 0, 0.5), transparent);
+  margin: 0 var(--spacing-xs);
+  flex-shrink: 0;
+  align-self: center;
 }
 
 .mobile-quick-filters-scroll {
@@ -2852,9 +2862,9 @@ a {
     width: 100%;
   }
 
-  /* Add padding to shop section to account for FIXED search bar and filters (~120px total) */
+  /* Add padding to shop section to account for FIXED search bar and filters (~135px total) */
   body.shop-page .section {
-    padding-top: 130px;
+    padding-top: 140px;
   }
 
   /* Only show mobile search/filters on shop page */

@@ -649,21 +649,23 @@ function initPriceRangeSlider() {
     });
   }
 
-  // Mobile Quick Filters
-  const mobileFilterChips = document.querySelectorAll('.mobile-filter-chip');
-  if (mobileFilterChips.length) {
+  // Mobile Quick Filters - REINITIALIZABLE function
+  window.initMobileFilterChips = function() {
+    const mobileFilterChips = document.querySelectorAll('.mobile-filter-chip');
+    if (!mobileFilterChips.length) return;
+
     mobileFilterChips.forEach(chip => {
-      chip.addEventListener('click', () => {
+      // Remove old listeners by cloning
+      const newChip = chip.cloneNode(true);
+      chip.parentNode.replaceChild(newChip, chip);
+
+      newChip.addEventListener('click', () => {
         // Remove active class from all chips
-        mobileFilterChips.forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.mobile-filter-chip').forEach(c => c.classList.remove('active'));
         // Add active class to clicked chip
-        chip.classList.add('active');
+        newChip.classList.add('active');
 
-        const filterValue = chip.dataset.filter;
-
-        // Apply filter based on type (category or brand)
-        const categoryChips = document.querySelectorAll('.mobile-filter-chip[data-filter="cascos"], .mobile-filter-chip[data-filter="uniformes"], .mobile-filter-chip[data-filter="botas"], .mobile-filter-chip[data-filter="protecciones"]');
-        const brandChips = document.querySelectorAll('.mobile-filter-chip[data-filter="fox"], .mobile-filter-chip[data-filter="fly"], .mobile-filter-chip[data-filter="leatt"], .mobile-filter-chip[data-filter="alpinestars"], .mobile-filter-chip[data-filter="troy-lee"]');
+        const filterValue = newChip.dataset.filter;
 
         // Reset desktop filters
         categoryFilters.forEach(cb => cb.checked = false);
@@ -702,12 +704,16 @@ function initPriceRangeSlider() {
         }
 
         filterProducts();
+        updateResultsCount();
 
         // Scroll to products grid
         document.getElementById('productsGrid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
-  }
+  };
+
+  // Initialize mobile filter chips
+  window.initMobileFilterChips();
 }
 
 /**

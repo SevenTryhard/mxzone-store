@@ -339,6 +339,10 @@ async function renderShopProducts() {
       if (window.MXZONE && window.MXZONE.InitPriceSlider) {
         window.MXZONE.InitPriceSlider();
       }
+      // Initialize mobile filter chips
+      if (window.initMobileFilterChips) {
+        window.initMobileFilterChips();
+      }
       updateResultsCount();
     }, 100);
   } else if (container && products.length === 0) {
