@@ -1664,16 +1664,18 @@ a {
   transform: scale(1.05);
 }
 
-/* Mobile Search Bar - Amazon Style */
+/* Mobile Search Bar - FIXED position (sticks to header) */
 .mobile-search-bar {
   display: none;
   padding: var(--spacing-sm) var(--spacing-md);
-  background: rgba(26, 26, 26, 0.95);
+  background: rgba(26, 26, 26, 0.98);
   backdrop-filter: blur(30px) saturate(200%);
   -webkit-backdrop-filter: blur(30px) saturate(200%);
   border-bottom: 1px solid rgba(255, 102, 0, 0.2);
-  position: sticky;
+  position: fixed;
   top: 60px; /* Directly below mobile header */
+  left: 0;
+  right: 0;
   z-index: 998;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
@@ -1713,16 +1715,18 @@ a {
   pointer-events: none;
 }
 
-/* Mobile Quick Filters - Amazon Style Horizontal Scroll */
+/* Mobile Quick Filters - FIXED position (below search bar) */
 .mobile-quick-filters {
   display: none;
   padding: var(--spacing-sm) var(--spacing-md);
-  background: rgba(26, 26, 26, 0.95);
+  background: rgba(26, 26, 26, 0.98);
   backdrop-filter: blur(30px) saturate(200%);
   -webkit-backdrop-filter: blur(30px) saturate(200%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  position: sticky;
-  top: 120px; /* Below mobile search bar (60px header + ~60px search) */
+  position: fixed;
+  top: 115px; /* Below mobile search bar (60px header + ~55px search) */
+  left: 0;
+  right: 0;
   z-index: 997;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
@@ -2834,14 +2838,6 @@ a {
     text-align: center;
   }
 
-  .mobile-search-bar {
-    display: block;
-  }
-
-  .mobile-quick-filters {
-    display: block;
-  }
-
   .shop-layout {
     grid-template-columns: 1fr;
     gap: 0;
@@ -2856,9 +2852,18 @@ a {
     width: 100%;
   }
 
-  /* Add padding to shop section to account for sticky search bar and filters */
-  .shop-layout {
-    margin-top: var(--spacing-lg);
+  /* Add padding to shop section to account for FIXED search bar and filters (~120px total) */
+  body.shop-page .section {
+    padding-top: 130px;
+  }
+
+  /* Only show mobile search/filters on shop page */
+  body.shop-page .mobile-search-bar {
+    display: block;
+  }
+
+  body.shop-page .mobile-quick-filters {
+    display: block;
   }
 
   .shop-sidebar {
