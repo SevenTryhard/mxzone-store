@@ -287,6 +287,23 @@ function initShopFiltersInternal() {
     });
   }
 
+  // Sync mobile chips with desktop filters
+  function updateMobileChips(selectedCategory = null, selectedBrand = null) {
+    const mobileFilterChips = document.querySelectorAll('.mobile-filter-chip');
+    mobileFilterChips.forEach(chip => chip.classList.remove('active'));
+
+    if (selectedCategory && selectedCategory !== 'all') {
+      const matchingChip = document.querySelector(`.mobile-filter-chip[data-filter="${selectedCategory}"]`);
+      if (matchingChip) matchingChip.classList.add('active');
+    } else if (selectedBrand && selectedBrand !== 'all') {
+      const matchingChip = document.querySelector(`.mobile-filter-chip[data-filter="${selectedBrand}"]`);
+      if (matchingChip) matchingChip.classList.add('active');
+    } else {
+      const allChip = document.querySelector('.mobile-filter-chip[data-filter="all"]');
+      if (allChip) allChip.classList.add('active');
+    }
+  }
+
   categoryFilters.forEach(cb => {
     cb.addEventListener('change', () => {
       // Handle "all" checkbox
@@ -300,6 +317,12 @@ function initShopFiltersInternal() {
         const allCheckbox = document.querySelector('.category-filter[data-category="all"]');
         if (allCheckbox) allCheckbox.checked = false;
       }
+
+      // Update mobile chips
+      const selectedCategory = Array.from(categoryFilters).find(c => c.checked && c.dataset.category !== 'all')?.dataset.category;
+      const selectedBrand = Array.from(brandFilters).find(b => b.checked && b.dataset.brand !== 'all')?.dataset.brand;
+      updateMobileChips(selectedCategory, selectedBrand);
+
       filterProducts();
     });
   });
@@ -317,6 +340,12 @@ function initShopFiltersInternal() {
         const allCheckbox = document.querySelector('.brand-filter[data-brand="all"]');
         if (allCheckbox) allCheckbox.checked = false;
       }
+
+      // Update mobile chips
+      const selectedCategory = Array.from(categoryFilters).find(c => c.checked && c.dataset.category !== 'all')?.dataset.category;
+      const selectedBrand = Array.from(brandFilters).find(b => b.checked && b.dataset.brand !== 'all')?.dataset.brand;
+      updateMobileChips(selectedCategory, selectedBrand);
+
       filterProducts();
     });
   });
@@ -384,6 +413,66 @@ function initShopFiltersInternal() {
     shopOverlay.addEventListener('click', () => {
       shopSidebar.classList.remove('active');
       shopOverlay.classList.remove('active');
+    });
+  }
+
+  // Mobile Quick Filters
+  const mobileFilterChips = document.querySelectorAll('.mobile-filter-chip');
+  if (mobileFilterChips.length) {
+    mobileFilterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        // Remove active class from all chips
+        mobileFilterChips.forEach(c => c.classList.remove('active'));
+        // Add active class to clicked chip
+        chip.classList.add('active');
+
+        const filterValue = chip.dataset.filter;
+
+        // Apply filter based on type (category or brand)
+        const categoryChips = document.querySelectorAll('.mobile-filter-chip[data-filter="cascos"], .mobile-filter-chip[data-filter="uniformes"], .mobile-filter-chip[data-filter="botas"], .mobile-filter-chip[data-filter="protecciones"]');
+        const brandChips = document.querySelectorAll('.mobile-filter-chip[data-filter="fox"], .mobile-filter-chip[data-filter="fly"], .mobile-filter-chip[data-filter="leatt"], .mobile-filter-chip[data-filter="alpinestars"], .mobile-filter-chip[data-filter="troy-lee"]');
+
+        // Reset desktop filters
+        categoryFilters.forEach(cb => cb.checked = false);
+        brandFilters.forEach(cb => cb.checked = false);
+
+        if (filterValue === 'all') {
+          // Show all products
+          const allCategory = document.querySelector('.category-filter[data-category="all"]');
+          if (allCategory) allCategory.checked = true;
+          const allBrand = document.querySelector('.brand-filter[data-brand="all"]');
+          if (allBrand) allBrand.checked = true;
+        } else if (['cascos', 'uniformes', 'botas', 'protecciones'].includes(filterValue)) {
+          // Category filter
+          const targetCategory = document.querySelector(`.category-filter[data-category="${filterValue}"]`);
+          if (targetCategory) {
+            targetCategory.checked = true;
+            // Uncheck "all"
+            const allCategory = document.querySelector('.category-filter[data-category="all"]');
+            if (allCategory) allCategory.checked = false;
+          }
+          // Check "all brands"
+          const allBrand = document.querySelector('.brand-filter[data-brand="all"]');
+          if (allBrand) allBrand.checked = true;
+        } else {
+          // Brand filter
+          const targetBrand = document.querySelector(`.brand-filter[data-brand="${filterValue}"]`);
+          if (targetBrand) {
+            targetBrand.checked = true;
+            // Uncheck "all"
+            const allBrand = document.querySelector('.brand-filter[data-brand="all"]');
+            if (allBrand) allBrand.checked = false;
+          }
+          // Check "all categories"
+          const allCategory = document.querySelector('.category-filter[data-category="all"]');
+          if (allCategory) allCategory.checked = true;
+        }
+
+        filterProducts();
+
+        // Scroll to products grid
+        document.getElementById('productsGrid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     });
   }
 }
