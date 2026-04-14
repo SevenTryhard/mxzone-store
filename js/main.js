@@ -1324,6 +1324,106 @@ function initProductModalInternal() {
       if (e.target === sizeGuideModal) closeSizeGuide();
     });
   }
+
+  // Image Preview Modal - Click en imagen abre preview
+  const imagePreviewModal = document.getElementById('imagePreviewModal');
+  const imagePreviewMain = document.getElementById('imagePreviewMain');
+  const imagePreviewThumbnails = document.getElementById('imagePreviewThumbnails');
+  const closeImagePreviewBtn = document.getElementById('closeImagePreview');
+
+  if (imagePreviewModal && imagePreviewMain) {
+    // Delegación de eventos para clicks en imágenes de productos
+    document.addEventListener('click', (e) => {
+      const productImage = e.target.closest('.product-image img');
+      if (!productImage || !productImage.src) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Obtener todas las imágenes del producto
+      const card = productImage.closest('.product-card');
+      let images = [];
+
+      try {
+        const imagesData = card?.dataset.images;
+        if (imagesData) {
+          images = JSON.parse(imagesData.replace(/&#39;/g, "'"));
+        }
+      } catch (err) {
+        images = [];
+      }
+
+      if (images.length === 0 && productImage.src) {
+        images = [productImage.src];
+      }
+
+      // Mostrar preview
+      imagePreviewMain.src = images[0] || productImage.src;
+      imagePreviewMain.dataset.index = '0';
+
+      // Crear thumbnails si hay múltiples imágenes
+      if (images.length > 1 && imagePreviewThumbnails) {
+        imagePreviewThumbnails.innerHTML = '';
+        imagePreviewThumbnails.style.display = 'flex';
+
+        images.forEach((imgSrc, idx) => {
+          const thumb = document.createElement('div');
+          thumb.className = `image-preview-thumb${idx === 0 ? ' active' : ''}`;
+          thumb.innerHTML = `<img src="${imgSrc}" alt="Vista ${idx + 1}">`;
+          thumb.addEventListener('click', (e) => {
+            e.stopPropagation();
+            imagePreviewMain.src = imgSrc;
+            imagePreviewMain.dataset.index = idx.toString();
+            imagePreviewThumbnails.querySelectorAll('.image-preview-thumb').forEach((t, i) => {
+              t.classList.toggle('active', i === idx);
+            });
+          });
+          imagePreviewThumbnails.appendChild(thumb);
+        });
+      } else if (imagePreviewThumbnails) {
+        imagePreviewThumbnails.style.display = 'none';
+      }
+
+      imagePreviewModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    // Cerrar preview
+    if (closeImagePreviewBtn) {
+      closeImagePreviewBtn.addEventListener('click', () => {
+        imagePreviewModal.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    }
+
+    imagePreviewModal.addEventListener('click', (e) => {
+      if (e.target === imagePreviewModal || e.target.classList.contains('image-preview-container')) {
+        imagePreviewModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Navegar con teclas
+    document.addEventListener('keydown', (e) => {
+      if (!imagePreviewModal.classList.contains('active')) return;
+
+      const currentIndex = parseInt(imagePreviewMain.dataset.index) || 0;
+      const thumbnails = imagePreviewThumbnails?.querySelectorAll('.image-preview-thumb');
+
+      if (e.key === 'Escape') {
+        imagePreviewModal.classList.remove('active');
+        document.body.style.overflow = '';
+      } else if (thumbnails && thumbnails.length > 1) {
+        if (e.key === 'ArrowLeft') {
+          const prevIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
+          thumbnails[prevIndex].click();
+        } else if (e.key === 'ArrowRight') {
+          const nextIndex = (currentIndex + 1) % thumbnails.length;
+          thumbnails[nextIndex].click();
+        }
+      }
+    });
+  }
 }
 
 /**
