@@ -30,7 +30,8 @@ function initActiveNavLink() {
 
   navLinks.forEach(link => {
     const href = link.getAttribute('href');
-    if (href === currentPage) {
+    // Comparar href exacto o si la página actual empieza con el href (para query params)
+    if (href === currentPage || currentPage.startsWith(href + '?') || currentPage.startsWith(href + '#')) {
       link.classList.add('active');
     } else {
       link.classList.remove('active');
@@ -1362,6 +1363,7 @@ function createParticle(container, index) {
 
 /**
  * Hero Parallax Effect & Video Toggle
+ * Nota: Parallax removido para mejor rendimiento y scroll smooth
  */
 function initHeroParallax() {
   const hero = document.querySelector('.hero');
@@ -1369,18 +1371,16 @@ function initHeroParallax() {
 
   const videoContainer = hero.querySelector('.hero-video-container');
   const video = hero.querySelector('.hero-video');
-  const content = hero.querySelector('.hero-content');
 
-  if (!videoContainer || !content) return;
+  if (!videoContainer) return;
 
   let videoEnabled = true;
+  const triggerPoint = hero.offsetHeight * 0.3;
 
+  // Solo toggle del video, sin parallax
   window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
-    const heroHeight = hero.offsetHeight;
-    const triggerPoint = heroHeight * 0.3;
 
-    // Hide video when scrolling down (performance optimization)
     if (scrolled > triggerPoint) {
       if (videoEnabled) {
         videoContainer.classList.add('hidden');
@@ -1393,12 +1393,6 @@ function initHeroParallax() {
         video.play();
         videoEnabled = true;
       }
-    }
-
-    // Parallax effect for content
-    if (scrolled < heroHeight) {
-      content.style.transform = `translateY(${scrolled * 0.3}px)`;
-      content.style.opacity = 1 - (scrolled / heroHeight);
     }
   }, { passive: true });
 }

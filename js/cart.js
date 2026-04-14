@@ -23,12 +23,14 @@ function loadCart() {
     cart = [];
   }
   updateCartCount();
+  updateFloatingWhatsApp();
 }
 
 // Guardar carrito en localStorage
 function saveCart() {
   localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
   updateCartCount();
+  updateFloatingWhatsApp();
 }
 
 // Agregar producto al carrito
@@ -401,6 +403,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+// Actualizar WhatsApp flotante con productos del carrito
+function updateFloatingWhatsApp() {
+  const floatBtn = document.getElementById('whatsappFloat');
+  if (!floatBtn) return;
+
+  if (cart.length === 0) {
+    // Sin productos - mensaje genérico
+    floatBtn.href = `https://wa.me/${WHATSAPP_NUMBER}`;
+    floatBtn.title = 'Contactar por WhatsApp';
+  } else {
+    // Con productos - mensaje con lista del carrito
+    const message = `Hola MXZONE! 👋\n\nTengo estos productos en mi carrito:\n\n${cart.map((item, i) => `${i + 1}. ${item.name} (${item.selectedSize}) - $${item.price}`).join('\n')}\n\n*Total: ${getCartTotal()}*\n\n¿Me ayudan con el pedido?`;
+    floatBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    floatBtn.title = `WhatsApp (${cart.length} productos)`;
+  }
+}
 
 // Exportar funciones globales
 window.addToCart = addToCart;

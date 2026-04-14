@@ -259,65 +259,18 @@ a {
   white-space: nowrap;
 }
 
-.nav-links a::before {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: -6px;
-  right: -6px;
-  bottom: -4px;
-  background: radial-gradient(ellipse at center, rgba(255, 102, 0, 0.2) 0%, transparent 70%);
-  border-radius: var(--radius-full);
-  opacity: 0;
-  transform: scale(0.7);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: -1;
-}
-
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: radial-gradient(circle, rgba(255, 102, 0, 0.3) 0%, transparent 70%);
-  border-radius: var(--radius-full);
-  transform: translate(-50%, -50%);
-  transition: all 0.5s ease;
-  z-index: -1;
-  opacity: 0;
+.nav-links a {
+  position: relative;
 }
 
 .nav-links a:hover {
   color: var(--orange-primary);
-  text-shadow: 0 0 20px rgba(255, 102, 0, 0.5);
-}
-
-.nav-links a:hover::before {
-  opacity: 1;
-  transform: scale(1.2);
-}
-
-.nav-links a:hover::after {
-  width: 140%;
-  height: 180%;
-  opacity: 1;
 }
 
 .nav-links a.active {
   color: var(--orange-primary);
-  background: rgba(255, 102, 0, 0.2);
-  box-shadow:
-    0 0 30px rgba(255, 102, 0, 0.4),
-    0 0 60px rgba(255, 102, 0, 0.2),
-    inset 0 0 20px rgba(255, 102, 0, 0.1);
-  text-shadow: 0 0 25px rgba(255, 102, 0, 0.6);
-}
-
-.nav-links a.active::before {
-  opacity: 1;
-  transform: scale(1.3);
+  background: rgba(255, 102, 0, 0.15);
+  box-shadow: 0 0 20px rgba(255, 102, 0, 0.3);
 }
 
 .nav-cta {
@@ -503,38 +456,6 @@ a {
   );
   z-index: 2;
   pointer-events: none;
-}
-
-/* Smooth Loop Animation - Blink Effect */
-@keyframes heroVideoLoop {
-  0% {
-    opacity: 1;
-    filter: brightness(1);
-  }
-  92% {
-    opacity: 1;
-    filter: brightness(1);
-  }
-  94% {
-    opacity: 0.3;
-    filter: brightness(0.2);
-  }
-  96% {
-    opacity: 0.1;
-    filter: brightness(0.1);
-  }
-  98% {
-    opacity: 0.3;
-    filter: brightness(0.3);
-  }
-  100% {
-    opacity: 1;
-    filter: brightness(1);
-  }
-}
-
-.hero-video {
-  animation: heroVideoLoop 12s ease-in-out infinite;
 }
 
 .hero-content {
@@ -2178,33 +2099,32 @@ a {
    ================================ */
 .whatsapp-float {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 65px;
-  height: 65px;
-  background: #25D366;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: transparent;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--white);
-  font-size: 2rem;
-  box-shadow: 0 4px 20px rgba(37, 211, 101, 0.5);
+  color: #25D366;
+  font-size: 2.5rem;
   z-index: 999;
   transition: var(--transition-base);
-  animation: pulse 2s ease-in-out infinite;
-  padding: var(--spacing-sm);
 }
 
 .whatsapp-float:hover {
-  transform: scale(1.1);
-  box-shadow: 0 8px 30px rgba(37, 211, 101, 0.6);
+  color: #25D366;
+  text-shadow: 0 0 20px rgba(37, 211, 101, 0.8);
+  transform: scale(1.05);
 }
 
 .whatsapp-float .whatsapp-icon {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(37, 211, 101, 0.5));
 }
 
 /* ================================
