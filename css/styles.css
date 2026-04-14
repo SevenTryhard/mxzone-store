@@ -1604,6 +1604,11 @@ a {
   border-color: var(--orange-primary);
   color: var(--orange-primary);
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+}
+
+.mobile-filter-chip:active {
+  transform: translateY(0) scale(0.95);
 }
 
 .mobile-filter-chip .chip-icon {

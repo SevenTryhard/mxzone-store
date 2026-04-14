@@ -307,11 +307,22 @@ async function renderFeaturedProducts() {
 // Función para renderizar todos los productos en la tienda
 async function renderShopProducts() {
   console.log('renderShopProducts: iniciando...');
-  const products = await loadProducts();
-  console.log('renderShopProducts:', products.length, 'productos cargados');
 
   const container = document.getElementById('productsGrid');
   console.log('renderShopProducts: container productsGrid:', container);
+
+  // Mostrar loading state
+  if (container) {
+    container.innerHTML = `
+      <div class="loading-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4rem 2rem; gap: 1.5rem;">
+        <div class="loading-spinner" style="width: 50px; height: 50px; border: 3px solid rgba(255, 102, 0, 0.2); border-top-color: var(--orange-primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+        <p style="color: var(--gray-text); font-size: 1rem;">Cargando productos...</p>
+      </div>
+    `;
+  }
+
+  const products = await loadProducts();
+  console.log('renderShopProducts:', products.length, 'productos cargados');
 
   if (container && products.length > 0) {
     container.innerHTML = products.map(createProductCard).join('');
@@ -327,6 +338,14 @@ async function renderShopProducts() {
       }
       updateResultsCount();
     }, 100);
+  } else if (container && products.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4rem 2rem; gap: 1rem;">
+        <span style="font-size: 4rem;">📦</span>
+        <h3 style="color: var(--white);">No hay productos disponibles</h3>
+        <p style="color: var(--gray-text);">Intenta recargar la página o contacta con soporte</p>
+      </div>
+    `;
   }
 }
 

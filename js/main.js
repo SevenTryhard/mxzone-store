@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize all modules
   initHeader();
   initMobileMenu();
+  initActiveNavLink();
   initScrollAnimations();
   initSmoothScroll();
   initShopFilters();
@@ -19,6 +20,23 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroParticles();
   initHeroParallax();
 });
+
+/**
+ * Set active navigation link based on current page
+ */
+function initActiveNavLink() {
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === currentPage) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+}
 
 /**
  * Header scroll effect
