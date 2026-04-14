@@ -144,6 +144,7 @@ function initShopFiltersInternal() {
 
   // Elements
   const searchInput = document.getElementById('productSearch');
+  const mobileSearchInput = document.getElementById('mobileProductSearch');
   const categoryFilters = document.querySelectorAll('.category-filter');
   const brandFilters = document.querySelectorAll('.brand-filter');
   const minPriceInput = document.getElementById('minPrice');
@@ -264,9 +265,26 @@ function initShopFiltersInternal() {
     productsArray.forEach(card => grid.appendChild(card));
   }
 
+  // Sync mobile and desktop search inputs
+  function syncSearchInputs(source, target) {
+    if (source && target) {
+      target.value = source.value;
+    }
+  }
+
   // Event listeners
   if (searchInput) {
-    searchInput.addEventListener('input', filterProducts);
+    searchInput.addEventListener('input', (e) => {
+      syncSearchInputs(searchInput, mobileSearchInput);
+      filterProducts();
+    });
+  }
+
+  if (mobileSearchInput) {
+    mobileSearchInput.addEventListener('input', (e) => {
+      syncSearchInputs(mobileSearchInput, searchInput);
+      filterProducts();
+    });
   }
 
   categoryFilters.forEach(cb => {
@@ -311,6 +329,7 @@ function initShopFiltersInternal() {
     clearFiltersBtn.addEventListener('click', () => {
       // Reset search
       if (searchInput) searchInput.value = '';
+      if (mobileSearchInput) mobileSearchInput.value = '';
 
       // Reset categories
       categoryFilters.forEach(cb => {
