@@ -91,6 +91,8 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -101,6 +103,8 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  max-width: 100%;
+  position: relative;
 }
 
 /* ================================
@@ -336,7 +340,7 @@ a {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100%;
   overflow: hidden;
   z-index: 0;
@@ -352,8 +356,8 @@ a {
   position: absolute;
   top: 50%;
   left: 50%;
-  min-width: 100vw;
-  min-height: 100vh;
+  min-width: 100%;
+  min-height: 100%;
   width: auto;
   height: auto;
   transform: translate(-50%, -50%);
@@ -2552,6 +2556,7 @@ a {
     z-index: 1000;
     overflow-y: auto;
     border-radius: 0;
+    max-height: 100vh;
   }
 
   .mobile-filter-toggle {
@@ -2587,6 +2592,25 @@ a {
 @media (max-width: 480px) {
   html {
     font-size: 16px;
+    /* Prevenir zoom indeseado */
+    touch-action: manipulation;
+  }
+
+  body {
+    /* Prevenir overflow horizontal */
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Prevenir que elementos grandes causen overflow */
+  img, video, canvas {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .container {
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
   }
 
   .hero-buttons {
@@ -2618,26 +2642,30 @@ a {
   }
 
   .product-name {
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 1.4;
+    font-weight: 600;
   }
 
   .product-price {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+    font-weight: 700;
   }
 
   .product-category {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 600;
   }
 
   .card-size-select {
-    font-size: 0.9rem;
+    font-size: 1rem;
     padding: var(--spacing-xs) var(--spacing-sm);
   }
 
   .product-actions .btn {
     padding: var(--spacing-md);
-    font-size: 0.85rem;
+    font-size: 1rem;
+    font-weight: 600;
   }
 
   /* Mobile search and filters */
@@ -2646,21 +2674,33 @@ a {
   }
 
   .mobile-search-bar .search-input {
-    font-size: 1rem;
+    font-size: 16px; /* Prevenir zoom en iOS */
     padding: var(--spacing-sm) var(--spacing-md);
   }
 
   .mobile-filter-chip {
-    min-width: 65px;
+    min-width: 70px;
     padding: var(--spacing-xs) var(--spacing-sm);
   }
 
   .mobile-filter-chip .chip-icon {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
 
   .mobile-filter-chip .chip-label {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  /* Slider de precio en móvil */
+  .slider-thumb {
+    width: 20px;
+    height: 20px;
+    border-width: 3px;
+  }
+
+  .price-field {
+    font-size: 14px;
   }
 }
 

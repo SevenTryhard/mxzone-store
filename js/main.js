@@ -640,7 +640,6 @@ function initPriceRangeSlider() {
 
   // Initialize slider position
   updateSlider();
-}
 
   if (shopOverlay && shopSidebar) {
     shopOverlay.addEventListener('click', () => {
