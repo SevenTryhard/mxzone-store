@@ -20,11 +20,18 @@
 
   <header class="header" id="header">
     <nav class="nav">
+      <!-- Logo (Left) -->
       <a href="index.html" class="logo">
         <img src="assets/logo/logo.png" alt="MXZONE" class="logo-image">
         <span>MX ZONE</span>
       </a>
 
+      <!-- WhatsApp Center (Mobile Only) -->
+      <a href="https://wa.me/573176692997" class="mobile-wa-btn" target="_blank" aria-label="WhatsApp">
+        💬
+      </a>
+
+      <!-- Nav Links (Desktop) -->
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Inicio</a></li>
         <li><a href="shop.html">Tienda</a></li>
@@ -36,7 +43,17 @@
       </ul>
 
       <div class="nav-cta">
-        <a href="https://wa.me/573176692997" class="btn btn-whatsapp btn-small" target="_blank">WhatsApp</a>
+        <!-- Carrito Button -->
+        <div class="cart-btn-container">
+          <button class="cart-btn" id="cartBtn" aria-label="Ver carrito">
+            🛒
+          </button>
+          <span class="cart-badge" id="cartCount" style="display: none;">0</span>
+        </div>
+
+        <a href="https://wa.me/573176692997" class="btn btn-whatsapp btn-small desktop-only" target="_blank">
+          <span>WhatsApp</span>
+        </a>
         <button class="menu-toggle" id="menuToggle" aria-label="Menu">
           <span></span><span></span><span></span>
         </button>
@@ -175,6 +192,15 @@
             <li><a href="shipping.html">Envíos</a></li>
             <li><a href="returns.html">Devoluciones</a></li>
             <li><a href="faq.html">Preguntas Frecuentes</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Legal</h4>
+          <ul class="footer-links">
+            <li><a href="terms.html">Términos y Condiciones</a></li>
+            <li><a href="privacy.html">Política de Privacidad</a></li>
+            <li><a href="sizes.html">Guía de Tallas</a></li>
           </ul>
         </div>
 
