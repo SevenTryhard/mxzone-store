@@ -205,28 +205,35 @@ function initShopFiltersInternal() {
     let visibleCount = 0;
 
     productCards.forEach(card => {
-      const name = card.querySelector('.product-name').textContent.toLowerCase();
-      const category = card.dataset.category;
-      const brand = card.dataset.brand;
-      const price = parseInt(card.dataset.price);
+      try {
+        const nameEl = card.querySelector('.product-name');
+        if (!nameEl) return;
 
-      // Search filter
-      const matchesSearch = name.includes(searchTerm);
+        const name = nameEl.textContent.toLowerCase();
+        const category = card.dataset.category;
+        const brand = card.dataset.brand;
+        const price = parseInt(card.dataset.price) || 0;
 
-      // Category filter
-      const matchesCategory = selectedCategories.includes('all') || selectedCategories.includes(category);
+        // Search filter
+        const matchesSearch = name.includes(searchTerm);
 
-      // Brand filter
-      const matchesBrand = selectedBrands.includes('all') || selectedBrands.includes(brand);
+        // Category filter
+        const matchesCategory = selectedCategories.includes('all') || selectedCategories.includes(category);
 
-      // Price filter
-      const matchesPrice = price >= minPrice && price <= maxPrice;
+        // Brand filter
+        const matchesBrand = selectedBrands.includes('all') || selectedBrands.includes(brand);
 
-      if (matchesSearch && matchesCategory && matchesBrand && matchesPrice) {
-        card.style.display = 'block';
-        visibleCount++;
-      } else {
-        card.style.display = 'none';
+        // Price filter
+        const matchesPrice = price >= minPrice && price <= maxPrice;
+
+        if (matchesSearch && matchesCategory && matchesBrand && matchesPrice) {
+          card.style.display = 'block';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      } catch (e) {
+        console.warn('Error filtering product card:', e);
       }
     });
 
@@ -242,33 +249,52 @@ function initShopFiltersInternal() {
     const productsArray = Array.from(productCards);
     const grid = document.querySelector('.products-grid');
 
-    productsArray.sort((a, b) => {
-      const nameA = a.querySelector('.product-name').textContent.toUpperCase();
-      const nameB = b.querySelector('.product-name').textContent.toUpperCase();
-      const priceA = parseInt(a.dataset.price) || 0;
-      const priceB = parseInt(b.dataset.price) || 0;
+    if (!grid) return;
 
-      switch (sortBy) {
-        case 'price-asc':
-          return priceA - priceB;
-        case 'price-desc':
-          return priceB - priceA;
-        case 'name-asc':
-          return nameA.localeCompare(nameB);
-        case 'name-desc':
-          return nameB.localeCompare(nameA);
-        default:
-          return 0;
+    productsArray.sort((a, b) => {
+      try {
+        const nameAEl = a.querySelector('.product-name');
+        const nameBEl = b.querySelector('.product-name');
+        const nameA = nameAEl ? nameAEl.textContent.toUpperCase() : '';
+        const nameB = nameBEl ? nameBEl.textContent.toUpperCase() : '';
+        const priceA = parseInt(a.dataset.price) || 0;
+        const priceB = parseInt(b.dataset.price) || 0;
+
+        switch (sortBy) {
+          case 'price-asc':
+            return priceA - priceB;
+          case 'price-desc':
+            return priceB - priceA;
+          case 'name-asc':
+            return nameA.localeCompare(nameB);
+          case 'name-desc':
+            return nameB.localeCompare(nameA);
+          default:
+            return 0;
+        }
+      } catch (e) {
+        console.warn('Error sorting products:', e);
+        return 0;
       }
     });
 
-    productsArray.forEach(card => grid.appendChild(card));
+    productsArray.forEach(card => {
+      try {
+        grid.appendChild(card);
+      } catch (e) {
+        console.warn('Error appending sorted card:', e);
+      }
+    });
   }
 
   // Sync mobile and desktop search inputs
   function syncSearchInputs(source, target) {
     if (source && target) {
-      target.value = source.value;
+      try {
+        target.value = source.value;
+      } catch (e) {
+        console.warn('Error syncing search inputs:', e);
+      }
     }
   }
 
