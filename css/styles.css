@@ -1416,8 +1416,9 @@ a {
   height: 100%;
   background: var(--orange-primary);
   border-radius: var(--radius-full);
-  left: 0;
-  right: 25%;
+  left: 0%;
+  right: 100%;
+  transition: left 0.1s ease, right 0.1s ease;
 }
 
 .slider-thumb {
@@ -1429,10 +1430,26 @@ a {
   border-radius: 50%;
   top: 50%;
   transform: translateY(-50%);
-  cursor: pointer;
-  right: 25%;
+  cursor: grab;
+  left: 0%;
   box-shadow: var(--shadow-md);
   transition: var(--transition-fast);
+  z-index: 2;
+  touch-action: none;
+}
+
+.slider-thumb#maxThumb {
+  left: 100%;
+}
+
+.slider-thumb:hover {
+  transform: translateY(-50%) scale(1.2);
+  box-shadow: 0 0 15px var(--orange-glow);
+}
+
+.slider-thumb:active {
+  cursor: grabbing;
+  transform: translateY(-50%) scale(1.3);
 }
 
 .slider-thumb:hover {

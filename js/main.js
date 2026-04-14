@@ -261,6 +261,9 @@ function initShopFiltersInternal() {
     }
   }
 
+  // Expose filterProducts globally for price slider
+  window.filterProducts = filterProducts;
+
   // Sort function
   function sortProducts() {
     const sortBy = sortSelect?.value || 'default';
@@ -452,6 +455,192 @@ function initShopFiltersInternal() {
       if (shopOverlay) shopOverlay.classList.toggle('active');
     });
   }
+
+  // ========================================
+  // DUAL-HANDLE PRICE RANGE SLIDER
+  // ========================================
+  initPriceRangeSlider();
+}
+
+function initPriceRangeSlider() {
+  const track = document.querySelector('.slider-track');
+  const minThumb = document.getElementById('minThumb');
+  const maxThumb = document.getElementById('maxThumb');
+  const sliderFill = document.querySelector('.slider-fill');
+  const minPriceInput = document.getElementById('minPrice');
+  const maxPriceInput = document.getElementById('maxPrice');
+  const applyPriceBtn = document.getElementById('applyPriceFilter');
+
+  if (!track || !minThumb || !maxThumb || !sliderFill || !minPriceInput || !maxPriceInput) {
+    return;
+  }
+
+  // Get product price range dynamically
+  let MIN_PRICE = 0;
+  let MAX_PRICE = 3000000;
+
+  // Try to get actual price range from loaded products
+  function updatePriceRangeFromProducts() {
+    const productCards = document.querySelectorAll('.product-card');
+    if (productCards.length === 0) return;
+
+    let min = Infinity;
+    let max = -Infinity;
+
+    productCards.forEach(card => {
+      const price = parseInt(card.dataset.price) || 0;
+      if (price > 0) {
+        min = Math.min(min, price);
+        max = Math.max(max, price);
+      }
+    });
+
+    if (min !== Infinity && max !== -Infinity) {
+      MIN_PRICE = min;
+      MAX_PRICE = max;
+      // Update input max/min attributes
+      minPriceInput.max = MAX_PRICE;
+      maxPriceInput.max = MAX_PRICE;
+      minPriceInput.min = MIN_PRICE;
+      maxPriceInput.min = MIN_PRICE;
+    }
+  }
+
+  // Call after products are loaded
+  setTimeout(updatePriceRangeFromProducts, 500);
+
+  let isMinDragging = false;
+  let isMaxDragging = false;
+
+  // Convert price to percentage position
+  function priceToPercent(price) {
+    const range = MAX_PRICE - MIN_PRICE;
+    if (range === 0) return 0;
+    return ((price - MIN_PRICE) / range) * 100;
+  }
+
+  // Convert percentage position to price
+  function percentToPrice(percent) {
+    const range = MAX_PRICE - MIN_PRICE;
+    return MIN_PRICE + (percent / 100) * range;
+  }
+
+  // Update slider fill and input values
+  function updateSlider() {
+    const minPrice = parseInt(minPriceInput.value) || MIN_PRICE;
+    const maxPrice = parseInt(maxPriceInput.value) || MAX_PRICE;
+
+    const minPercent = priceToPercent(minPrice);
+    const maxPercent = priceToPercent(maxPrice);
+
+    // Position thumbs
+    minThumb.style.left = `${minPercent}%`;
+    maxThumb.style.left = `${maxPercent}%`;
+
+    // Update fill
+    sliderFill.style.left = `${minPercent}%`;
+    sliderFill.style.right = `${100 - maxPercent}%`;
+  }
+
+  // Handle drag start
+  function handleDragStart(e, isMin) {
+    e.preventDefault();
+    if (isMin) {
+      isMinDragging = true;
+    } else {
+      isMaxDragging = true;
+    }
+    document.body.style.cursor = 'grabbing';
+  }
+
+  // Handle drag end
+  function handleDragEnd() {
+    isMinDragging = false;
+    isMaxDragging = false;
+    document.body.style.cursor = '';
+  }
+
+  // Handle drag move
+  function handleDragMove(e) {
+    if (!isMinDragging && !isMaxDragging) return;
+    e.preventDefault();
+
+    // Get pointer position (touch or mouse)
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const trackRect = track.getBoundingClientRect();
+    const trackWidth = trackRect.width;
+
+    // Calculate percentage along track
+    let percent = ((clientX - trackRect.left) / trackWidth) * 100;
+    percent = Math.max(0, Math.min(100, percent)); // Clamp between 0-100
+
+    // Convert to price
+    let newPrice = percentToPrice(percent);
+    // Round to step (50000)
+    newPrice = Math.round(newPrice / 50000) * 50000;
+
+    const minPrice = parseInt(minPriceInput.value) || MIN_PRICE;
+    const maxPrice = parseInt(maxPriceInput.value) || MAX_PRICE;
+
+    if (isMinDragging) {
+      // Min thumb can't exceed max thumb
+      if (newPrice > maxPrice) {
+        newPrice = maxPrice;
+      }
+      minPriceInput.value = newPrice;
+    } else if (isMaxDragging) {
+      // Max thumb can't go below min thumb
+      if (newPrice < minPrice) {
+        newPrice = minPrice;
+      }
+      maxPriceInput.value = newPrice;
+    }
+
+    updateSlider();
+  }
+
+  // Event listeners for thumbs
+  minThumb.addEventListener('mousedown', (e) => handleDragStart(e, true));
+  maxThumb.addEventListener('mousedown', (e) => handleDragStart(e, false));
+
+  minThumb.addEventListener('touchstart', (e) => handleDragStart(e, true), { passive: false });
+  maxThumb.addEventListener('touchstart', (e) => handleDragStart(e, false), { passive: false });
+
+  // Global drag listeners
+  document.addEventListener('mousemove', handleDragMove);
+  document.addEventListener('touchmove', handleDragMove, { passive: false });
+  document.addEventListener('mouseup', handleDragEnd);
+  document.addEventListener('touchend', handleDragEnd);
+
+  // Sync input changes with slider
+  minPriceInput.addEventListener('input', updateSlider);
+  maxPriceInput.addEventListener('input', updateSlider);
+
+  // Apply filter on button click
+  if (applyPriceBtn) {
+    applyPriceBtn.addEventListener('click', () => {
+      if (typeof filterProducts === 'function') {
+        filterProducts();
+      }
+    });
+  }
+
+  // Also filter when dragging ends
+  function handleDragEndWithFilter() {
+    handleDragEnd();
+    if (typeof filterProducts === 'function') {
+      filterProducts();
+    }
+  }
+
+  minThumb.addEventListener('mouseup', handleDragEndWithFilter);
+  maxThumb.addEventListener('mouseup', handleDragEndWithFilter);
+  minThumb.addEventListener('touchend', handleDragEndWithFilter);
+  maxThumb.addEventListener('touchend', handleDragEndWithFilter);
+
+  // Initialize slider position
+  updateSlider();
+}
 
   if (shopOverlay && shopSidebar) {
     shopOverlay.addEventListener('click', () => {
@@ -1188,5 +1377,6 @@ window.MXZONE = {
   addToCartAnimation,
   showNotification,
   InitShopFilters: initShopFiltersInternal,
-  InitProductModal: initProductModalInternal
+  InitProductModal: initProductModalInternal,
+  InitPriceSlider: initPriceRangeSlider
 };
