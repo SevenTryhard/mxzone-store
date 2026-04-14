@@ -2781,6 +2781,7 @@ a {
     padding: 0 var(--spacing-sm);
     max-width: 100%;
     overflow: hidden;
+    width: 100%;
   }
 
   .product-card {
@@ -2841,19 +2842,23 @@ a {
     display: block;
   }
 
-  /* Add padding to section content to account for sticky elements */
-  .shop-layout .section {
-    padding-top: var(--spacing-lg);
-  }
-
   .shop-layout {
     grid-template-columns: 1fr;
     gap: 0;
+    min-width: 0;
+    max-width: 100%;
   }
 
   .shop-content {
+    min-width: 0;
     max-width: 100%;
     overflow-x: hidden;
+    width: 100%;
+  }
+
+  /* Add padding to shop section to account for sticky search bar and filters */
+  .shop-layout {
+    margin-top: var(--spacing-lg);
   }
 
   .shop-sidebar {
@@ -2926,7 +2931,15 @@ a {
   .container {
     padding-left: var(--spacing-sm);
     padding-right: var(--spacing-sm);
+    max-width: 100%;
+    overflow-x: hidden;
   }
+
+  /* Shop layout specific - prevent any overflow */
+  .shop-layout .container {
+    padding: 0 var(--spacing-sm);
+  }
+
 
   .hero-buttons {
     flex-direction: column;
