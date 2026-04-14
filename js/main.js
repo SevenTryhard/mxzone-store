@@ -1144,8 +1144,12 @@ function initProductModalInternal() {
   // Open modal on product card click (anywhere on the card)
   document.querySelectorAll('.product-card').forEach(card => {
     card.addEventListener('click', (e) => {
-      // Don't open modal if clicking on WhatsApp, Add to Cart, or Ver button
-      if (e.target.closest('.btn-whatsapp') || e.target.closest('.btn-cart-add') || e.target.closest('.btn-secondary')) {
+      // Don't open modal if clicking on WhatsApp, Add to Cart, Ver button, or size select
+      if (e.target.closest('.btn-whatsapp') ||
+          e.target.closest('.btn-cart-add') ||
+          e.target.closest('.btn-secondary') ||
+          e.target.closest('.card-size-select') ||
+          e.target.closest('.product-sizes-selector')) {
         return;
       }
 
@@ -1291,6 +1295,34 @@ function initProductModalInternal() {
       }
     }
   });
+
+  // Size Guide Modal
+  const sizeGuideModal = document.getElementById('sizeGuideModal');
+  const openSizeGuideBtn = document.getElementById('openSizeGuide');
+  const closeSizeGuideBtn = document.getElementById('closeSizeGuide');
+  const confirmSizeGuideBtn = document.getElementById('confirmSizeGuide');
+
+  if (openSizeGuideBtn && sizeGuideModal) {
+    openSizeGuideBtn.addEventListener('click', () => {
+      sizeGuideModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  }
+
+  function closeSizeGuide() {
+    if (sizeGuideModal) {
+      sizeGuideModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  if (closeSizeGuideBtn) closeSizeGuideBtn.addEventListener('click', closeSizeGuide);
+  if (confirmSizeGuideBtn) confirmSizeGuideBtn.addEventListener('click', closeSizeGuide);
+  if (sizeGuideModal) {
+    sizeGuideModal.addEventListener('click', (e) => {
+      if (e.target === sizeGuideModal) closeSizeGuide();
+    });
+  }
 }
 
 /**

@@ -206,6 +206,7 @@ a {
   padding: var(--spacing-sm) var(--spacing-md);
   max-width: 1400px;
   margin: 0 auto;
+  gap: var(--spacing-md);
 }
 
 .logo {
@@ -213,12 +214,13 @@ a {
   align-items: center;
   gap: var(--spacing-sm);
   font-family: var(--font-display);
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   color: var(--white);
+  flex-shrink: 0;
 }
 
 .logo-image {
-  height: 50px;
+  height: 45px;
   width: auto;
   object-fit: contain;
 }
@@ -238,20 +240,23 @@ a {
 
 .nav-links {
   display: flex;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-md);
   list-style: none;
+  justify-content: center;
+  flex: 1;
 }
 
 .nav-links a {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
   color: var(--gray-light-text);
   position: relative;
   padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--radius-full);
   transition: var(--transition-base);
+  white-space: nowrap;
 }
 
 .nav-links a::before {
@@ -289,6 +294,83 @@ a {
   display: flex;
   gap: var(--spacing-sm);
   align-items: center;
+  flex-shrink: 0;
+}
+
+/* Cart button container */
+.cart-btn-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cart-btn {
+  background: var(--gray-dark);
+  border: 1px solid var(--gray-lighter);
+  border-radius: var(--radius-md);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: var(--transition-base);
+  color: var(--white);
+}
+
+.cart-btn:hover {
+  border-color: var(--orange-primary);
+  background: rgba(255, 102, 0, 0.1);
+}
+
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--orange-primary);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 700;
+  min-width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(255, 102, 0, 0.4);
+}
+
+/* Mobile WhatsApp Button (Center) */
+.mobile-wa-btn {
+  display: none;
+  font-size: 1.5rem;
+  color: var(--white);
+  padding: var(--spacing-xs);
+  transition: var(--transition-fast);
+}
+
+.mobile-wa-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Desktop Only Utility */
+.desktop-only {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-wa-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .menu-toggle {
@@ -2391,6 +2473,61 @@ a {
   font-size: 0.85rem;
 }
 
+/* Size Guide Button */
+.size-guide-btn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.size-guide-btn:hover {
+  background: rgba(255, 102, 0, 0.1);
+  border-color: var(--orange-hover);
+}
+
+/* Size Guide Modal */
+.size-guide-modal .modal-product-info {
+  padding: var(--spacing-lg);
+}
+
+.size-guide-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--gray-dark);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.size-guide-table th,
+.size-guide-table td {
+  padding: var(--spacing-sm) var(--spacing-md);
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.size-guide-table th {
+  background: rgba(255, 102, 0, 0.15);
+  color: var(--orange-primary);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.size-guide-table td {
+  color: var(--gray-light-text);
+  font-size: 0.9rem;
+}
+
+.size-guide-table tr:last-child td {
+  border-bottom: none;
+}
+
+.size-guide-table tr:hover td {
+  background: rgba(255, 102, 0, 0.05);
+}
+
 /* Modal Responsive */
 @media (max-width: 900px) {
   .product-modal-content {
@@ -2455,9 +2592,24 @@ a {
 }
 
 @media (max-width: 768px) {
+  /* Mobile Header - Compact: Logo | WhatsApp | Menu */
+  .nav {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    gap: var(--spacing-xs);
+  }
+
+  .logo {
+    font-size: 1.2rem;
+  }
+
+  .logo-image {
+    height: 35px;
+  }
+
+  /* Hide nav links by default, show in drawer */
   .nav-links {
     position: fixed;
-    top: 70px;
+    top: 60px;
     left: 0;
     right: 0;
     background: var(--gray-dark);
@@ -2469,6 +2621,7 @@ a {
     visibility: hidden;
     transition: var(--transition-base);
     border-bottom: 1px solid rgba(255, 102, 0, 0.1);
+    z-index: 999;
   }
 
   .nav-links.active {
@@ -2479,6 +2632,23 @@ a {
 
   .menu-toggle {
     display: flex;
+    width: 40px;
+    height: 40px;
+    padding: var(--spacing-xs);
+  }
+
+  .menu-toggle span {
+    width: 20px;
+    height: 2px;
+  }
+
+  /* Hide WhatsApp button in nav-cta on mobile (use separate one) */
+  .nav-cta .btn-whatsapp {
+    display: none;
+  }
+
+  .nav-cta {
+    gap: var(--spacing-xs);
   }
 
   .hero-stats {
