@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   initMobileMenu();
   initActiveNavLink();
+  highlightActiveNavLink();
   initScrollAnimations();
   initSmoothScroll();
   initShopFilters();
@@ -35,6 +36,23 @@ function initActiveNavLink() {
       link.classList.add('active');
     } else {
       link.classList.remove('active');
+    }
+  });
+}
+
+/**
+ * Highlight active nav link using window.location.href for better accuracy
+ */
+function highlightActiveNavLink() {
+  const currentPath = window.location.pathname;
+  const currentPage = currentPath.split('/').pop() || 'index.html';
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    link.classList.remove('active');
+    if (href === currentPage || currentPath.includes(href)) {
+      link.classList.add('active');
     }
   });
 }

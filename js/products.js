@@ -304,6 +304,32 @@ async function renderFeaturedProducts() {
   });
 }
 
+// Función para renderizar productos RECOMENDADOS (los más caros) en carrusel
+async function renderRecomendados() {
+  const container = document.getElementById('recomendadosCarousel');
+  if (!container) return;
+
+  const products = await loadProducts();
+  if (products.length === 0) return;
+
+  // Ordenar por precio (mayor a menor) y tomar los top 8
+  const sortedProducts = [...products].sort((a, b) => {
+    const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
+    const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
+    return priceB - priceA;
+  });
+
+  const topProducts = sortedProducts.slice(0, 8);
+  container.innerHTML = topProducts.map(product => createProductCard(product)).join('');
+
+  // Re-inicializar modal después de cargar recomendados
+  setTimeout(() => {
+    if (window.MXZONE && window.MXZONE.InitProductModal) {
+      window.MXZONE.InitProductModal();
+    }
+  }, 100);
+}
+
 // Función para renderizar todos los productos en la tienda
 async function renderShopProducts() {
   console.log('renderShopProducts: iniciando...');
@@ -369,9 +395,14 @@ function updateResultsCount() {
 document.addEventListener('DOMContentLoaded', () => {
   const isHomePage = document.querySelector('[data-products]');
   const isShopPage = document.getElementById('productsGrid');
+  const isRecomendadosPage = document.getElementById('recomendadosCarousel');
 
   if (isHomePage) {
     renderFeaturedProducts();
+  }
+
+  if (isRecomendadosPage) {
+    renderRecomendados();
   }
 
   if (isShopPage) {

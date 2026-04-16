@@ -74,111 +74,25 @@
       <!-- Shop Overlay for Mobile -->
       <div class="shop-overlay" id="shopOverlay"></div>
 
-      <!-- Mobile Search Bar (visible only on mobile) - OUTSIDE shop-layout for sticky to work -->
+      <!-- Mobile Search Bar with Embedded Filter Icon -->
       <div class="mobile-search-bar">
         <div class="search-box">
-          <input type="text" id="mobileProductSearch" class="search-input" placeholder="Buscar en MXZONE...">
+          <input type="text" id="mobileProductSearch" class="search-input" placeholder="Buscar...">
+          <button class="search-filter-btn" id="mobileFiltersTrigger" aria-label="Abrir filtros">
+            <span>⚙️</span>
+          </button>
           <span class="search-icon">🔍</span>
         </div>
       </div>
 
-      <!-- Mobile Filters Button (triggers off-canvas drawer) -->
-      <button class="mobile-filters-trigger" id="mobileFiltersTrigger">
-        <span class="trigger-icon">⚙️</span>
-        <span class="trigger-text">Filtros</span>
-      </button>
-
-      <!-- Mobile Quick Filters (visible only on mobile) - OUTSIDE shop-layout for sticky to work -->
-      <div class="mobile-quick-filters">
-        <div class="mobile-quick-filters-scroll">
-          <button class="mobile-filter-chip active" data-filter="all">
-            <span class="chip-icon">📦</span>
-            <span class="chip-label">Todo</span>
-          </button>
-          <button class="mobile-filter-chip" data-filter="cascos">
-            <span class="chip-icon">⛑️</span>
-            <span class="chip-label">Cascos</span>
-          </button>
-          <button class="mobile-filter-chip" data-filter="uniformes">
-            <span class="chip-icon">👕</span>
-            <span class="chip-label">Uniformes</span>
-          </button>
-          <button class="mobile-filter-chip" data-filter="botas">
-            <span class="chip-icon">👢</span>
-            <span class="chip-label">Botas</span>
-          </button>
-          <button class="mobile-filter-chip" data-filter="protecciones">
-            <span class="chip-icon">🛡️</span>
-            <span class="chip-label">Protec</span>
-          </button>
-          <!-- Divider between categories and brands -->
-          <div class="mobile-filter-divider"></div>
-          <button class="mobile-filter-chip" data-filter="fox">
-            <span class="chip-icon">🦊</span>
-            <span class="chip-label">Fox</span>
-          </button>
-          <button class="mobile-filter-chip" data-filter="fly">
-            <span class="chip-icon">✈️</span>
-            <span class="chip-label">Fly</span>
-          </button>
-          <button class="mobile-filter-chip" data-filter="leatt">
-            <span class="chip-icon">⚡</span>
-            <span class="chip-label">Leatt</span>
-          </button>
-          <button class="mobile-filter-chip" data-filter="alpinestars">
-            <span class="chip-icon">⭐</span>
-            <span class="chip-label">Alpine</span>
-          </button>
-          <button class="mobile-filter-chip" data-filter="troy-lee">
-            <span class="chip-icon">🎨</span>
-            <span class="chip-label">Troy Lee</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Top Selecciones / Recomendados -->
-      <section class="recomendados-section">
+      <!-- RECOMENDACIONES - Productos destacados del CMS -->
+      <section class="recomendados-section" id="recomendadosSection">
         <div class="recomendados-header">
-          <h2 class="recomendados-title">🔥 Top Selecciones</h2>
-          <p class="recomendados-subtitle">Los favoritos de nuestros clientes</p>
+          <h2 class="recomendados-title">⭐ Recomendaciones</h2>
+          <p class="recomendados-subtitle">Seleccionados especialmente para ti</p>
         </div>
-        <div class="recomendados-grid">
-          <!-- Producto Recomendado 1 -->
-          <div class="recomendado-card">
-            <div class="recomendado-badge">Más Vendido</div>
-            <div class="recomendado-image">
-              <span class="recomendado-icon">⛑️</span>
-            </div>
-            <div class="recomendado-info">
-              <h3 class="recomendado-name">Casco Fox V1 Przm</h3>
-              <p class="recomendado-price">$459.990</p>
-              <button class="recomendado-btn btn btn-primary btn-small">Ver Producto</button>
-            </div>
-          </div>
-          <!-- Producto Recomendado 2 -->
-          <div class="recomendado-card">
-            <div class="recomendado-badge">Oferta</div>
-            <div class="recomendado-image">
-              <span class="recomendado-icon">👕</span>
-            </div>
-            <div class="recomendado-info">
-              <h3 class="recomendado-name">Kit Fly Kinetic</h3>
-              <p class="recomendado-price">$389.990</p>
-              <button class="recomendado-btn btn btn-primary btn-small">Ver Producto</button>
-            </div>
-          </div>
-          <!-- Producto Recomendado 3 -->
-          <div class="recomendado-card">
-            <div class="recomendado-badge">Premium</div>
-            <div class="recomendado-image">
-              <span class="recomendado-icon">👢</span>
-            </div>
-            <div class="recomendado-info">
-              <h3 class="recomendado-name">Botas Leatt 4.5</h3>
-              <p class="recomendado-price">$629.990</p>
-              <button class="recomendado-btn btn btn-primary btn-small">Ver Producto</button>
-            </div>
-          </div>
+        <div class="recomendados-carousel" id="recomendadosCarousel">
+          <!-- Productos cargados dinámicamente desde CMS -->
         </div>
       </section>
 
@@ -704,16 +618,9 @@
     </div>
   </footer>
 
-  <!-- Floating WhatsApp Button (Desktop) / Sticky Bar (Mobile) -->
+  <!-- Floating WhatsApp Button -->
   <a href="https://wa.me/573176692997" class="whatsapp-float" target="_blank" aria-label="Chat WhatsApp" id="whatsappFloat">
     💬
-  </a>
-
-  <!-- Sticky Mobile WhatsApp Bar -->
-  <a href="https://wa.me/573176692997" class="whatsapp-sticky-bar-shop" target="_blank">
-    <span class="sticky-bar-icon">📲</span>
-    <span class="sticky-bar-text">Asesoría y Compras por WhatsApp</span>
-    <span class="sticky-bar-cta">Abrir →</span>
   </a>
 
   <!-- Scripts -->
