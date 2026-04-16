@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initProductModal();
   initHeroParticles();
   initHeroParallax();
+  initHero3DTilt();
+  initCard3DTilt();
 });
 
 /**
@@ -1559,6 +1561,77 @@ function initHeroParallax() {
       }
     }
   }, { passive: true });
+}
+
+/**
+ * Hero 3D Tilt Effect - Mouse tracking
+ * Adds premium 3D tilt effect based on mouse position
+ */
+function initHero3DTilt() {
+  const hero = document.querySelector('.hero');
+  const heroContent = document.querySelector('.hero-content');
+
+  if (!hero || !heroContent) return;
+
+  // Only enable on desktop for performance
+  if (window.innerWidth < 768) return;
+
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // Calculate center
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    // Calculate rotation (max 5 degrees)
+    const rotateX = ((y - centerY) / centerY) * -3;
+    const rotateY = ((x - centerX) / centerX) * 3;
+
+    // Apply transform to hero content
+    heroContent.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+
+  hero.addEventListener('mouseleave', () => {
+    heroContent.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+  });
+}
+
+/**
+ * 3D Tilt Effect for Cards
+ * Adds interactive 3D tilt effect on mousemove with mouse-following glow
+ */
+function initCard3DTilt() {
+  const cards = document.querySelectorAll('.product-card, .category-card, .benefit-card');
+
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // Calculate center
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      // Calculate rotation (max 10 degrees for cards)
+      const rotateX = ((y - centerY) / centerY) * -5;
+      const rotateY = ((x - centerX) / centerX) * 5;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+
+      // Mouse-following glow effect
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0deg)';
+      card.style.removeProperty('--mouse-x');
+      card.style.removeProperty('--mouse-y');
+    });
+  });
 }
 
 // Export functions for external use
