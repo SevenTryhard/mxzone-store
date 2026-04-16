@@ -445,10 +445,34 @@ function initShopFiltersInternal() {
     }
   }
 
-  // Mobile filter toggle
+  // Mobile filter toggle (legacy support)
   const mobileFilterToggle = document.getElementById('mobileFilterToggle');
   const shopSidebar = document.querySelector('.shop-sidebar');
   const shopOverlay = document.getElementById('shopOverlay');
+
+  // New Mobile Filters Trigger Button
+  const mobileFiltersTrigger = document.getElementById('mobileFiltersTrigger');
+  const sidebarClose = document.getElementById('sidebarClose');
+
+  function openSidebar() {
+    if (shopSidebar) shopSidebar.classList.add('active');
+    if (shopOverlay) shopOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    if (shopSidebar) shopSidebar.classList.remove('active');
+    if (shopOverlay) shopOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (mobileFiltersTrigger) {
+    mobileFiltersTrigger.addEventListener('click', openSidebar);
+  }
+
+  if (sidebarClose) {
+    sidebarClose.addEventListener('click', closeSidebar);
+  }
 
   if (mobileFilterToggle && shopSidebar) {
     mobileFilterToggle.addEventListener('click', () => {
@@ -456,6 +480,22 @@ function initShopFiltersInternal() {
       if (shopOverlay) shopOverlay.classList.toggle('active');
     });
   }
+
+  // Close sidebar when clicking overlay
+  if (shopOverlay) {
+    shopOverlay.addEventListener('click', closeSidebar);
+  }
+
+  // Close sidebar when clicking outside on mobile
+  document.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768 && shopSidebar && shopSidebar.classList.contains('active')) {
+      if (!shopSidebar.contains(e.target) &&
+          !mobileFiltersTrigger?.contains(e.target) &&
+          !mobileFilterToggle?.contains(e.target)) {
+        closeSidebar();
+      }
+    }
+  });
 
   // ========================================
   // DUAL-HANDLE PRICE RANGE SLIDER

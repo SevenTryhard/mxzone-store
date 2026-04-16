@@ -82,6 +82,12 @@
         </div>
       </div>
 
+      <!-- Mobile Filters Button (triggers off-canvas drawer) -->
+      <button class="mobile-filters-trigger" id="mobileFiltersTrigger">
+        <span class="trigger-icon">⚙️</span>
+        <span class="trigger-text">Filtros</span>
+      </button>
+
       <!-- Mobile Quick Filters (visible only on mobile) - OUTSIDE shop-layout for sticky to work -->
       <div class="mobile-quick-filters">
         <div class="mobile-quick-filters-scroll">
@@ -133,8 +139,12 @@
       <!-- Shop Layout with Sidebar -->
       <div class="shop-layout">
 
-        <!-- Sidebar Filters -->
-        <aside class="shop-sidebar">
+        <!-- Sidebar Filters (Off-Canvas Drawer on Mobile) -->
+        <aside class="shop-sidebar" id="shopSidebar">
+          <div class="sidebar-header">
+            <h3 class="sidebar-title">Filtros</h3>
+            <button class="sidebar-close" id="sidebarClose">&times;</button>
+          </div>
 
           <!-- Search -->
           <div class="filter-group">
@@ -345,6 +355,7 @@
         <!-- Cascos -->
         <div style="margin-bottom: var(--spacing-lg);">
           <h4 style="color: var(--orange-primary); margin-bottom: var(--spacing-sm);">Cascos</h4>
+          <div class="table-responsive">
           <table class="size-guide-table">
             <thead>
               <tr>
@@ -361,6 +372,7 @@
               <tr><td>XXL</td><td>63-64</td></tr>
             </tbody>
           </table>
+          </div>
           <p style="font-size: 0.8rem; color: var(--gray-text); margin-top: var(--spacing-xs);">
             💡 Mide la circunferencia de tu cabeza pasando la cinta métrica por encima de las cejas.
           </p>
@@ -369,6 +381,7 @@
         <!-- Uniformes -->
         <div style="margin-bottom: var(--spacing-lg);">
           <h4 style="color: var(--orange-primary); margin-bottom: var(--spacing-sm);">Uniformes (Jersey y Pantalón)</h4>
+          <div class="table-responsive">
           <table class="size-guide-table">
             <thead>
               <tr>
@@ -385,6 +398,7 @@
               <tr><td>XXL</td><td>180-190</td><td>95-105</td></tr>
             </tbody>
           </table>
+          </div>
           <p style="font-size: 0.8rem; color: var(--gray-text); margin-top: var(--spacing-xs);">
             💡 Los uniformes MX tienen corte atlético. Si estás entre tallas, elige la mayor.
           </p>
@@ -393,6 +407,7 @@
         <!-- Botas -->
         <div style="margin-bottom: var(--spacing-lg);">
           <h4 style="color: var(--orange-primary); margin-bottom: var(--spacing-sm);">Botas</h4>
+          <div class="table-responsive">
           <table class="size-guide-table">
             <thead>
               <tr>
@@ -412,6 +427,7 @@
               <tr><td>46</td><td>13</td><td>29.5</td></tr>
             </tbody>
           </table>
+          </div>
           <p style="font-size: 0.8rem; color: var(--gray-text); margin-top: var(--spacing-xs);">
             💡 Mide tu pie desde el talón hasta el dedo más largo. Las botas de motocross deben quedar ajustadas pero cómodas.
           </p>
@@ -423,6 +439,7 @@
           <p style="font-size: 0.9rem; color: var(--gray-text); margin-bottom: var(--spacing-sm);">
             Las protecciones deben quedar ajustadas al cuerpo sin limitar el movimiento. Para rodilleras y coderas, mide el contorno de la articulación.
           </p>
+          <div class="table-responsive">
           <table class="size-guide-table">
             <thead>
               <tr>
@@ -437,6 +454,7 @@
               <tr><td>XL</td><td>45-50</td></tr>
             </tbody>
           </table>
+          </div>
         </div>
 
         <button class="btn btn-secondary" id="confirmSizeGuide" style="width: 100%; margin-top: var(--spacing-lg);">
@@ -629,9 +647,16 @@
     </div>
   </footer>
 
-  <!-- Floating WhatsApp Button -->
+  <!-- Floating WhatsApp Button (Desktop) / Sticky Bar (Mobile) -->
   <a href="https://wa.me/573176692997" class="whatsapp-float" target="_blank" aria-label="Chat WhatsApp" id="whatsappFloat">
     💬
+  </a>
+
+  <!-- Sticky Mobile WhatsApp Bar -->
+  <a href="https://wa.me/573176692997" class="whatsapp-sticky-bar-shop" target="_blank">
+    <span class="sticky-bar-icon">📲</span>
+    <span class="sticky-bar-text">Asesoría y Compras por WhatsApp</span>
+    <span class="sticky-bar-cta">Abrir →</span>
   </a>
 
   <!-- Scripts -->
