@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroParallax();
   initHero3DTilt();
   initCard3DTilt();
+  initRecomendadosCarousel();
 });
 
 /**
@@ -1632,6 +1633,88 @@ function initCard3DTilt() {
       card.style.removeProperty('--mouse-y');
     });
   });
+}
+
+/**
+ * Carousel Navigation & Swipe for Recomendados
+ * Arrow navigation for desktop + touch swipe for mobile
+ */
+function initRecomendadosCarousel() {
+  const carousel = document.getElementById('recomendadosCarousel');
+  const prevBtn = document.getElementById('carouselPrev');
+  const nextBtn = document.getElementById('carouselNext');
+
+  if (!carousel) return;
+
+  const scrollAmount = 320; // Width of one card + gap
+
+  // Arrow navigation
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+  }
+
+  // Touch swipe functionality
+  let isDown = false;
+  let startX = 0;
+  let scrollLeft = 0;
+  let isDragging = false;
+
+  carousel.addEventListener('mousedown', (e) => {
+    isDown = true;
+    startX = e.pageX - carousel.offsetLeft;
+    scrollLeft = carousel.scrollLeft;
+    carousel.style.cursor = 'grabbing';
+  });
+
+  carousel.addEventListener('mouseleave', () => {
+    isDown = false;
+    isDragging = false;
+    carousel.style.cursor = 'grab';
+  });
+
+  carousel.addEventListener('mouseup', () => {
+    isDown = false;
+    isDragging = false;
+    carousel.style.cursor = 'grab';
+  });
+
+  carousel.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - carousel.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll speed
+    carousel.scrollLeft = scrollLeft - walk;
+    isDragging = true;
+  });
+
+  // Hide/show navigation buttons based on scroll position
+  const updateNavButtons = () => {
+    if (prevBtn) {
+      prevBtn.style.opacity = carousel.scrollLeft > 0 ? '1' : '0';
+      prevBtn.style.pointerEvents = carousel.scrollLeft > 0 ? 'auto' : 'none';
+    }
+    if (nextBtn) {
+      const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+      const isAtEnd = carousel.scrollLeft >= maxScroll - 10;
+      nextBtn.style.opacity = isAtEnd ? '0' : '1';
+      nextBtn.style.pointerEvents = isAtEnd ? 'none' : 'auto';
+    }
+  };
+
+  carousel.addEventListener('scroll', () => {
+    updateNavButtons();
+  });
+
+  // Initial button state
+  updateNavButtons();
 }
 
 // Export functions for external use
