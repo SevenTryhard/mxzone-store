@@ -175,6 +175,65 @@ a {
   border-radius: var(--radius-full);
 }
 
+/* PAS Section - Problema-Agitación-Solución */
+.pas-section {
+  background: var(--gray-medium);
+  padding: var(--spacing-xl) 0;
+}
+
+.pas-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.pas-problem,
+.pas-agitation,
+.pas-solution {
+  text-align: center;
+}
+
+.pas-title {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  color: var(--white);
+  margin-bottom: var(--spacing-md);
+}
+
+.pas-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--gray-light-text);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.pas-agitation .pas-text {
+  font-style: italic;
+  color: var(--gray-text);
+}
+
+.pas-solution {
+  background: rgba(255, 102, 0, 0.05);
+  border: 1px solid rgba(255, 102, 0, 0.2);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  margin-top: var(--spacing-md);
+}
+
+.pas-solution-title {
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  color: var(--orange-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.pas-cta {
+  margin-top: var(--spacing-lg);
+}
+
+.pas-cta .btn-whatsapp {
+  min-width: 280px;
+}
+
 /* ================================
    HEADER & NAV - Apple Style Glassmorphism
    ================================ */
@@ -628,6 +687,29 @@ a {
   flex-wrap: wrap;
   animation: fadeInUp 0.8s ease 0.6s forwards;
   opacity: 0;
+}
+
+/* Trust Badge - Prueba Social Hero */
+.hero-trust-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-lg);
+  animation: fadeInUp 0.8s ease 0.7s forwards;
+  opacity: 0;
+}
+
+.trust-stars {
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
+.trust-text {
+  font-size: 0.9rem;
+  color: var(--gray-light-text);
+  text-align: center;
+  max-width: 500px;
 }
 
 .hero-stats {
@@ -2171,7 +2253,7 @@ a {
 }
 
 /* ================================
-   FLOATING WHATSAPP BUTTON
+   FLOATING WHATSAPP BUTTON / STICKY MOBILE CTA
    ================================ */
 .whatsapp-float {
   position: fixed;
@@ -2188,6 +2270,7 @@ a {
   font-size: 2.5rem;
   z-index: 999;
   transition: var(--transition-base);
+  text-decoration: none;
 }
 
 .whatsapp-float:hover {
@@ -2201,6 +2284,72 @@ a {
   height: 100%;
   object-fit: contain;
   filter: drop-shadow(0 0 10px rgba(37, 211, 101, 0.5));
+}
+
+/* Sticky Mobile CTA Bar - Desktop oculto */
+.whatsapp-sticky-bar {
+  display: none;
+}
+
+/* Mobile: transformar a barra inferior fija */
+@media (max-width: 768px) {
+  .whatsapp-float {
+    display: none;
+  }
+
+  .whatsapp-sticky-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #25D366 0%, #1EBE57 100%);
+    padding: var(--spacing-sm) var(--spacing-md);
+    z-index: 999;
+    box-shadow: 0 -4px 20px rgba(37, 211, 101, 0.4);
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    animation: slideUp 0.4s ease 0.3s forwards;
+  }
+
+  .whatsapp-sticky-bar .sticky-icon {
+    font-size: 1.5rem;
+    animation: pulse 2s infinite;
+  }
+
+  .whatsapp-sticky-bar .sticky-text {
+    color: var(--white);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex: 1;
+    text-align: center;
+  }
+
+  .whatsapp-sticky-bar .sticky-cta {
+    background: var(--white);
+    color: #1EBE57;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* ================================

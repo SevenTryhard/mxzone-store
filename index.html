@@ -79,7 +79,7 @@
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-video-container">
-      <video class="hero-video" autoplay muted loop playsinline>
+      <video class="hero-video" autoplay muted loop playsinline poster="assets/images/hero-poster.jpg">
         <source src="assets/videos/hero-bg.mp4" type="video/mp4">
       </video>
       <div class="hero-video-overlay"></div>
@@ -98,6 +98,12 @@
         <a href="https://wa.me/573176692997" class="btn btn-secondary btn-large" target="_blank">Asesoría Personal</a>
       </div>
 
+      <!-- Trust Badge - Prueba Social -->
+      <div class="hero-trust-badge">
+        <span class="trust-stars">⭐⭐⭐⭐⭐</span>
+        <span class="trust-text">Más de 500 pilotos ya confían en nosotros en Colombia</span>
+      </div>
+
       <div class="hero-stats">
         <div class="stat-item">
           <span class="stat-number">200+</span>
@@ -110,6 +116,46 @@
         <div class="stat-item">
           <span class="stat-number">100%</span>
           <span class="stat-label">Garantía Oficial</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAS Section: Problema-Agitación-Solución -->
+  <section class="section pas-section">
+    <div class="container container-narrow">
+      <div class="pas-content">
+        <!-- Problema -->
+        <div class="pas-problem">
+          <h2 class="pas-title">¿Sabemos lo difícil que es elegir el equipo correcto por internet?</h2>
+          <p class="pas-text">
+            Tallas que no coinciden, materiales que no puedes tocar, colores que se ven diferentes en pantalla.
+            Comprar equipamiento de motocross online puede ser una lotería.
+          </p>
+        </div>
+
+        <!-- Agitación -->
+        <div class="pas-agitation">
+          <p class="pas-text">
+            Imagina recibir tu casco y que no te quede. O esas botas que pediste y resultan ser más rígidas de lo que esperabas.
+            Devoluciones, tiempos de espera, dinero parado... <strong>El juego no vale la vela.</strong>
+          </p>
+        </div>
+
+        <!-- Solución -->
+        <div class="pas-solution">
+          <h3 class="pas-solution-title">Por eso en MXZONE hacemos las cosas diferente</h3>
+          <p class="pas-text">
+            Antes de que compres nada, te ofrecemos una <strong>asesoría 1-a-1 por WhatsApp</strong> con alguien que realmente sabe del tema.
+            Te ayudamos a elegir la talla correcta, el equipo que se ajusta a tu estilo de manejo y tu presupuesto.
+            Sin presiones, sin letras pequeñas.
+          </p>
+          <div class="pas-cta">
+            <a href="https://wa.me/573176692997" class="btn btn-whatsapp btn-large" target="_blank">
+              <span>💬</span>
+              <span>Hablar con un Experto Ahora</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -403,9 +449,16 @@
     </div>
   </footer>
 
-  <!-- Floating WhatsApp Button -->
+  <!-- Floating WhatsApp Button (Desktop) / Sticky Bar (Mobile) -->
   <a href="https://wa.me/573176692997" class="whatsapp-float" target="_blank" aria-label="Chat WhatsApp">
     <img src="assets/whatsapp-logo.webp" alt="WhatsApp" class="whatsapp-icon">
+  </a>
+
+  <!-- Sticky Mobile CTA Bar -->
+  <a href="https://wa.me/573176692997" class="whatsapp-sticky-bar" target="_blank">
+    <span class="sticky-icon">💬</span>
+    <span class="sticky-text">Comprar / Asesoría por WhatsApp</span>
+    <span class="sticky-cta">Abrir →</span>
   </a>
 
   <!-- Shopping Cart Modal -->
