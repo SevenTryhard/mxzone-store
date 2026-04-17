@@ -892,6 +892,46 @@ a {
   gap: var(--spacing-md);
 }
 
+/* Category Dividers */
+.category-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg) 0;
+  margin: var(--spacing-lg) 0;
+}
+
+.category-divider-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 102, 0, 0.5) 50%, transparent 100%);
+  max-width: 200px;
+}
+
+.category-divider-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: rgba(255, 102, 0, 0.1);
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 102, 0, 0.2);
+}
+
+.category-divider-icon {
+  font-size: 1.2rem;
+}
+
+.category-divider-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  color: var(--orange-primary);
+  margin: 0;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
 .product-card {
   background: var(--gradient-card);
   border-radius: var(--radius-lg);
@@ -3658,6 +3698,29 @@ a {
     max-width: 100%;
     overflow: hidden;
     width: 100%;
+  }
+
+  /* Category Dividers - Mobile */
+  .category-divider {
+    padding: var(--spacing-md) 0;
+    margin: var(--spacing-md) 0;
+  }
+
+  .category-divider-line {
+    max-width: 80px;
+  }
+
+  .category-divider-content {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    gap: 6px;
+  }
+
+  .category-divider-icon {
+    font-size: 1rem;
+  }
+
+  .category-divider-title {
+    font-size: 1.2rem;
   }
 
   .product-card {

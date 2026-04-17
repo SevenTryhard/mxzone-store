@@ -243,7 +243,9 @@ function initShopFiltersInternal() {
     const maxPrice = parseInt(maxPriceInput?.value) || 3000000;
 
     let visibleCount = 0;
+    const categoryVisibility = {};
 
+    // First pass: determine which categories have visible products
     productCards.forEach(card => {
       try {
         const nameEl = card.querySelector('.product-name');
@@ -266,7 +268,17 @@ function initShopFiltersInternal() {
         // Price filter
         const matchesPrice = price >= minPrice && price <= maxPrice;
 
-        if (matchesSearch && matchesCategory && matchesBrand && matchesPrice) {
+        const isVisible = matchesSearch && matchesCategory && matchesBrand && matchesPrice;
+
+        // Track category visibility
+        if (!categoryVisibility[category]) {
+          categoryVisibility[category] = false;
+        }
+        if (isVisible) {
+          categoryVisibility[category] = true;
+        }
+
+        if (isVisible) {
           card.style.display = 'block';
           visibleCount++;
         } else {
@@ -275,6 +287,14 @@ function initShopFiltersInternal() {
       } catch (e) {
         console.warn('Error filtering product card:', e);
       }
+    });
+
+    // Second pass: show/hide category dividers based on visibility
+    const dividers = document.querySelectorAll('.category-divider');
+    dividers.forEach(divider => {
+      const category = divider.dataset.category;
+      const hasVisibleProducts = categoryVisibility[category] || selectedCategories.includes('all');
+      divider.style.display = hasVisibleProducts ? 'flex' : 'none';
     });
 
     // Update results count
@@ -291,8 +311,12 @@ function initShopFiltersInternal() {
     const sortBy = sortSelect?.value || 'default';
     const productsArray = Array.from(productCards);
     const grid = document.querySelector('.products-grid');
+    const dividers = document.querySelectorAll('.category-divider');
 
     if (!grid) return;
+
+    // Hide dividers during sort (they'll be repositioned after)
+    dividers.forEach(d => d.remove());
 
     productsArray.sort((a, b) => {
       try {
@@ -321,13 +345,59 @@ function initShopFiltersInternal() {
       }
     });
 
-    productsArray.forEach(card => {
-      try {
-        grid.appendChild(card);
-      } catch (e) {
-        console.warn('Error appending sorted card:', e);
-      }
-    });
+    // Re-insert products with category dividers (only for default sort)
+    if (sortBy === 'default') {
+      const categoryOrder = ['botas', 'cascos', 'uniformes', 'protecciones'];
+      let lastCategory = null;
+
+      productsArray.forEach(card => {
+        try {
+          const category = card.dataset.category;
+          // Insert divider if category changed
+          if (category !== lastCategory) {
+            const divider = createCategoryDivider(category);
+            if (divider) grid.appendChild(divider);
+            lastCategory = category;
+          }
+          grid.appendChild(card);
+        } catch (e) {
+          console.warn('Error appending sorted card:', e);
+        }
+      });
+    } else {
+      // For other sorts, just append products without dividers
+      productsArray.forEach(card => {
+        try {
+          grid.appendChild(card);
+        } catch (e) {
+          console.warn('Error appending sorted card:', e);
+        }
+      });
+    }
+  }
+
+  // Helper to create category divider element
+  function createCategoryDivider(category) {
+    const labels = {
+      'botas': { label: 'Botas', icon: '👢' },
+      'cascos': { label: 'Cascos', icon: '⛑️' },
+      'uniformes': { label: 'Uniformes', icon: '👕' },
+      'protecciones': { label: 'Protecciones', icon: '🛡️' }
+    };
+    const catData = labels[category] || { label: category, icon: '📦' };
+
+    const divider = document.createElement('div');
+    divider.className = 'category-divider';
+    divider.dataset.category = category;
+    divider.innerHTML = `
+      <div class="category-divider-line"></div>
+      <div class="category-divider-content">
+        <span class="category-divider-icon">${catData.icon}</span>
+        <h3 class="category-divider-title">${catData.label}</h3>
+      </div>
+      <div class="category-divider-line"></div>
+    `;
+    return divider;
   }
 
   // Sync mobile and desktop search inputs

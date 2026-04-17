@@ -330,7 +330,29 @@ async function renderRecomendados() {
   }, 100);
 }
 
-// Función para renderizar todos los productos en la tienda
+// Función para crear un separador de categoría
+function createCategoryDivider(category, icon) {
+  const labels = {
+    'botas': { label: 'Botas', icon: '👢' },
+    'cascos': { label: 'Cascos', icon: '⛑️' },
+    'uniformes': { label: 'Uniformes', icon: '👕' },
+    'protecciones': { label: 'Protecciones', icon: '🛡️' }
+  };
+  const catData = labels[category] || { label: category, icon: icon || '📦' };
+
+  return `
+    <div class="category-divider" data-category="${category}">
+      <div class="category-divider-line"></div>
+      <div class="category-divider-content">
+        <span class="category-divider-icon">${catData.icon}</span>
+        <h3 class="category-divider-title">${catData.label}</h3>
+      </div>
+      <div class="category-divider-line"></div>
+    </div>
+  `;
+}
+
+// Función para renderizar productos en la tienda con separadores por categoría
 async function renderShopProducts() {
   console.log('renderShopProducts: iniciando...');
 
@@ -351,8 +373,29 @@ async function renderShopProducts() {
   console.log('renderShopProducts:', products.length, 'productos cargados');
 
   if (container && products.length > 0) {
-    container.innerHTML = products.map(createProductCard).join('');
-    console.log('renderShopProducts: productos renderizados en el grid');
+    // Ordenar productos por categoría para agruparlos
+    const categoryOrder = ['botas', 'cascos', 'uniformes', 'protecciones'];
+    const sortedProducts = [...products].sort((a, b) => {
+      const indexA = categoryOrder.indexOf(a.category);
+      const indexB = categoryOrder.indexOf(b.category);
+      return (indexA !== -1 ? indexA : 999) - (indexB !== -1 ? indexB : 999);
+    });
+
+    // Renderizar productos con separadores
+    let html = '';
+    let lastCategory = null;
+
+    sortedProducts.forEach(product => {
+      // Agregar separador si cambia la categoría
+      if (product.category !== lastCategory) {
+        html += createCategoryDivider(product.category);
+        lastCategory = product.category;
+      }
+      html += createProductCard(product);
+    });
+
+    container.innerHTML = html;
+    console.log('renderShopProducts: productos renderizados en el grid con separadores');
 
     // Re-inicializar filtros y modal después de cargar productos
     setTimeout(() => {
