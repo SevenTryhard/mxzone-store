@@ -2012,7 +2012,7 @@ a {
 /* Mobile Search Bar - FIXED position (sticks to header) */
 .mobile-search-bar {
   display: none;
-  padding: 4px var(--spacing-md);
+  padding: 8px var(--spacing-md);
   background: rgba(26, 26, 26, 0.98);
   backdrop-filter: blur(30px) saturate(200%);
   -webkit-backdrop-filter: blur(30px) saturate(200%);
@@ -2023,7 +2023,7 @@ a {
   right: 0;
   z-index: 998;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-  height: 40px;
+  height: 48px;
 }
 
 .mobile-search-bar .search-box {
@@ -2100,7 +2100,7 @@ a {
   -webkit-backdrop-filter: blur(30px) saturate(200%);
   border-bottom: 1px solid rgba(255, 102, 0, 0.15);
   position: fixed;
-  top: 92px; /* Below search bar (52px header + 40px search) */
+  top: 100px; /* Below search bar (52px header + 48px search) */
   left: 0;
   right: 0;
   z-index: 997;
@@ -3852,9 +3852,9 @@ a {
   }
 
   /* Add padding to shop section to account for FIXED search bar + quick filters bar */
-  /* Header (52px) + Search bar (40px) + Quick filters (~40px) = ~132px total */
+  /* Header (52px) + Search bar (48px) + Quick filters (~40px) = ~140px total */
   body.shop-page .section {
-    padding-top: 135px;
+    padding-top: 145px;
   }
 
   /* Only show mobile search/filters on shop page */

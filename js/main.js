@@ -444,17 +444,29 @@ function initShopFiltersInternal() {
   }
 
   // Initialize new quick filter chips (horizontal scrollable bar)
-  function initQuickFilterChips() {
+  window.initQuickFilterChips = function initQuickFilterChips() {
     const quickFilterChips = document.querySelectorAll('.quick-filter-chip');
-    if (!quickFilterChips.length) return;
+    if (!quickFilterChips.length) {
+      console.log('Quick filter chips not found in DOM');
+      return;
+    }
+    console.log('Initializing quick filter chips:', quickFilterChips.length);
 
     quickFilterChips.forEach(chip => {
+      // Remove any existing listeners to prevent duplicates
+      chip.replaceWith(chip.cloneNode(true));
+    });
+
+    // Re-select after cloning
+    const chips = document.querySelectorAll('.quick-filter-chip');
+    chips.forEach(chip => {
       chip.addEventListener('click', () => {
         const filter = chip.dataset.filter;
         const filterType = chip.dataset.type;
+        console.log('Quick filter clicked:', filter, filterType);
 
         // Remove active class from all chips
-        quickFilterChips.forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.quick-filter-chip').forEach(c => c.classList.remove('active'));
         // Add active class to clicked chip
         chip.classList.add('active');
 
@@ -467,9 +479,15 @@ function initShopFiltersInternal() {
           if (filter === 'all') {
             const allCheckbox = document.querySelector('.category-filter[data-category="all"]');
             if (allCheckbox) allCheckbox.checked = true;
+            console.log('Selected: all categories');
           } else {
             const categoryCheckbox = document.querySelector(`.category-filter[data-category="${filter}"]`);
-            if (categoryCheckbox) categoryCheckbox.checked = true;
+            if (categoryCheckbox) {
+              categoryCheckbox.checked = true;
+              console.log('Selected category:', filter);
+            } else {
+              console.warn('Category checkbox not found:', filter);
+            }
           }
 
           // Reset brand filters to "all"
@@ -482,10 +500,11 @@ function initShopFiltersInternal() {
         if (mobileSearchInput) mobileSearchInput.value = '';
         if (searchInput) searchInput.value = '';
 
+        console.log('Calling filterProducts...');
         filterProducts();
       });
     });
-  }
+  };
 
   categoryFilters.forEach(cb => {
     cb.addEventListener('change', () => {

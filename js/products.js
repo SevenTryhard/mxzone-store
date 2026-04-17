@@ -413,8 +413,8 @@ async function renderShopProducts() {
         window.initMobileFilterChips();
       }
       // Re-initialize quick filter chips after filters are set up
-      if (typeof initQuickFilterChips !== 'undefined') {
-        initQuickFilterChips();
+      if (window.initQuickFilterChips) {
+        window.initQuickFilterChips();
       }
       updateResultsCount();
     }, 100);
