@@ -465,13 +465,13 @@ function initShopFiltersInternal() {
         const filterType = chip.dataset.type;
         console.log('Quick filter clicked:', filter, filterType);
 
-        // Remove active class from all chips
-        document.querySelectorAll('.quick-filter-chip').forEach(c => c.classList.remove('active'));
-        // Add active class to clicked chip
-        chip.classList.add('active');
-
-        // Update category filters in sidebar
         if (filterType === 'category') {
+          // Remove active class from all category chips
+          document.querySelectorAll('.quick-filter-chip[data-type="category"]').forEach(c => c.classList.remove('active'));
+          // Add active class to clicked chip
+          chip.classList.add('active');
+
+          // Update category filters in sidebar
           // Uncheck all category filters
           categoryFilters.forEach(cb => cb.checked = false);
 
@@ -489,11 +489,30 @@ function initShopFiltersInternal() {
               console.warn('Category checkbox not found:', filter);
             }
           }
+        } else if (filterType === 'brand') {
+          // Remove active class from all brand chips
+          document.querySelectorAll('.quick-filter-chip[data-type="brand"]').forEach(c => c.classList.remove('active'));
+          // Add active class to clicked chip
+          chip.classList.add('active');
 
-          // Reset brand filters to "all"
+          // Update brand filters in sidebar
+          // Uncheck all brand filters
           brandFilters.forEach(cb => cb.checked = false);
-          const allBrandCheckbox = document.querySelector('.brand-filter[data-brand="all"]');
-          if (allBrandCheckbox) allBrandCheckbox.checked = true;
+
+          // Check the selected brand or "all"
+          if (filter === 'all') {
+            const allCheckbox = document.querySelector('.brand-filter[data-brand="all"]');
+            if (allCheckbox) allCheckbox.checked = true;
+            console.log('Selected: all brands');
+          } else {
+            const brandCheckbox = document.querySelector(`.brand-filter[data-brand="${filter}"]`);
+            if (brandCheckbox) {
+              brandCheckbox.checked = true;
+              console.log('Selected brand:', filter);
+            } else {
+              console.warn('Brand checkbox not found:', filter);
+            }
+          }
         }
 
         // Sync search inputs

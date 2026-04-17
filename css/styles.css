@@ -2156,6 +2156,16 @@ a {
   transform: rotate(90deg) scale(1.1);
 }
 
+/* Quick Filter Separator - Vertical divider between categories and brands */
+.quick-filter-separator {
+  flex-shrink: 0;
+  width: 1px;
+  height: 24px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 102, 0, 0.4), transparent);
+  margin: 0 4px;
+  align-self: center;
+}
+
 /* Quick Filter Chips - Compact category buttons with icons */
 .quick-filter-chip {
   scroll-snap-align: start;
