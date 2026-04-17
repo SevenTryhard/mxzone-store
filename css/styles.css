@@ -2035,7 +2035,7 @@ a {
 
 .mobile-search-bar .search-input {
   width: 100%;
-  padding: 6px 72px 6px 12px;
+  padding: 6px 36px 6px 40px; /* Left padding for filter button, right for search icon */
   background: rgba(45, 45, 45, 0.9);
   border: 1px solid rgba(255, 102, 0, 0.3);
   border-radius: var(--radius-full);
@@ -2052,10 +2052,10 @@ a {
   background: rgba(45, 45, 45, 1);
 }
 
-/* Filter Gear Icon - Embedded in Search */
+/* Filter Gear Icon - Embedded in Search (LEFT side) */
 .search-filter-btn {
   position: absolute;
-  right: 36px;
+  left: 8px;
   top: 50%;
   transform: translateY(-50%);
   background: transparent;
@@ -2091,21 +2091,77 @@ a {
   pointer-events: none;
 }
 
-/* Mobile Quick Filters - Ultra Compact */
+/* Mobile Quick Filters - Horizontal Scrollable Category Bar */
 .mobile-quick-filters {
   display: none;
-  padding: 4px var(--spacing-md);
+  padding: 8px var(--spacing-md);
   background: rgba(26, 26, 26, 0.98);
   backdrop-filter: blur(30px) saturate(200%);
   -webkit-backdrop-filter: blur(30px) saturate(200%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 102, 0, 0.15);
   position: fixed;
   top: 104px; /* Below mobile search bar (60px header + 44px search) */
   left: 0;
   right: 0;
   z-index: 997;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-  height: 40px;
+}
+
+.mobile-quick-filters-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 2px 4px;
+  scroll-snap-type: x mandatory;
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+.mobile-quick-filters-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Quick Filter Chips - Category buttons with icons */
+.quick-filter-chip {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(45, 45, 45, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  color: var(--gray-light-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.quick-filter-chip span {
+  font-size: 1rem;
+  filter: grayscale(0.3);
+  transition: var(--transition-fast);
+}
+
+.quick-filter-chip:hover span,
+.quick-filter-chip.active span {
+  filter: grayscale(0);
+  transform: scale(1.1);
+}
+
+.quick-filter-chip.active {
+  background: rgba(255, 102, 0, 0.2);
+  border-color: rgba(255, 102, 0, 0.5);
+  color: var(--orange-primary);
 }
 
 /* Divider between categories and brands in mobile filters */
@@ -3791,9 +3847,10 @@ a {
     width: 100%;
   }
 
-  /* Add padding to shop section to account for FIXED search bar and filters (~135px total) */
+  /* Add padding to shop section to account for FIXED search bar + quick filters bar */
+  /* Header (60px) + Search bar (44px) + Quick filters (~50px) = ~154px total */
   body.shop-page .section {
-    padding-top: 140px;
+    padding-top: 160px;
   }
 
   /* Only show mobile search/filters on shop page */

@@ -443,6 +443,50 @@ function initShopFiltersInternal() {
     }
   }
 
+  // Initialize new quick filter chips (horizontal scrollable bar)
+  function initQuickFilterChips() {
+    const quickFilterChips = document.querySelectorAll('.quick-filter-chip');
+    if (!quickFilterChips.length) return;
+
+    quickFilterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        const filterType = chip.dataset.type;
+
+        // Remove active class from all chips
+        quickFilterChips.forEach(c => c.classList.remove('active'));
+        // Add active class to clicked chip
+        chip.classList.add('active');
+
+        // Update category filters in sidebar
+        if (filterType === 'category') {
+          // Uncheck all category filters
+          categoryFilters.forEach(cb => cb.checked = false);
+
+          // Check the selected category or "all"
+          if (filter === 'all') {
+            const allCheckbox = document.querySelector('.category-filter[data-category="all"]');
+            if (allCheckbox) allCheckbox.checked = true;
+          } else {
+            const categoryCheckbox = document.querySelector(`.category-filter[data-category="${filter}"]`);
+            if (categoryCheckbox) categoryCheckbox.checked = true;
+          }
+
+          // Reset brand filters to "all"
+          brandFilters.forEach(cb => cb.checked = false);
+          const allBrandCheckbox = document.querySelector('.brand-filter[data-brand="all"]');
+          if (allBrandCheckbox) allBrandCheckbox.checked = true;
+        }
+
+        // Sync search inputs
+        if (mobileSearchInput) mobileSearchInput.value = '';
+        if (searchInput) searchInput.value = '';
+
+        filterProducts();
+      });
+    });
+  }
+
   categoryFilters.forEach(cb => {
     cb.addEventListener('change', () => {
       // Handle "all" checkbox
@@ -845,6 +889,9 @@ function initPriceRangeSlider() {
 
   // Initialize mobile filter chips
   window.initMobileFilterChips();
+
+  // Initialize new quick filter chips (horizontal scrollable category bar)
+  initQuickFilterChips();
 }
 
 /**
