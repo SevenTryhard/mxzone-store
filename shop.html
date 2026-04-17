@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=4a-20260417">
+  <link rel="stylesheet" href="css/styles.css?v=5a-20260417">
 </head>
 <body class="shop-page">
 
@@ -74,19 +74,19 @@
       <!-- Shop Overlay for Mobile -->
       <div class="shop-overlay" id="shopOverlay"></div>
 
-      <!-- Mobile Search Bar -->
+      <!-- Mobile Search Bar with Filter Icon on Left -->
       <div class="mobile-search-bar">
         <div class="search-box">
+          <button class="search-filter-btn" id="mobileFiltersTrigger" aria-label="Abrir filtros">
+            <span>⚙️</span>
+          </button>
           <input type="text" id="mobileProductSearch" class="search-input" placeholder="Buscar...">
           <span class="search-icon">🔍</span>
         </div>
       </div>
 
-      <!-- Mobile Quick Filters - Horizontal Scrollable Bar with Fixed Filter Icon -->
+      <!-- Mobile Quick Filters - Horizontal Scrollable Bar -->
       <div class="mobile-quick-filters" id="mobileQuickFilters">
-        <button class="quick-filter-btn" id="mobileFiltersTrigger" aria-label="Abrir filtros">
-          <span>⚙️</span>
-        </button>
         <div class="mobile-quick-filters-scroll">
           <!-- Categorías -->
           <button class="quick-filter-chip active" data-filter="all" data-type="category">

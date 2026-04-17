@@ -2035,7 +2035,7 @@ a {
 
 .mobile-search-bar .search-input {
   width: 100%;
-  padding: 6px 36px 6px 12px; /* Right padding for search icon only */
+  padding: 6px 36px 6px 36px; /* Left padding for filter button, right for search icon */
   background: rgba(45, 45, 45, 0.9);
   border: 1px solid rgba(255, 102, 0, 0.3);
   border-radius: var(--radius-full);
@@ -2055,7 +2055,7 @@ a {
 /* Filter Gear Icon - Embedded in Search (LEFT side) */
 .search-filter-btn {
   position: absolute;
-  left: 8px;
+  left: 4px;
   top: 50%;
   transform: translateY(-50%);
   background: transparent;
@@ -2067,6 +2067,8 @@ a {
   align-items: center;
   justify-content: center;
   transition: var(--transition-base);
+  min-width: 28px;
+  height: 28px;
 }
 
 .search-filter-btn span {
@@ -2115,47 +2117,12 @@ a {
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding: 0 var(--spacing-md);
-  padding-left: calc(var(--spacing-md) + 56px); /* Space for fixed filter button (32px + margin) */
   scroll-snap-type: x mandatory;
-  /* Fade starts after filter button (~60px) and ends at right edge */
-  mask-image: linear-gradient(to right, transparent 0%, black 60px, black 95%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 60px, black 95%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
   /* Horizontal layout - swipe left/right */
   flex-direction: row;
   white-space: nowrap;
-}
-
-/* Quick Filter Button - FIXED position (part of header, doesn't scroll) */
-.quick-filter-btn {
-  position: absolute;
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 10px;
-  background: rgba(255, 102, 0, 0.15);
-  border: 1px solid rgba(255, 102, 0, 0.3);
-  border-radius: var(--radius-full);
-  color: var(--orange-primary);
-  cursor: pointer;
-  transition: var(--transition-fast);
-  height: 32px;
-  min-width: 32px;
-  z-index: 10;
-}
-
-.quick-filter-btn span {
-  font-size: 1rem;
-  display: inline-block;
-  transition: var(--transition-fast);
-}
-
-.quick-filter-btn:hover span,
-.quick-filter-btn:active span {
-  transform: rotate(90deg) scale(1.1);
 }
 
 .mobile-quick-filters-scroll::-webkit-scrollbar {
