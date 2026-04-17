@@ -2115,6 +2115,7 @@ a {
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding: 0 var(--spacing-md);
+  padding-left: calc(var(--spacing-md) + 44px); /* Space for fixed filter button */
   scroll-snap-type: x mandatory;
   mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
@@ -2123,13 +2124,12 @@ a {
   white-space: nowrap;
 }
 
-.mobile-quick-filters-scroll::-webkit-scrollbar {
-  display: none;
-}
-
-/* Quick Filter Button - Gear icon at start of scroll bar */
+/* Quick Filter Button - FIXED position (part of header, doesn't scroll) */
 .quick-filter-btn {
-  scroll-snap-align: start;
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
@@ -2143,6 +2143,7 @@ a {
   transition: var(--transition-fast);
   height: 32px;
   min-width: 32px;
+  z-index: 10;
 }
 
 .quick-filter-btn span {
@@ -2154,6 +2155,10 @@ a {
 .quick-filter-btn:hover span,
 .quick-filter-btn:active span {
   transform: rotate(90deg) scale(1.1);
+}
+
+.mobile-quick-filters-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 /* Quick Filter Separator - Vertical divider between categories and brands */
