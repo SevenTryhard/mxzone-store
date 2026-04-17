@@ -2115,11 +2115,11 @@ a {
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding: 0 var(--spacing-md);
-  padding-left: calc(var(--spacing-md) + 44px); /* Space for fixed filter button */
+  padding-left: calc(var(--spacing-md) + 56px); /* Space for fixed filter button (32px + margin) */
   scroll-snap-type: x mandatory;
-  /* Fade starts after filter button (~50px) and ends at right edge */
-  mask-image: linear-gradient(to right, transparent 0%, black 50px, black 95%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 50px, black 95%, transparent 100%);
+  /* Fade starts after filter button (~60px) and ends at right edge */
+  mask-image: linear-gradient(to right, transparent 0%, black 60px, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 60px, black 95%, transparent 100%);
   /* Horizontal layout - swipe left/right */
   flex-direction: row;
   white-space: nowrap;
