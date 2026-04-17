@@ -900,13 +900,16 @@ a {
   gap: var(--spacing-md);
   padding: var(--spacing-lg) 0;
   margin: var(--spacing-lg) 0;
+  /* Hacer que el separador ocupe todo el ancho del grid */
+  grid-column: 1 / -1;
+  width: 100%;
 }
 
 .category-divider-line {
   flex: 1;
   height: 2px;
   background: linear-gradient(90deg, transparent 0%, rgba(255, 102, 0, 0.5) 50%, transparent 100%);
-  max-width: 200px;
+  max-width: 300px;
 }
 
 .category-divider-content {
@@ -917,6 +920,7 @@ a {
   background: rgba(255, 102, 0, 0.1);
   border-radius: var(--radius-full);
   border: 1px solid rgba(255, 102, 0, 0.2);
+  white-space: nowrap;
 }
 
 .category-divider-icon {
