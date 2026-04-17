@@ -408,9 +408,13 @@ async function renderShopProducts() {
       if (window.MXZONE && window.MXZONE.InitPriceSlider) {
         window.MXZONE.InitPriceSlider();
       }
-      // Initialize mobile filter chips
+      // Initialize mobile filter chips and quick filter chips
       if (window.initMobileFilterChips) {
         window.initMobileFilterChips();
+      }
+      // Re-initialize quick filter chips after filters are set up
+      if (typeof initQuickFilterChips !== 'undefined') {
+        initQuickFilterChips();
       }
       updateResultsCount();
     }, 100);

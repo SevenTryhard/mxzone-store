@@ -891,7 +891,9 @@ function initPriceRangeSlider() {
   window.initMobileFilterChips();
 
   // Initialize new quick filter chips (horizontal scrollable category bar)
+  // Try immediately and also after a short delay to ensure DOM is ready
   initQuickFilterChips();
+  setTimeout(initQuickFilterChips, 100);
 }
 
 /**
