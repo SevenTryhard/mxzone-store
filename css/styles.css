@@ -201,9 +201,42 @@ a {
   color: var(--orange-primary);
 }
 
+/* Instagram Full Width Section */
+.instagram-full-section {
+  margin-bottom: var(--spacing-lg);
+}
+
+.instagram-full-content {
+  min-height: 500px;
+  background: #fafafa;
+  padding: var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.instagram-embed-wrapper {
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  background: transparent;
+}
+
+.instagram-embed-wrapper blockquote {
+  margin: 0 auto !important;
+  max-width: 100% !important;
+}
+
+/* Dual Grid for TikTok + Facebook */
+.social-grid-dual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+}
+
 .social-hero-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: var(--spacing-lg);
   align-items: stretch;
 }
@@ -318,13 +351,20 @@ a {
   margin: 0 auto !important;
 }
 
-/* TikTok Placeholder */
-.tiktok-embed {
+/* TikTok Embed */
+.tiktok-embed-wrapper {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+}
+
+.tiktok-embed-wrapper blockquote {
+  margin: 0 auto !important;
 }
 
 .tiktok-placeholder {
@@ -400,17 +440,56 @@ a {
 
 /* Responsive Social Hero */
 @media (max-width: 1024px) {
-  .social-hero-grid {
+  .social-grid-dual {
     grid-template-columns: 1fr;
-    gap: var(--spacing-md);
-  }
-
-  .social-card.featured {
-    order: -1;
   }
 
   .social-content {
     min-height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .social-hero-section {
+    padding: var(--spacing-md) 0;
+    margin-top: var(--spacing-md);
+  }
+
+  .social-hero-title {
+    font-size: 1.8rem;
+  }
+
+  .social-hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .social-cta-badges {
+    gap: 6px;
+  }
+
+  .social-cta-badges .badge {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+  }
+
+  .social-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+
+  .social-content {
+    min-height: 180px;
+  }
+
+  .instagram-full-content {
+    min-height: 400px;
+    padding: var(--spacing-sm);
+  }
+
+  .social-grid-dual {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
   }
 }
 
