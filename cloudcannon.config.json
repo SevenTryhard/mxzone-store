@@ -79,10 +79,13 @@
         "images": {
           "type": "array",
           "label": "Galería de imágenes",
+          "array_item_type": "file",
           "items": {
             "type": "file",
+            "label": "Imagen",
             "options": {
-              "upload_path": "assets/images/cascos"
+              "upload_path": "assets/images/uploads",
+              "original_filename": true
             }
           }
         },
