@@ -1,0 +1,54 @@
+{
+  "collections": {
+    "productos": {
+      "path": "cms/productos",
+      "schema": {
+        "name": {
+          "type": "text",
+          "label": "Nombre del producto"
+        },
+        "price": {
+          "type": "text",
+          "label": "Precio"
+        },
+        "sizes": {
+          "type": "text",
+          "label": "Tallas disponibles"
+        },
+        "image": {
+          "type": "file",
+          "label": "Imagen principal",
+          "options": {
+            "upload_path": "assets/images/uploads"
+          }
+        },
+        "images": {
+          "type": "array",
+          "label": "Galería de imágenes",
+          "array_item_type": "file",
+          "options": {
+            "upload_path": "assets/images/uploads"
+          }
+        },
+        "badge": {
+          "type": "text",
+          "label": "Etiqueta (Badge)"
+        },
+        "category": {
+          "type": "select",
+          "label": "Categoría",
+          "options": {
+            "values": ["cascos", "uniformes", "botas", "protecciones"]
+          }
+        },
+        "description": {
+          "type": "text",
+          "label": "Descripción"
+        }
+      }
+    }
+  },
+  "paths": {
+    "uploads": "assets/images/uploads"
+  }
+}
