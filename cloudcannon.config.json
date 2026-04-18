@@ -52,13 +52,11 @@
             "upload_path": "assets/images/uploads"
           }
         },
-        "images": {
-          "type": "gallery",
-          "label": "Galería de imágenes",
+        "extras": {
+          "type": "file",
+          "label": "Imágenes adicionales",
           "options": {
-            "upload_path": "assets/images/uploads",
-            "original_filename": true,
-            "preview_path": "assets/images/uploads"
+            "upload_path": "assets/images/uploads"
           }
         },
         "badge": {

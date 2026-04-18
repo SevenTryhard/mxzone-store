@@ -16,13 +16,20 @@ function isCloudCannonUrl(url) {
   return url && url.includes('cloudvent.net');
 }
 
-// Obtener imagen del producto (images[] tiene prioridad, image es fallback)
+// Obtener imagen del producto (image + extras)
 function getProductImage(product) {
   let imageSrc = '';
-  if (product.images && product.images.length > 0) {
-    imageSrc = product.images[0];
-  } else if (product.image) {
+  // Primero usar image principal
+  if (product.image) {
     imageSrc = product.image;
+  }
+  // Si no, usar extras (puede ser string o array)
+  else if (product.extras) {
+    if (Array.isArray(product.extras)) {
+      imageSrc = product.extras[0] || '';
+    } else {
+      imageSrc = product.extras;
+    }
   }
   // Si es CloudCannon, corregir formato
   if (isCloudCannonUrl(imageSrc)) {

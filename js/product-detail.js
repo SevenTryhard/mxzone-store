@@ -95,17 +95,23 @@ function isCloudCannonUrl(url) {
   return url && url.includes('cloudvent.net');
 }
 
-// Obtener imagen principal del producto (images[] tiene prioridad, image es fallback)
+// Obtener imagen principal del producto (image + extras)
 function getProductImage(product) {
   let imageSrc = '';
-  // Filtrar strings vacíos del array images
-  const validImages = product.images ? product.images.filter(img => img && img.trim() !== '') : [];
 
-  if (validImages.length > 0) {
-    imageSrc = validImages[0];
-  } else if (product.image) {
+  // Primero usar image principal
+  if (product.image) {
     imageSrc = product.image;
   }
+  // Si no, usar extras (puede ser string o array)
+  else if (product.extras) {
+    if (Array.isArray(product.extras)) {
+      imageSrc = product.extras[0] || '';
+    } else {
+      imageSrc = product.extras;
+    }
+  }
+
   // Si es CloudCannon, corregir formato y no agregar cache buster
   if (isCloudCannonUrl(imageSrc)) {
     return imageSrc.replace(/^\/https:/, 'https:');
@@ -113,6 +119,27 @@ function getProductImage(product) {
   // Quitar slash inicial si existe
   const cleanPath = imageSrc.replace(/^\//, '');
   return encodeImagePath(cleanPath) + '?' + IMAGE_VERSION;
+}
+
+// Obtener todas las imágenes del producto (image + extras)
+function getProductImages(product) {
+  let images = [];
+
+  // Primero la imagen principal
+  if (product.image) {
+    images.push(product.image);
+  }
+
+  // Luego las imágenes extras
+  if (product.extras) {
+    if (Array.isArray(product.extras)) {
+      images = images.concat(product.extras.filter(e => e && e.trim() !== ''));
+    } else if (typeof product.extras === 'string' && product.extras.trim() !== '') {
+      images.push(product.extras);
+    }
+  }
+
+  return images;
 }
 
 // Crear HTML del producto
@@ -128,22 +155,44 @@ function createProductHTML(product) {
   const badgeHTML = product.badge ?
     `<span class="product-detail-badge">${product.badge}</span>` : '';
 
+  // Obtener todas las imágenes
+  const allImages = getProductImages(product);
+  const imageVersion = Date.now();
+
+  // Procesar URLs
+  const processImageUrl = (img) => {
+    if (isCloudCannonUrl(img)) {
+      return img.replace(/^\/https:/, 'https:');
+    }
+    return encodeImagePath(img.replace(/^\//, '')) + '?' + imageVersion;
+  };
+
+  const processedImages = allImages.map(processImageUrl);
+  const mainImage = processedImages.length > 0 ? processedImages[0] : imageSrc;
+
+  // Crear thumbnails
+  const thumbnails = processedImages.map((img, idx) => `
+    <div class="thumbnail${idx === 0 ? ' active' : ''}">
+      <img src="${img}" alt="${product.name}" onerror="this.style.display='none';">
+    </div>
+  `).join('');
+
   return `
     <div class="product-detail-grid">
       <!-- Galería de Imágenes -->
       <div class="product-detail-gallery">
         <div class="main-image-container">
-          <img src="${imageSrc}" alt="${product.name}" class="product-main-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <img src="${mainImage}" alt="${product.name}" class="product-main-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
           <div class="product-image-placeholder-large" style="display:none;">MX</div>
           ${badgeHTML}
         </div>
 
-        <!-- Miniaturas (se pueden expandir para múltiples imágenes) -->
+        <!-- Miniaturas para múltiples imágenes -->
+        ${processedImages.length > 1 ? `
         <div class="thumbnail-container">
-          <div class="thumbnail active">
-            <img src="${imageSrc}" alt="${product.name}" onerror="this.style.display='none';">
-          </div>
+          ${thumbnails}
         </div>
+        ` : ''}
       </div>
 
       <!-- Información del Producto -->
