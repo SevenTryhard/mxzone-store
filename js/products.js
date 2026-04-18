@@ -156,25 +156,28 @@ async function loadProducts() {
 
     const products = [];
 
-    // Caché para evitar recargar productos en la misma sesión
-    const cacheKey = 'mxzone_products_cache';
-    const cachedData = sessionStorage.getItem(cacheKey);
+    // Versión de imágenes - actualizar este número cuando se cambien las fotos
+    // Esto fuerza al navegador a cargar las imágenes nuevas
+    const IMAGE_VERSION = 'v3-20260418';
 
-    if (cachedData) {
-      const { products: cachedProducts, timestamp } = JSON.parse(cachedData);
-      // Usar caché por 5 minutos
-      if (Date.now() - timestamp < 5 * 60 * 1000) {
-        console.log('Productos cargados desde caché:', cachedProducts.length);
-        return cachedProducts;
-      }
+    // Función para codificar URLs de imágenes correctamente (maneja espacios)
+    function encodeImagePath(path) {
+      return path.replace(/ /g, '%20');
     }
 
-    // Cargar todos los archivos en paralelo
+    // Cargar todos los archivos en paralelo con cache buster en el JSON también
     const promises = productFiles.map(async (file) => {
       try {
-        const response = await fetch(cmsBaseUrl + file);
+        const response = await fetch(cmsBaseUrl + file + '?v=' + IMAGE_VERSION);
         if (response.ok) {
           const product = await response.json();
+          // Procesar imágenes: codificar espacios y agregar versión
+          if (product.images && product.images.length > 0) {
+            product.images = product.images.map(img => encodeImagePath(img) + '?' + IMAGE_VERSION);
+          }
+          if (product.image) {
+            product.image = encodeImagePath(product.image) + '?' + IMAGE_VERSION;
+          }
           return product;
         }
       } catch (e) {
@@ -185,12 +188,6 @@ async function loadProducts() {
 
     const results = await Promise.all(promises);
     const validProducts = results.filter(p => p !== null);
-
-    // Guardar en caché
-    sessionStorage.setItem(cacheKey, JSON.stringify({
-      products: validProducts,
-      timestamp: Date.now()
-    }));
 
     console.log('Productos cargados:', validProducts.length);
     return validProducts;
@@ -220,8 +217,10 @@ function createProductCard(product) {
   const productSlug = createProductSlug(product.name);
 
   // Soporte para múltiples imágenes o imagen única
-  const images = product.images || (product.image ? [product.image] : []);
-  const mainImage = images.length > 0 ? images[0] : product.image || '';
+  // Agregar timestamp para forzar recarga de imágenes nuevas (cache buster)
+  const imageVersion = Date.now();
+  const images = (product.images || (product.image ? [product.image] : [])).map(img => img + '?v=' + imageVersion);
+  const mainImage = images.length > 0 ? images[0] : product.image + '?v=' + imageVersion;
   const badgeHTML = product.badge ?
     `<span class="product-badge">${product.badge}</span>` : '';
 

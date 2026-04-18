@@ -3,6 +3,11 @@
  * Premium interactions and animations
  */
 
+// Función para codificar URLs de imágenes correctamente (maneja espacios)
+function encodeImagePath(path) {
+  return path.replace(/ /g, '%20');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize all modules
   initHeader();
@@ -1404,13 +1409,16 @@ function initProductModalInternal() {
         images = [card.dataset.image];
       }
 
+      // Codificar imágenes correctamente
+      images = images.map(encodeImagePath);
+
       // Store current product data
       currentProduct = {
         name,
         price,
         priceNum: parseInt(price.replace(/[^0-9]/g, '')),
         category,
-        image: images[0] || '',
+        image: encodeImagePath(images[0] || ''),
         images,
         sizes
       };
@@ -1580,6 +1588,9 @@ function initProductModalInternal() {
       if (images.length === 0 && productImage.src) {
         images = [productImage.src];
       }
+
+      // Codificar imágenes correctamente
+      images = images.map(encodeImagePath);
 
       // Mostrar preview
       imagePreviewMain.src = images[0] || productImage.src;

@@ -82,6 +82,14 @@ function getCategoryFeatures(category) {
   return features[category] || features.cascos;
 }
 
+// Versión de imágenes - actualizar cuando se cambien las fotos
+const IMAGE_VERSION = 'v3-20260418';
+
+// Función para codificar URLs de imágenes correctamente (maneja espacios)
+function encodeImagePath(path) {
+  return path.replace(/ /g, '%20');
+}
+
 // Crear HTML del producto
 function createProductHTML(product) {
   const brand = getBrand(product.name);
@@ -91,6 +99,7 @@ function createProductHTML(product) {
   const features = getCategoryFeatures(product.category);
   const sizes = product.sizes.split('/').map(s => s.trim());
 
+  const imageSrc = encodeImagePath(product.image) + '?' + IMAGE_VERSION;
   const badgeHTML = product.badge ?
     `<span class="product-detail-badge">${product.badge}</span>` : '';
 
@@ -99,7 +108,7 @@ function createProductHTML(product) {
       <!-- Galería de Imágenes -->
       <div class="product-detail-gallery">
         <div class="main-image-container">
-          <img src="${product.image}" alt="${product.name}" class="product-main-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <img src="${imageSrc}" alt="${product.name}" class="product-main-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
           <div class="product-image-placeholder-large" style="display:none;">MX</div>
           ${badgeHTML}
         </div>
@@ -107,7 +116,7 @@ function createProductHTML(product) {
         <!-- Miniaturas (se pueden expandir para múltiples imágenes) -->
         <div class="thumbnail-container">
           <div class="thumbnail active">
-            <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none';">
+            <img src="${imageSrc}" alt="${product.name}" onerror="this.style.display='none';">
           </div>
         </div>
       </div>
@@ -264,13 +273,15 @@ function createRelatedProductCard(product) {
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
   const brand = getBrand(product.name);
 
+  const imageSrc = encodeImagePath(product.image) + '?' + IMAGE_VERSION;
+
   const badgeHTML = product.badge ?
     `<span class="product-badge">${product.badge}</span>` : '';
 
   return `
     <div class="product-card" data-category="${product.category}" data-brand="${brand.name.toLowerCase()}">
       <div class="product-image">
-        <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <img src="${imageSrc}" alt="${product.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <span class="product-image-placeholder" style="display:none;">MX</span>
         ${badgeHTML}
       </div>

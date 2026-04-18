@@ -6,6 +6,11 @@
 const CART_STORAGE_KEY = 'mxzone_cart';
 const WHATSAPP_NUMBER = '573176692997';
 
+// Función para codificar URLs de imágenes correctamente (maneja espacios)
+function encodeImagePath(path) {
+  return path.replace(/ /g, '%20');
+}
+
 // Estado del carrito
 let cart = [];
 let selectedPaymentMethod = '';
@@ -46,7 +51,7 @@ function addToCart(product, size, quantity = 1) {
       name: product.name,
       price: product.price,
       priceNum: parseInt(product.price.replace(/[^0-9]/g, '')),
-      image: product.image,
+      image: encodeImagePath(product.image),
       category: product.category,
       selectedSize: size,
       quantity: quantity,
