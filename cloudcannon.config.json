@@ -55,8 +55,10 @@
         "extras": {
           "type": "file",
           "label": "Imágenes adicionales",
+          "comment": "Segunda imagen del producto - mismo comportamiento que image",
           "options": {
-            "upload_path": "assets/images/uploads"
+            "upload_path": "assets/images/uploads",
+            "preview_path": "assets/images/uploads"
           }
         },
         "badge": {
