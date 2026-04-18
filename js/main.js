@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroParallax();
   initHero3DTilt();
   initCard3DTilt();
-  initGalaxyCard3DTilt();
   initRecomendadosCarousel();
 });
 
@@ -1873,36 +1872,6 @@ function initRecomendadosCarousel() {
 
   // Initial button state
   updateNavButtons();
-}
-
-/**
- * 3D Tilt Effect for Galaxy Cards (Social Media Section)
- * Same effect as category cards but for social media cards
- */
-function initGalaxyCard3DTilt() {
-  const galaxyCards = document.querySelectorAll('.galaxy-card');
-
-  galaxyCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      // Calculate center
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
-      // Calculate rotation (max 8 degrees for galaxy cards)
-      const rotateX = ((y - centerY) / centerY) * -8;
-      const rotateY = ((x - centerX) / centerX) * 8;
-
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(5px)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0deg)';
-    });
-  });
 }
 
 // Export functions for external use

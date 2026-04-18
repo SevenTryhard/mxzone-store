@@ -239,15 +239,18 @@ a {
   transform: translateY(-2px);
 }
 
-/* Galaxy Cards - Base simple, 3D se aplica con JS */
+/* Galaxy Cards - Sin 3D, solo hover simple */
 .galaxy-card {
   background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
   border: 1px solid rgba(255, 102, 0, 0.3);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(10px);
-  transition: transform 0.1s ease-out, box-shadow 0.3s ease;
-  transform-style: preserve-3d;
-  will-change: transform;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.galaxy-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
 }
 
 .galaxy-header {
@@ -304,12 +307,58 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 300px;
+  min-height: 250px;
   border-radius: var(--radius-md);
   margin: var(--spacing-md);
 }
 
-.instagram-embed-container blockquote,
+/* Instagram Profile Link */
+.instagram-profile-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.instagram-profile-content {
+  text-align: center;
+  padding: var(--spacing-lg);
+}
+
+.instagram-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: var(--spacing-md);
+}
+
+.instagram-profile-content h4 {
+  color: #000;
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 700;
+}
+
+.instagram-profile-content p {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.btn-instagram {
+  display: inline-block;
+  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: white;
+  padding: 10px 24px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-instagram:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 39, 67, 0.4);
+}
+
 .tiktok-embed-container blockquote {
   margin: 0 !important;
   max-width: 100% !important;
