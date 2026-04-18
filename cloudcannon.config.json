@@ -3,30 +3,6 @@
     "uploads": "assets/images/uploads"
   },
   "collections_config": {
-    "pages": {
-      "path": "",
-      "icon": "wysiwyg",
-      "disable_url": false,
-      "disable_add": false,
-      "disable_add_folder": false,
-      "disable_file_actions": false
-    },
-    "admin": {
-      "path": "admin",
-      "icon": "ad",
-      "disable_url": false,
-      "disable_add": false,
-      "disable_add_folder": false,
-      "disable_file_actions": false
-    },
-    "cms": {
-      "path": "cms",
-      "icon": "css",
-      "disable_url": false,
-      "disable_add": false,
-      "disable_add_folder": false,
-      "disable_file_actions": false
-    },
     "cms_productos": {
       "path": "cms/productos",
       "icon": "nest_protect",
