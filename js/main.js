@@ -8,6 +8,26 @@ function encodeImagePath(path) {
   return path.replace(/ /g, '%20');
 }
 
+// Verificar si es URL de CloudCannon
+function isCloudCannonUrl(url) {
+  return url && url.includes('cloudvent.net');
+}
+
+// Obtener imagen del producto (images[] tiene prioridad, image es fallback)
+function getProductImage(product) {
+  let imageSrc = '';
+  if (product.images && product.images.length > 0) {
+    imageSrc = product.images[0];
+  } else if (product.image) {
+    imageSrc = product.image;
+  }
+  // Si es CloudCannon, corregir formato
+  if (isCloudCannonUrl(imageSrc)) {
+    return imageSrc.replace(/^\/https:/, 'https:');
+  }
+  return encodeImagePath(imageSrc);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize all modules
   initHeader();
@@ -1409,8 +1429,13 @@ function initProductModalInternal() {
         images = [card.dataset.image];
       }
 
-      // Codificar imágenes correctamente
-      images = images.map(encodeImagePath);
+      // Procesar imágenes: CloudCannon o local con encode
+      images = images.map(img => {
+        if (isCloudCannonUrl(img)) {
+          return img.replace(/^\/https:/, 'https:');
+        }
+        return encodeImagePath(img);
+      });
 
       // Store current product data
       currentProduct = {
@@ -1418,7 +1443,7 @@ function initProductModalInternal() {
         price,
         priceNum: parseInt(price.replace(/[^0-9]/g, '')),
         category,
-        image: encodeImagePath(images[0] || ''),
+        image: images[0] || '',
         images,
         sizes
       };
@@ -1589,8 +1614,13 @@ function initProductModalInternal() {
         images = [productImage.src];
       }
 
-      // Codificar imágenes correctamente
-      images = images.map(encodeImagePath);
+      // Procesar imágenes: CloudCannon o local con encode
+      images = images.map(img => {
+        if (isCloudCannonUrl(img)) {
+          return img.replace(/^\/https:/, 'https:');
+        }
+        return encodeImagePath(img);
+      });
 
       // Mostrar preview
       imagePreviewMain.src = images[0] || productImage.src;

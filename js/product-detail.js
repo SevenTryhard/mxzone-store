@@ -83,11 +83,31 @@ function getCategoryFeatures(category) {
 }
 
 // Versión de imágenes - actualizar cuando se cambien las fotos
-const IMAGE_VERSION = 'v3-20260418';
+const IMAGE_VERSION = 'v4-20260418';
 
 // Función para codificar URLs de imágenes correctamente (maneja espacios)
 function encodeImagePath(path) {
   return path.replace(/ /g, '%20');
+}
+
+// Verificar si es URL de CloudCannon
+function isCloudCannonUrl(url) {
+  return url && url.includes('cloudvent.net');
+}
+
+// Obtener imagen principal del producto (images[] tiene prioridad, image es fallback)
+function getProductImage(product) {
+  let imageSrc = '';
+  if (product.images && product.images.length > 0) {
+    imageSrc = product.images[0];
+  } else if (product.image) {
+    imageSrc = product.image;
+  }
+  // Si es CloudCannon, corregir formato y no agregar cache buster
+  if (isCloudCannonUrl(imageSrc)) {
+    return imageSrc.replace(/^\/https:/, 'https:');
+  }
+  return encodeImagePath(imageSrc) + '?' + IMAGE_VERSION;
 }
 
 // Crear HTML del producto
@@ -99,7 +119,7 @@ function createProductHTML(product) {
   const features = getCategoryFeatures(product.category);
   const sizes = product.sizes.split('/').map(s => s.trim());
 
-  const imageSrc = encodeImagePath(product.image) + '?' + IMAGE_VERSION;
+  const imageSrc = getProductImage(product);
   const badgeHTML = product.badge ?
     `<span class="product-detail-badge">${product.badge}</span>` : '';
 
@@ -273,7 +293,7 @@ function createRelatedProductCard(product) {
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
   const brand = getBrand(product.name);
 
-  const imageSrc = encodeImagePath(product.image) + '?' + IMAGE_VERSION;
+  const imageSrc = getProductImage(product);
 
   const badgeHTML = product.badge ?
     `<span class="product-badge">${product.badge}</span>` : '';

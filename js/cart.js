@@ -11,6 +11,26 @@ function encodeImagePath(path) {
   return path.replace(/ /g, '%20');
 }
 
+// Verificar si es URL de CloudCannon
+function isCloudCannonUrl(url) {
+  return url && url.includes('cloudvent.net');
+}
+
+// Obtener imagen del producto (images[] tiene prioridad, image es fallback)
+function getProductImage(product) {
+  let imageSrc = '';
+  if (product.images && product.images.length > 0) {
+    imageSrc = product.images[0];
+  } else if (product.image) {
+    imageSrc = product.image;
+  }
+  // Si es CloudCannon, corregir formato
+  if (isCloudCannonUrl(imageSrc)) {
+    return imageSrc.replace(/^\/https:/, 'https:');
+  }
+  return encodeImagePath(imageSrc);
+}
+
 // Estado del carrito
 let cart = [];
 let selectedPaymentMethod = '';
@@ -51,7 +71,7 @@ function addToCart(product, size, quantity = 1) {
       name: product.name,
       price: product.price,
       priceNum: parseInt(product.price.replace(/[^0-9]/g, '')),
-      image: encodeImagePath(product.image),
+      image: getProductImage(product),
       category: product.category,
       selectedSize: size,
       quantity: quantity,
