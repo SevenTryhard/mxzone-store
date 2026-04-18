@@ -95,7 +95,7 @@ function isCloudCannonUrl(url) {
   return url && url.includes('cloudvent.net');
 }
 
-// Obtener imagen principal del producto (image + extras)
+// Obtener imagen principal del producto (image + galeria)
 function getProductImage(product) {
   let imageSrc = '';
 
@@ -103,12 +103,12 @@ function getProductImage(product) {
   if (product.image) {
     imageSrc = product.image;
   }
-  // Si no, usar extras (puede ser string o array)
-  else if (product.extras) {
-    if (Array.isArray(product.extras)) {
-      imageSrc = product.extras[0] || '';
+  // Si no, usar galeria (puede ser string o array)
+  else if (product.galeria) {
+    if (Array.isArray(product.galeria)) {
+      imageSrc = product.galeria[0] || '';
     } else {
-      imageSrc = product.extras;
+      imageSrc = product.galeria;
     }
   }
 
@@ -121,7 +121,7 @@ function getProductImage(product) {
   return encodeImagePath(cleanPath) + '?' + IMAGE_VERSION;
 }
 
-// Obtener todas las imágenes del producto (image + extras)
+// Obtener todas las imágenes del producto (image + galeria)
 function getProductImages(product) {
   let images = [];
 
@@ -130,12 +130,12 @@ function getProductImages(product) {
     images.push(product.image);
   }
 
-  // Luego las imágenes extras
-  if (product.extras) {
-    if (Array.isArray(product.extras)) {
-      images = images.concat(product.extras.filter(e => e && e.trim() !== ''));
-    } else if (typeof product.extras === 'string' && product.extras.trim() !== '') {
-      images.push(product.extras);
+  // Luego las imágenes de la galería
+  if (product.galeria) {
+    if (Array.isArray(product.galeria)) {
+      images = images.concat(product.galeria.filter(e => e && e.trim() !== ''));
+    } else if (typeof product.galeria === 'string' && product.galeria.trim() !== '') {
+      images.push(product.galeria);
     }
   }
 

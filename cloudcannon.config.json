@@ -52,10 +52,9 @@
             "upload_path": "assets/images/uploads"
           }
         },
-        "extras": {
+        "galeria": {
           "type": "file",
-          "label": "Imágenes adicionales",
-          "comment": "Segunda imagen del producto - mismo comportamiento que image",
+          "label": "Galería (Segunda imagen)",
           "options": {
             "upload_path": "assets/images/uploads",
             "preview_path": "assets/images/uploads"
