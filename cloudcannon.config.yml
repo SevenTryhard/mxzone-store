@@ -17,6 +17,9 @@ collections_config:
     path: cms/productos
     icon: nest_protect
     disable_url: false
+    _inputs:
+      $.name:
+        cascade: true
     disable_add: false
     disable_add_folder: false
     disable_file_actions: false
@@ -34,10 +37,8 @@ collections_config:
     disable_add: false
     disable_add_folder: false
     disable_file_actions: false
-
 base_url: https://golden-macadamia.cloudvent.net
 timezone: Etc/UTC
-
 collections:
   productos:
     _options:
@@ -70,12 +71,12 @@ collections:
         label: Imagen Principal del Producto
         type: image
         required: true
-        comment: 'Imagen que se muestra en el catálogo'
+        comment: Imagen que se muestra en el catálogo
       - name: images
         label: Galería de Imágenes
         type: array
         required: false
-        comment: 'Imágenes adicionales del producto (máximo 5)'
+        comment: Imágenes adicionales del producto (máximo 5)
         array_item:
           type: image
       - name: badge
@@ -89,7 +90,7 @@ collections:
             - Nuevo
             - Edicion Limitada
             - Oferta
-        comment: 'Etiqueta que aparece en la esquina'
+        comment: Etiqueta que aparece en la esquina
       - name: category
         label: Categoría
         type: select
@@ -100,7 +101,6 @@ collections:
             - uniformes
             - botas
             - protecciones
-
   testimonials:
     _options:
       icon: star
@@ -130,7 +130,6 @@ collections:
         type: text
         required: true
         comment: '2 letras. Ej: CR, JM'
-
   settings:
     _options:
       icon: settings
@@ -160,16 +159,15 @@ collections:
       - name: facebook
         label: Facebook URL
         type: text
-        comment: 'Link completo https://facebook.com/...'
+        comment: Link completo https://facebook.com/...
       - name: instagram
         label: Instagram URL
         type: text
-        comment: 'Link completo https://instagram.com/...'
+        comment: Link completo https://instagram.com/...
       - name: tiktok
         label: TikTok URL
         type: text
-        comment: 'Link completo https://tiktok.com/...'
-
+        comment: Link completo https://tiktok.com/...
   promociones:
     _options:
       icon: local_offer
@@ -193,12 +191,12 @@ collections:
         label: Slug (URL)
         type: text
         required: false
-        comment: 'Opcional. Si se deja vacío se genera automáticamente'
+        comment: Opcional. Si se deja vacío se genera automáticamente
       - name: description
         label: Descripción
         type: text
         required: false
-        comment: 'Descripción corta del combo'
+        comment: Descripción corta del combo
       - name: category
         label: Categoría
         type: select
@@ -209,7 +207,7 @@ collections:
             - intermedio
             - profesional
             - premium
-        comment: 'Nivel del combo'
+        comment: Nivel del combo
       - name: badge
         label: Etiqueta Destacada
         type: select
@@ -221,17 +219,17 @@ collections:
             - Recomendado
             - Edición Limitada
             - Top Descuento
-        comment: 'Etiqueta que aparece en la esquina'
+        comment: Etiqueta que aparece en la esquina
       - name: image
         label: Imagen Principal
         type: image
         required: true
-        comment: 'Imagen que se muestra en el grid'
+        comment: Imagen que se muestra en el grid
       - name: images
         label: Galería de Imágenes
         type: array
         required: false
-        comment: 'Imágenes adicionales del combo (máximo 5)'
+        comment: Imágenes adicionales del combo (máximo 5)
         array_item:
           type: image
       - name: regularTotal
@@ -248,7 +246,7 @@ collections:
         label: Productos Incluidos
         type: array
         required: true
-        comment: 'Lista de productos que forman el combo'
+        comment: Lista de productos que forman el combo
         array_item:
           type: object
           fields:
@@ -279,7 +277,6 @@ collections:
               type: text
               required: false
               comment: 'Ej: S/M/L/XL o 38/39/40/41'
-
 media:
   cloudcannon:
     - source: assets/images/cms
@@ -305,7 +302,6 @@ media:
       path: assets/images/protecciones
       optimize: true
       max_size: 5MB
-
 preview:
   enabled: true
   environment: production
