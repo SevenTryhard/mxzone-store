@@ -222,7 +222,8 @@ function createProductCard(product) {
 
   let images = [];
   if (product.images && product.images.length > 0) {
-    images = product.images;
+    // Filtrar strings vacíos del array
+    images = product.images.filter(img => img && img.trim() !== '');
   } else if (product.image) {
     images = [product.image];
   }
