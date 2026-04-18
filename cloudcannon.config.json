@@ -1,4 +1,58 @@
 {
+  "paths": {
+    "uploads": "assets/images/uploads"
+  },
+  "collections_config": {
+    "pages": {
+      "path": "",
+      "icon": "wysiwyg",
+      "disable_url": false,
+      "disable_add": false,
+      "disable_add_folder": false,
+      "disable_file_actions": false
+    },
+    "admin": {
+      "path": "admin",
+      "icon": "ad",
+      "disable_url": false,
+      "disable_add": false,
+      "disable_add_folder": false,
+      "disable_file_actions": false
+    },
+    "cms": {
+      "path": "cms",
+      "icon": "css",
+      "disable_url": false,
+      "disable_add": false,
+      "disable_add_folder": false,
+      "disable_file_actions": false
+    },
+    "cms_productos": {
+      "path": "cms/productos",
+      "icon": "nest_protect",
+      "disable_url": false,
+      "disable_add": false,
+      "disable_add_folder": false,
+      "disable_file_actions": false
+    },
+    "cms_promociones": {
+      "path": "cms/promociones",
+      "icon": "3d_rotation",
+      "disable_url": false,
+      "disable_add": false,
+      "disable_add_folder": false,
+      "disable_file_actions": false
+    },
+    "cms_settings": {
+      "path": "cms/settings",
+      "icon": "reset_settings",
+      "disable_url": false,
+      "disable_add": false,
+      "disable_add_folder": false,
+      "disable_file_actions": false
+    }
+  },
+  "timezone": "Etc/UTC",
   "collections": {
     "productos": {
       "path": "cms/productos",
@@ -40,7 +94,12 @@
           "type": "select",
           "label": "Categoría",
           "options": {
-            "values": ["cascos", "uniformes", "botas", "protecciones"]
+            "values": [
+              "cascos",
+              "uniformes",
+              "botas",
+              "protecciones"
+            ]
           }
         },
         "description": {
@@ -49,8 +108,5 @@
         }
       }
     }
-  },
-  "paths": {
-    "uploads": "assets/images/uploads"
   }
 }
