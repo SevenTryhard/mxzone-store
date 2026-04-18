@@ -164,7 +164,7 @@ a {
   overflow: hidden;
 }
 
-/* GALAXY THEME - La Galaxia MXZONE */
+/* GALAXY THEME - La Galaxia MXZONE - OPTIMIZADO SIN LAG */
 .galaxy-theme {
   background: linear-gradient(180deg, #0a0a1a 0%, #1a0a2e 50%, #0d1b2a 100%);
   border-bottom: 1px solid rgba(255, 102, 0, 0.2);
@@ -177,7 +177,7 @@ a {
   pointer-events: none;
 }
 
-/* Estrellas animadas */
+/* Estrellas - Solo 1 capa, sin animacion para rendimiento */
 .stars {
   position: absolute;
   width: 100%;
@@ -187,57 +187,30 @@ a {
 
 .stars-1 {
   background-image:
-    radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
-    radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
-    radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.7), transparent),
-    radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.5), transparent),
-    radial-gradient(1px 1px at 230px 80px, rgba(255,255,255,0.8), transparent),
-    radial-gradient(2px 2px at 300px 150px, rgba(255,255,255,0.6), transparent),
-    radial-gradient(1px 1px at 370px 50px, rgba(255,255,255,0.7), transparent),
-    radial-gradient(2px 2px at 450px 180px, rgba(255,255,255,0.5), transparent);
+    radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 90px 70px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 150px 40px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 200px 100px, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 280px 60px, rgba(255,255,255,0.5), transparent);
   background-repeat: repeat;
-  background-size: 500px 200px;
-  animation: twinkle 5s ease-in-out infinite;
-  opacity: 0.6;
-}
-
-.stars-2 {
-  background-image:
-    radial-gradient(1px 1px at 50px 100px, rgba(255,200,100,0.6), transparent),
-    radial-gradient(1px 1px at 150px 50px, rgba(100,150,255,0.7), transparent),
-    radial-gradient(2px 2px at 250px 140px, rgba(255,100,150,0.5), transparent),
-    radial-gradient(1px 1px at 350px 90px, rgba(100,255,200,0.6), transparent);
-  background-repeat: repeat;
-  background-size: 400px 250px;
-  animation: twinkle 7s ease-in-out infinite reverse;
+  background-size: 300px 150px;
   opacity: 0.4;
 }
 
-
-@keyframes twinkle {
-  0%, 100% { opacity: 0.3; transform: translateY(0px); }
-  50% { opacity: 0.8; transform: translateY(-2px); }
-}
-
-/* Nebula effect */
+/* Nebula effect - Simplificado, sin animacion */
 .nebula {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 600px;
-  height: 600px;
+  width: 400px;
+  height: 400px;
   transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse at center, rgba(255,102,0,0.15) 0%, transparent 70%);
-  filter: blur(40px);
-  animation: nebula-pulse 8s ease-in-out infinite;
+  background: radial-gradient(ellipse at center, rgba(255,102,0,0.1) 0%, transparent 70%);
+  filter: blur(30px);
+  opacity: 0.3;
 }
 
-@keyframes nebula-pulse {
-  0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
-}
-
-/* Galaxy Title 3D */
+/* Galaxy Title 3D - Sin animacion automatica */
 .galaxy-title .title-3d {
   display: inline-block;
   font-size: clamp(2.5rem, 6vw, 4rem);
@@ -247,12 +220,6 @@ a {
     0 0 30px rgba(255, 102, 0, 0.4),
     0 4px 8px rgba(0,0,0,0.5),
     0 8px 16px rgba(0,0,0,0.3);
-  animation: title-float 3s ease-in-out infinite;
-}
-
-@keyframes title-float {
-  0%, 100% { transform: translateY(0px) rotateX(0deg); }
-  50% { transform: translateY(-5px) rotateX(5deg); }
 }
 
 .galaxy-subtitle {
@@ -260,42 +227,27 @@ a {
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-/* Galaxy Badges 3D */
+/* Galaxy Badges 3D - Simple hover */
 .galaxy-badges .badge-3d {
   background: linear-gradient(135deg, rgba(255,102,0,0.3) 0%, rgba(255,102,0,0.1) 100%);
   border: 1px solid rgba(255, 102, 0, 0.5);
-  box-shadow:
-    0 4px 15px rgba(255, 102, 0, 0.3),
-    inset 0 1px 0 rgba(255,255,255,0.2);
-  backdrop-filter: blur(10px);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3);
+  transition: transform 0.2s ease;
 }
 
 .galaxy-badges .badge-3d:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow:
-    0 8px 25px rgba(255, 102, 0, 0.5),
-    inset 0 1px 0 rgba(255,255,255,0.3);
+  transform: translateY(-2px);
 }
 
-/* Galaxy Cards */
+/* Galaxy Cards - Base simple, 3D se aplica con JS */
 .galaxy-card {
   background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
   border: 1px solid rgba(255, 102, 0, 0.3);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    0 0 40px rgba(255, 102, 0, 0.1);
-  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  transition: transform 0.1s ease-out, box-shadow 0.3s ease;
   transform-style: preserve-3d;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.galaxy-card:hover {
-  transform: translateY(-8px) rotateX(2deg);
-  border-color: rgba(255, 102, 0, 0.6);
-  box-shadow:
-    0 16px 48px rgba(0, 0, 0, 0.5),
-    0 0 60px rgba(255, 102, 0, 0.2);
+  will-change: transform;
 }
 
 .galaxy-header {
@@ -306,42 +258,30 @@ a {
 
 .galaxy-icon {
   filter: drop-shadow(0 0 10px rgba(255, 102, 0, 0.6));
-  animation: icon-glow 2s ease-in-out infinite;
-}
-
-@keyframes icon-glow {
-  0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 102, 0, 0.6)); }
-  50% { filter: drop-shadow(0 0 20px rgba(255, 102, 0, 0.9)); }
 }
 
 .galaxy-btn {
   background: linear-gradient(135deg, #ff6600 0%, #ff8800 100%);
-  box-shadow:
-    0 4px 15px rgba(255, 102, 0, 0.4),
-    inset 0 1px 0 rgba(255,255,255,0.3);
-  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 102, 0, 0.4);
+  transition: transform 0.2s ease;
 }
 
 .galaxy-btn:hover {
   transform: translateY(-2px);
-  box-shadow:
-    0 6px 25px rgba(255, 102, 0, 0.6),
-    inset 0 1px 0 rgba(255,255,255,0.4);
 }
 
-/* Galaxy Stats 3D */
+/* Galaxy Stats - Simple */
 .galaxy-stats {
   background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
   border-top: 1px solid rgba(255, 102, 0, 0.2);
-  backdrop-filter: blur(10px);
 }
 
 .galaxy-stats .stat-3d {
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
 }
 
 .galaxy-stats .stat-3d:hover {
-  transform: translateY(-5px) scale(1.1);
+  transform: translateY(-3px);
 }
 
 /* Galaxy Placeholder */
@@ -355,118 +295,46 @@ a {
   perspective: 1000px;
 }
 
-/* Preview Grid 3D - Optimizado */
-.instagram-preview-grid,
-.tiktok-preview-grid,
-.facebook-preview-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md);
-}
-
-.preview-card-3d {
-  position: relative;
-  display: block;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  aspect-ratio: 1 / 1;
-  transform-style: preserve-3d;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow:
-    0 4px 15px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(255, 102, 0, 0.1);
-}
-
-.preview-card-3d:hover {
-  transform: translateY(-5px) scale(1.02) rotateY(5deg);
-  box-shadow:
-    0 12px 35px rgba(0, 0, 0, 0.5),
-    0 0 40px rgba(255, 102, 0, 0.3);
-}
-
-.preview-img-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.preview-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.preview-card-3d:hover .preview-img {
-  transform: scale(1.1);
-}
-
-.preview-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%);
+/* Embed Containers - Optimizadas */
+.instagram-embed-container,
+.tiktok-embed-container,
+.facebook-embed-container {
+  padding: var(--spacing-lg);
+  background: rgba(255,255,255,0.98);
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  gap: var(--spacing-xs);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  backdrop-filter: blur(2px);
+  align-items: center;
+  min-height: 300px;
+  border-radius: var(--radius-md);
+  margin: var(--spacing-md);
 }
 
-.preview-card-3d:hover .preview-overlay {
-  opacity: 1;
+.instagram-embed-container blockquote,
+.tiktok-embed-container blockquote {
+  margin: 0 !important;
+  max-width: 100% !important;
 }
 
-.preview-icon {
-  font-size: 2rem;
-  filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+/* Facebook Placeholder */
+.facebook-placeholder-full {
+  text-align: center;
+  padding: var(--spacing-xl);
 }
 
-.preview-cta {
+.facebook-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: var(--spacing-md);
+}
+
+.facebook-placeholder-full h4 {
   color: var(--white);
-  font-weight: 700;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  margin-bottom: var(--spacing-sm);
 }
 
-/* TikTok Overlay */
-.tiktok-overlay {
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(255,0,80,0.9) 100%);
-}
-
-.tiktok-overlay .preview-cta {
-  color: #ff0050;
-}
-
-/* Facebook Overlay */
-.facebook-overlay {
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(24,119,242,0.9) 100%);
-}
-
-.facebook-overlay .preview-cta {
-  color: #1877f2;
-}
-
-/* Responsive Preview Grids */
-@media (max-width: 768px) {
-  .instagram-preview-grid,
-  .tiktok-preview-grid,
-  .facebook-preview-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .instagram-preview-grid,
-  .tiktok-preview-grid,
-  .facebook-preview-grid {
-    grid-template-columns: 1fr;
-  }
+.facebook-placeholder-full p {
+  color: var(--gray-text);
+  margin-bottom: var(--spacing-md);
 }
 
 .social-hero-header {
