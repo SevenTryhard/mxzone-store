@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/styles.css?v=10a-20260417">
+  <link rel="stylesheet" href="css/styles.css?v=11a-20260418">
 </head>
 <body>
 
@@ -57,6 +57,19 @@
   <!-- Social Media Hero Section -->
   <section class="social-hero-section">
     <div class="container">
+      <!-- Header con mensaje motivacional -->
+      <div class="social-hero-header">
+        <h2 class="social-hero-title">🔥 Vive la Experiencia MXZONE</h2>
+        <p class="social-hero-subtitle">
+          Únete a nuestra comunidad, aprende técnicas, conoce productos y domina el terreno con el mejor contenido de motocross en Colombia.
+        </p>
+        <div class="social-cta-badges">
+          <span class="badge">📱 Contenido diario</span>
+          <span class="badge">🎁 Sorteos exclusivos</span>
+          <span class="badge">🏁 Tips de pilotos</span>
+        </div>
+      </div>
+
       <div class="social-hero-grid">
         <!-- Instagram Featured (Principal) -->
         <div class="social-card instagram-card featured">
@@ -73,13 +86,17 @@
             </a>
           </div>
           <div class="social-content">
-            <!-- Instagram Embed - Último Reel/Post -->
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/mxzoneoficial/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"></blockquote>
+            <!-- Instagram Embed - Feed principal -->
+            <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/mxzoneoficial/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; padding:0; width:100%;"></blockquote>
           </div>
           <div class="social-stats">
             <div class="stat">
               <span class="stat-number">🔥</span>
-              <span class="stat-label">Último contenido</span>
+              <span class="stat-label">Últimos posts y Reels</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">💬</span>
+              <span class="stat-label">Responde DM</span>
             </div>
           </div>
         </div>
@@ -94,17 +111,22 @@
                 <p>TikTok</p>
               </div>
             </div>
-            <a href="https://www.tiktok.com/@mx_zonestore" class="social-follow-btn" target="_blank">
+            <a href="https://www.tiktok.com/@mx_zonestore" class="social-follow-btn tiktok" target="_blank">
               Seguir →
             </a>
           </div>
           <div class="social-content">
-            <div class="tiktok-embed">
-              <div class="tiktok-placeholder">
-                <span class="tiktok-icon">🎬</span>
-                <p>Videos destacados</p>
-                <a href="https://www.tiktok.com/@mx_zonestore" target="_blank" class="tiktok-link">Ver perfil →</a>
-              </div>
+            <!-- TikTok Embed -->
+            <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@mx_zonestore" data-unique-id="mx_zonestore" data-embed-type="creator" style="max-width: 780px; min-width: 280px;" > <div> <a href="https://www.tiktok.com/@mx_zonestore?refer=creator_embed" target="_blank"> @mx_zonestore </a> </div> </blockquote>
+          </div>
+          <div class="social-stats">
+            <div class="stat">
+              <span class="stat-number">🎬</span>
+              <span class="stat-label">Videos cortos</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">⚡</span>
+              <span class="stat-label">Trucos MX</span>
             </div>
           </div>
         </div>
@@ -119,7 +141,7 @@
                 <p>Facebook</p>
               </div>
             </div>
-            <a href="https://www.facebook.com/profile.php?id=100077482166864" class="social-follow-btn" target="_blank">
+            <a href="https://www.facebook.com/profile.php?id=100077482166864" class="social-follow-btn facebook" target="_blank">
               Seguir →
             </a>
           </div>
@@ -127,9 +149,19 @@
             <div class="facebook-embed">
               <div class="facebook-placeholder">
                 <span class="facebook-icon">👍</span>
-                <p>Comunidad y eventos</p>
+                <p>Eventos y comunidad</p>
                 <a href="https://www.facebook.com/profile.php?id=100077482166864" target="_blank" class="facebook-link">Ver página →</a>
               </div>
+            </div>
+          </div>
+          <div class="social-stats">
+            <div class="stat">
+              <span class="stat-number">📅</span>
+              <span class="stat-label">Eventos</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">👥</span>
+              <span class="stat-label">Comunidad</span>
             </div>
           </div>
         </div>
@@ -297,6 +329,9 @@
   <!-- Instagram Embed Script -->
   <script async src="//www.instagram.com/embed.js"></script>
 
-  <script src="js/main.js?v=9a-20260417"></script>
+  <!-- TikTok Embed Script -->
+  <script async src="https://www.tiktok.com/embed.js"></script>
+
+  <script src="js/main.js?v=10a-20260418"></script>
 </body>
 </html>

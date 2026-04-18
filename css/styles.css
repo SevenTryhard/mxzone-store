@@ -156,9 +156,49 @@ a {
    SOCIAL HERO SECTION (About Page)
    ================================ */
 .social-hero-section {
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-2xl) 0 var(--spacing-xl) 0;
+  margin-top: var(--spacing-xl);
   background: linear-gradient(180deg, rgba(255, 102, 0, 0.08) 0%, transparent 100%);
   border-bottom: 1px solid rgba(255, 102, 0, 0.1);
+}
+
+.social-hero-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto var(--spacing-xl) auto;
+  padding: 0 var(--spacing-md);
+}
+
+.social-hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--white);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: 1px;
+}
+
+.social-hero-subtitle {
+  font-size: 1.05rem;
+  color: var(--gray-text);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-md);
+}
+
+.social-cta-badges {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.social-cta-badges .badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  background: rgba(255, 102, 0, 0.15);
+  border: 1px solid rgba(255, 102, 0, 0.3);
+  border-radius: var(--radius-full);
+  color: var(--orange-primary);
 }
 
 .social-hero-grid {
