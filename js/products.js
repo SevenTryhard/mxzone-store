@@ -235,7 +235,9 @@ function createProductCard(product) {
       // Corregir formato de URL de CloudCannon (quitar slash inicial si existe)
       return img.replace(/^\/https:/, 'https:');
     }
-    return encodeImagePath(img) + '?v=' + imageVersion;
+    // Rutas locales: quitar slash inicial si existe
+    const cleanPath = img.replace(/^\//, '');
+    return encodeImagePath(cleanPath) + '?v=' + imageVersion;
   });
 
   const mainImage = images.length > 0 ? images[0] : '';

@@ -98,8 +98,11 @@ function isCloudCannonUrl(url) {
 // Obtener imagen principal del producto (images[] tiene prioridad, image es fallback)
 function getProductImage(product) {
   let imageSrc = '';
-  if (product.images && product.images.length > 0) {
-    imageSrc = product.images[0];
+  // Filtrar strings vacíos del array images
+  const validImages = product.images ? product.images.filter(img => img && img.trim() !== '') : [];
+
+  if (validImages.length > 0) {
+    imageSrc = validImages[0];
   } else if (product.image) {
     imageSrc = product.image;
   }
@@ -107,7 +110,9 @@ function getProductImage(product) {
   if (isCloudCannonUrl(imageSrc)) {
     return imageSrc.replace(/^\/https:/, 'https:');
   }
-  return encodeImagePath(imageSrc) + '?' + IMAGE_VERSION;
+  // Quitar slash inicial si existe
+  const cleanPath = imageSrc.replace(/^\//, '');
+  return encodeImagePath(cleanPath) + '?' + IMAGE_VERSION;
 }
 
 // Crear HTML del producto
