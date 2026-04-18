@@ -53,16 +53,12 @@
           }
         },
         "images": {
-          "type": "array",
+          "type": "gallery",
           "label": "Galería de imágenes",
-          "array_item_type": "file",
-          "items": {
-            "type": "file",
-            "label": "Imagen",
-            "options": {
-              "upload_path": "assets/images/uploads",
-              "original_filename": true
-            }
+          "options": {
+            "upload_path": "assets/images/uploads",
+            "original_filename": true,
+            "preview_path": "assets/images/uploads"
           }
         },
         "badge": {
