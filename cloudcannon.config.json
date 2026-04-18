@@ -25,9 +25,11 @@
         "images": {
           "type": "array",
           "label": "Galería de imágenes",
-          "array_item_type": "file",
-          "options": {
-            "upload_path": "assets/images/uploads"
+          "items": {
+            "type": "file",
+            "options": {
+              "upload_path": "assets/images/cascos"
+            }
           }
         },
         "badge": {
