@@ -364,6 +364,17 @@ a {
   min-height: 180px;
 }
 
+.post-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition-base);
+}
+
+.instagram-post-card:hover .post-preview-img {
+  transform: scale(1.05);
+}
+
 .instagram-post-card:hover {
   transform: translateY(-4px);
   border-color: rgba(255, 102, 0, 0.4);
