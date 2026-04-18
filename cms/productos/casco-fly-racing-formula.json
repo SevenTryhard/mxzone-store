@@ -1,12 +1,12 @@
-{
-  "name": "CASCO FLY RACING FORMULA",
-  "price": "$1.250.000",
-  "sizes": "S/M/L/XL",
-  "image": "/https:/golden-macadamia.cloudvent.net/uploads/fly-racing-formula-cp-rush-helmet-grey-black-white.webp",
-  "badge": "Premium",
-  "category": "cascos",
-  "description": "Casco FLY RACING FORMULA de competición",
-  "images": [
-    "assets/images/cascos/CASCO FLY RACING FORMULA.jpg"
-  ]
+﻿{
+    "name":  "CASCO FLY RACING FORMULA",
+    "price":  "$1.250.000",
+    "sizes":  "S/M/L/XL",
+    "image":  "assets/images/nuevas_images/fly-racing-formula-cp-rush-helmet-grey-black-white.webp",
+    "badge":  "Premium",
+    "category":  "cascos",
+    "description":  "Casco FLY RACING FORMULA de competiciÃ³n",
+    "images":  [
+                   "assets/images/nuevas_images/fly-racing-formula-cp-rush-helmet-grey-black-white.webp"
+               ]
 }

@@ -1,12 +1,12 @@
-{
-  "name": "CASCO FLY RACING KINETIC BLK RED",
-  "price": "$890.000",
-  "sizes": "S/M/L/XL",
-  "image": "/https:/golden-macadamia.cloudvent.net/uploads/s-l1200-1.webp",
-  "badge": "Top Ventas",
-  "category": "cascos",
-  "description": "Casco FLY RACING KINETIC negro rojo",
-  "images": [
-    "assets/images/cascos/CASCO FLY RACING KINETIC BLK RED.jpg"
-  ]
+﻿{
+    "name":  "CASCO FLY RACING KINETIC BLK RED",
+    "price":  "$890.000",
+    "sizes":  "S/M/L/XL",
+    "image":  "assets/images/nuevas_images/s-l1200-1.webp",
+    "badge":  "Top Ventas",
+    "category":  "cascos",
+    "description":  "Casco FLY RACING KINETIC negro rojo",
+    "images":  [
+                   "assets/images/nuevas_images/s-l1200-1.webp"
+               ]
 }

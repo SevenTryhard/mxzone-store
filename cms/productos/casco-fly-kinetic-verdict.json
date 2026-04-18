@@ -1,12 +1,12 @@
-{
-  "name": "CASCO FLY KINETIC VERDICT",
-  "price": "$890.000",
-  "sizes": "S/M/L/XL",
-  "image": "/https:/golden-macadamia.cloudvent.net/uploads/s-l1200.webp",
-  "badge": "",
-  "category": "cascos",
-  "description": "Casco FLY KINETIC VERDICT de rendimiento",
-  "images": [
-    "assets/images/cascos/CASCO FLY KINETIC VERDICT.jpg"
-  ]
+﻿{
+    "name":  "CASCO FLY KINETIC VERDICT",
+    "price":  "$890.000",
+    "sizes":  "S/M/L/XL",
+    "image":  "assets/images/nuevas_images/s-l1200.webp",
+    "badge":  "",
+    "category":  "cascos",
+    "description":  "Casco FLY KINETIC VERDICT de rendimiento",
+    "images":  [
+                   "assets/images/nuevas_images/s-l1200.webp"
+               ]
 }

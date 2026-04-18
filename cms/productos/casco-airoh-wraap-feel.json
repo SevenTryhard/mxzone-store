@@ -1,12 +1,12 @@
-{
-  "name": "CASCO AIROH WRAAP FEEL",
-  "price": "$1.350.000",
-  "sizes": "S/M/L/XL",
-  "image": "/https:/golden-macadamia.cloudvent.net/uploads/cascoairohwraaapfeelnaranja-2.webp",
-  "badge": "Premium",
-  "category": "cascos",
-  "description": "Casco AIROH WRAAP FEEL con diseño exclusivo",
-  "images": [
-    "assets/images/cascos/CASCO AIROH WRAAP FEEL.jpg"
-  ]
+﻿{
+    "name":  "CASCO AIROH WRAAP FEEL",
+    "price":  "$1.350.000",
+    "sizes":  "S/M/L/XL",
+    "image":  "assets/images/nuevas_images/cascoairohwraaapfeelnaranja-2.webp",
+    "badge":  "Premium",
+    "category":  "cascos",
+    "description":  "Casco AIROH WRAAP FEEL con diseÃ±o exclusivo",
+    "images":  [
+                   "assets/images/nuevas_images/cascoairohwraaapfeelnaranja-2.webp"
+               ]
 }

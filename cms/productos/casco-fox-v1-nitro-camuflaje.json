@@ -1,12 +1,12 @@
-{
-  "name": "CASCO FOX V1 NITRO CAMUFLAJE",
-  "price": "$1.429.900",
-  "sizes": "S/M/L/XL",
-  "image": "/https:/golden-macadamia.cloudvent.net/uploads/31370-330-2-800x.webp",
-  "badge": "Top Ventas",
-  "category": "cascos",
-  "description": "Casco FOX V1 con diseño camuflaje nitro",
-  "images": [
-    "assets/images/cascos/CASCO FOX V1 NITRO CAMUFLAJE.jpg"
-  ]
+﻿{
+    "name":  "CASCO FOX V1 NITRO CAMUFLAJE",
+    "price":  "$1.429.900",
+    "sizes":  "S/M/L/XL",
+    "image":  "assets/images/nuevas_images/31370-330-2-800x.webp",
+    "badge":  "Top Ventas",
+    "category":  "cascos",
+    "description":  "Casco FOX V1 con diseÃ±o camuflaje nitro",
+    "images":  [
+                   "assets/images/nuevas_images/31370-330-2-800x.webp"
+               ]
 }

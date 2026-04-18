@@ -1,12 +1,12 @@
-{
-  "name": "CASCO FLY FORMULA CP",
-  "price": "$1.450.000",
-  "sizes": "S",
-  "image": "/https:/golden-macadamia.cloudvent.net/uploads/casco-azul-fly-formula-cp-bicicleta-moto-73-0032-1-c0126a86-a19a-4296-9663-eee7877cf030.jpg",
-  "badge": "Premium",
-  "category": "cascos",
-  "description": "Casco premium para motocross de alto rendimiento",
-  "images": [
-    "assets/images/cascos/CASCO FLY FORMULA CP.jpg"
-  ]
+﻿{
+    "name":  "CASCO FLY FORMULA CP",
+    "price":  "$1.450.000",
+    "sizes":  "S",
+    "image":  "assets/images/nuevas_images/casco-azul-fly-formula-cp-bicicleta-moto-73-0032-1-c0126a86-a19a-4296-9663-eee7877cf030.jpg",
+    "badge":  "Premium",
+    "category":  "cascos",
+    "description":  "Casco premium para motocross de alto rendimiento",
+    "images":  [
+                   "assets/images/nuevas_images/casco-azul-fly-formula-cp-bicicleta-moto-73-0032-1-c0126a86-a19a-4296-9663-eee7877cf030.jpg"
+               ]
 }

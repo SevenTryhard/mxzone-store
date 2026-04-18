@@ -1,12 +1,12 @@
-{
-  "name": "CASCO ALPINESTARS RADIUM NEGRO ROJO",
-  "price": "$1.550.000",
-  "sizes": "S/M/L/XL",
-  "image": "/https:/golden-macadamia.cloudvent.net/uploads/8300726-1553-r3-sm3-radium.webp",
-  "badge": "",
-  "category": "cascos",
-  "description": "Casco ALPINESTARS RADIUM en color negro y rojo",
-  "images": [
-    "assets/images/cascos/CASCO ALPINESTARS RADIUM NEGRO ROJO.jpg"
-  ]
+﻿{
+    "name":  "CASCO ALPINESTARS RADIUM NEGRO ROJO",
+    "price":  "$1.550.000",
+    "sizes":  "S/M/L/XL",
+    "image":  "assets/images/nuevas_images/8300726-1553-r3-sm3-radium.webp",
+    "badge":  "",
+    "category":  "cascos",
+    "description":  "Casco ALPINESTARS RADIUM en color negro y rojo",
+    "images":  [
+                   "assets/images/nuevas_images/8300726-1553-r3-sm3-radium.webp"
+               ]
 }
