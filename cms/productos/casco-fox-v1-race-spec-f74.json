@@ -1,12 +1,10 @@
-﻿{
-    "name":  "CASCO FOX V1 RACE SPEC F74",
-    "price":  "$1.350.000",
-    "sizes":  "S/M/L/XL",
-    "image":  "assets/images/nuevas_images/1505906-800-800.webp",
-    "badge":  "Premium",
-    "category":  "cascos",
-    "description":  "Casco FOX V1 RACE SPEC F74 ediciÃ³n especial",
-    "images":  [
-                   "assets/images/nuevas_images/1505906-800-800.webp"
-               ]
+{
+  "name": "CASCO FOX V1 RACE SPEC F74",
+  "price": "$1.350.000",
+  "sizes": "S/M/L/XL",
+  "image": "assets/images/nuevas_images/1505906-800-800.webp",
+  "badge": "Premium",
+  "category": "cascos",
+  "description": "Casco FOX V1 RACE SPEC F74 ediciÃ³n especial",
+  "extras": "assets/images/nuevas_images/1505906-800-800.webp"
 }

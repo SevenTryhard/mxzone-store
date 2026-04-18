@@ -6,7 +6,5 @@
   "badge": "Premium",
   "category": "cascos",
   "description": "Casco AIROH TWIST de diseño italiano",
-  "images": [
-    "assets/images/nuevas_images/1-140.jpg"
-  ]
+  "extras": "assets/images/nuevas_images/1-140.jpg"
 }

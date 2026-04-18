@@ -6,7 +6,5 @@
   "badge": "",
   "category": "uniformes",
   "description": "Uniforme FLY MESH transpirable",
-  "images": [
-    "assets/images/uniformes/UNIFORME FLY MESH.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME FLY MESH.jpg"
 }

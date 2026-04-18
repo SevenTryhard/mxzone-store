@@ -6,7 +6,5 @@
   "badge": "",
   "category": "uniformes",
   "description": "Uniforme FLY KINETIC JET en azul gris blanco",
-  "images": [
-    "assets/images/uniformes/UNIFORME FLY KINETIC JET BLUE GREY WHITE.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME FLY KINETIC JET BLUE GREY WHITE.jpg"
 }

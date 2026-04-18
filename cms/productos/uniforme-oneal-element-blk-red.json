@@ -6,7 +6,5 @@
   "badge": "",
   "category": "uniformes",
   "description": "Uniforme ONEAL ELEMENT black red de competición",
-  "images": [
-    "assets/images/uniformes/UNIFORME ONEAL ELEMENT BLK RED.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME ONEAL ELEMENT BLK RED.jpg"
 }

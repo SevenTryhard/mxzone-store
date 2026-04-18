@@ -6,7 +6,5 @@
   "badge": "Nuevo",
   "category": "uniformes",
   "description": "Uniforme FOX 180 LEED en color azul",
-  "images": [
-    "assets/images/uniformes/UNIFORME FOX 180 LEED BLUE.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME FOX 180 LEED BLUE.jpg"
 }

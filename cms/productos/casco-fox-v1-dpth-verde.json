@@ -6,7 +6,5 @@
   "badge": "",
   "category": "cascos",
   "description": "Casco FOX V1 DPTH en color verde y negro",
-  "images": [
-    "assets/images/cascos/CASCO FOX V1 DPTH VERDE NEGRO.jpg"
-  ]
+  "extras": "assets/images/cascos/CASCO FOX V1 DPTH VERDE NEGRO.jpg"
 }

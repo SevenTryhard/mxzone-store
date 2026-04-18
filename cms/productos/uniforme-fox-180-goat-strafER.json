@@ -6,7 +6,5 @@
   "badge": "Premium",
   "category": "uniformes",
   "description": "Uniforme FOX 180 GOAT STRAFER edición especial",
-  "images": [
-    "assets/images/uniformes/UNIFORME FOX 180 GOAT STRAFER.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME FOX 180 GOAT STRAFER.jpg"
 }

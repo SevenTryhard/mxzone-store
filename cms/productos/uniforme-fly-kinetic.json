@@ -6,7 +6,5 @@
   "badge": "Top Ventas",
   "category": "uniformes",
   "description": "Uniforme FLY KINETIC clásico",
-  "images": [
-    "assets/images/uniformes/UNIFORME FLY KINETIC.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME FLY KINETIC.jpg"
 }

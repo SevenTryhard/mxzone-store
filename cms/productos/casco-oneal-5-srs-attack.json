@@ -1,12 +1,10 @@
-﻿{
-    "name":  "CASCO ONEAL 5 SRS ATTACK",
-    "price":  "$1.750.000",
-    "sizes":  "S/M/L/XL",
-    "image":  "assets/images/nuevas_images/5-srs-attack-negro-neon-1.jpg",
-    "badge":  "",
-    "category":  "cascos",
-    "description":  "Casco ONEAL 5 SRS ATTACK de alta gama",
-    "images":  [
-                   "assets/images/nuevas_images/5-srs-attack-negro-neon-1.jpg"
-               ]
+{
+  "name": "CASCO ONEAL 5 SRS ATTACK",
+  "price": "$1.750.000",
+  "sizes": "S/M/L/XL",
+  "image": "assets/images/nuevas_images/5-srs-attack-negro-neon-1.jpg",
+  "badge": "",
+  "category": "cascos",
+  "description": "Casco ONEAL 5 SRS ATTACK de alta gama",
+  "extras": "assets/images/nuevas_images/5-srs-attack-negro-neon-1.jpg"
 }

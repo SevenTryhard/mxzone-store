@@ -6,7 +6,5 @@
   "badge": "Premium",
   "category": "uniformes",
   "description": "Uniforme FOX RACE SPEC en verde pálido",
-  "images": [
-    "assets/images/uniformes/UNIFORME FOX RACE SPEC PALE GREEN.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME FOX RACE SPEC PALE GREEN.jpg"
 }

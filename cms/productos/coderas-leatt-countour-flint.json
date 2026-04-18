@@ -6,7 +6,5 @@
   "badge": "",
   "category": "protecciones",
   "description": "Coderas LEATT CONTOUR en color flint",
-  "images": [
-    "assets/images/protecciones/CODERAS LEATT COUNTOUR FLINT.jpg"
-  ]
+  "extras": "assets/images/protecciones/CODERAS LEATT COUNTOUR FLINT.jpg"
 }

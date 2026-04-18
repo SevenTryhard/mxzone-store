@@ -6,7 +6,5 @@
   "badge": "",
   "category": "uniformes",
   "description": "Uniforme FOX 180 LEED en dark shadow",
-  "images": [
-    "assets/images/uniformes/UNIFORME FOX 180 LEED DARK SHADOW.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME FOX 180 LEED DARK SHADOW.jpg"
 }

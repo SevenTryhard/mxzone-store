@@ -6,7 +6,5 @@
   "badge": "Premium",
   "category": "protecciones",
   "description": "Pechera ALPINESTARS A1 ROOST GUARD de protección",
-  "images": [
-    "assets/images/protecciones/PECHERA ALPINESTAR A-1 ROOST GUARD.jpg"
-  ]
+  "extras": "assets/images/protecciones/PECHERA ALPINESTAR A-1 ROOST GUARD.jpg"
 }

@@ -6,7 +6,5 @@
   "badge": "",
   "category": "protecciones",
   "description": "Pechera FLY REVEL RACE de competición",
-  "images": [
-    "assets/images/protecciones/PECHERA FLY REVEL RACE.jpg"
-  ]
+  "extras": "assets/images/protecciones/PECHERA FLY REVEL RACE.jpg"
 }

@@ -6,7 +6,5 @@
   "badge": "",
   "category": "protecciones",
   "description": "Coderas LEATT CONTOUR de protección ergonómica",
-  "images": [
-    "assets/images/protecciones/CODERAS LEATT CONTOUR.jpg"
-  ]
+  "extras": "assets/images/protecciones/CODERAS LEATT CONTOUR.jpg"
 }

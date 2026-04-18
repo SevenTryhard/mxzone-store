@@ -6,7 +6,5 @@
   "badge": "Premium",
   "category": "cascos",
   "description": "Casco TROY LEE SE5 GASGAS de edición especial",
-  "images": [
-    "assets/images/cascos/CASCO TROY LEE GP AIR TEAM 81.jpg"
-  ]
+  "extras": "assets/images/cascos/CASCO TROY LEE GP AIR TEAM 81.jpg"
 }

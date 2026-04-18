@@ -6,7 +6,5 @@
   "badge": "",
   "category": "uniformes",
   "description": "Uniforme FLY KINETIC PRIX de competición",
-  "images": [
-    "assets/images/uniformes/UNIFORME FLY KINETIC PRIX.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME FLY KINETIC PRIX.jpg"
 }

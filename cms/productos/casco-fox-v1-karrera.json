@@ -6,7 +6,5 @@
   "badge": "Top Ventas",
   "category": "cascos",
   "description": "Casco FOX V1 KARRERA de competición",
-  "images": [
-    "assets/images/nuevas_images/d-q-np-605564-mlu70659130225-072023-o.webp"
-  ]
+  "extras": "assets/images/nuevas_images/d-q-np-605564-mlu70659130225-072023-o.webp"
 }

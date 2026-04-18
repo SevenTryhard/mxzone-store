@@ -6,7 +6,5 @@
   "badge": "",
   "category": "protecciones",
   "description": "Pechera protectora FOX RACEFRAME ROOST",
-  "images": [
-    "assets/images/protecciones/PECHERA FOX RACEFRAME ROOST.jpg"
-  ]
+  "extras": "assets/images/protecciones/PECHERA FOX RACEFRAME ROOST.jpg"
 }

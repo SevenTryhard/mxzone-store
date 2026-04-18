@@ -6,7 +6,5 @@
   "badge": "Premium",
   "category": "botas",
   "description": "Botas ALPINESTARS TECH 7 de competición profesional",
-  "images": [
-    "assets/images/botas/BOTAS ALPINESTARS TECH 7.jpg"
-  ]
+  "extras": "assets/images/botas/BOTAS ALPINESTARS TECH 7.jpg"
 }

@@ -6,7 +6,5 @@
   "badge": "",
   "category": "uniformes",
   "description": "Uniforme FOX BALLAST clásico",
-  "images": [
-    "assets/images/uniformes/UNIFORME FOX BALLAST.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME FOX BALLAST.jpg"
 }

@@ -6,7 +6,5 @@
   "badge": "Oferta",
   "category": "protecciones",
   "description": "Rodillera estilo LEATT 3DF de protección",
-  "images": [
-    "assets/images/protecciones/RODILLERA TIPO LEATT 3DF.jpg"
-  ]
+  "extras": "assets/images/protecciones/RODILLERA TIPO LEATT 3DF.jpg"
 }

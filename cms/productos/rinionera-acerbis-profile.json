@@ -6,7 +6,5 @@
   "badge": "",
   "category": "protecciones",
   "description": "Riñonera ACERBIS PROFILE para hidratación",
-  "images": [
-    "assets/images/protecciones/RINIONERA ACERBIS PROFILE.jpg"
-  ]
+  "extras": "assets/images/protecciones/RINIONERA ACERBIS PROFILE.jpg"
 }

@@ -6,7 +6,5 @@
   "badge": "",
   "category": "uniformes",
   "description": "Uniforme ONEAL ELEMENT V6 en negro gris",
-  "images": [
-    "assets/images/uniformes/UNIFORME ONEAL ELEMENT V6 BLK GRY.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME ONEAL ELEMENT V6 BLK GRY.jpg"
 }

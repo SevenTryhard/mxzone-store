@@ -6,7 +6,5 @@
   "badge": "",
   "category": "uniformes",
   "description": "Uniforme FLY EVOLUTION DST de rendimiento",
-  "images": [
-    "assets/images/uniformes/UNIFORME FLY EVOLUTION DST.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME FLY EVOLUTION DST.jpg"
 }

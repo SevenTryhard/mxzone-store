@@ -6,7 +6,5 @@
   "badge": "",
   "category": "uniformes",
   "description": "Uniforme FOX BALLAST 180 de competición",
-  "images": [
-    "assets/images/uniformes/UNIFORME FOX BALLAST 180.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME FOX BALLAST 180.jpg"
 }

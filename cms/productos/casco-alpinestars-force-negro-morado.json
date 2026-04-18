@@ -1,12 +1,10 @@
-﻿{
-    "name":  "CASCO ALPINESTARS FORCE NEGRO MORADO",
-    "price":  "$1.250.000",
-    "sizes":  "S/M/L/XL",
-    "image":  "assets/images/nuevas_images/alpinestars-sm3-force-helmet-nero.jpg",
-    "badge":  "",
-    "category":  "cascos",
-    "description":  "Casco ALPINESTARS FORCE en color negro morado",
-    "images":  [
-                   "assets/images/nuevas_images/alpinestars-sm3-force-helmet-nero.jpg"
-               ]
+{
+  "name": "CASCO ALPINESTARS FORCE NEGRO MORADO",
+  "price": "$1.250.000",
+  "sizes": "S/M/L/XL",
+  "image": "assets/images/nuevas_images/alpinestars-sm3-force-helmet-nero.jpg",
+  "badge": "",
+  "category": "cascos",
+  "description": "Casco ALPINESTARS FORCE en color negro morado",
+  "extras": "assets/images/nuevas_images/alpinestars-sm3-force-helmet-nero.jpg"
 }

@@ -1,12 +1,10 @@
-﻿{
-    "name":  "CASCO FOX V1 FLORA DARK INDIGO",
-    "price":  "$1.150.000",
-    "sizes":  "S/M/L/XL",
-    "image":  "assets/images/nuevas_images/d-nq-np-818647-cbt80225338484-112024-o.webp",
-    "badge":  "Nuevo",
-    "category":  "cascos",
-    "description":  "Casco FOX V1 FLORA en dark indigo",
-    "images":  [
-                   "assets/images/nuevas_images/d-nq-np-818647-cbt80225338484-112024-o.webp"
-               ]
+{
+  "name": "CASCO FOX V1 FLORA DARK INDIGO",
+  "price": "$1.150.000",
+  "sizes": "S/M/L/XL",
+  "image": "assets/images/nuevas_images/d-nq-np-818647-cbt80225338484-112024-o.webp",
+  "badge": "Nuevo",
+  "category": "cascos",
+  "description": "Casco FOX V1 FLORA en dark indigo",
+  "extras": "assets/images/nuevas_images/d-nq-np-818647-cbt80225338484-112024-o.webp"
 }

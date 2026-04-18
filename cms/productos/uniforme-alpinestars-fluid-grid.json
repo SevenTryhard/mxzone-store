@@ -6,7 +6,5 @@
   "badge": "Premium",
   "category": "uniformes",
   "description": "Uniforme ALPINESTAR FLUID GRID red black purple",
-  "images": [
-    "assets/images/uniformes/UNIFORME ALPINESTAR FLUID GRID RED BLACK PURPLE.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME ALPINESTAR FLUID GRID RED BLACK PURPLE.jpg"
 }

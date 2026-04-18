@@ -6,7 +6,5 @@
   "badge": "",
   "category": "uniformes",
   "description": "Uniforme ALPINESTARS FLUID GRID en rojo negro morado",
-  "images": [
-    "assets/images/uniformes/UNIFORME ALPINESTAR FLUID GRID RED BLACK PURPLE.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME ALPINESTAR FLUID GRID RED BLACK PURPLE.jpg"
 }

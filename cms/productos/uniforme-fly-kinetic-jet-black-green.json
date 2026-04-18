@@ -6,7 +6,5 @@
   "badge": "",
   "category": "uniformes",
   "description": "Uniforme FLY KINETIC JET en negro verde",
-  "images": [
-    "assets/images/uniformes/UNIFORME FLY KINETIC JET BLACK GREEN.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME FLY KINETIC JET BLACK GREEN.jpg"
 }

@@ -6,7 +6,5 @@
   "badge": "Premium",
   "category": "uniformes",
   "description": "Uniforme FXR REVO COMP de competición",
-  "images": [
-    "assets/images/uniformes/UNIFORME FXR REVO COMP.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME FXR REVO COMP.jpg"
 }

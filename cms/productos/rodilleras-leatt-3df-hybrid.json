@@ -6,7 +6,5 @@
   "badge": "Top Ventas",
   "category": "protecciones",
   "description": "Rodillera LEATT 3DF HYBRID de máxima protección",
-  "images": [
-    "assets/images/protecciones/RODILLERA LEATT 3DF HYBRID.jpg"
-  ]
+  "extras": "assets/images/protecciones/RODILLERA LEATT 3DF HYBRID.jpg"
 }

@@ -6,7 +6,5 @@
   "badge": "Popular",
   "category": "uniformes",
   "description": "Uniforme FLY KINETIC KORE de alto rendimiento",
-  "images": [
-    "assets/images/uniformes/UNIFORME FLY KINETIC KORE.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME FLY KINETIC KORE.jpg"
 }

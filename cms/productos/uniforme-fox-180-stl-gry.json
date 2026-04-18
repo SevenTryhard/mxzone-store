@@ -6,7 +6,5 @@
   "badge": "",
   "category": "uniformes",
   "description": "Uniforme FOX 180 STL en color gris",
-  "images": [
-    "assets/images/uniformes/UNIFORME FOX 180 STL GRY.jpg"
-  ]
+  "extras": "assets/images/uniformes/UNIFORME FOX 180 STL GRY.jpg"
 }
