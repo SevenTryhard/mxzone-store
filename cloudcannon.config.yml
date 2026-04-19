@@ -27,12 +27,6 @@ collections:
       - name: name
         label: Nombre
         type: text
-      - name: price
-        label: Precio
-        type: text
-      - name: sizes
-        label: Tallas
-        type: text
       - name: image
         label: IMAGEN PRINCIPAL
         type: image
@@ -43,6 +37,12 @@ collections:
         array_item:
           type: image
         comment: "Click en + para agregar más imágenes. Máximo 5 recomendadas"
+      - name: price
+        label: Precio
+        type: text
+      - name: sizes
+        label: Tallas
+        type: text
       - name: badge
         label: Etiqueta
         type: select
