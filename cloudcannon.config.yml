@@ -1,56 +1,14 @@
-collections_config:
-  cms_productos:
-    path: cms/productos
-    icon: nest_protect
-    disable_url: false
-    preview:
-      text:
-      subtext:
-      icon:
-      icon_color:
-      icon_background_color:
-      image:
-      metadata:
-      gallery:
-    disable_add: false
-    disable_add_folder: false
-    disable_file_actions: false
-  cms_promociones:
-    path: cms/promociones
-    icon: 3d_rotation
-    disable_url: false
-    disable_add: false
-    disable_add_folder: false
-    disable_file_actions: false
-  cms_settings:
-    path: cms/settings
-    icon: reset_settings
-    disable_url: false
-    disable_add: false
-    disable_add_folder: false
-    disable_file_actions: false
-  public:
-    path: public
-    icon: public
-    disable_url: false
-    disable_add: false
-    disable_add_folder: false
-    disable_file_actions: false
-_inputs:
-  whatsapp:
-    type: text
-    cascade: true
-  email:
-    type: text
-    cascade: true
+# CloudCannon Configuration - MXZONE Store
 base_url: https://mxzonestore.motocross.workers.dev
 timezone: America/Bogota
+
 media:
   cloudcannon:
     - source: assets/images
       path: assets/images
       optimize: true
       max_size: 10MB
+
 collections:
   productos:
     path: cms/productos
@@ -68,13 +26,13 @@ collections:
       - name: image
         label: IMAGEN PRINCIPAL
         type: image
-        comment: Imagen principal del producto (se muestra en el catálogo)
+        comment: Imagen principal del producto
       - name: gallery
         label: GALERÍA (Imágenes secundarias)
         type: array
         array_item:
           type: image
-        comment: Click en + para agregar más imágenes. Máximo 5 recomendadas
+        comment: Click en + para agregar más imágenes
       - name: price
         label: Precio
         type: text
@@ -85,21 +43,13 @@ collections:
         label: Etiqueta
         type: select
         options:
-          values:
-            - ''
-            - Premium
-            - Top Ventas
-            - Nuevo
-            - Oferta
+          values: ['', 'Premium', 'Top Ventas', 'Nuevo', 'Oferta']
       - name: category
         label: Categoría
         type: select
         options:
-          values:
-            - cascos
-            - uniformes
-            - botas
-            - protecciones
+          values: [cascos, uniformes, botas, protecciones]
+
   promociones:
     path: cms/promociones
     type: json
@@ -116,20 +66,12 @@ collections:
         label: Categoría
         type: select
         options:
-          values:
-            - principiante
-            - intermedio
-            - profesional
-            - premium
+          values: [principiante, intermedio, profesional, premium]
       - name: badge
         label: Etiqueta
         type: select
         options:
-          values:
-            - ''
-            - Más Vendido
-            - Nuevo
-            - Recomendado
+          values: ['', 'Más Vendido', 'Nuevo', 'Recomendado']
       - name: image
         label: IMAGE
         type: image
@@ -139,6 +81,7 @@ collections:
       - name: promoPrice
         label: Precio Promocional
         type: number
+
   settings:
     path: cms/settings
     type: yaml
@@ -164,3 +107,9 @@ collections:
       - name: tiktok
         label: TikTok
         type: text
+
+_inputs:
+  whatsapp:
+    type: text
+  email:
+    type: text
