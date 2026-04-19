@@ -34,8 +34,15 @@ collections:
         label: Tallas
         type: text
       - name: image
-        label: IMAGE
+        label: IMAGEN PRINCIPAL
         type: image
+        comment: "Imagen principal del producto (se muestra en el catálogo)"
+      - name: gallery
+        label: GALERÍA (Imágenes secundarias)
+        type: array
+        array_item:
+          type: image
+        comment: "Click en + para agregar más imágenes. Máximo 5 recomendadas"
       - name: badge
         label: Etiqueta
         type: select
