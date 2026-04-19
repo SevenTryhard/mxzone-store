@@ -5,7 +5,5 @@
   "badge": "Premium",
   "category": "cascos",
   "description": "Casco ALPINESTARS S-M5 RAYON de alta gama",
-  "images": [
-    "assets/images/nuevas_images/casco-alpinestars-s-m5-rayon-azul-mate-blanco.jpg"
-  ]
+  "image": "assets/images/nuevas_images/casco-alpinestars-s-m5-rayon-azul-mate-blanco.jpg"
 }

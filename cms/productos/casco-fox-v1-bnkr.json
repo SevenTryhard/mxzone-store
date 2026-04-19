@@ -5,7 +5,5 @@
   "badge": "Nuevo",
   "category": "cascos",
   "description": "Casco FOX V1 BNKR de alto rendimiento para motocross",
-  "images": [
-    "assets/images/nuevas_images/d-nq-np-743646-mco74270063566-022024-o.webp"
-  ]
+  "image": "assets/images/nuevas_images/d-nq-np-743646-mco74270063566-022024-o.webp"
 }

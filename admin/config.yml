@@ -3,8 +3,10 @@
 # ============================================
 
 backend:
-  name: git-gateway
+  name: github
+  repo: SevenTryhard/mxzone-store
   branch: main
+  auth_scope: repo
   commit_messages:
     create: "CMS: Agregar {{collection}} - {{slug}}"
     update: "CMS: Actualizar {{collection}} - {{slug}}"
@@ -12,8 +14,6 @@ backend:
 
 media_folder: "assets/images/cms"
 public_folder: "/assets/images/cms"
-local_backend:
-  url: http://localhost:8081/api/v1
 
 collections:
   # PRODUCTOS
@@ -25,8 +25,6 @@ collections:
     slug: "{{slug}}"
     extension: "json"
     format: "json"
-    editor:
-      preview: false
     fields:
       - label: "Nombre del Producto"
         name: "name"
@@ -38,25 +36,21 @@ collections:
         name: "price"
         widget: "string"
         required: true
-        hint: "Formato: $1.234.567 (sin decimales)"
+        hint: "Formato: $1.234.567"
 
       - label: "Tallas Disponibles"
         name: "sizes"
         widget: "string"
         required: true
-        hint: "Ej: S/M/L/XL o 38/39/40/41 o 7-11 US"
+        hint: "Ej: S/M/L/XL o 38/39/40/41"
 
       - label: "Imagen del Producto"
         name: "image"
         widget: "image"
         required: true
-        hint: "Sube una foto clara del producto. Tamaño recomendado: 800x800px"
-        media_library:
-          config:
-            multiple: false
-            max_file_size: 5000000
+        hint: "Sube una foto clara. Tamaño recomendado: 800x800px"
 
-      - label: "Etiqueta Destacada (Opcional)"
+      - label: "Etiqueta Destacada"
         name: "badge"
         widget: "select"
         required: false
@@ -73,7 +67,6 @@ collections:
             value: "Edicion Limitada"
           - label: "Oferta"
             value: "Oferta"
-        hint: "Etiqueta que aparece en la esquina del producto"
 
       - label: "Categoria"
         name: "category"
@@ -88,14 +81,12 @@ collections:
             value: "botas"
           - label: "Protecciones"
             value: "protecciones"
-        hint: "Selecciona la categoria del producto"
 
       - label: "Descripcion Corta"
         name: "description"
         widget: "text"
         required: false
         hint: "Breve descripcion para SEO (max 160 caracteres)"
-        max_length: 160
 
   # TESTIMONIOS
   - name: "testimonials"
@@ -111,7 +102,6 @@ collections:
         name: "name"
         widget: "string"
         required: true
-        hint: "Nombre completo o como quiere aparecer"
 
       - label: "Ciudad, Departamento"
         name: "location"
@@ -123,13 +113,12 @@ collections:
         name: "text"
         widget: "text"
         required: true
-        hint: "La opinion completa del cliente"
 
       - label: "Iniciales (Avatar)"
         name: "avatar"
         widget: "string"
         required: true
-        hint: "2 letras para el avatar. Ej: CR, JM, DG"
+        hint: "2 letras para el avatar. Ej: CR, JM"
 
   # CONFIGURACION GENERAL
   - name: "settings"
@@ -152,28 +141,121 @@ collections:
             name: "address"
             widget: "string"
             required: true
-            hint: "Direccion completa de la tienda"
 
           - label: "Email de Contacto"
             name: "email"
             widget: "string"
             required: true
-            hint: "Email para consultas"
 
           - label: "Facebook URL"
             name: "facebook"
             widget: "string"
             required: false
-            hint: "Link completo a tu pagina de Facebook"
 
           - label: "Instagram URL"
             name: "instagram"
             widget: "string"
             required: false
-            hint: "Link completo a tu perfil de Instagram"
 
           - label: "TikTok URL"
             name: "tiktok"
             widget: "string"
             required: false
-            hint: "Link completo a tu perfil de TikTok"
+
+  # PROMOCIONES / COMBOS
+  - name: "promociones"
+    label: "Promociones / Combos"
+    description: "Combos y promociones especiales"
+    folder: "cms/promociones"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - label: "Nombre del Combo"
+        name: "name"
+        widget: "string"
+        required: true
+
+      - label: "Categoria"
+        name: "category"
+        widget: "select"
+        required: true
+        options:
+          - label: "Principiante"
+            value: "principiante"
+          - label: "Intermedio"
+            value: "intermedio"
+          - label: "Profesional"
+            value: "profesional"
+          - label: "Premium"
+            value: "premium"
+
+      - label: "Etiqueta Destacada"
+        name: "badge"
+        widget: "select"
+        required: false
+        options:
+          - label: "Ninguna"
+            value: ""
+          - label: "Mas Vendido"
+            value: "Mas Vendido"
+          - label: "Nuevo"
+            value: "Nuevo"
+          - label: "Recomendado"
+            value: "Recomendado"
+          - label: "Top Descuento"
+            value: "Top Descuento"
+
+      - label: "Imagen Principal"
+        name: "image"
+        widget: "image"
+        required: true
+
+      - label: "Precio Regular"
+        name: "regularTotal"
+        widget: "number"
+        required: true
+        hint: "Precio total sin descuento"
+
+      - label: "Precio Promocional"
+        name: "promoPrice"
+        widget: "number"
+        required: true
+        hint: "Precio con descuento"
+
+      - label: "Descripcion Corta"
+        name: "description"
+        widget: "text"
+        required: false
+
+      - label: "Productos Incluidos"
+        name: "products"
+        widget: "list"
+        required: true
+        fields:
+          - label: "Nombre del Producto"
+            name: "name"
+            widget: "string"
+            required: true
+          - label: "Categoria"
+            name: "category"
+            widget: "select"
+            required: true
+            options:
+              - label: "Cascos"
+                value: "cascos"
+              - label: "Uniformes"
+                value: "uniformes"
+              - label: "Botas"
+                value: "botas"
+              - label: "Protecciones"
+                value: "protecciones"
+          - label: "Precio Unitario"
+            name: "price"
+            widget: "number"
+            required: true
+          - label: "Imagen"
+            name: "image"
+            widget: "image"
+            required: false

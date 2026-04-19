@@ -6,19 +6,9 @@
     "enabled": true
   },
   "assets": {
-    "directory": "."
+    "directory": "./public"
   },
   "compatibility_flags": [
     "nodejs_compat"
-  ],
-  "routes": [
-    {
-      "pattern": "mxzonestore.com",
-      "zone_name": "mxzonestore.com"
-    },
-    {
-      "pattern": "www.mxzonestore.com",
-      "zone_name": "mxzonestore.com"
-    }
   ]
 }

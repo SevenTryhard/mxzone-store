@@ -1,0 +1,261 @@
+# ============================================
+# MXZONE STORE - Decap CMS Configuration
+# ============================================
+
+backend:
+  name: github
+  repo: SevenTryhard/mxzone-store
+  branch: main
+  auth_scope: repo
+  commit_messages:
+    create: "CMS: Agregar {{collection}} - {{slug}}"
+    update: "CMS: Actualizar {{collection}} - {{slug}}"
+    delete: "CMS: Eliminar {{collection}} - {{slug}}"
+
+media_folder: "assets/images/cms"
+public_folder: "/assets/images/cms"
+
+collections:
+  # PRODUCTOS
+  - name: "productos"
+    label: "Productos"
+    description: "Gestiona todo el catalogo de productos"
+    folder: "cms/productos"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - label: "Nombre del Producto"
+        name: "name"
+        widget: "string"
+        required: true
+        hint: "Ej: CASCO FOX V1 TOXSYK NEGRO"
+
+      - label: "Precio"
+        name: "price"
+        widget: "string"
+        required: true
+        hint: "Formato: $1.234.567"
+
+      - label: "Tallas Disponibles"
+        name: "sizes"
+        widget: "string"
+        required: true
+        hint: "Ej: S/M/L/XL o 38/39/40/41"
+
+      - label: "Imagen del Producto"
+        name: "image"
+        widget: "image"
+        required: true
+        hint: "Sube una foto clara. Tamaño recomendado: 800x800px"
+
+      - label: "Etiqueta Destacada"
+        name: "badge"
+        widget: "select"
+        required: false
+        options:
+          - label: "Ninguna"
+            value: ""
+          - label: "Premium"
+            value: "Premium"
+          - label: "Top Ventas"
+            value: "Top Ventas"
+          - label: "Nuevo"
+            value: "Nuevo"
+          - label: "Edicion Limitada"
+            value: "Edicion Limitada"
+          - label: "Oferta"
+            value: "Oferta"
+
+      - label: "Categoria"
+        name: "category"
+        widget: "select"
+        required: true
+        options:
+          - label: "Cascos"
+            value: "cascos"
+          - label: "Uniformes"
+            value: "uniformes"
+          - label: "Botas"
+            value: "botas"
+          - label: "Protecciones"
+            value: "protecciones"
+
+      - label: "Descripcion Corta"
+        name: "description"
+        widget: "text"
+        required: false
+        hint: "Breve descripcion para SEO (max 160 caracteres)"
+
+  # TESTIMONIOS
+  - name: "testimonials"
+    label: "Testimonios"
+    description: "Opiniones de clientes satisfechos"
+    folder: "cms/testimonials"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - label: "Nombre del Cliente"
+        name: "name"
+        widget: "string"
+        required: true
+
+      - label: "Ciudad, Departamento"
+        name: "location"
+        widget: "string"
+        required: true
+        hint: "Ej: Medellin, Antioquia"
+
+      - label: "Testimonio"
+        name: "text"
+        widget: "text"
+        required: true
+
+      - label: "Iniciales (Avatar)"
+        name: "avatar"
+        widget: "string"
+        required: true
+        hint: "2 letras para el avatar. Ej: CR, JM"
+
+  # CONFIGURACION GENERAL
+  - name: "settings"
+    label: "Configuracion"
+    description: "Datos de contacto y redes sociales"
+    editor:
+      preview: false
+    files:
+      - name: "general"
+        label: "Datos Generales"
+        file: "cms/settings/general.yml"
+        fields:
+          - label: "Numero de WhatsApp"
+            name: "whatsapp"
+            widget: "string"
+            required: true
+            hint: "Solo numeros con codigo de pais. Ej: 573176692997"
+
+          - label: "Direccion Fisica"
+            name: "address"
+            widget: "string"
+            required: true
+
+          - label: "Email de Contacto"
+            name: "email"
+            widget: "string"
+            required: true
+
+          - label: "Facebook URL"
+            name: "facebook"
+            widget: "string"
+            required: false
+
+          - label: "Instagram URL"
+            name: "instagram"
+            widget: "string"
+            required: false
+
+          - label: "TikTok URL"
+            name: "tiktok"
+            widget: "string"
+            required: false
+
+  # PROMOCIONES / COMBOS
+  - name: "promociones"
+    label: "Promociones / Combos"
+    description: "Combos y promociones especiales"
+    folder: "cms/promociones"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - label: "Nombre del Combo"
+        name: "name"
+        widget: "string"
+        required: true
+
+      - label: "Categoria"
+        name: "category"
+        widget: "select"
+        required: true
+        options:
+          - label: "Principiante"
+            value: "principiante"
+          - label: "Intermedio"
+            value: "intermedio"
+          - label: "Profesional"
+            value: "profesional"
+          - label: "Premium"
+            value: "premium"
+
+      - label: "Etiqueta Destacada"
+        name: "badge"
+        widget: "select"
+        required: false
+        options:
+          - label: "Ninguna"
+            value: ""
+          - label: "Mas Vendido"
+            value: "Mas Vendido"
+          - label: "Nuevo"
+            value: "Nuevo"
+          - label: "Recomendado"
+            value: "Recomendado"
+          - label: "Top Descuento"
+            value: "Top Descuento"
+
+      - label: "Imagen Principal"
+        name: "image"
+        widget: "image"
+        required: true
+
+      - label: "Precio Regular"
+        name: "regularTotal"
+        widget: "number"
+        required: true
+        hint: "Precio total sin descuento"
+
+      - label: "Precio Promocional"
+        name: "promoPrice"
+        widget: "number"
+        required: true
+        hint: "Precio con descuento"
+
+      - label: "Descripcion Corta"
+        name: "description"
+        widget: "text"
+        required: false
+
+      - label: "Productos Incluidos"
+        name: "products"
+        widget: "list"
+        required: true
+        fields:
+          - label: "Nombre del Producto"
+            name: "name"
+            widget: "string"
+            required: true
+          - label: "Categoria"
+            name: "category"
+            widget: "select"
+            required: true
+            options:
+              - label: "Cascos"
+                value: "cascos"
+              - label: "Uniformes"
+                value: "uniformes"
+              - label: "Botas"
+                value: "botas"
+              - label: "Protecciones"
+                value: "protecciones"
+          - label: "Precio Unitario"
+            name: "price"
+            widget: "number"
+            required: true
+          - label: "Imagen"
+            name: "image"
+            widget: "image"
+            required: false

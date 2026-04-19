@@ -5,7 +5,5 @@
   "badge": "Nuevo",
   "category": "uniformes",
   "description": "Uniforme FOX 180 FLORA con diseño floral",
-  "images": [
-    "assets/images/uniformes/UNIFORME FOX 180 FLORA.jpg"
-  ]
+  "image": "assets/images/uniformes/UNIFORME FOX 180 FLORA.jpg"
 }

@@ -5,7 +5,5 @@
   "badge": "Top Ventas",
   "category": "cascos",
   "description": "Casco FLY KINETIC K 120 de entrada",
-  "images": [
-    "assets/images/nuevas_images/354355.webp"
-  ]
+  "image": "assets/images/nuevas_images/354355.webp"
 }

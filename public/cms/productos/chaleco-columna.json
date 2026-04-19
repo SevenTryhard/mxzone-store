@@ -1,0 +1,11 @@
+{
+  "name": "CHALECO COLUMNA",
+  "price": "$280.000",
+  "sizes": "S/M/L/XL",
+  "badge": "",
+  "category": "protecciones",
+  "description": "Chaleco de protección para columna",
+  "images": [
+    "assets/images/protecciones/CHALECO COLUMNA.jpg"
+  ]
+}

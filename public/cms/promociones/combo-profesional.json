@@ -1,0 +1,48 @@
+{
+  "name": "COMBO PROFESIONAL - COMPETICIÓN",
+  "slug": "combo-profesional",
+  "description": "Equipamiento de nivel competitivo para pilotos exigentes. Máxima protección y rendimiento en cada componente.",
+  "category": "profesional",
+  "badge": "Top Descuento",
+  "image": "assets/images/cascos/CASCO LEATT MOTO 2.5 V24.jpg",
+  "images": [],
+  "regularTotal": 5079800,
+  "promoPrice": 4060000,
+  "products": [
+    {
+      "name": "CASCO LEATT MOTO 2.5 V24",
+      "category": "cascos",
+      "price": 1899900,
+      "image": "assets/images/cascos/CASCO LEATT MOTO 2.5 V24.jpg",
+      "sizes": "S/M/L/XL"
+    },
+    {
+      "name": "UNIFORME FLY KINETIC",
+      "category": "uniformes",
+      "price": 380000,
+      "image": "assets/images/uniformes/UNIFORME FLY KINETIC.jpg",
+      "sizes": "S/M/L/XL"
+    },
+    {
+      "name": "BOTAS ALPINESTARS TECH 3",
+      "category": "botas",
+      "price": 1699900,
+      "image": "assets/images/botas/BOTAS ALPINESTARS TECH 3.jpg",
+      "sizes": "38/39/40/41/42/43/44/45"
+    },
+    {
+      "name": "RODILLERAS LEATT 3DF 5.0 ZIP",
+      "category": "protecciones",
+      "price": 599900,
+      "image": "assets/images/protecciones/rodillera-leatt-3df-5-0-zip.jpg",
+      "sizes": "S/M/L/XL"
+    },
+    {
+      "name": "PECHERA ACERBIS PO35 L1",
+      "category": "protecciones",
+      "price": 500100,
+      "image": "assets/images/protecciones/pechera-acerbis-po35-l1.jpg",
+      "sizes": "S/M/L"
+    }
+  ]
+}

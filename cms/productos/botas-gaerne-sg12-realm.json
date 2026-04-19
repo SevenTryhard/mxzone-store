@@ -5,7 +5,5 @@
   "badge": "",
   "category": "botas",
   "description": "Botas GAERNE SG12 REALM de alto rendimiento",
-  "images": [
-    "assets/images/botas/BOTAS GAERNE SG12 REALM.jpg"
-  ]
+  "image": "assets/images/botas/BOTAS GAERNE SG12 REALM.jpg"
 }

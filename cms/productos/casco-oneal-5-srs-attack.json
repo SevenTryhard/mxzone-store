@@ -5,7 +5,5 @@
   "badge": "",
   "category": "cascos",
   "description": "Casco ONEAL 5 SRS ATTACK de alta gama",
-  "images": [
-    "assets/images/nuevas_images/5-srs-attack-negro-neon-1.jpg"
-  ]
+  "image": "assets/images/nuevas_images/5-srs-attack-negro-neon-1.jpg"
 }

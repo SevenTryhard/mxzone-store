@@ -5,7 +5,5 @@
   "badge": "Premium",
   "category": "cascos",
   "description": "Casco AIROH TWIST 3 DYNASTY en color rosso italiano",
-  "images": [
-    "assets/images/nuevas_images/tw3di18-1.png"
-  ]
+  "image": "assets/images/nuevas_images/tw3di18-1.png"
 }

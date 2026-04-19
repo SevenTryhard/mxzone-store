@@ -5,7 +5,5 @@
   "badge": "Premium",
   "category": "cascos",
   "description": "Casco AIROH TWIST 3 DYNASTY en color rosso",
-  "images": [
-    "assets/images/nuevas_images/casco-airoh-wrap-vision-naranja-brillante-azul.webp"
-  ]
+  "image": "assets/images/nuevas_images/casco-airoh-wrap-vision-naranja-brillante-azul.webp"
 }

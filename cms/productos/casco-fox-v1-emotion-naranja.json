@@ -5,7 +5,5 @@
   "badge": "Nuevo",
   "category": "cascos",
   "description": "Casco FOX V1 EMOTION en naranja",
-  "images": [
-    "assets/images/nuevas_images/1505988-800-800.webp"
-  ]
+  "image": "assets/images/nuevas_images/1505988-800-800.webp"
 }

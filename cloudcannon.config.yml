@@ -1,307 +1,112 @@
-collections_config:
-  pages:
-    path: ''
-    icon: wysiwyg
-    disable_url: false
-    disable_add: false
-    disable_add_folder: false
-    disable_file_actions: false
-  cms_promociones:
-    path: cms/promociones
-    icon: local_offer
-    disable_url: false
-    disable_add: false
-    disable_add_folder: false
-    disable_file_actions: false
-  cms_productos:
-    path: cms/productos
-    icon: nest_protect
-    disable_url: false
-    _inputs:
-      $.name:
-        cascade: true
-    disable_add: false
-    disable_add_folder: false
-    disable_file_actions: false
-  cms_settings:
-    path: cms/settings
-    icon: reset_settings
-    disable_url: false
-    disable_add: false
-    disable_add_folder: false
-    disable_file_actions: false
-  admin:
-    path: admin
-    icon: ad
-    disable_url: false
-    disable_add: false
-    disable_add_folder: false
-    disable_file_actions: false
-base_url: https://golden-macadamia.cloudvent.net
-timezone: Etc/UTC
+# CloudCannon Configuration - MXZONE Store
+# Configuración simple que funcionaba antes
+
+base_url: https://mxzonestore.motocross.workers.dev
+timezone: America/Bogota
+
+# Media - Imágenes
+media:
+  cloudcannon:
+    - source: assets/images
+      path: assets/images
+      optimize: true
+      max_size: 10MB
+
+# Colecciones
 collections:
   productos:
-    _options:
-      icon: shopping_bag
-      label: Productos
-      display:
-        fields:
-          - name
-          - price
-          - category
-          - badge
     path: cms/productos
     type: json
+    icon: shopping_bag
+    label: Productos
+    display:
+      image: image
+      title: name
+      subtitle: price
     fields:
       - name: name
-        label: Nombre del Producto
+        label: Nombre
         type: text
-        required: true
       - name: price
         label: Precio
         type: text
-        required: true
-        comment: 'Formato: $1.234.567'
       - name: sizes
-        label: Tallas Disponibles
+        label: Tallas
         type: text
-        required: true
-        comment: 'Ej: S/M/L/XL o 38/39/40/41'
       - name: image
-        label: Imagen Principal del Producto
+        label: IMAGE
         type: image
-        required: true
-        comment: Imagen que se muestra en el catálogo
-      - name: images
-        label: Galería de Imágenes
-        type: array
-        required: false
-        comment: Imágenes adicionales del producto (máximo 5)
-        array_item:
-          type: image
       - name: badge
-        label: Etiqueta Destacada
+        label: Etiqueta
         type: select
         options:
-          values:
-            - ''
-            - Premium
-            - Top Ventas
-            - Nuevo
-            - Edicion Limitada
-            - Oferta
-        comment: Etiqueta que aparece en la esquina
+          values: ["", "Premium", "Top Ventas", "Nuevo", "Oferta"]
       - name: category
         label: Categoría
         type: select
-        required: true
         options:
-          values:
-            - cascos
-            - uniformes
-            - botas
-            - protecciones
-  testimonials:
-    _options:
-      icon: star
-      label: Testimonios
-      display:
-        fields:
-          - name
-          - location
-          - text
-    path: cms/testimonials
-    type: json
-    fields:
-      - name: name
-        label: Nombre del Cliente
-        type: text
-        required: true
-      - name: location
-        label: Ciudad, Departamento
-        type: text
-        required: true
-      - name: text
-        label: Testimonio
-        type: text
-        required: true
-      - name: avatar
-        label: Iniciales (Avatar)
-        type: text
-        required: true
-        comment: '2 letras. Ej: CR, JM'
-  settings:
-    _options:
-      icon: settings
-      label: Configuración
-      singleton: true
-      display:
-        fields:
-          - whatsapp
-          - address
-          - email
-    path: cms/settings
-    type: yaml
-    fields:
-      - name: whatsapp
-        label: Número de WhatsApp
-        type: text
-        required: true
-        comment: 'Solo números. Ej: 573176692997'
-      - name: address
-        label: Dirección Física
-        type: text
-        required: true
-      - name: email
-        label: Email de Contacto
-        type: text
-        required: true
-      - name: facebook
-        label: Facebook URL
-        type: text
-        comment: Link completo https://facebook.com/...
-      - name: instagram
-        label: Instagram URL
-        type: text
-        comment: Link completo https://instagram.com/...
-      - name: tiktok
-        label: TikTok URL
-        type: text
-        comment: Link completo https://tiktok.com/...
+          values: [cascos, uniformes, botas, protecciones]
+
   promociones:
-    _options:
-      icon: local_offer
-      label: Promociones / Combos
-      display:
-        fields:
-          - name
-          - category
-          - promoPrice
-          - regularTotal
-          - badge
     path: cms/promociones
     type: json
+    icon: local_offer
+    label: Promociones
+    display:
+      image: image
+      title: name
     fields:
       - name: name
         label: Nombre del Combo
         type: text
-        required: true
-        comment: 'Ej: Combo Principiante - Kit Completo'
-      - name: slug
-        label: Slug (URL)
-        type: text
-        required: false
-        comment: Opcional. Si se deja vacío se genera automáticamente
-      - name: description
-        label: Descripción
-        type: text
-        required: false
-        comment: Descripción corta del combo
       - name: category
         label: Categoría
         type: select
-        required: true
         options:
-          values:
-            - principiante
-            - intermedio
-            - profesional
-            - premium
-        comment: Nivel del combo
+          values: [principiante, intermedio, profesional, premium]
       - name: badge
-        label: Etiqueta Destacada
+        label: Etiqueta
         type: select
         options:
-          values:
-            - ''
-            - Más Vendido
-            - Nuevo
-            - Recomendado
-            - Edición Limitada
-            - Top Descuento
-        comment: Etiqueta que aparece en la esquina
+          values: ["", "Más Vendido", "Nuevo", "Recomendado"]
       - name: image
-        label: Imagen Principal
+        label: IMAGE
         type: image
-        required: true
-        comment: Imagen que se muestra en el grid
-      - name: images
-        label: Galería de Imágenes
-        type: array
-        required: false
-        comment: Imágenes adicionales del combo (máximo 5)
-        array_item:
-          type: image
       - name: regularTotal
-        label: Precio Regular (suma de productos)
+        label: Precio Regular
         type: number
-        required: true
-        comment: 'Precio total sin descuento (ej: 1500000)'
       - name: promoPrice
         label: Precio Promocional
         type: number
-        required: true
-        comment: 'Precio con descuento (ej: 1200000)'
-      - name: products
-        label: Productos Incluidos
-        type: array
-        required: true
-        comment: Lista de productos que forman el combo
-        array_item:
-          type: object
-          fields:
-            - name: name
-              label: Nombre del Producto
-              type: text
-              required: true
-            - name: category
-              label: Categoría
-              type: select
-              options:
-                values:
-                  - cascos
-                  - uniformes
-                  - botas
-                  - protecciones
-              required: true
-            - name: price
-              label: Precio Unitario
-              type: number
-              required: true
-            - name: image
-              label: Imagen del Producto
-              type: image
-              required: false
-            - name: sizes
-              label: Tallas Disponibles
-              type: text
-              required: false
-              comment: 'Ej: S/M/L/XL o 38/39/40/41'
-media:
-  cloudcannon:
-    - source: assets/images/cms
-      path: assets/images/cms
-      optimize: true
-      max_size: 5MB
-    - source: assets/logo
-      path: assets/logo
-      optimize: true
-    - source: assets/images/cascos
-      path: assets/images/cascos
-      optimize: true
-      max_size: 5MB
-    - source: assets/images/uniformes
-      path: assets/images/uniformes
-      optimize: true
-      max_size: 5MB
-    - source: assets/images/botas
-      path: assets/images/botas
-      optimize: true
-      max_size: 5MB
-    - source: assets/images/protecciones
-      path: assets/images/protecciones
-      optimize: true
-      max_size: 5MB
-preview:
-  enabled: true
-  environment: production
+
+  settings:
+    path: cms/settings
+    type: yaml
+    icon: settings
+    label: Configuración
+    singleton: true
+    fields:
+      - name: whatsapp
+        label: WhatsApp
+        type: text
+      - name: address
+        label: Dirección
+        type: text
+      - name: email
+        label: Email
+        type: text
+      - name: facebook
+        label: Facebook
+        type: text
+      - name: instagram
+        label: Instagram
+        type: text
+      - name: tiktok
+        label: TikTok
+        type: text
+
+_inputs:
+  whatsapp:
+    type: text
+  email:
+    type: text

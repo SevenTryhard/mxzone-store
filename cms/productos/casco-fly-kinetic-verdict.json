@@ -5,7 +5,5 @@
   "badge": "",
   "category": "cascos",
   "description": "Casco FLY KINETIC VERDICT de rendimiento",
-  "images": [
-    "assets/images/nuevas_images/s-l1200.webp"
-  ]
+  "image": "assets/images/nuevas_images/s-l1200.webp"
 }

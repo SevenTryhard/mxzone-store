@@ -5,7 +5,5 @@
   "badge": "Top Ventas",
   "category": "botas",
   "description": "Botas LEATT 4.5 en color negro, máxima protección",
-  "images": [
-    "assets/images/botas/BOTAS LEATT 4.5 NEGRO.jpg"
-  ]
+  "image": "assets/images/botas/BOTAS LEATT 4.5 NEGRO.jpg"
 }

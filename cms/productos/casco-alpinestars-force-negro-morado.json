@@ -5,7 +5,5 @@
   "badge": "",
   "category": "cascos",
   "description": "Casco ALPINESTARS FORCE en color negro morado",
-  "images": [
-    "assets/images/nuevas_images/alpinestars-sm3-force-helmet-nero.jpg"
-  ]
+  "image": "assets/images/nuevas_images/alpinestars-sm3-force-helmet-nero.jpg"
 }

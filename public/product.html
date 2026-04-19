@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Producto destacado - MXZONE STORE">
+  <!-- Cache control para imágenes -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Producto | MXZONE STORE</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo/logo.png">
+  <link rel="apple-touch-icon" href="assets/logo/logo.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css?v=3d-20260418">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <nav class="nav">
+      <!-- Logo (Left) -->
+      <a href="index.html" class="logo">
+        <img src="assets/logo/logo.png" alt="MXZONE" class="logo-image">
+        <span>MX ZONE</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="shop.html">Tienda</a></li>
+        <li><a href="promociones.html">Promociones</a></li>
+        <li><a href="about.html">Nosotros</a></li>
+        <li><a href="testimonials.html">Testimonios</a></li>
+        <li><a href="contact.html">Contacto</a></li>
+      </ul>
+
+      <div class="nav-cta">
+        <!-- Carrito Button -->
+        <div class="cart-btn-container">
+          <button class="cart-btn" id="cartBtn" aria-label="Ver carrito">
+            🛒
+          </button>
+          <span class="cart-badge" id="cartCount" style="display: none;">0</span>
+        </div>
+
+        <a href="https://wa.me/573176692997" class="btn btn-whatsapp btn-small desktop-only" target="_blank">
+          <span>WhatsApp</span>
+        </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <div class="container">
+      <a href="index.html">Inicio</a>
+      <span class="breadcrumb-separator">/</span>
+      <a href="shop.html">Tienda</a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-current" id="breadcrumbProduct">Producto</span>
+    </div>
+  </nav>
+
+  <!-- Product Detail Section -->
+  <section class="section">
+    <div class="container">
+      <div class="product-detail-layout" id="productDetailLayout">
+        <!-- Loading State -->
+        <div class="product-loading">
+          <div class="loading-spinner"></div>
+          <p>Cargando producto...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Products Section -->
+  <section class="section" style="background: var(--gray-medium);">
+    <div class="container">
+      <h2 class="section-title">Productos Relacionados</h2>
+      <div class="products-grid" id="relatedProducts">
+        <!-- Productos relacionados cargados dinámicamente -->
+      </div>
+      <div class="text-center" style="margin-top: var(--spacing-xl);">
+        <a href="shop.html" class="btn btn-secondary btn-large">Ver Todos los Productos</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2 class="cta-title">¿Tienes dudas sobre este producto?</h2>
+      <p class="cta-text">
+        Escríbenos por WhatsApp y te ayudamos con tallas, disponibilidad y más.
+      </p>
+      <a href="https://wa.me/573176692997" class="btn btn-large" target="_blank">
+        Consultar por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="assets/logo/logo.png" alt="MXZONE" class="logo-image" style="height: 40px;">
+            <span>MX ZONE</span>
+          </div>
+          <p class="footer-description">
+            Tienda especializada en equipamiento premium para motocross y enduro.
+            Las mejores marcas, los mejores precios.
+          </p>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/profile.php?id=100077482166864&locale=es_LA" class="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">📘</a>
+            <a href="https://www.instagram.com/mxzoneoficial/?hl=es" class="social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">📷</a>
+            <a href="https://www.tiktok.com/@mx_zonestore" class="social-link" aria-label="TikTok" target="_blank" rel="noopener noreferrer">🎵</a>
+            <a href="https://wa.me/573176692997" class="social-link" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">💬</a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Tienda</h4>
+          <ul class="footer-links">
+            <li><a href="shop.html?cat=cascos">Cascos</a></li>
+            <li><a href="shop.html?cat=uniformes">Uniformes</a></li>
+            <li><a href="shop.html?cat=botas">Botas</a></li>
+            <li><a href="shop.html?cat=protecciones">Protecciones</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Información</h4>
+          <ul class="footer-links">
+            <li><a href="about.html">Nosotros</a></li>
+            <li><a href="sizes.html">Guía de Tallas</a></li>
+            <li><a href="shipping.html">Envíos</a></li>
+            <li><a href="returns.html">Devoluciones</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Contacto</h4>
+          <ul class="footer-links footer-contact">
+            <li>
+              <span>📍</span>
+              <span>Calle 36N # 3N-56</span>
+            </li>
+            <li>
+              <span>📱</span>
+              <span>+57 317 669 2997</span>
+            </li>
+            <li>
+              <span>✉️</span>
+              <span>MXZONEOFICIAL</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copyright">
+          © 2026 MXZONE STORE. Todos los derechos reservados.
+        </p>
+        <div class="footer-payment">
+          <div class="payment-icon">VISA</div>
+          <div class="payment-icon">MC</div>
+          <div class="payment-icon">EFECTY</div>
+          <div class="payment-icon">TRANSFER</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/573176692997" class="whatsapp-float" target="_blank" aria-label="Chat WhatsApp">
+    <img src="assets/whatsapp-logo.webp" alt="WhatsApp" class="whatsapp-icon">
+  </a>
+
+  <!-- Scripts -->
+  <script src="js/main.js?v=3d-20260418"></script>
+  <script src="js/product-detail.js?v=20260418"></script>
+</body>
+</html>

@@ -5,7 +5,5 @@
   "badge": "Premium",
   "category": "protecciones",
   "description": "Rodillera LEATT 3DF 5.0 ZIP de alta protección",
-  "images": [
-    "assets/images/protecciones/RODILLERA LEATT 3DF 5.0 ZIP.jpg"
-  ]
+  "image": "assets/images/protecciones/RODILLERA LEATT 3DF 5.0 ZIP.jpg"
 }

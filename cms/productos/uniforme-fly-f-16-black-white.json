@@ -5,7 +5,5 @@
   "badge": "Top Ventas",
   "category": "uniformes",
   "description": "Uniforme FLY F-16 en negro blanco",
-  "images": [
-    "assets/images/uniformes/UNIFORME FLY F-16 BLACK WHITE.jpg"
-  ]
+  "image": "assets/images/uniformes/UNIFORME FLY F-16 BLACK WHITE.jpg"
 }

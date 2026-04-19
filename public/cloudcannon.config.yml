@@ -1,0 +1,112 @@
+# CloudCannon Configuration - MXZONE Store
+# Configuración simple que funcionaba antes
+
+base_url: https://mxzonestore.motocross.workers.dev
+timezone: America/Bogota
+
+# Media - Imágenes
+media:
+  cloudcannon:
+    - source: assets/images
+      path: assets/images
+      optimize: true
+      max_size: 10MB
+
+# Colecciones
+collections:
+  productos:
+    path: cms/productos
+    type: json
+    icon: shopping_bag
+    label: Productos
+    display:
+      image: image
+      title: name
+      subtitle: price
+    fields:
+      - name: name
+        label: Nombre
+        type: text
+      - name: price
+        label: Precio
+        type: text
+      - name: sizes
+        label: Tallas
+        type: text
+      - name: image
+        label: IMAGE
+        type: image
+      - name: badge
+        label: Etiqueta
+        type: select
+        options:
+          values: ["", "Premium", "Top Ventas", "Nuevo", "Oferta"]
+      - name: category
+        label: Categoría
+        type: select
+        options:
+          values: [cascos, uniformes, botas, protecciones]
+
+  promociones:
+    path: cms/promociones
+    type: json
+    icon: local_offer
+    label: Promociones
+    display:
+      image: image
+      title: name
+    fields:
+      - name: name
+        label: Nombre del Combo
+        type: text
+      - name: category
+        label: Categoría
+        type: select
+        options:
+          values: [principiante, intermedio, profesional, premium]
+      - name: badge
+        label: Etiqueta
+        type: select
+        options:
+          values: ["", "Más Vendido", "Nuevo", "Recomendado"]
+      - name: image
+        label: IMAGE
+        type: image
+      - name: regularTotal
+        label: Precio Regular
+        type: number
+      - name: promoPrice
+        label: Precio Promocional
+        type: number
+
+  settings:
+    path: cms/settings
+    type: yaml
+    icon: settings
+    label: Configuración
+    singleton: true
+    fields:
+      - name: whatsapp
+        label: WhatsApp
+        type: text
+      - name: address
+        label: Dirección
+        type: text
+      - name: email
+        label: Email
+        type: text
+      - name: facebook
+        label: Facebook
+        type: text
+      - name: instagram
+        label: Instagram
+        type: text
+      - name: tiktok
+        label: TikTok
+        type: text
+
+_inputs:
+  whatsapp:
+    type: text
+  email:
+    type: text

@@ -5,7 +5,5 @@
   "badge": "Top Ventas",
   "category": "cascos",
   "description": "Casco ALPINESTARS S-M5 BOND de alta resistencia",
-  "images": [
-    "assets/images/nuevas_images/8059175891434-001-750wx750h.webp"
-  ]
+  "image": "assets/images/nuevas_images/8059175891434-001-750wx750h.webp"
 }

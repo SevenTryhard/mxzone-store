@@ -5,7 +5,5 @@
   "badge": "Nuevo",
   "category": "botas",
   "description": "Botas LEATT 4.5 en color citrus vibrante",
-  "images": [
-    "assets/images/botas/BOTAS LEATT 4.5 CITRUS.jpg"
-  ]
+  "image": "assets/images/botas/BOTAS LEATT 4.5 CITRUS.jpg"
 }

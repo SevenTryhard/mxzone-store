@@ -5,7 +5,5 @@
   "badge": "Top Ventas",
   "category": "cascos",
   "description": "Casco FOX V1 con diseÃ±o camuflaje nitro",
-  "images": [
-    "assets/images/nuevas_images/31370-330-2-800x.webp"
-  ]
+  "image": "assets/images/nuevas_images/31370-330-2-800x.webp"
 }
