@@ -2,9 +2,10 @@
   "name": "UNIFORME FLY F-16 DARK BLUE WHITE",
   "price": "$320.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/uniformes/UNIFORME FLY F-16 DARK BLUE WHITE.jpg",
   "badge": "",
   "category": "uniformes",
   "description": "Uniforme FLY F-16 en azul oscuro blanco",
-  "galeria": "assets/images/uniformes/UNIFORME FLY F-16 DARK BLUE WHITE.jpg"
+  "images": [
+    "assets/images/uniformes/UNIFORME FLY F-16 DARK BLUE WHITE.jpg"
+  ]
 }

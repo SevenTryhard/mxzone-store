@@ -216,25 +216,14 @@ function createProductCard(product) {
   const priceNum = parseInt(product.price.replace(/[^0-9]/g, ''));
   const productSlug = createProductSlug(product.name);
 
-  // Soporte para imágenes: image principal + galeria como secundarias
+  // Soporte para múltiples imágenes (array images)
   // Las URLs de CloudCannon (cloudvent.net) se usan directamente sin cache buster
   const isCloudCannonUrl = (url) => url && url.includes('cloudvent.net');
 
   let images = [];
-  // Primero la imagen principal
-  if (product.image) {
-    images.push(product.image);
-  }
-  // Luego las imágenes de la galería (si existen)
-  if (product.galeria) {
-    // Si galeria es un array
-    if (Array.isArray(product.galeria)) {
-      images = images.concat(product.galeria.filter(e => e && e.trim() !== ''));
-    }
-    // Si galeria es un string (una sola imagen)
-    else if (typeof product.galeria === 'string' && product.galeria.trim() !== '') {
-      images.push(product.galeria);
-    }
+  // Usar product.images (array)
+  if (product.images && Array.isArray(product.images)) {
+    images = product.images.filter(img => img && img.trim() !== '');
   }
 
   // Agregar cache buster solo a imágenes locales (no CloudCannon)

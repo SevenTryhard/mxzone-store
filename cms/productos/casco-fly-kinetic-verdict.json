@@ -2,9 +2,10 @@
   "name": "CASCO FLY KINETIC VERDICT",
   "price": "$890.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/nuevas_images/s-l1200.webp",
   "badge": "",
   "category": "cascos",
   "description": "Casco FLY KINETIC VERDICT de rendimiento",
-  "galeria": "assets/images/nuevas_images/s-l1200.webp"
+  "images": [
+    "assets/images/nuevas_images/s-l1200.webp"
+  ]
 }

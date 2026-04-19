@@ -2,9 +2,10 @@
   "name": "CASCO FOX V1 DPTH VERDE NEGRO",
   "price": "$1.150.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/cascos/CASCO FOX V1 DPTH VERDE NEGRO.jpg",
   "badge": "",
   "category": "cascos",
   "description": "Casco FOX V1 DPTH en verde negro",
-  "galeria": "assets/images/cascos/CASCO FOX V1 DPTH VERDE NEGRO.jpg"
+  "images": [
+    "assets/images/cascos/CASCO FOX V1 DPTH VERDE NEGRO.jpg"
+  ]
 }

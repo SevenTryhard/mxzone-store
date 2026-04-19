@@ -2,9 +2,10 @@
   "name": "UNIFORME THOR TARMAC",
   "price": "$480.000",
   "sizes": "30-S",
-  "image": "assets/images/uniformes/UNIFORME THOR TARMAC.jpg",
   "badge": "",
   "category": "uniformes",
   "description": "Uniforme completo THOR TARMAC para motocross",
-  "galeria": "assets/images/uniformes/UNIFORME THOR TARMAC.jpg"
+  "images": [
+    "assets/images/uniformes/UNIFORME THOR TARMAC.jpg"
+  ]
 }

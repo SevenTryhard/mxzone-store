@@ -2,9 +2,10 @@
   "name": "UNIFORME FOX 180 FLORA",
   "price": "$450.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/uniformes/UNIFORME FOX 180 FLORA.jpg",
   "badge": "Nuevo",
   "category": "uniformes",
   "description": "Uniforme FOX 180 FLORA con diseño floral",
-  "galeria": "assets/images/uniformes/UNIFORME FOX 180 FLORA.jpg"
+  "images": [
+    "assets/images/uniformes/UNIFORME FOX 180 FLORA.jpg"
+  ]
 }

@@ -2,9 +2,10 @@
   "name": "RIÑONERA KTM ORANGE",
   "price": "$200.000",
   "sizes": "ÚNICA",
-  "image": "assets/images/protecciones/RINIONERA KTM ORANGE.jpg",
   "badge": "",
   "category": "protecciones",
   "description": "Riñonera KTM ORANGE oficial",
-  "galeria": "assets/images/protecciones/RINIONERA KTM ORANGE.jpg"
+  "images": [
+    "assets/images/protecciones/RINIONERA KTM ORANGE.jpg"
+  ]
 }

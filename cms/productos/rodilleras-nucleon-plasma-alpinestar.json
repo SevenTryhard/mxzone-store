@@ -2,9 +2,10 @@
   "name": "RODILLERAS NUCLEON PLASMA ALPINESTARS",
   "price": "$520.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/protecciones/RODILLERAS NUCLEON PLASMA ALPINESTAR.jpg",
   "badge": "Premium",
   "category": "protecciones",
   "description": "Rodilleras ALPINESTARS NUCLEON PLASMA de alta gama",
-  "galeria": "assets/images/protecciones/RODILLERAS NUCLEON PLASMA ALPINESTAR.jpg"
+  "images": [
+    "assets/images/protecciones/RODILLERAS NUCLEON PLASMA ALPINESTAR.jpg"
+  ]
 }

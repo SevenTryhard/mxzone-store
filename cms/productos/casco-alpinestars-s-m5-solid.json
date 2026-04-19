@@ -2,9 +2,10 @@
   "name": "CASCO ALPINESTARS S-M5 SOLID",
   "price": "$1.890.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/cascos/CASCO ALPINESTARS S-M5 SOLID.jpg",
   "badge": "Premium",
   "category": "cascos",
   "description": "Casco ALPINESTARS S-M5 SOLID color sólido",
-  "galeria": "assets/images/cascos/CASCO ALPINESTARS S-M5 SOLID.jpg"
+  "images": [
+    "assets/images/cascos/CASCO ALPINESTARS S-M5 SOLID.jpg"
+  ]
 }

@@ -2,9 +2,10 @@
   "name": "UNIFORME FOX 180 GOAT STRAFER",
   "price": "$450.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/uniformes/UNIFORME FOX 180 GOAT STRAFER.jpg",
   "badge": "Premium",
   "category": "uniformes",
   "description": "Uniforme FOX 180 GOAT STRAFER edición especial",
-  "galeria": "assets/images/uniformes/UNIFORME FOX 180 GOAT STRAFER.jpg"
+  "images": [
+    "assets/images/uniformes/UNIFORME FOX 180 GOAT STRAFER.jpg"
+  ]
 }

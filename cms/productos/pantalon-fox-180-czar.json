@@ -2,9 +2,10 @@
   "name": "PANTALON FOX 180 CZAR",
   "price": "$280.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/uniformes/PANTALON FOX 180 CZAR.jpg",
   "badge": "",
   "category": "uniformes",
   "description": "Pantalón FOX 180 CZAR de competición",
-  "galeria": "assets/images/uniformes/PANTALON FOX 180 CZAR.jpg"
+  "images": [
+    "assets/images/uniformes/PANTALON FOX 180 CZAR.jpg"
+  ]
 }

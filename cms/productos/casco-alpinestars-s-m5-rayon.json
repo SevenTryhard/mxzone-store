@@ -2,9 +2,10 @@
   "name": "CASCO ALPINESTARS S-M5 RAYON",
   "price": "$1.890.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/nuevas_images/casco-alpinestars-s-m5-rayon-azul-mate-blanco.jpg",
   "badge": "Premium",
   "category": "cascos",
   "description": "Casco ALPINESTARS S-M5 RAYON de alta gama",
-  "galeria": "assets/images/nuevas_images/casco-alpinestars-s-m5-rayon-azul-mate-blanco.jpg"
+  "images": [
+    "assets/images/nuevas_images/casco-alpinestars-s-m5-rayon-azul-mate-blanco.jpg"
+  ]
 }

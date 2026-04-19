@@ -2,9 +2,10 @@
   "name": "CASCO AIROH TWIST",
   "price": "$1.450.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/nuevas_images/1-140.jpg",
   "badge": "Premium",
   "category": "cascos",
   "description": "Casco AIROH TWIST de diseño italiano",
-  "galeria": "assets/images/nuevas_images/1-140.jpg"
+  "images": [
+    "assets/images/nuevas_images/1-140.jpg"
+  ]
 }

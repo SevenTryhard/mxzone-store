@@ -2,9 +2,10 @@
   "name": "KIT RODILLERA Y CODERA VALKIRIA",
   "price": "$450.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/protecciones/KIT RODILLERA Y CODERA VALKIRIA.jpg",
   "badge": "Top Ventas",
   "category": "protecciones",
   "description": "Kit completo de rodilleras y coderas VALKIRIA",
-  "galeria": "assets/images/protecciones/KIT RODILLERA Y CODERA VALKIRIA.jpg"
+  "images": [
+    "assets/images/protecciones/KIT RODILLERA Y CODERA VALKIRIA.jpg"
+  ]
 }

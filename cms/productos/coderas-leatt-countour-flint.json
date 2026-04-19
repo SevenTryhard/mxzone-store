@@ -2,9 +2,10 @@
   "name": "CODERAS LEATT CONTOUR FLINT",
   "price": "$380.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/protecciones/CODERAS LEATT COUNTOUR FLINT.jpg",
   "badge": "",
   "category": "protecciones",
   "description": "Coderas LEATT CONTOUR en color flint",
-  "galeria": "assets/images/protecciones/CODERAS LEATT COUNTOUR FLINT.jpg"
+  "images": [
+    "assets/images/protecciones/CODERAS LEATT COUNTOUR FLINT.jpg"
+  ]
 }

@@ -2,9 +2,10 @@
   "name": "CASCO ALPINESTARS RADIUM NEGRO ROJO",
   "price": "$1.550.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/nuevas_images/8300726-1553-r3-sm3-radium.webp",
   "badge": "",
   "category": "cascos",
   "description": "Casco ALPINESTARS RADIUM en color negro y rojo",
-  "galeria": "assets/images/nuevas_images/8300726-1553-r3-sm3-radium.webp"
+  "images": [
+    "assets/images/nuevas_images/8300726-1553-r3-sm3-radium.webp"
+  ]
 }

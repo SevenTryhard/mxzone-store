@@ -2,9 +2,10 @@
   "name": "RODILLERA TIPO LEATT 3DF",
   "price": "$280.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/protecciones/RODILLERA TIPO LEATT 3DF.jpg",
   "badge": "Oferta",
   "category": "protecciones",
   "description": "Rodillera estilo LEATT 3DF de protección",
-  "galeria": "assets/images/protecciones/RODILLERA TIPO LEATT 3DF.jpg"
+  "images": [
+    "assets/images/protecciones/RODILLERA TIPO LEATT 3DF.jpg"
+  ]
 }

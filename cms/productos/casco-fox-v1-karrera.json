@@ -2,9 +2,10 @@
   "name": "CASCO FOX V1 KARRERA",
   "price": "$1.150.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/nuevas_images/d-q-np-605564-mlu70659130225-072023-o.webp",
   "badge": "Top Ventas",
   "category": "cascos",
   "description": "Casco FOX V1 KARRERA de competición",
-  "galeria": "assets/images/nuevas_images/d-q-np-605564-mlu70659130225-072023-o.webp"
+  "images": [
+    "assets/images/nuevas_images/d-q-np-605564-mlu70659130225-072023-o.webp"
+  ]
 }

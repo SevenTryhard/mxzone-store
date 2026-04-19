@@ -2,9 +2,10 @@
   "name": "RIÑONERA FLY BARRICADE",
   "price": "$190.000",
   "sizes": "ÚNICA",
-  "image": "assets/images/protecciones/RINIONERA FLY BARRICADE.jpg",
   "badge": "",
   "category": "protecciones",
   "description": "Riñonera FLY BARRICADE para hidratación",
-  "galeria": "assets/images/protecciones/RINIONERA FLY BARRICADE.jpg"
+  "images": [
+    "assets/images/protecciones/RINIONERA FLY BARRICADE.jpg"
+  ]
 }

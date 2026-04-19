@@ -2,9 +2,10 @@
   "name": "RIÑONERA FOX TITAN RACE",
   "price": "$289.900",
   "sizes": "SM, L/XL",
-  "image": "assets/images/protecciones/RINIONERA FOX TITAN RACE.jpg",
   "badge": "",
   "category": "protecciones",
   "description": "Riñonera FOX TITAN RACE para hidratación",
-  "galeria": "assets/images/protecciones/RINIONERA FOX TITAN RACE.jpg"
+  "images": [
+    "assets/images/protecciones/RINIONERA FOX TITAN RACE.jpg"
+  ]
 }

@@ -2,9 +2,10 @@
   "name": "CODERAS TITAN RACE",
   "price": "$290.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/protecciones/CODERAS TITAN RACE.jpg",
   "badge": "",
   "category": "protecciones",
   "description": "Coderas TITAN RACE de protección",
-  "galeria": "assets/images/protecciones/CODERAS TITAN RACE.jpg"
+  "images": [
+    "assets/images/protecciones/CODERAS TITAN RACE.jpg"
+  ]
 }

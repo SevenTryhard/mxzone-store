@@ -2,9 +2,10 @@
   "name": "PECHERA ACERBIS KIDS GRAVITY",
   "price": "$320.000",
   "sizes": "S/M/L",
-  "image": "assets/images/protecciones/PECHERA ACERBIS KIDS GRAVITY.jpg",
   "badge": "",
   "category": "protecciones",
   "description": "Pechera ACERBIS GRAVITY para niños",
-  "galeria": "assets/images/protecciones/PECHERA ACERBIS KIDS GRAVITY.jpg"
+  "images": [
+    "assets/images/protecciones/PECHERA ACERBIS KIDS GRAVITY.jpg"
+  ]
 }

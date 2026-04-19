@@ -2,9 +2,10 @@
   "name": "RODILLERAS FOX LAUNCH D30",
   "price": "$649.900",
   "sizes": "S/M",
-  "image": "assets/images/protecciones/RODILLERAS FOX LAUNCH D30.jpg",
   "badge": "",
   "category": "protecciones",
   "description": "Rodilleras FOX LAUNCH con protección D3O",
-  "galeria": "assets/images/protecciones/RODILLERAS FOX LAUNCH D30.jpg"
+  "images": [
+    "assets/images/protecciones/RODILLERAS FOX LAUNCH D30.jpg"
+  ]
 }

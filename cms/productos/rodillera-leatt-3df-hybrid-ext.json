@@ -2,9 +2,10 @@
   "name": "RODILLERA LEATT 3DF HYBRID EXT",
   "price": "$450.000",
   "sizes": "S/M/L/XL",
-  "image": "assets/images/protecciones/RODILLERA LEATT 3DF HYBRID EXT.jpg",
   "badge": "Premium",
   "category": "protecciones",
   "description": "Rodillera LEATT 3DF HYBRID EXT de protección extendida",
-  "galeria": "assets/images/protecciones/RODILLERA LEATT 3DF HYBRID EXT.jpg"
+  "images": [
+    "assets/images/protecciones/RODILLERA LEATT 3DF HYBRID EXT.jpg"
+  ]
 }

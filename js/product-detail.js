@@ -95,21 +95,13 @@ function isCloudCannonUrl(url) {
   return url && url.includes('cloudvent.net');
 }
 
-// Obtener imagen principal del producto (image + galeria)
+// Obtener imagen principal del producto (primera del array images)
 function getProductImage(product) {
   let imageSrc = '';
 
-  // Primero usar image principal
-  if (product.image) {
-    imageSrc = product.image;
-  }
-  // Si no, usar galeria (puede ser string o array)
-  else if (product.galeria) {
-    if (Array.isArray(product.galeria)) {
-      imageSrc = product.galeria[0] || '';
-    } else {
-      imageSrc = product.galeria;
-    }
+  // Usar primera imagen del array
+  if (product.images && Array.isArray(product.images) && product.images.length > 0) {
+    imageSrc = product.images[0];
   }
 
   // Si es CloudCannon, corregir formato y no agregar cache buster
@@ -121,25 +113,12 @@ function getProductImage(product) {
   return encodeImagePath(cleanPath) + '?' + IMAGE_VERSION;
 }
 
-// Obtener todas las imágenes del producto (image + galeria)
+// Obtener todas las imágenes del producto
 function getProductImages(product) {
-  let images = [];
-
-  // Primero la imagen principal
-  if (product.image) {
-    images.push(product.image);
+  if (product.images && Array.isArray(product.images)) {
+    return product.images.filter(img => img && img.trim() !== '');
   }
-
-  // Luego las imágenes de la galería
-  if (product.galeria) {
-    if (Array.isArray(product.galeria)) {
-      images = images.concat(product.galeria.filter(e => e && e.trim() !== ''));
-    } else if (typeof product.galeria === 'string' && product.galeria.trim() !== '') {
-      images.push(product.galeria);
-    }
-  }
-
-  return images;
+  return [];
 }
 
 // Crear HTML del producto

@@ -45,19 +45,17 @@
           "type": "text",
           "label": "Tallas disponibles"
         },
-        "image": {
-          "type": "file",
-          "label": "Imagen principal",
-          "options": {
-            "upload_path": "assets/images/uploads"
-          }
-        },
-        "galeria": {
-          "type": "file",
-          "label": "Galería (Segunda imagen)",
-          "options": {
-            "upload_path": "assets/images/uploads",
-            "preview_path": "assets/images/uploads"
+        "images": {
+          "type": "array",
+          "label": "Galería de imágenes",
+          "array_item_type": "file",
+          "items": {
+            "type": "file",
+            "label": "Imagen",
+            "options": {
+              "upload_path": "assets/images/uploads",
+              "original_filename": true
+            }
           }
         },
         "badge": {
