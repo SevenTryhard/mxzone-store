@@ -1,14 +1,26 @@
-# CloudCannon Configuration - MXZONE Store
+collections_config:
+  cms_productos:
+    path: cms/productos
+    icon: nest_protect
+    disable_url: false
+    disable_add: false
+    disable_add_folder: false
+    disable_file_actions: false
+_inputs:
+  whatsapp:
+    type: text
+    cascade: true
+  email:
+    type: text
+    cascade: true
 base_url: https://mxzonestore.motocross.workers.dev
 timezone: America/Bogota
-
 media:
   cloudcannon:
     - source: assets/images
       path: assets/images
       optimize: true
       max_size: 10MB
-
 collections:
   productos:
     path: cms/productos
@@ -43,13 +55,21 @@ collections:
         label: Etiqueta
         type: select
         options:
-          values: ['', 'Premium', 'Top Ventas', 'Nuevo', 'Oferta']
+          values:
+            - ''
+            - Premium
+            - Top Ventas
+            - Nuevo
+            - Oferta
       - name: category
         label: Categoría
         type: select
         options:
-          values: [cascos, uniformes, botas, protecciones]
-
+          values:
+            - cascos
+            - uniformes
+            - botas
+            - protecciones
   promociones:
     path: cms/promociones
     type: json
@@ -66,12 +86,20 @@ collections:
         label: Categoría
         type: select
         options:
-          values: [principiante, intermedio, profesional, premium]
+          values:
+            - principiante
+            - intermedio
+            - profesional
+            - premium
       - name: badge
         label: Etiqueta
         type: select
         options:
-          values: ['', 'Más Vendido', 'Nuevo', 'Recomendado']
+          values:
+            - ''
+            - Más Vendido
+            - Nuevo
+            - Recomendado
       - name: image
         label: IMAGE
         type: image
@@ -81,7 +109,6 @@ collections:
       - name: promoPrice
         label: Precio Promocional
         type: number
-
   settings:
     path: cms/settings
     type: yaml
@@ -107,9 +134,3 @@ collections:
       - name: tiktok
         label: TikTok
         type: text
-
-_inputs:
-  whatsapp:
-    type: text
-  email:
-    type: text
