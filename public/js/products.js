@@ -240,13 +240,9 @@ function createProductCard(product) {
       // Corregir formato de URL de CloudCannon (quitar slash inicial si existe)
       return img.replace(/^\/https:/, 'https:');
     }
-    // Rutas locales: asegurar que empiecen con / para ruta absoluta
-    let cleanPath = img.replace(/^\//, '');
-    // Agregar slash inicial para ruta absoluta desde root
-    if (!cleanPath.startsWith('/')) {
-      cleanPath = '/' + cleanPath;
-    }
-    return encodeImagePath(cleanPath) + '?v=' + imageVersion;
+    // Rutas locales: usar ruta absoluta directa sin modificar
+    // La ruta ya viene como "assets/images/..." del JSON
+    return img + '?v=' + imageVersion;
   });
 
   const mainImage = images.length > 0 ? images[0] : '';
