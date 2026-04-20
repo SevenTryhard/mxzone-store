@@ -1,4 +1,50 @@
-# CloudCannon Configuration - MXZONE Store
+collections_config:
+  cms_productos:
+    path: cms/productos
+    icon: nest_protect
+    disable_url: false
+    disable_add: false
+    disable_add_folder: false
+    disable_file_actions: false
+  cms_promociones:
+    path: cms/promociones
+    icon: 3d_rotation
+    disable_url: false
+    disable_add: false
+    disable_add_folder: false
+    disable_file_actions: false
+  cms_settings:
+    path: cms/settings
+    icon: reset_settings
+    disable_url: false
+    disable_add: false
+    disable_add_folder: false
+    disable_file_actions: false
+
+_inputs:
+  whatsapp:
+    type: text
+    cascade: true
+  email:
+    type: text
+    cascade: true
+  image:
+    type: image
+    options:
+      storage: cloudcannon
+  images:
+    type: array
+    array_item:
+      type: image
+      options:
+        storage: cloudcannon
+  gallery:
+    type: array
+    array_item:
+      type: image
+      options:
+        storage: cloudcannon
+
 base_url: https://mxzonestore.motocross.workers.dev
 timezone: America/Bogota
 
@@ -8,13 +54,6 @@ media:
       path: assets/images
       optimize: true
       max_size: 10MB
-
-  # Configurar para que las imágenes usen CDN de CloudCannon
-  storage:
-    - name: assets/images
-      type: local
-      path: assets/images
-      optimize: true
 
 collections:
   productos:
@@ -50,12 +89,21 @@ collections:
         label: Etiqueta
         type: select
         options:
-          values: ['', 'Premium', 'Top Ventas', 'Nuevo', 'Oferta']
+          values:
+            - ''
+            - Premium
+            - Top Ventas
+            - Nuevo
+            - Oferta
       - name: category
         label: Categoría
         type: select
         options:
-          values: [cascos, uniformes, botas, protecciones]
+          values:
+            - cascos
+            - uniformes
+            - botas
+            - protecciones
 
   promociones:
     path: cms/promociones
@@ -73,12 +121,20 @@ collections:
         label: Categoría
         type: select
         options:
-          values: [principiante, intermedio, profesional, premium]
+          values:
+            - principiante
+            - intermedio
+            - profesional
+            - premium
       - name: badge
         label: Etiqueta
         type: select
         options:
-          values: ['', 'Más Vendido', 'Nuevo', 'Recomendado']
+          values:
+            - ''
+            - Más Vendido
+            - Nuevo
+            - Recomendado
       - name: image
         label: IMAGE
         type: image
@@ -114,25 +170,3 @@ collections:
       - name: tiktok
         label: TikTok
         type: text
-
-_inputs:
-  whatsapp:
-    type: text
-  email:
-    type: text
-  image:
-    type: image
-    options:
-      storage: cloudcannon
-  images:
-    type: array
-    array_item:
-      type: image
-      options:
-        storage: cloudcannon
-  gallery:
-    type: array
-    array_item:
-      type: image
-      options:
-        storage: cloudcannon
