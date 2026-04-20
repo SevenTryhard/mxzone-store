@@ -9,6 +9,13 @@ media:
       optimize: true
       max_size: 10MB
 
+  # Configurar para que las imágenes usen CDN de CloudCannon
+  storage:
+    - name: assets/images
+      type: local
+      path: assets/images
+      optimize: true
+
 collections:
   productos:
     path: cms/productos
@@ -113,3 +120,19 @@ _inputs:
     type: text
   email:
     type: text
+  image:
+    type: image
+    options:
+      storage: cloudcannon
+  images:
+    type: array
+    array_item:
+      type: image
+      options:
+        storage: cloudcannon
+  gallery:
+    type: array
+    array_item:
+      type: image
+      options:
+        storage: cloudcannon
