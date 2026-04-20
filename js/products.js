@@ -86,7 +86,6 @@ async function loadProducts() {
       'casco-leatt-moto-2-5-v24.json',
       'casco-oneal-5-srs-attack.json',
       'casco-racing-formula.json',
-      'casco-tipo-fox.json',
       'casco-troy-lee-se5-gasgas.json',
       'casco-v1-nukr-verde-negro.json',
 
@@ -233,8 +232,12 @@ function createProductCard(product) {
       // Corregir formato de URL de CloudCannon (quitar slash inicial si existe)
       return img.replace(/^\/https:/, 'https:');
     }
-    // Rutas locales: quitar slash inicial si existe
-    const cleanPath = img.replace(/^\//, '');
+    // Rutas locales: asegurar que empiecen con / para ruta absoluta
+    let cleanPath = img.replace(/^\//, '');
+    // Agregar slash inicial para ruta absoluta desde root
+    if (!cleanPath.startsWith('/')) {
+      cleanPath = '/' + cleanPath;
+    }
     return encodeImagePath(cleanPath) + '?v=' + imageVersion;
   });
 

@@ -86,7 +86,6 @@ async function loadProducts() {
       'casco-leatt-moto-2-5-v24.json',
       'casco-oneal-5-srs-attack.json',
       'casco-racing-formula.json',
-      'casco-tipo-fox.json',
       'casco-troy-lee-se5-gasgas.json',
       'casco-v1-nukr-verde-negro.json',
 
