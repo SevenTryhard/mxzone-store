@@ -235,9 +235,14 @@ function createProductCard(product) {
   // Agregar cache buster solo a imágenes locales (no CloudCannon)
   const imageVersion = Date.now();
   images = images.map(img => {
+    // Corregir formato de URL rota de CloudCannon (/https:/ -> https://)
+    if (img && img.startsWith('/https:/')) {
+      img = img.replace('/https:/', 'https://');
+      console.log('URL corregida:', img);
+    }
     if (isCloudCannonUrl(img)) {
-      // Corregir formato de URL de CloudCannon (quitar slash inicial si existe)
-      return img.replace(/^\/https:/, 'https:');
+      // URLs de CloudCannon (cloudvent.net) se usan directamente
+      return img;
     }
     // Rutas locales: usar ruta absoluta directa sin modificar
     return img + '?v=' + imageVersion;

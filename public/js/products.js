@@ -228,14 +228,17 @@ function createProductCard(product) {
   const isCloudCannonUrl = (url) => url && url.includes('cloudvent.net');
 
   let images = [];
-  // Usar product.images (array)
+  // IMPORTANTE: Los JSON del CMS usan "image" (singular), no "images" (array)
+  // Primero intentar con images (array), luego fallback a image (singular)
   if (product.images && Array.isArray(product.images)) {
     images = product.images.filter(img => img && img.trim() !== '');
   }
   // Fallback: usar product.image (singular) si no hay array
   if (!images.length && product.image) {
     images = [product.image];
+    console.log('Usando image singular:', product.image);
   }
+  console.log('Images procesadas:', images.length, images);
 
   // Agregar cache buster solo a imágenes locales (no CloudCannon)
   const imageVersion = Date.now();
