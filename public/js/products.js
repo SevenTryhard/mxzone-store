@@ -167,18 +167,26 @@ async function loadProducts() {
     // Cargar todos los archivos en paralelo con cache buster en el JSON también
     const promises = productFiles.map(async (file) => {
       try {
-        const response = await fetch(cmsBaseUrl + file + '?v=' + IMAGE_VERSION);
-        if (response.ok) {
-          const product = await response.json();
-          // Procesar imágenes: codificar espacios y agregar versión
-          if (product.images && product.images.length > 0) {
-            product.images = product.images.map(img => encodeImagePath(img) + '?' + IMAGE_VERSION);
-          }
-          if (product.image) {
-            product.image = encodeImagePath(product.image) + '?' + IMAGE_VERSION;
-          }
-          return product;
+        const url = cmsBaseUrl + file + '?v=' + IMAGE_VERSION;
+        console.log('Cargando producto:', url);
+        const response = await fetch(url);
+        if (!response.ok) {
+          console.warn(`Error ${response.status} cargando ${file}`);
+          return null;
         }
+        const product = await response.json();
+        // Procesar imágenes: codificar espacios y agregar versión
+        if (product.images && product.images.length > 0) {
+          product.images = product.images.map(img => {
+            const encoded = encodeImagePath(img) + '?' + IMAGE_VERSION;
+            console.log(`  Imagen: ${img} -> ${encoded}`);
+            return encoded;
+          });
+        }
+        if (product.image) {
+          product.image = encodeImagePath(product.image) + '?' + IMAGE_VERSION;
+        }
+        return product;
       } catch (e) {
         console.warn(`No se pudo cargar ${file}:`, e);
       }
