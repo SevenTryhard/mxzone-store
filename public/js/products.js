@@ -232,6 +232,10 @@ function createProductCard(product) {
   if (product.images && Array.isArray(product.images)) {
     images = product.images.filter(img => img && img.trim() !== '');
   }
+  // Fallback: usar product.image (singular) si no hay array
+  if (!images.length && product.image) {
+    images = [product.image];
+  }
 
   // Agregar cache buster solo a imágenes locales (no CloudCannon)
   const imageVersion = Date.now();
