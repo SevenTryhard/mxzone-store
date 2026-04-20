@@ -233,12 +233,24 @@ function createProductCard(product) {
       // Corregir formato de URL de CloudCannon (quitar slash inicial si existe)
       return img.replace(/^\/https:/, 'https:');
     }
-    // Rutas locales: quitar slash inicial si existe
-    const cleanPath = img.replace(/^\//, '');
+    // Rutas locales: asegurar que empiecen con / para ruta absoluta
+    let cleanPath = img.replace(/^\//, '');
+    // Agregar slash inicial para ruta absoluta desde root
+    if (!cleanPath.startsWith('/')) {
+      cleanPath = '/' + cleanPath;
+    }
     return encodeImagePath(cleanPath) + '?v=' + imageVersion;
   });
 
   const mainImage = images.length > 0 ? images[0] : '';
+
+  // Debug: Log de rutas de imágenes
+  console.log(`Producto "${product.name}":`, {
+    originalImages: product.images,
+    processedImages: images,
+    mainImage
+  });
+
   const badgeHTML = product.badge ?
     `<span class="product-badge">${product.badge}</span>` : '';
 
