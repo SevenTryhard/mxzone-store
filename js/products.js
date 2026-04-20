@@ -220,10 +220,17 @@ function createProductCard(product) {
   const isCloudCannonUrl = (url) => url && url.includes('cloudvent.net');
 
   let images = [];
-  // Usar product.images (array)
+  // IMPORTANTE: Los JSON del CMS usan "image" (singular), no "images" (array)
+  // Primero intentar con images (array), luego fallback a image (singular)
   if (product.images && Array.isArray(product.images)) {
     images = product.images.filter(img => img && img.trim() !== '');
   }
+  // Fallback: usar product.image (singular) si no hay array
+  if (!images.length && product.image) {
+    images = [product.image];
+    console.log('Usando image singular:', product.image);
+  }
+  console.log('Images procesadas:', images.length, images);
 
   // Agregar cache buster solo a imágenes locales (no CloudCannon)
   const imageVersion = Date.now();
@@ -232,13 +239,8 @@ function createProductCard(product) {
       // Corregir formato de URL de CloudCannon (quitar slash inicial si existe)
       return img.replace(/^\/https:/, 'https:');
     }
-    // Rutas locales: asegurar que empiecen con / para ruta absoluta
-    let cleanPath = img.replace(/^\//, '');
-    // Agregar slash inicial para ruta absoluta desde root
-    if (!cleanPath.startsWith('/')) {
-      cleanPath = '/' + cleanPath;
-    }
-    return encodeImagePath(cleanPath) + '?v=' + imageVersion;
+    // Rutas locales: usar ruta absoluta directa sin modificar
+    return img + '?v=' + imageVersion;
   });
 
   const mainImage = images.length > 0 ? images[0] : '';
