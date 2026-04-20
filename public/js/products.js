@@ -243,11 +243,13 @@ function createProductCard(product) {
 
   const mainImage = images.length > 0 ? images[0] : '';
 
-  // Debug: Log de rutas de imágenes
+  // Debug: Log de rutas de imágenes con URL completa
+  const fullImageUrl = window.location.origin + mainImage;
   console.log(`Producto "${product.name}":`, {
     originalImages: product.images,
     processedImages: images,
-    mainImage
+    mainImage,
+    fullUrl: fullImageUrl
   });
 
   const badgeHTML = product.badge ?
