@@ -277,7 +277,7 @@ function createProductCard(product) {
          data-slug="${productSlug}"
          data-sizes="${product.sizes}">
       <div class="product-image">
-        <img src="${mainImage}" alt="${product.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <img src="${mainImage}" alt="${product.name}" onerror="console.error('Error cargando imagen:', this.src, this); this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <span class="product-image-placeholder" style="display:none;">MX</span>
         ${badgeHTML}
       </div>
