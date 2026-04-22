@@ -1,11 +1,11 @@
 {
   "name": "PANTALON FOX 180 FYCE",
-  "price": "$280.000",
-  "sizes": "S/M/L/XL",
+  "price": "$389.000",
+  "sizes": "26",
   "badge": "",
   "category": "uniformes",
-  "description": "Pantalón FOX 180 FYCE de rendimiento",
+  "description": "Pantalón FOX 180 FYCE para motocross",
   "images": [
-    "assets/images/uniformes/PANTALON FOX 180 FYCE.jpg"
+    "assets/images/uniformes/pantalon-fox-180-fyce.jpg"
   ]
 }
