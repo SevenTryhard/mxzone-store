@@ -223,7 +223,68 @@ async function loadProducts() {
       'gafas-100-accuri-2-fairbranks.json',
       'gafas-100-accuri-2-odeon.json',
       'gafas-100-accuri-2-wolg-red.json',
-      'goggles-fmf-powerbomb.json'
+      'goggles-fmf-powerbomb.json',
+
+      // Gorras
+      'gorra-alpinestars-blaze-flexfit-sb-hat.json',
+      'alpinestars-ageless-flexfit-navy.json',
+      'coastal-blues-snapback-hat.json',
+      'gorra-fox-absolute-flexfit-azul.json',
+      'gorra-fox-absolute-flexfit-gris.json',
+      'gorra-fox-absolute-mesh-snapback.json',
+      'gorra-fox-efekt-flexfit.json',
+      'gorra-fox-going-pro-ff.json',
+      'gorra-fox-head-camo-tech-flexfit-grn-cam.json',
+      'gorra-fox-head-flexfit-camuflado.json',
+      'gorra-fox-optical-flexfit-rojo.json',
+      'gorra-fox-plana-head-camo-tech-snapback-verde.json',
+      'gorra-fox-syz-flexfit-hat.json',
+      'gorra-non-stop-tech-flexfit-cit.json',
+      'fox-fixated-flexfit-hat.json',
+
+      // Guantes
+      'guante-100-smart-shock-fluo-m.json',
+      'guante-100-smart-shock-red-s.json',
+      'guante-fasthouse-speed-style-ridgeline-m.json',
+      'guante-fist-metzger-flaming-plug-s.json',
+      'guante-fist-stocker-camo-s.json',
+      'guante-fist-strapped-stocker-l.json',
+      'guante-fly-f-16-glove-m.json',
+      'guante-fly-f-16-s.json',
+      'guante-fly-lite-bluegray-l.json',
+      'guante-fly-lite-bluegray-m.json',
+      'guante-fly-lite-kyptek-s.json',
+      'guante-fly-lite-long-finger-l.json',
+      'guante-fly-lite-long-finger-m.json',
+      'guante-fly-lite-long-finger-s.json',
+      'guante-fly-lite-racewear-blue-m.json',
+      'guante-fly-lite-red-l.json',
+      'guante-fly-lite-s.json',
+      'guante-fly-lite-uncaged-m.json',
+      'guante-fly-lite-vice-m.json',
+      'guante-fly-lite-warped-m.json',
+      'guante-fly-lite-warped-s.json',
+      'guante-troy-lee-air-green-army-l.json',
+      'guante-troy-lee-brushed-black-l.json',
+      'guante-troy-lee-designs-air-formula-camo-navy-s.json',
+      'guantes-acerbis-linear-s.json',
+      'guantes-fox-180-bnkr-m.json',
+      'guantes-fox-dirt-paw-m.json',
+      'guantes-fox-ranger-swarmer-m.json',
+      'guantes-fox-ranger-swarmer-s.json',
+      'thor-invert-pit-gloves-green-l.json',
+
+      // Maletas
+      'bolsa-herramientas-manubrio-25-l.json',
+      'canguro-fly-tool-pack.json',
+      'canguro-riñonera-acerbis.json',
+      'canguro-tipo-ktm.json',
+      'leatt-hip-pack-con-hidratacion-core-15.json',
+      'morral-hidratacion-2-litros-importado.json',
+      'morral-hidratacion-acerbis-5l-negro.json',
+      'morral-hidratacion-camel-bags.json',
+      'morral-hidratacion-leatt-cactus-15.json',
+      'morral-hidratacion-leatt-lite-15.json'
     ];
 
     const products = [];
@@ -376,7 +437,10 @@ function getCategoryLabel(category) {
     'protecciones': 'Protecciones',
     'accesorios': 'Accesorios',
     'jersey': 'Jerseys',
-    'gafas': 'Gafas'
+    'gafas': 'Gafas',
+    'gorras': 'Gorras',
+    'guantes': 'Guantes',
+    'maletas': 'Maletas'
   };
   return labels[category] || category;
 }
@@ -440,8 +504,11 @@ function createCategoryDivider(category, icon) {
     'cascos': { label: 'Cascos', icon: '⛑️' },
     'uniformes': { label: 'Uniformes', icon: '👕' },
     'jersey': { label: 'Jerseys', icon: '👕' },
+    'guantes': { label: 'Guantes', icon: '🧤' },
+    'gorras': { label: 'Gorras', icon: '🧢' },
     'protecciones': { label: 'Protecciones', icon: '🛡️' },
     'accesorios': { label: 'Accesorios', icon: '🔧' },
+    'maletas': { label: 'Maletas', icon: '🎒' },
     'gafas': { label: 'Gafas', icon: '👓' }
   };
   const catData = labels[category] || { label: category, icon: icon || '📦' };
@@ -480,7 +547,7 @@ async function renderShopProducts() {
 
   if (container && products.length > 0) {
     // Ordenar productos por categoría para agruparlos
-    const categoryOrder = ['botas', 'cascos', 'uniformes', 'jersey', 'protecciones', 'accesorios', 'gafas'];
+    const categoryOrder = ['botas', 'cascos', 'uniformes', 'jersey', 'guantes', 'gorras', 'protecciones', 'accesorios', 'maletas', 'gafas'];
     const sortedProducts = [...products].sort((a, b) => {
       const indexA = categoryOrder.indexOf(a.category);
       const indexB = categoryOrder.indexOf(b.category);
