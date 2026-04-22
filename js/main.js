@@ -1591,7 +1591,8 @@ function initProductModalInternal() {
     // Delegación de eventos para clicks en imágenes de productos
     document.addEventListener('click', (e) => {
       const productImage = e.target.closest('.product-image img');
-      if (!productImage || !productImage.src) return;
+      // No abrir preview si la imagen está dentro de una product-card (ese click abre el quickview)
+      if (!productImage || !productImage.src || e.target.closest('.product-card')) return;
 
       e.preventDefault();
       e.stopPropagation();
