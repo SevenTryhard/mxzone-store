@@ -1,0 +1,11 @@
+{
+  "name": "RODILLO DE CADENA",
+  "price": "$45.000",
+  "sizes": "Unica",
+  "badge": "",
+  "category": "accesorios",
+  "description": "Accesorio para motocross: RODILLO DE CADENA",
+  "images": [
+    "assets/images/accesorios/rodillo-de-cadena.jpg"
+  ]
+}
