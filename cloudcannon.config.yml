@@ -73,7 +73,7 @@ collections:
         label: IMAGEN PRINCIPAL
         type: image
         comment: Imagen principal del producto
-      - name: gallery
+      - name: images
         label: GALERÍA (Imágenes secundarias)
         type: array
         array_item:
