@@ -95,13 +95,17 @@ function isCloudCannonUrl(url) {
   return url && url.includes('cloudvent.net');
 }
 
-// Obtener imagen principal del producto (primera del array images)
+// Obtener imagen principal del producto (primera del array images o image singular)
 function getProductImage(product) {
   let imageSrc = '';
 
-  // Usar primera imagen del array
+  // Primero intentar con images (array)
   if (product.images && Array.isArray(product.images) && product.images.length > 0) {
     imageSrc = product.images[0];
+  }
+  // Fallback a image (singular) - formato legacy
+  else if (product.image) {
+    imageSrc = product.image;
   }
 
   // Si es CloudCannon, corregir formato y no agregar cache buster
@@ -113,10 +117,15 @@ function getProductImage(product) {
   return encodeImagePath(cleanPath) + '?' + IMAGE_VERSION;
 }
 
-// Obtener todas las imágenes del producto
+// Obtener todas las imágenes del producto (soporta array images o image singular)
 function getProductImages(product) {
+  // Si tiene array images
   if (product.images && Array.isArray(product.images)) {
     return product.images.filter(img => img && img.trim() !== '');
+  }
+  // Fallback a image (singular) - formato legacy
+  if (product.image) {
+    return [product.image];
   }
   return [];
 }
@@ -254,7 +263,13 @@ function getCategoryLabel(category) {
     'cascos': 'Cascos',
     'uniformes': 'Uniformes',
     'botas': 'Botas',
-    'protecciones': 'Protecciones'
+    'protecciones': 'Protecciones',
+    'accesorios': 'Accesorios',
+    'jersey': 'Jerseys',
+    'gafas': 'Gafas',
+    'gorras': 'Gorras',
+    'guantes': 'Guantes',
+    'maletas': 'Maletas'
   };
   return labels[category] || category;
 }
