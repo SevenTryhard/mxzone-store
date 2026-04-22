@@ -1,0 +1,11 @@
+{
+  "name": "BANCO HIDRAULICO",
+  "price": "$319.000",
+  "sizes": "Unica",
+  "badge": "",
+  "category": "accesorios",
+  "description": "Accesorio para motocross: BANCO HIDRAULICO",
+  "images": [
+    "assets/images/accesorios/banco-hidraulico.jpg"
+  ]
+}

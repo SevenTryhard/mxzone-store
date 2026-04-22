@@ -1,0 +1,11 @@
+{
+  "name": "PISA LLANTAS",
+  "price": "$60.000",
+  "sizes": "Unica",
+  "badge": "",
+  "category": "accesorios",
+  "description": "Accesorio para motocross: PISA LLANTAS",
+  "images": [
+    "assets/images/accesorios/pisa-llantas.jpg"
+  ]
+}
