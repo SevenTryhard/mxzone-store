@@ -150,7 +150,80 @@ async function loadProducts() {
       'rodilleras-fox-launch-d30.json',
       'rodilleras-leatt-3df-hybrid.json',
       'rodilleras-nucleon-plasma-alpinestar.json',
-      'rodilleras-nucleon-plasma-alpinestars.json'
+      'rodilleras-nucleon-plasma-alpinestars.json',
+
+      // Accesorios
+      'banco-hidraulico.json',
+      'cepillo-limpiador-cadena.json',
+      'correas-acerbis.json',
+      'correas-oneal.json',
+      'filtro-de-aire-profilter.json',
+      'handguards-acerbis-x-ultimate.json',
+      'handguards-alma-en-aluminio.json',
+      'herramienta-multiusos.json',
+      'kit-herramienta-46-piezas.json',
+      'kit-tornillos-60-piezas.json',
+      'limpiador-filtro-motorx-1l.json',
+      'limpiador-sellos-suspension.json',
+      'lubricante-cadena-offroad-500ml.json',
+      'lubricante-filtro-de-aire-motorx-spray-075l.json',
+      'medidor-de-presion-digital.json',
+      'motorex-crosspower-2t-1l.json',
+      'motorex-crosspower-4t-10w60-1l.json',
+      'pisa-llantas.json',
+      'protector-curva-2t.json',
+      'protector-de-punta-siliconado.json',
+      'protector-punta-dona.json',
+      'protector-suspension-delantera.json',
+      'rampa-aluminio-plegable-75-pies-capacidad-750-lbs.json',
+      'refrigerante-motorx-m50.json',
+      'rodillo-de-cadena.json',
+      'triangulo-moto.json',
+
+      // Jersey
+      'alpinestars-fluid-apex-l.json',
+      'alpinestars-fluid-apex-m.json',
+      'alpinestars-fluid-apex-s.json',
+      'alpinestars-fluid-apex-xl.json',
+      'alpinestars-fluid-wurx-l.json',
+      'jersey-fly-f16-l.json',
+      'jersey-fly-f16-m.json',
+      'jersey-fly-f16-s.json',
+      'jersey-fly-f16-xl.json',
+      'jersey-fly-kinetic-jet-l.json',
+      'jersey-fly-kinetic-k121-m.json',
+      'jersey-fly-kinetic-kore-l.json',
+      'jersey-fly-kinetic-kore-s.json',
+      'jersey-fly-kinetic-kore-xl.json',
+      'jersey-fly-kinetic-mesh-s.json',
+      'jersey-fly-kinetic-rebel-yl (youth large).json',
+      'jersey-fox-180-black-out-s.json',
+      'jersey-fox-180-flora-azul-s.json',
+      'jersey-fox-180-flora-l.json',
+      'jersey-fox-180-flora-xl.json',
+      'jersey-fox-180-race-spec-s.json',
+      'jersey-fox-360-streak-l.json',
+      'jersey-fox-airline-exo-l.json',
+      'jersey-fxr-revo-comp-l.json',
+      'jersey-fxr-revo-comp-m.json',
+      'jersey-kinetic-jet-l.json',
+      'oneal-element-roller-l.json',
+      'oneal-element-roller-xl.json',
+
+      // Gafas
+      '100-armatic-black-gold-flash-lens.json',
+      '100-armatic-neon-orange-silver-flash-lens.json',
+      '100-armega-soledad-red-lens.json',
+      '100-strata-2-black.json',
+      '100-strata-2-garage-smoke.json',
+      '100-strata-2-neon-yellow.json',
+      'gafa-100-strata-2-claro.json',
+      'gafa-100-strata-2-lente-rojo.json',
+      'gafa-100-strata-2-smoke.json',
+      'gafas-100-accuri-2-fairbranks.json',
+      'gafas-100-accuri-2-odeon.json',
+      'gafas-100-accuri-2-wolg-red.json',
+      'goggles-fmf-powerbomb.json'
     ];
 
     const products = [];
@@ -300,7 +373,10 @@ function getCategoryLabel(category) {
     'cascos': 'Cascos',
     'uniformes': 'Uniformes',
     'botas': 'Botas',
-    'protecciones': 'Protecciones'
+    'protecciones': 'Protecciones',
+    'accesorios': 'Accesorios',
+    'jersey': 'Jerseys',
+    'gafas': 'Gafas'
   };
   return labels[category] || category;
 }
@@ -363,7 +439,10 @@ function createCategoryDivider(category, icon) {
     'botas': { label: 'Botas', icon: '👢' },
     'cascos': { label: 'Cascos', icon: '⛑️' },
     'uniformes': { label: 'Uniformes', icon: '👕' },
-    'protecciones': { label: 'Protecciones', icon: '🛡️' }
+    'jersey': { label: 'Jerseys', icon: '👕' },
+    'protecciones': { label: 'Protecciones', icon: '🛡️' },
+    'accesorios': { label: 'Accesorios', icon: '🔧' },
+    'gafas': { label: 'Gafas', icon: '👓' }
   };
   const catData = labels[category] || { label: category, icon: icon || '📦' };
 
@@ -401,7 +480,7 @@ async function renderShopProducts() {
 
   if (container && products.length > 0) {
     // Ordenar productos por categoría para agruparlos
-    const categoryOrder = ['botas', 'cascos', 'uniformes', 'protecciones'];
+    const categoryOrder = ['botas', 'cascos', 'uniformes', 'jersey', 'protecciones', 'accesorios', 'gafas'];
     const sortedProducts = [...products].sort((a, b) => {
       const indexA = categoryOrder.indexOf(a.category);
       const indexB = categoryOrder.indexOf(b.category);
