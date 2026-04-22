@@ -104,6 +104,12 @@ collections:
             - uniformes
             - botas
             - protecciones
+            - gafas
+            - guantes
+            - maletas
+            - gorras
+            - jersey
+            - accesorios
 
   promociones:
     path: cms/promociones
