@@ -1,6 +1,7 @@
 /**
- * MXZONE STORE - Dynamic Product Loader
+ * MXZONE STORE - Dynamic Product Loader v5
  * Carga TODOS los productos desde los archivos JSON del CMS automáticamente
+ * Usa index.json para descubrimiento automático de productos
  */
 
 // WHATSAPP_NUMBER se define en cart.js - usar la variable global
@@ -24,272 +25,44 @@ function getBrand(productName) {
 }
 
 // Función para descubrir y cargar TODOS los productos del CMS automáticamente
-// SISTEMA AUTOMÁTICO: Detecta todos los archivos JSON en cms/productos/
 async function loadProducts() {
   try {
-    const cmsBaseUrl = 'cms/productos/';
-    const IMAGE_VERSION = 'v4-20260423-auto';
+    const cmsBaseUrl = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.cmsBaseUrl : 'cms/productos/';
+    const IMAGE_VERSION = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.imageVersion : 'v5-20260423';
 
     // Función para codificar URLs de imágenes correctamente (maneja espacios)
     function encodeImagePath(path) {
       return path.replace(/ /g, '%20');
     }
 
-    console.log('Cargando productos automáticamente desde:', cmsBaseUrl);
+    console.log('🚀 Cargando productos automáticamente desde:', cmsBaseUrl);
+    console.log('📦 Versión de imágenes:', IMAGE_VERSION);
 
-    // Paso 1: Obtener lista de archivos desde index.json (generado automáticamente)
+    // Paso 1: Obtener lista de archivos desde index.json
     let productFiles = [];
     try {
       const indexResponse = await fetch(cmsBaseUrl + 'index.json?v=' + IMAGE_VERSION);
       if (indexResponse.ok) {
         const indexData = await indexResponse.json();
         productFiles = indexData.files || [];
-        console.log('✓ index.json cargado:', productFiles.length, 'archivos encontrados');
+        console.log('✅ index.json cargado:', productFiles.length, 'archivos encontrados');
+      } else {
+        console.warn('⚠️ index.json respondió con estado:', indexResponse.status);
       }
     } catch (e) {
-      console.warn('No se pudo cargar index.json, usando lista de respaldo:', e);
+      console.error('❌ Error cargando index.json:', e);
     }
 
-    // Si no hay index.json, usar lista manual de respaldo
+    // Si no hay index.json o está vacío, mostrar error
     if (productFiles.length === 0) {
-      console.warn('⚠ Usando lista de productos de respaldo (index.json no disponible)');
-      productFiles = [
-        'botas-alpinestars-tech-3.json',
-        'botas-alpinestars-tech-3-enduro.json',
-        'botas-alpinestars-tech-7.json',
-        'botas-fly-maverick-lt-enduro.json',
-        'botas-gaerne-sg12-enduro.json',
-        'botas-gaerne-sg12-enduro-gravel.json',
-        'botas-gaerne-sg12-realm.json',
-        'botas-leatt-3-5.json',
-        'botas-leatt-4-5.json',
-        'botas-leatt-4-5-citrus.json',
-        'botas-leatt-4-5-naranja.json',
-        'botas-leatt-4-5-negro.json',
-        'botas-pvc-impermeables-gris-dakar.json',
-        'casco-airoh-twist.json',
-        'casco-airoh-twist-3-dynasty.json',
-        'casco-airoh-twist-3-dynasty-rosso.json',
-        'casco-airoh-wraap-feel.json',
-        'casco-airoh-wraap-feel-azul-rojo.json',
-        'casco-alpinestar-sm5-action-2.json',
-        'casco-alpinestars-force-negro-morado.json',
-        'casco-alpinestars-force-azul-verde-fluo.json',
-        'casco-alpinestars-radium-negro-blanco.json',
-        'casco-alpinestars-radium-negro-rojo.json',
-        'casco-alpinestars-s-m5-bond.json',
-        'casco-alpinestars-s-m5-rayon.json',
-        'casco-alpinestars-s-m5-rover.json',
-        'casco-alpinestars-s-m5-solid.json',
-        'casco-fly-formula-cp.json',
-        'casco-fly-kinetic-crest-mx.json',
-        'casco-fly-kinetic-k-120.json',
-        'casco-fly-kinetic-menace.json',
-        'casco-fly-kinetic-verdict.json',
-        'casco-fly-racing-formula.json',
-        'casco-fly-racing-kinetic-blk-red.json',
-        'casco-fly-v1-interfere-gris.json',
-        'casco-fox-v1-bnkr.json',
-        'casco-fox-v1-dpth-verde.json',
-        'casco-fox-v1-dpth-verde-negro.json',
-        'casco-fox-v1-emotion-naranja.json',
-        'casco-fox-v1-flora-dark-indigo.json',
-        'casco-fox-v1-karrera.json',
-        'casco-fox-v1-kozmiK.json',
-        'casco-fox-v1-leed.json',
-        'casco-fox-v1-leed-fluo-red.json',
-        'casco-fox-v1-nitro-camuflaje.json',
-        'casco-fox-v1-race-spec-f74.json',
-        'casco-fox-v1-solid-matte-black.json',
-        'casco-fox-v1-toxsyk-negro.json',
-        'casco-leatt-moto-2-5-v24.json',
-        'casco-oneal-5-srs-attack.json',
-        'casco-racing-formula.json',
-        'casco-troy-lee-se5-gasgas.json',
-        'casco-v1-nukr-verde-negro.json',
-        'uniforme-alpinestars-fluid-apex.json',
-        'uniforme-alpinestars-fluid-grid.json',
-        'uniforme-alpinestars-fluid-grid-red-black-purple.json',
-        'uniforme-fly-evolution-dst.json',
-        'uniforme-fly-f16.json',
-        'uniforme-fly-f-16-black-white.json',
-        'uniforme-fly-f-16-dark-blue-white.json',
-        'uniforme-fly-kinetic.json',
-        'uniforme-fly-kinetic-jet.json',
-        'uniforme-fly-kinetic-jet-black-green.json',
-        'uniforme-fly-kinetic-jet-blue-grey-white.json',
-        'uniforme-fly-kinetic-kore.json',
-        'uniforme-fly-kinetic-prix.json',
-        'uniforme-fly-kinetic-stoke.json',
-        'uniforme-fly-mesh.json',
-        'uniforme-fox-180-flora.json',
-        'uniforme-fox-180-goat-strafER.json',
-        'uniforme-fox-180-leed-blue.json',
-        'uniforme-fox-180-leed-dark-shadow.json',
-        'uniforme-fox-180-stl-gry.json',
-        'uniforme-fox-ballast.json',
-        'uniforme-fox-ballast-180.json',
-        'uniforme-fox-race-spec-pale-green.json',
-        'uniforme-fxr-revo-comp.json',
-        'uniforme-oneal-element-blk-red.json',
-        'uniforme-oneal-element-v6-blk-gry.json',
-        'uniforme-thor-tarmac.json',
-        'uniforme-tipo-fox-1-1.json',
-        'uniforme-troy-lee-gp-air-team-81.json',
-        'pantalon-fox-180-czar.json',
-        'pantalon-fox-180-fyce.json',
-        'chaleco-columna.json',
-        'coderas-leatt-contour.json',
-        'coderas-leatt-countour-flint.json',
-        'coderas-titan-race.json',
-        'kit-rodillera-y-codera-valkiria.json',
-        'pechera-acerbis-kids-gravity.json',
-        'pechera-acerbis-po35-l1.json',
-        'pechera-alpinestar-a-1-bionic-action.json',
-        'pechera-alpinestar-a1-roost-guard.json',
-        'pechera-alpinestars-a1-bionic.json',
-        'pechera-fly-revel-race.json',
-        'pechera-fox-r3.json',
-        'pechera-fox-raceframe.json',
-        'pechera-fox-raceframe-roost.json',
-        'rinionera-acerbis-profile.json',
-        'rinionera-fly-barricade.json',
-        'rinionera-fox-titan-race.json',
-        'rinionera-ktm-orange.json',
-        'rinionera-oneal-adulto.json',
-        'rodillera-leatt-3df-5-0-zip.json',
-        'rodillera-leatt-3df-hybrid.json',
-        'rodillera-leatt-3df-hybrid-ext.json',
-        'rodillera-tipo-leatt-3df.json',
-        'rodilleras-acerbis-soft.json',
-        'rodilleras-fox-launch-d30.json',
-        'rodilleras-leatt-3df-hybrid.json',
-        'rodilleras-nucleon-plasma-alpinestar.json',
-        'rodilleras-nucleon-plasma-alpinestars.json',
-        'banco-hidraulico.json',
-        'cepillo-limpiador-cadena.json',
-        'correas-acerbis.json',
-        'correas-oneal.json',
-        'filtro-de-aire-profilter.json',
-        'handguards-acerbis-x-ultimate.json',
-        'handguards-alma-en-aluminio.json',
-        'herramienta-multiusos.json',
-        'kit-herramienta-46-piezas.json',
-        'kit-tornillos-60-piezas.json',
-        'limpiador-filtro-motorx-1l.json',
-        'limpiador-sellos-suspension.json',
-        'lubricante-cadena-offroad-500ml.json',
-        'lubricante-filtro-de-aire-motorx-spray-075l.json',
-        'medidor-de-presion-digital.json',
-        'motorex-crosspower-2t-1l.json',
-        'motorex-crosspower-4t-10w60-1l.json',
-        'pisa-llantas.json',
-        'protector-curva-2t.json',
-        'protector-de-punta-siliconado.json',
-        'protector-punta-dona.json',
-        'protector-suspension-delantera.json',
-        'rampa-aluminio-plegable-75-pies-capacidad-750-lbs.json',
-        'refrigerante-motorx-m50.json',
-        'rodillo-de-cadena.json',
-        'triangulo-moto.json',
-        'alpinestars-fluid-apex-l.json',
-        'alpinestars-fluid-apex-m.json',
-        'alpinestars-fluid-apex-s.json',
-        'alpinestars-fluid-apex-xl.json',
-        'alpinestars-fluid-wurx-l.json',
-        'jersey-fly-f16-l.json',
-        'jersey-fly-f16-m.json',
-        'jersey-fly-f16-s.json',
-        'jersey-fly-f16-xl.json',
-        'jersey-fly-kinetic-jet-l.json',
-        'jersey-fly-kinetic-k121-m.json',
-        'jersey-fly-kinetic-kore-l.json',
-        'jersey-fly-kinetic-kore-s.json',
-        'jersey-fly-kinetic-kore-xl.json',
-        'jersey-fly-kinetic-mesh-s.json',
-        'jersey-fly-kinetic-rebel-yl (youth large).json',
-        'jersey-fox-180-black-out-s.json',
-        'jersey-fox-180-flora-azul-s.json',
-        'jersey-fox-180-flora-l.json',
-        'jersey-fox-180-flora-xl.json',
-        'jersey-fox-180-race-spec-s.json',
-        'jersey-fox-360-streak-l.json',
-        'jersey-fox-airline-exo-l.json',
-        'jersey-fxr-revo-comp-l.json',
-        'jersey-fxr-revo-comp-m.json',
-        'jersey-kinetic-jet-l.json',
-        'oneal-element-roller-l.json',
-        'oneal-element-roller-xl.json',
-        '100-armatic-black-gold-flash-lens.json',
-        '100-armatic-neon-orange-silver-flash-lens.json',
-        '100-armega-soledad-red-lens.json',
-        '100-strata-2-black.json',
-        '100-strata-2-garage-smoke.json',
-        '100-strata-2-neon-yellow.json',
-        'gafa-100-strata-2-claro.json',
-        'gafa-100-strata-2-lente-rojo.json',
-        'gafa-100-strata-2-smoke.json',
-        'gafas-100-accuri-2-fairbranks.json',
-        'gafas-100-accuri-2-odeon.json',
-        'gafas-100-accuri-2-wolg-red.json',
-        'goggles-fmf-powerbomb.json',
-        'gorra-alpinestars-blaze-flexfit-sb-hat.json',
-        'alpinestars-ageless-flexfit-navy.json',
-        'coastal-blues-snapback-hat.json',
-        'gorra-fox-absolute-flexfit-azul.json',
-        'gorra-fox-absolute-flexfit-gris.json',
-        'gorra-fox-absolute-mesh-snapback.json',
-        'gorra-fox-efekt-flexfit.json',
-        'gorra-fox-going-pro-ff.json',
-        'gorra-fox-head-camo-tech-flexfit-grn-cam.json',
-        'gorra-fox-head-flexfit-camuflado.json',
-        'gorra-fox-optical-flexfit-rojo.json',
-        'gorra-fox-plana-head-camo-tech-snapback-verde.json',
-        'gorra-fox-syz-flexfit-hat.json',
-        'gorra-non-stop-tech-flexfit-cit.json',
-        'fox-fixated-flexfit-hat.json',
-        'guante-100-smart-shock-fluo-m.json',
-        'guante-100-smart-shock-red-s.json',
-        'guante-fasthouse-speed-style-ridgeline-m.json',
-        'guante-fist-metzger-flaming-plug-s.json',
-        'guante-fist-stocker-camo-s.json',
-        'guante-fist-strapped-stocker-l.json',
-        'guante-fly-f-16-glove-m.json',
-        'guante-fly-f-16-s.json',
-        'guante-fly-lite-bluegray-l.json',
-        'guante-fly-lite-bluegray-m.json',
-        'guante-fly-lite-kyptek-s.json',
-        'guante-fly-lite-long-finger-l.json',
-        'guante-fly-lite-long-finger-m.json',
-        'guante-fly-lite-long-finger-s.json',
-        'guante-fly-lite-racewear-blue-m.json',
-        'guante-fly-lite-red-l.json',
-        'guante-fly-lite-s.json',
-        'guante-fly-lite-uncaged-m.json',
-        'guante-fly-lite-vice-m.json',
-        'guante-fly-lite-warped-m.json',
-        'guante-fly-lite-warped-s.json',
-        'guante-troy-lee-air-green-army-l.json',
-        'guante-troy-lee-brushed-black-l.json',
-        'guante-troy-lee-designs-air-formula-camo-navy-s.json',
-        'guantes-acerbis-linear-s.json',
-        'guantes-fox-180-bnkr-m.json',
-        'guantes-fox-dirt-paw-m.json',
-        'guantes-fox-ranger-swarmer-m.json',
-        'guantes-fox-ranger-swarmer-s.json',
-        'thor-invert-pit-gloves-green-l.json',
-        'bolsa-herramientas-manubrio-25-l.json',
-        'canguro-fly-tool-pack.json',
-        'canguro-riñonera-acerbis.json',
-        'canguro-tipo-ktm.json',
-        'leatt-hip-pack-con-hidratacion-core-15.json',
-        'morral-hidratacion-2-litros-importado.json',
-        'morral-hidratacion-acerbis-5l-negro.json',
-        'morral-hidratacion-camel-bags.json',
-        'morral-hidratacion-leatt-cactus-15.json',
-        'morral-hidratacion-leatt-lite-15.json'
-      ];
+      console.error('❌ No se pudo cargar index.json. Verifica que el archivo exista en', cmsBaseUrl);
+      return [];
     }
+
+    // Filtrar index.json de la lista (por si acaso)
+    productFiles = productFiles.filter(f => f !== 'index.json');
+
+    console.log('📋 Cargando', productFiles.length, 'productos...');
 
     // Cargar todos los archivos en paralelo con cache buster
     const promises = productFiles.map(async (file) => {
@@ -297,6 +70,7 @@ async function loadProducts() {
         const response = await fetch(cmsBaseUrl + file + '?v=' + IMAGE_VERSION);
         if (response.ok) {
           const product = await response.json();
+          
           // Procesar imágenes: codificar espacios y agregar versión
           if (product.images && product.images.length > 0) {
             product.images = product.images.map(img => encodeImagePath(img) + '?' + IMAGE_VERSION);
@@ -304,10 +78,13 @@ async function loadProducts() {
           if (product.image) {
             product.image = encodeImagePath(product.image) + '?' + IMAGE_VERSION;
           }
+          
           return product;
+        } else {
+          console.warn('⚠️ No se pudo cargar', file, '- Estado:', response.status);
         }
       } catch (e) {
-        console.warn(`No se pudo cargar ${file}:`, e);
+        console.warn('❌ Error cargando', file + ':', e.message);
       }
       return null;
     });
@@ -315,11 +92,18 @@ async function loadProducts() {
     const results = await Promise.all(promises);
     const validProducts = results.filter(p => p !== null);
 
-    console.log('✅ Productos cargados exitosamente:', validProducts.length);
+    console.log('✅ Productos cargados exitosamente:', validProducts.length, 'de', productFiles.length);
+    
+    // Mostrar productos con categoría inválida
+    const invalidCategories = validProducts.filter(p => !p.category || p.category.trim() === '');
+    if (invalidCategories.length > 0) {
+      console.warn('⚠️', invalidCategories.length, 'productos sin categoría válida:', invalidCategories.map(p => p.name));
+    }
+    
     return validProducts;
 
   } catch (error) {
-    console.error('❌ Error cargando productos:', error);
+    console.error('❌ Error crítico cargando productos:', error);
     return [];
   }
 }
@@ -343,7 +127,6 @@ function createProductCard(product) {
   const productSlug = createProductSlug(product.name);
 
   // Soporte para múltiples imágenes (array images)
-  // Las URLs de CloudCannon (cloudvent.net) se usan directamente sin cache buster
   const isCloudCannonUrl = (url) => url && url.includes('cloudvent.net');
 
   let images = [];
@@ -355,9 +138,7 @@ function createProductCard(product) {
   // Fallback: usar product.image (singular) si no hay array
   if (!images.length && product.image) {
     images = [product.image];
-    console.log('Usando image singular:', product.image);
   }
-  console.log('Images procesadas:', images.length, images);
 
   // Agregar cache buster solo a imágenes locales (no CloudCannon)
   const imageVersion = Date.now();
@@ -365,7 +146,6 @@ function createProductCard(product) {
     // Corregir formato de URL rota de CloudCannon (/https:/ -> https://)
     if (img && img.startsWith('/https:/')) {
       img = img.replace('/https:/', 'https://');
-      console.log('URL corregida:', img);
     }
     if (isCloudCannonUrl(img)) {
       // URLs de CloudCannon (cloudvent.net) se usan directamente
@@ -380,18 +160,18 @@ function createProductCard(product) {
     `<span class="product-badge">${product.badge}</span>` : '';
 
   // Parsear tallas
-  const sizesArray = product.sizes.split('/').map(s => s.trim());
+  const sizesArray = product.sizes ? product.sizes.split('/').map(s => s.trim()) : ['Única'];
   const sizeOptions = sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
 
   return `
     <div class="product-card"
-         data-category="${product.category}"
+         data-category="${product.category || 'sin-categoria'}"
          data-brand="${brand}"
          data-price="${priceNum}"
          data-image="${mainImage}"
          data-images='${JSON.stringify(images).replace(/'/g, "&#39;")}'
          data-slug="${productSlug}"
-         data-sizes="${product.sizes}">
+         data-sizes="${product.sizes || 'Única'}">
       <div class="product-image">
         <img src="${mainImage}" alt="${product.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <span class="product-image-placeholder" style="display:none;">MX</span>
@@ -426,6 +206,8 @@ function getCategoryLabel(category) {
   const labels = {
     'cascos': 'Cascos',
     'uniformes': 'Uniformes',
+    'jersey': 'Jerseys',
+    'pantalones': 'Pantalones',
     'botas': 'Botas',
     'protecciones': 'Protecciones',
     'accesorios': 'Accesorios',
@@ -435,7 +217,7 @@ function getCategoryLabel(category) {
     'guantes': 'Guantes',
     'maletas': 'Maletas'
   };
-  return labels[category] || category;
+  return labels[category] || category || 'Sin categoría';
 }
 
 // Función para renderizar productos en la página principal
