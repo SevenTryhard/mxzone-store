@@ -1,11 +1,11 @@
 ﻿{
     "name":  "CEPILLO LIMPIADOR CADENA",
-    "image":  "assets/images/accesorios/cepillo-limpiador-cadena.jpg",
+    "image":  "/assets/images/accesorios/cepillo-limpiador-cadena.jpg",
     "price":  "$20.000",
     "sizes":  "Unica",
     "category":  "accesorios",
     "description":  "Accesorio para motocross: CEPILLO LIMPIADOR CADENA",
     "images":  [
-                   "assets/images/accesorios/cepillo-limpiador-cadena.jpg"
+                   "/assets/images/accesorios/cepillo-limpiador-cadena.jpg"
                ]
 }

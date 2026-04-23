@@ -1,11 +1,11 @@
 ﻿{
     "name":  "HANDGUARDS ALMA EN ALUMINIO",
-    "image":  "assets/images/accesorios/handguards-alma-en-aluminio.jpg",
+    "image":  "/assets/images/accesorios/handguards-alma-en-aluminio.jpg",
     "price":  "$169.900",
     "sizes":  "Unica",
     "category":  "accesorios",
     "description":  "Accesorio para motocross: HANDGUARDS ALMA EN ALUMINIO",
     "images":  [
-                   "assets/images/accesorios/handguards-alma-en-aluminio.jpg"
+                   "/assets/images/accesorios/handguards-alma-en-aluminio.jpg"
                ]
 }

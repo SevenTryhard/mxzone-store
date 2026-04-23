@@ -1,11 +1,11 @@
 ﻿{
     "name":  "UNIFORME THOR PULSE",
-    "image":  "assets/images/uniformes/captura-de-pantalla-2026-04-21-152331.png",
+    "image":  "/assets/images/uniformes/captura-de-pantalla-2026-04-21-152331.png",
     "price":  "$480.000",
     "sizes":  "30-S",
     "category":  "uniformes",
     "description":  "Uniforme completo THOR TARMAC para motocross",
     "images":  [
-                   "assets/images/uniformes/captura-de-pantalla-2026-04-21-152331.png"
+                   "/assets/images/uniformes/captura-de-pantalla-2026-04-21-152331.png"
                ]
 }

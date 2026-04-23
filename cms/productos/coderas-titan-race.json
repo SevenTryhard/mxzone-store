@@ -1,11 +1,11 @@
 ﻿{
     "name":  "CODERAS TITAN RACE",
-    "image":  "assets/images/protecciones/1-a4192aa7-a563-4a62-80bd-a36b22246756-2x.webp",
+    "image":  "/assets/images/protecciones/1-a4192aa7-a563-4a62-80bd-a36b22246756-2x.webp",
     "price":  "$290.000",
     "sizes":  "S/M/L/XL",
     "category":  "protecciones",
     "description":  "Coderas TITAN RACE de protecciÃ³n",
     "images":  [
-                   "assets/images/protecciones/1-a4192aa7-a563-4a62-80bd-a36b22246756-2x.webp"
+                   "/assets/images/protecciones/1-a4192aa7-a563-4a62-80bd-a36b22246756-2x.webp"
                ]
 }

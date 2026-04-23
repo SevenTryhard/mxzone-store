@@ -1,11 +1,11 @@
 ﻿{
     "name":  "UNIFORME FLY KINETIC JET BLUE GREY WHITE",
-    "image":  "assets/images/uniformes/kinetic-jet-blue.webp",
+    "image":  "/assets/images/uniformes/kinetic-jet-blue.webp",
     "price":  "$380.000",
     "sizes":  "S/M/L/XL",
     "category":  "uniformes",
     "description":  "Uniforme FLY KINETIC JET en azul gris blanco",
     "images":  [
-                   "assets/images/uniformes/kinetic-jet-blue.webp"
+                   "/assets/images/uniformes/kinetic-jet-blue.webp"
                ]
 }

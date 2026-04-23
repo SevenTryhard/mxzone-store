@@ -1,11 +1,11 @@
 ﻿{
     "name":  "PECHERA FOX RACEFRAME ROOST",
-    "image":  "assets/images/protecciones/a6-ea-67-h1foxraceframeimpactbrustpanzerschwarz21880932019.webp",
+    "image":  "/assets/images/protecciones/a6-ea-67-h1foxraceframeimpactbrustpanzerschwarz21880932019.webp",
     "price":  "$679.900",
     "sizes":  "SM/LXL",
     "category":  "protecciones",
     "description":  "Pechera protectora FOX RACEFRAME ROOST",
     "images":  [
-                   "assets/images/protecciones/a6-ea-67-h1foxraceframeimpactbrustpanzerschwarz21880932019.webp"
+                   "/assets/images/protecciones/a6-ea-67-h1foxraceframeimpactbrustpanzerschwarz21880932019.webp"
                ]
 }

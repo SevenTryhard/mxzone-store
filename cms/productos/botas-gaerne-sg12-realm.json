@@ -1,11 +1,11 @@
 ﻿{
     "name":  "BOTAS GAERNE REALM SG12",
-    "image":  "assets/images/botas/BOTAS GAERNE SG12 REALM.jpg",
+    "image":  "/assets/images/botas/BOTAS GAERNE SG12 REALM.jpg",
     "price":  "$2.450.000",
     "sizes":  "39/40/41/42/43/44/45",
     "category":  "botas",
     "description":  "Botas GAERNE SG12 REALM de alto rendimiento",
     "images":  [
-                   "assets/images/botas/BOTAS GAERNE SG12 REALM.jpg"
+                   "/assets/images/botas/BOTAS GAERNE SG12 REALM.jpg"
                ]
 }

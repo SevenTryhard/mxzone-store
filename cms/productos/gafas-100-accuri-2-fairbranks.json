@@ -1,11 +1,11 @@
 ﻿{
     "name":  "GAFAS 100% ACCURI 2 FAIRBRANKS",
-    "image":  "assets/images/gafas/gafas-100-accuri-2-fairbranks.jpg",
+    "image":  "/assets/images/gafas/gafas-100-accuri-2-fairbranks.jpg",
     "price":  "$280.000",
     "sizes":  "Unica",
     "category":  "gafas",
     "description":  "Gafas para motocross: GAFAS 100% ACCURI 2 FAIRBRANKS",
     "images":  [
-                   "assets/images/gafas/gafas-100-accuri-2-fairbranks.jpg"
+                   "/assets/images/gafas/gafas-100-accuri-2-fairbranks.jpg"
                ]
 }

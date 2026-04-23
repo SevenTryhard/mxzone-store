@@ -1,11 +1,11 @@
 ﻿{
     "name":  "GUANTE TROY LEE AIR GREEN ARMY",
-    "image":  "assets/images/guantes/guante-troy-lee-air-green-army-l.jpg",
+    "image":  "/assets/images/guantes/guante-troy-lee-air-green-army-l.jpg",
     "price":  "$175.000",
     "sizes":  "L",
     "category":  "guantes",
     "description":  "Guante para motocross: GUANTE TROY LEE AIR GREEN ARMY",
     "images":  [
-                   "assets/images/guantes/guante-troy-lee-air-green-army-l.jpg"
+                   "/assets/images/guantes/guante-troy-lee-air-green-army-l.jpg"
                ]
 }

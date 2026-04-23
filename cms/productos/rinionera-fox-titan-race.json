@@ -1,11 +1,11 @@
 ﻿{
     "name":  "RIÃ‘ONERA FOX TITAN RACE",
-    "image":  "assets/images/protecciones/1-cf5e2af0-178e-4b39-8d38-6a65ded76ed0-2x.webp",
+    "image":  "/assets/images/protecciones/1-cf5e2af0-178e-4b39-8d38-6a65ded76ed0-2x.webp",
     "price":  "$289.900",
     "sizes":  "SM, L/XL",
     "category":  "protecciones",
     "description":  "RiÃ±onera FOX TITAN RACE para hidrataciÃ³n",
     "images":  [
-                   "assets/images/protecciones/1-cf5e2af0-178e-4b39-8d38-6a65ded76ed0-2x.webp"
+                   "/assets/images/protecciones/1-cf5e2af0-178e-4b39-8d38-6a65ded76ed0-2x.webp"
                ]
 }

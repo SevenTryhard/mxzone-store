@@ -1,11 +1,11 @@
 ﻿{
     "name":  "CASCO V1 NUKR VERDE NEGRO",
-    "image":  "assets/images/nuevas_images/captura-de-pantalla-2023-06-15-a-las-12-27-27-p-m.png",
+    "image":  "/assets/images/nuevas_images/captura-de-pantalla-2023-06-15-a-las-12-27-27-p-m.png",
     "price":  "$1.050.000",
     "sizes":  "S/M/L/XL",
     "category":  "cascos",
     "description":  "Casco V1 NUKR en verde negro",
     "images":  [
-                   "assets/images/nuevas_images/captura-de-pantalla-2023-06-15-a-las-12-27-27-p-m.png"
+                   "/assets/images/nuevas_images/captura-de-pantalla-2023-06-15-a-las-12-27-27-p-m.png"
                ]
 }

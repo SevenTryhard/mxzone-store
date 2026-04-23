@@ -1,11 +1,11 @@
 ﻿{
     "name":  "PECHERA ACERBIS KIDS GRAVITY",
-    "image":  "assets/images/protecciones/pechera-acerbis-kids-gravity.jpg",
+    "image":  "/assets/images/protecciones/pechera-acerbis-kids-gravity.jpg",
     "price":  "$479.000",
     "sizes":  "NiÃ±o",
     "category":  "protecciones",
     "description":  "Pechera protectora Acerbis Kids Gravity para niÃ±os",
     "images":  [
-                   "assets/images/protecciones/pechera-acerbis-kids-gravity.jpg"
+                   "/assets/images/protecciones/pechera-acerbis-kids-gravity.jpg"
                ]
 }

@@ -1,11 +1,11 @@
 ﻿{
     "name":  "GORRA FOX ABSOLUTE FLEXFIT [AZUL]",
-    "image":  "assets/images/gorras/gorra-fox-absolute-flexfit-azul.jpg",
+    "image":  "/assets/images/gorras/gorra-fox-absolute-flexfit-azul.jpg",
     "price":  "$179.900",
     "sizes":  "S/M",
     "category":  "gorras",
     "description":  "Gorra para motocross: GORRA FOX ABSOLUTE FLEXFIT [AZUL]",
     "images":  [
-                   "assets/images/gorras/gorra-fox-absolute-flexfit-azul.jpg"
+                   "/assets/images/gorras/gorra-fox-absolute-flexfit-azul.jpg"
                ]
 }

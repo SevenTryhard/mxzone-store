@@ -1,11 +1,11 @@
 ﻿{
     "name":  "GUANTE FLY LITE KYPTEK",
-    "image":  "assets/images/guantes/guante-fly-lite-kyptek-s.jpg",
+    "image":  "/assets/images/guantes/guante-fly-lite-kyptek-s.jpg",
     "price":  "$129.900",
     "sizes":  "S",
     "category":  "guantes",
     "description":  "Guante para motocross: GUANTE FLY LITE KYPTEK",
     "images":  [
-                   "assets/images/guantes/guante-fly-lite-kyptek-s.jpg"
+                   "/assets/images/guantes/guante-fly-lite-kyptek-s.jpg"
                ]
 }

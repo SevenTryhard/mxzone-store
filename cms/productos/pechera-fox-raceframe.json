@@ -1,12 +1,12 @@
 ﻿{
     "name":  "PECHERA FOX RACEFRAME",
-    "image":  "assets/images/protecciones/24267001-1.webp",
+    "image":  "/assets/images/protecciones/24267001-1.webp",
     "price":  "$620.000",
     "sizes":  "S/M/L/XL",
     "badge":  "Premium",
     "category":  "protecciones",
     "description":  "Pechera FOX RACEFRAME de alta gama",
     "images":  [
-                   "assets/images/protecciones/24267001-1.webp"
+                   "/assets/images/protecciones/24267001-1.webp"
                ]
 }

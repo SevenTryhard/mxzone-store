@@ -1,12 +1,12 @@
 ﻿{
     "name":  "PECHERA ALPINESTARS A1 ROOST GUARD",
-    "image":  "assets/images/protecciones/untitleddesign-44.webp",
+    "image":  "/assets/images/protecciones/untitleddesign-44.webp",
     "price":  "$420.000",
     "sizes":  "S/M/L/XL",
     "badge":  "Premium",
     "category":  "protecciones",
     "description":  "Pechera ALPINESTARS A1 ROOST GUARD de protecciÃ³n",
     "images":  [
-                   "assets/images/protecciones/untitleddesign-44.webp"
+                   "/assets/images/protecciones/untitleddesign-44.webp"
                ]
 }

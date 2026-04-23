@@ -1,11 +1,11 @@
 ﻿{
     "name":  "GUANTES FOX RANGER SWARMER",
-    "image":  "assets/images/guantes/guantes-fox-ranger-swarmer-m.jpg",
+    "image":  "/assets/images/guantes/guantes-fox-ranger-swarmer-m.jpg",
     "price":  "$159.900",
     "sizes":  "M",
     "category":  "guantes",
     "description":  "Guante para motocross: GUANTES FOX RANGER SWARMER",
     "images":  [
-                   "assets/images/guantes/guantes-fox-ranger-swarmer-m.jpg"
+                   "/assets/images/guantes/guantes-fox-ranger-swarmer-m.jpg"
                ]
 }

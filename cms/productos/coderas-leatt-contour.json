@@ -1,11 +1,11 @@
 ﻿{
     "name":  "CODERAS LEATT CONTOUR",
-    "image":  "assets/images/protecciones/coderaleattcontourbicicletamotos-7b954286-4596-4c01-bdc3-c905ed279082.webp",
+    "image":  "/assets/images/protecciones/coderaleattcontourbicicletamotos-7b954286-4596-4c01-bdc3-c905ed279082.webp",
     "price":  "$389.900",
     "sizes":  "S/M/L/XL",
     "category":  "protecciones",
     "description":  "Coderas LEATT CONTOUR de protecciÃ³n ergonÃ³mica",
     "images":  [
-                   "assets/images/protecciones/coderaleattcontourbicicletamotos-7b954286-4596-4c01-bdc3-c905ed279082.webp"
+                   "/assets/images/protecciones/coderaleattcontourbicicletamotos-7b954286-4596-4c01-bdc3-c905ed279082.webp"
                ]
 }

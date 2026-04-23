@@ -1,11 +1,11 @@
 ﻿{
     "name":  "100% STRATA 2 NEON YELLOW",
-    "image":  "assets/images/gafas/100-strata-2-neon-yellow.jpg",
+    "image":  "/assets/images/gafas/100-strata-2-neon-yellow.jpg",
     "price":  "$189.900",
     "sizes":  "Unica",
     "category":  "gafas",
     "description":  "Gafas para motocross: 100% STRATA 2 NEON YELLOW",
     "images":  [
-                   "assets/images/gafas/100-strata-2-neon-yellow.jpg"
+                   "/assets/images/gafas/100-strata-2-neon-yellow.jpg"
                ]
 }

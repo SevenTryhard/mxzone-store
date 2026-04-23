@@ -1,11 +1,11 @@
 ﻿{
     "name":  "CASCO ALPINESTARS RADIUM NEGRO BLANCO",
-    "image":  "assets/images/nuevas_images/ce38930d-6ee9-439d-b52b-fe43e9f0504f.webp",
+    "image":  "/assets/images/nuevas_images/ce38930d-6ee9-439d-b52b-fe43e9f0504f.webp",
     "price":  "$1.650.000",
     "sizes":  "S/M/L/XL",
     "category":  "cascos",
     "description":  "Casco ALPINESTARS RADIUM en color negro blanco",
     "images":  [
-                   "assets/images/nuevas_images/ce38930d-6ee9-439d-b52b-fe43e9f0504f.webp"
+                   "/assets/images/nuevas_images/ce38930d-6ee9-439d-b52b-fe43e9f0504f.webp"
                ]
 }

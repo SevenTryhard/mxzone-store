@@ -1,11 +1,11 @@
 ﻿{
     "name":  "UNIFORME FOX 180 LEED DARK SHADOW",
-    "image":  "assets/images/uniformes/foxracing-mx26gearsets-180shield-black-pdp1.jpg",
+    "image":  "/assets/images/uniformes/foxracing-mx26gearsets-180shield-black-pdp1.jpg",
     "price":  "$965.000",
     "sizes":  "S/M/L/XL",
     "category":  "uniformes",
     "description":  "Uniforme FOX 180 LEED en dark shadow",
     "images":  [
-                   "assets/images/uniformes/foxracing-mx26gearsets-180shield-black-pdp1.jpg"
+                   "/assets/images/uniformes/foxracing-mx26gearsets-180shield-black-pdp1.jpg"
                ]
 }

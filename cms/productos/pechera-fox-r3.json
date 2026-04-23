@@ -1,11 +1,11 @@
 ﻿{
     "name":  "PECHERA FOX R3",
-    "image":  "assets/images/protecciones/24017001-1-2x.webp",
+    "image":  "/assets/images/protecciones/24017001-1-2x.webp",
     "price":  "$669.900",
     "sizes":  "S/M/L/XL",
     "category":  "protecciones",
     "description":  "Pechera FOX R3 de protecciÃ³n completa",
     "images":  [
-                   "assets/images/protecciones/24017001-1-2x.webp"
+                   "/assets/images/protecciones/24017001-1-2x.webp"
                ]
 }

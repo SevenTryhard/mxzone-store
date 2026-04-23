@@ -1,11 +1,11 @@
 ﻿{
     "name":  "GUANTE 100% SMART SHOCK FLUO",
-    "image":  "assets/images/guantes/guante-100-smart-shock-fluo-m.jpg",
+    "image":  "/assets/images/guantes/guante-100-smart-shock-fluo-m.jpg",
     "price":  "$175.000",
     "sizes":  "M",
     "category":  "guantes",
     "description":  "Guante para motocross: GUANTE 100% SMART SHOCK FLUO",
     "images":  [
-                   "assets/images/guantes/guante-100-smart-shock-fluo-m.jpg"
+                   "/assets/images/guantes/guante-100-smart-shock-fluo-m.jpg"
                ]
 }

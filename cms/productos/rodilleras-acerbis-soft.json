@@ -1,11 +1,11 @@
 ﻿{
     "name":  "RODILLERAS ACERBIS SOFT",
-    "image":  "assets/images/protecciones/acerbis-soft-knee-guards-nero.jpg",
+    "image":  "/assets/images/protecciones/acerbis-soft-knee-guards-nero.jpg",
     "price":  "$649.900",
     "sizes":  "S/M/L/XL",
     "category":  "protecciones",
     "description":  "Rodilleras ACERBIS SOFT de protecciÃ³n suave",
     "images":  [
-                   "assets/images/protecciones/acerbis-soft-knee-guards-nero.jpg"
+                   "/assets/images/protecciones/acerbis-soft-knee-guards-nero.jpg"
                ]
 }

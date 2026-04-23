@@ -1,12 +1,12 @@
 ﻿{
     "name":  "CASCO ALPINESTARS S-M5 ROVER",
-    "image":  "assets/images/nuevas_images/d-q-np-894492-mlb44959544073-022021-o.webp",
+    "image":  "/assets/images/nuevas_images/d-q-np-894492-mlb44959544073-022021-o.webp",
     "price":  "$1.890.000",
     "sizes":  "S/M/L/XL",
     "badge":  "Premium",
     "category":  "cascos",
     "description":  "Casco ALPINESTARS S-M5 ROVER de competiciÃƒÂ³n",
     "images":  [
-                   "assets/images/nuevas_images/d-q-np-894492-mlb44959544073-022021-o.webp"
+                   "/assets/images/nuevas_images/d-q-np-894492-mlb44959544073-022021-o.webp"
                ]
 }

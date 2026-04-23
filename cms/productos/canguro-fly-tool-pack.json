@@ -1,11 +1,11 @@
 ﻿{
     "name":  "CANGURO FLY TOOL PACK",
-    "image":  "assets/images/maletas/canguro-fly-tool-pack.jpg",
+    "image":  "/assets/images/maletas/canguro-fly-tool-pack.jpg",
     "price":  "$279.900",
     "sizes":  "Ãšnica",
     "category":  "maletas",
     "description":  "Accesorio de transporte: CANGURO FLY TOOL PACK",
     "images":  [
-                   "assets/images/maletas/canguro-fly-tool-pack.jpg"
+                   "/assets/images/maletas/canguro-fly-tool-pack.jpg"
                ]
 }

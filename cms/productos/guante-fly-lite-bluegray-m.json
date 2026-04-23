@@ -1,11 +1,11 @@
 ﻿{
     "name":  "GUANTE FLY LITE BLUE/GRAY",
-    "image":  "assets/images/guantes/guante-fly-lite-bluegray-m.jpg",
+    "image":  "/assets/images/guantes/guante-fly-lite-bluegray-m.jpg",
     "price":  "$129.900",
     "sizes":  "M",
     "category":  "guantes",
     "description":  "Guante para motocross: GUANTE FLY LITE BLUE/GRAY",
     "images":  [
-                   "assets/images/guantes/guante-fly-lite-bluegray-m.jpg"
+                   "/assets/images/guantes/guante-fly-lite-bluegray-m.jpg"
                ]
 }

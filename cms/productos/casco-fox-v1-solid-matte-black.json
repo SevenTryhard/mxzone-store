@@ -1,11 +1,11 @@
 ﻿{
     "name":  "CASCO FOX V1 SOLID MATTE BLACK",
-    "image":  "assets/images/nuevas_images/29669255-1.webp",
+    "image":  "/assets/images/nuevas_images/29669255-1.webp",
     "price":  "$1.050.000",
     "sizes":  "S/M/L/XL",
     "category":  "cascos",
     "description":  "Casco FOX V1 SOLID en negro mate",
     "images":  [
-                   "assets/images/nuevas_images/29669255-1.webp"
+                   "/assets/images/nuevas_images/29669255-1.webp"
                ]
 }

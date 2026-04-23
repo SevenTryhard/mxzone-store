@@ -1,11 +1,11 @@
 ﻿{
     "name":  "JERSEY FLY KINETIC K121",
-    "image":  "assets/images/jersey/jersey-fly-kinetic-k121-m.jpg",
+    "image":  "/assets/images/jersey/jersey-fly-kinetic-k121-m.jpg",
     "price":  "$149.900",
     "sizes":  "M",
     "category":  "jersey",
     "description":  "Jersey para motocross: JERSEY FLY KINETIC K121",
     "images":  [
-                   "assets/images/jersey/jersey-fly-kinetic-k121-m.jpg"
+                   "/assets/images/jersey/jersey-fly-kinetic-k121-m.jpg"
                ]
 }

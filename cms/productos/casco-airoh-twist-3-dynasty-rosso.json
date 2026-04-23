@@ -1,12 +1,12 @@
 ﻿{
     "name":  "CASCO AIROH WRAAP BLUE/ORANGE",
-    "image":  "assets/images/nuevas_images/casco-airoh-wrap-vision-naranja-brillante-azul.webp",
+    "image":  "/assets/images/nuevas_images/casco-airoh-wrap-vision-naranja-brillante-azul.webp",
     "price":  "899.900",
     "sizes":  "S/M/L/XL",
     "badge":  "Premium",
     "category":  "cascos",
     "description":  "Casco AIROH TWIST 3 DYNASTY en color rosso",
     "images":  [
-                   "assets/images/nuevas_images/casco-airoh-wrap-vision-naranja-brillante-azul.webp"
+                   "/assets/images/nuevas_images/casco-airoh-wrap-vision-naranja-brillante-azul.webp"
                ]
 }

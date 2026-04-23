@@ -1,12 +1,12 @@
 ﻿{
     "name":  "UNIFORME FLY F-16 BLACK WHITE",
-    "image":  "assets/images/uniformes/310870-379-920-1h-f16-2026.webp",
+    "image":  "/assets/images/uniformes/310870-379-920-1h-f16-2026.webp",
     "price":  "$650.000",
     "sizes":  "S/M/L/XL",
     "badge":  "Top Ventas",
     "category":  "uniformes",
     "description":  "Uniforme FLY F-16 en negro blanco",
     "images":  [
-                   "assets/images/uniformes/310870-379-920-1h-f16-2026.webp"
+                   "/assets/images/uniformes/310870-379-920-1h-f16-2026.webp"
                ]
 }

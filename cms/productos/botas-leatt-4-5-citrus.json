@@ -1,12 +1,12 @@
 ﻿{
     "name":  "BOTAS LEATT 4.5 CITRUS",
-    "image":  "assets/images/botas/botas-leatt-4-5-citrus-bicicletas-motos-motocross-mx-1-1935fe5a-8e53-4b60-a33f-504ec251b801.webp",
+    "image":  "/assets/images/botas/botas-leatt-4-5-citrus-bicicletas-motos-motocross-mx-1-1935fe5a-8e53-4b60-a33f-504ec251b801.webp",
     "price":  "$1.890.000",
     "sizes":  "38/39/40/41/42/43/44/45",
     "badge":  "Nuevo",
     "category":  "botas",
     "description":  "Botas LEATT 4.5 en color citrus vibrante",
     "images":  [
-                   "assets/images/botas/botas-leatt-4-5-citrus-bicicletas-motos-motocross-mx-1-1935fe5a-8e53-4b60-a33f-504ec251b801.webp"
+                   "/assets/images/botas/botas-leatt-4-5-citrus-bicicletas-motos-motocross-mx-1-1935fe5a-8e53-4b60-a33f-504ec251b801.webp"
                ]
 }

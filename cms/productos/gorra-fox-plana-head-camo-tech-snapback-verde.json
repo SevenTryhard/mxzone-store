@@ -1,11 +1,11 @@
 ﻿{
     "name":  "GORRA FOX PLANA HEAD CAMO TECH SNAPBACK VERDE",
-    "image":  "assets/images/gorras/gorra-fox-plana-head-camo-tech-snapback-verde.jpg",
+    "image":  "/assets/images/gorras/gorra-fox-plana-head-camo-tech-snapback-verde.jpg",
     "price":  "$175.000",
     "sizes":  "Ãšnica",
     "category":  "gorras",
     "description":  "Gorra para motocross: GORRA FOX PLANA HEAD CAMO TECH SNAPBACK VERDE",
     "images":  [
-                   "assets/images/gorras/gorra-fox-plana-head-camo-tech-snapback-verde.jpg"
+                   "/assets/images/gorras/gorra-fox-plana-head-camo-tech-snapback-verde.jpg"
                ]
 }

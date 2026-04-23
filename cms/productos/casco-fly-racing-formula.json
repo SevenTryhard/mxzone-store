@@ -1,12 +1,12 @@
 ﻿{
     "name":  "CASCO FLY RACING FORMULA",
-    "image":  "assets/images/nuevas_images/fly-racing-formula-cp-rush-helmet-grey-black-white.webp",
+    "image":  "/assets/images/nuevas_images/fly-racing-formula-cp-rush-helmet-grey-black-white.webp",
     "price":  "$1.250.000",
     "sizes":  "S/M/L/XL",
     "badge":  "Premium",
     "category":  "cascos",
     "description":  "Casco FLY RACING FORMULA de competiciÃƒÂ³n",
     "images":  [
-                   "assets/images/nuevas_images/fly-racing-formula-cp-rush-helmet-grey-black-white.webp"
+                   "/assets/images/nuevas_images/fly-racing-formula-cp-rush-helmet-grey-black-white.webp"
                ]
 }

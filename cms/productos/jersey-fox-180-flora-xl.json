@@ -1,11 +1,11 @@
 ﻿{
     "name":  "JERSEY FOX 180 FLORA",
-    "image":  "assets/images/jersey/jersey-fox-180-flora-xl.jpg",
+    "image":  "/assets/images/jersey/jersey-fox-180-flora-xl.jpg",
     "price":  "$215.000",
     "sizes":  "XL",
     "category":  "jersey",
     "description":  "Jersey para motocross: JERSEY FOX 180 FLORA",
     "images":  [
-                   "assets/images/jersey/jersey-fox-180-flora-xl.jpg"
+                   "/assets/images/jersey/jersey-fox-180-flora-xl.jpg"
                ]
 }

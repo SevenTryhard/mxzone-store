@@ -1,11 +1,11 @@
 ﻿{
     "name":  "RIÃ‘ONERA ACERBIS PROFILE",
-    "image":  "assets/images/protecciones/rinonera-acerbis-ram.webp",
+    "image":  "/assets/images/protecciones/rinonera-acerbis-ram.webp",
     "price":  "$299.000",
     "sizes":  "ÃšNICA",
     "category":  "protecciones",
     "description":  "RiÃ±onera ACERBIS PROFILE para hidrataciÃ³n",
     "images":  [
-                   "assets/images/protecciones/rinonera-acerbis-ram.webp"
+                   "/assets/images/protecciones/rinonera-acerbis-ram.webp"
                ]
 }

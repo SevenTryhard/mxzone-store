@@ -1,11 +1,11 @@
 ﻿{
     "name":  "GORRA FOX HEAD FLEXFIT [CAMUFLADO]",
-    "image":  "assets/images/gorras/gorra-fox-head-flexfit-camuflado.jpg",
+    "image":  "/assets/images/gorras/gorra-fox-head-flexfit-camuflado.jpg",
     "price":  "$165.000",
     "sizes":  "S/M",
     "category":  "gorras",
     "description":  "Gorra para motocross: GORRA FOX HEAD FLEXFIT [CAMUFLADO]",
     "images":  [
-                   "assets/images/gorras/gorra-fox-head-flexfit-camuflado.jpg"
+                   "/assets/images/gorras/gorra-fox-head-flexfit-camuflado.jpg"
                ]
 }

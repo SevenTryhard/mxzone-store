@@ -1,11 +1,11 @@
 ﻿{
     "name":  "GUANTE FLY LITE WARPED",
-    "image":  "assets/images/guantes/guante-fly-lite-warped-m.jpg",
+    "image":  "/assets/images/guantes/guante-fly-lite-warped-m.jpg",
     "price":  "$129.900",
     "sizes":  "M",
     "category":  "guantes",
     "description":  "Guante para motocross: GUANTE FLY LITE WARPED",
     "images":  [
-                   "assets/images/guantes/guante-fly-lite-warped-m.jpg"
+                   "/assets/images/guantes/guante-fly-lite-warped-m.jpg"
                ]
 }
