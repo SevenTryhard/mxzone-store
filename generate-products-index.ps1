@@ -17,8 +17,9 @@ $indexData = @{
     total = $files.Count
 }
 
-# Guardar como JSON
-$indexData | ConvertTo-Json -Depth 3 | Out-File -FilePath $outputFile -Encoding UTF8
+# Guardar como JSON (sin BOM)
+$jsonContent = $indexData | ConvertTo-Json -Depth 3
+[System.IO.File]::WriteAllText($outputFile, $jsonContent, [System.Text.UTF8Encoding]::new($false))
 
 Write-Host "=================================="
 Write-Host "Index.json generado exitosamente"
