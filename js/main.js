@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   highlightActiveNavLink();
   initScrollAnimations();
   initSmoothScroll();
-  initShopFilters();
+  // initShopFilters() se llama desde products.js despues de cargar productos
   initFAQAccordion();
   initSizeSelector();
   initProductThumbnails();
