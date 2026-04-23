@@ -1,9 +1,12 @@
-{
-  "name": "UNIFORME FOX RACE SPEC PALE GREEN",
-  "price": "$935.000",
-  "sizes": "S/M/L/XL",
-  "badge": "Premium",
-  "category": "uniformes",
-  "description": "Uniforme FOX RACE SPEC en verde pálido",
-  "image": "/assets/images/uniformes/33120-275-33121-275-1-1200x1200.webp"
+﻿{
+    "name":  "UNIFORME FOX RACE SPEC PALE GREEN",
+    "image":  "assets/images/uniformes/33120-275-33121-275-1-1200x1200.webp",
+    "price":  "$935.000",
+    "sizes":  "S/M/L/XL",
+    "badge":  "Premium",
+    "category":  "uniformes",
+    "description":  "Uniforme FOX RACE SPEC en verde pÃ¡lido",
+    "images":  [
+                   "assets/images/uniformes/33120-275-33121-275-1-1200x1200.webp"
+               ]
 }

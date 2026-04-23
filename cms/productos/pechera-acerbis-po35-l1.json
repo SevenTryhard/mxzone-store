@@ -1,9 +1,11 @@
-{
-  "name": "PECHERA ACERBIS PO35-L1",
-  "price": "$749.900",
-  "sizes": "S/M/L/XL",
-  "badge": "",
-  "category": "protecciones",
-  "description": "Pechera ACERBIS PO35-L1 de protección completa",
-  "image": "/assets/images/protecciones/peto-acerbis-deflector-p035-l1-color-gris.jpg"
+﻿{
+    "name":  "PECHERA ACERBIS PO35-L1",
+    "image":  "assets/images/protecciones/peto-acerbis-deflector-p035-l1-color-gris.jpg",
+    "price":  "$749.900",
+    "sizes":  "S/M/L/XL",
+    "category":  "protecciones",
+    "description":  "Pechera ACERBIS PO35-L1 de protecciÃ³n completa",
+    "images":  [
+                   "assets/images/protecciones/peto-acerbis-deflector-p035-l1-color-gris.jpg"
+               ]
 }

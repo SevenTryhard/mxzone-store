@@ -1,9 +1,11 @@
-{
-  "name": "BOTAS ALPINESTARS TECH 3",
-  "price": "$1.199.000",
-  "sizes": "7-11 US",
-  "badge": "",
-  "category": "botas",
-  "description": "Botas ALPINESTARS TECH 3 para enduro",
-  "image": "/assets/images/botas/alpinestars-botas-tech-3.jpeg"
+﻿{
+    "name":  "BOTAS ALPINESTARS TECH 3",
+    "image":  "assets/images/botas/alpinestars-botas-tech-3.jpeg",
+    "price":  "$1.199.000",
+    "sizes":  "7-11 US",
+    "category":  "botas",
+    "description":  "Botas ALPINESTARS TECH 3 para enduro",
+    "images":  [
+                   "assets/images/botas/alpinestars-botas-tech-3.jpeg"
+               ]
 }

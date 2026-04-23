@@ -1,9 +1,11 @@
-{
-  "name": "UNIFORME FLY F-16 DARK BLUE WHITE",
-  "price": "$320.000",
-  "sizes": "S/M/L/XL",
-  "badge": "",
-  "category": "uniformes",
-  "description": "Uniforme FLY F-16 en azul oscuro blanco",
-  "image": "/assets/images/uniformes/379-932-4-f16-2026-5360b597cd87d1ee9417602033042360-480-0.webp"
+﻿{
+    "name":  "UNIFORME FLY F-16 DARK BLUE WHITE",
+    "image":  "assets/images/uniformes/379-932-4-f16-2026-5360b597cd87d1ee9417602033042360-480-0.webp",
+    "price":  "$320.000",
+    "sizes":  "S/M/L/XL",
+    "category":  "uniformes",
+    "description":  "Uniforme FLY F-16 en azul oscuro blanco",
+    "images":  [
+                   "assets/images/uniformes/379-932-4-f16-2026-5360b597cd87d1ee9417602033042360-480-0.webp"
+               ]
 }

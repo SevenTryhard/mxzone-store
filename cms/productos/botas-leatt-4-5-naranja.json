@@ -1,9 +1,12 @@
-{
-  "name": "BOTAS LEATT 4.5 NARANJA",
-  "price": "$1.399.900",
-  "sizes": "8-11 US",
-  "badge": "Top",
-  "category": "botas",
-  "description": "Botas LEATT 4.5 en color naranja de alto rendimiento",
-  "image": "/assets/images/botas/t-2500000121-ce6c18b7-38a2-4050-9a1c-20038c5e7e03.webp"
+﻿{
+    "name":  "BOTAS LEATT 4.5 NARANJA",
+    "image":  "assets/images/botas/t-2500000121-ce6c18b7-38a2-4050-9a1c-20038c5e7e03.webp",
+    "price":  "$1.399.900",
+    "sizes":  "8-11 US",
+    "badge":  "Top",
+    "category":  "botas",
+    "description":  "Botas LEATT 4.5 en color naranja de alto rendimiento",
+    "images":  [
+                   "assets/images/botas/t-2500000121-ce6c18b7-38a2-4050-9a1c-20038c5e7e03.webp"
+               ]
 }

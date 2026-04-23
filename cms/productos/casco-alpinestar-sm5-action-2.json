@@ -1,9 +1,12 @@
-{
-  "name": "CASCO ALPINESTARS SM5 ACTION 2",
-  "price": "$1.890.000",
-  "sizes": "S/M/L/XL",
-  "badge": "Top Ventas",
-  "category": "cascos",
-  "description": "Casco ALPINESTARS SM5 con grÃ¡fico action",
-  "image": "assets/images/nuevas_images/noir-1-1ca22eb3-f81a-4114-a04b-162505398451.webp"
+﻿{
+    "name":  "CASCO ALPINESTARS SM5 ACTION 2",
+    "image":  "assets/images/nuevas_images/noir-1-1ca22eb3-f81a-4114-a04b-162505398451.webp",
+    "price":  "$1.890.000",
+    "sizes":  "S/M/L/XL",
+    "badge":  "Top Ventas",
+    "category":  "cascos",
+    "description":  "Casco ALPINESTARS SM5 con grÃƒÂ¡fico action",
+    "images":  [
+                   "assets/images/nuevas_images/noir-1-1ca22eb3-f81a-4114-a04b-162505398451.webp"
+               ]
 }

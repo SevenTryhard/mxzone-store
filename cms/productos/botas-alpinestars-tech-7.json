@@ -1,9 +1,12 @@
-{
-  "name": "BOTAS ALPINESTARS TECH 7",
-  "price": "$2.150.000",
-  "sizes": "38/39/40/41/42/43/44/45",
-  "badge": "Premium",
-  "category": "botas",
-  "description": "Botas ALPINESTARS TECH 7 de competición profesional",
-  "image": "/assets/images/botas/428-494e67f8-181b-414a-86eb-62d91d32fe67.webp"
+﻿{
+    "name":  "BOTAS ALPINESTARS TECH 7",
+    "image":  "assets/images/botas/428-494e67f8-181b-414a-86eb-62d91d32fe67.webp",
+    "price":  "$2.150.000",
+    "sizes":  "38/39/40/41/42/43/44/45",
+    "badge":  "Premium",
+    "category":  "botas",
+    "description":  "Botas ALPINESTARS TECH 7 de competiciÃ³n profesional",
+    "images":  [
+                   "assets/images/botas/428-494e67f8-181b-414a-86eb-62d91d32fe67.webp"
+               ]
 }

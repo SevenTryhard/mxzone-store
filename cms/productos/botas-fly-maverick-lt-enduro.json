@@ -1,9 +1,11 @@
-{
-  "name": "BOTAS FLY MAVERICK LT ENDURO",
-  "price": "$849.000",
-  "sizes": "7-11 US",
-  "badge": "",
-  "category": "botas",
-  "description": "Botas FLY MAVERICK LT para enduro",
-  "image": "assets/images/botas/BOTAS FLY MAVERICK LT ENDURO.jpg"
+﻿{
+    "name":  "BOTAS FLY MAVERICK LT ENDURO",
+    "image":  "assets/images/botas/BOTAS FLY MAVERICK LT ENDURO.jpg",
+    "price":  "$849.000",
+    "sizes":  "7-11 US",
+    "category":  "botas",
+    "description":  "Botas FLY MAVERICK LT para enduro",
+    "images":  [
+                   "assets/images/botas/BOTAS FLY MAVERICK LT ENDURO.jpg"
+               ]
 }

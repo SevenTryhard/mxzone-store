@@ -1,9 +1,12 @@
-{
-  "name": "BOTAS PVC IMPERMEABLES GRIS DAKAR",
-  "price": "$89.900",
-  "sizes": "38/39/40/41/42/43/44/45",
-  "badge": "Oferta",
-  "category": "botas",
-  "description": "Botas impermeables de PVC para enduro y lluvia",
-  "image": "/assets/images/botas/botas-dakar-dk0575-gris-1-grande.webp"
+﻿{
+    "name":  "BOTAS PVC IMPERMEABLES GRIS DAKAR",
+    "image":  "assets/images/botas/botas-dakar-dk0575-gris-1-grande.webp",
+    "price":  "$89.900",
+    "sizes":  "38/39/40/41/42/43/44/45",
+    "badge":  "Oferta",
+    "category":  "botas",
+    "description":  "Botas impermeables de PVC para enduro y lluvia",
+    "images":  [
+                   "assets/images/botas/botas-dakar-dk0575-gris-1-grande.webp"
+               ]
 }

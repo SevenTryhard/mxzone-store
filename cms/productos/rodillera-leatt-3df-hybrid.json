@@ -1,9 +1,11 @@
-{
-  "name": "RODILLERA LEATT 3DF HYBRID",
-  "price": "$649.900",
-  "sizes": "S/M/L/XL",
-  "badge": "",
-  "category": "protecciones",
-  "description": "Rodillera LEATT 3DF HYBRID de protección",
-  "image": "/assets/images/protecciones/httpsprobikesas-my-sharepoint-comxgpersonaldaniela-marquez-probike-com-coew-nrv5-f9viuiteqd-urw0b3vzxb2fnlinauv9a9m4uqgrtime-nkk6fpcg3ug-10-d9379c25-e5e3-4785-a342-19b2bfc31e5e.webp"
+﻿{
+    "name":  "RODILLERA LEATT 3DF HYBRID",
+    "image":  "assets/images/protecciones/httpsprobikesas-my-sharepoint-comxgpersonaldaniela-marquez-probike-com-coew-nrv5-f9viuiteqd-urw0b3vzxb2fnlinauv9a9m4uqgrtime-nkk6fpcg3ug-10-d9379c25-e5e3-4785-a342-19b2bfc31e5e.webp",
+    "price":  "$649.900",
+    "sizes":  "S/M/L/XL",
+    "category":  "protecciones",
+    "description":  "Rodillera LEATT 3DF HYBRID de protecciÃ³n",
+    "images":  [
+                   "assets/images/protecciones/httpsprobikesas-my-sharepoint-comxgpersonaldaniela-marquez-probike-com-coew-nrv5-f9viuiteqd-urw0b3vzxb2fnlinauv9a9m4uqgrtime-nkk6fpcg3ug-10-d9379c25-e5e3-4785-a342-19b2bfc31e5e.webp"
+               ]
 }

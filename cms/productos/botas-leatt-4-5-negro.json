@@ -1,9 +1,12 @@
-{
-  "name": "BOTAS LEATT 4.5 NEGRO",
-  "price": "$1.890.000",
-  "sizes": "38/39/40/41/42/43/44/45",
-  "badge": "Top Ventas",
-  "category": "botas",
-  "description": "Botas LEATT 4.5 en color negro, máxima protección",
-  "image": "assets/images/botas/BOTAS LEATT 4.5 NEGRO.jpg"
+﻿{
+    "name":  "BOTAS LEATT 4.5 NEGRO",
+    "image":  "assets/images/botas/BOTAS LEATT 4.5 NEGRO.jpg",
+    "price":  "$1.890.000",
+    "sizes":  "38/39/40/41/42/43/44/45",
+    "badge":  "Top Ventas",
+    "category":  "botas",
+    "description":  "Botas LEATT 4.5 en color negro, mÃ¡xima protecciÃ³n",
+    "images":  [
+                   "assets/images/botas/BOTAS LEATT 4.5 NEGRO.jpg"
+               ]
 }

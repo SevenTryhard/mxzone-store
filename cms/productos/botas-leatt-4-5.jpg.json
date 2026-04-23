@@ -1,9 +1,11 @@
-{
-  "name": "BOTAS LEATT 4.5 AZULES",
-  "price": "$1.890.000",
-  "sizes": "38/39/40/41/42/43/44/45",
-  "badge": "",
-  "category": "botas",
-  "description": "Botas LEATT 4.5 estándar de competición",
-  "image": "/assets/images/botas/leatt-boots-moto-4-5-enduro-blue-pair-3023050650-95hxax5p8qvtfpap-1.webp"
+﻿{
+    "name":  "BOTAS LEATT 4.5 AZULES",
+    "image":  "assets/images/botas/leatt-boots-moto-4-5-enduro-blue-pair-3023050650-95hxax5p8qvtfpap-1.webp",
+    "price":  "$1.890.000",
+    "sizes":  "38/39/40/41/42/43/44/45",
+    "category":  "botas",
+    "description":  "Botas LEATT 4.5 estÃ¡ndar de competiciÃ³n",
+    "images":  [
+                   "assets/images/botas/leatt-boots-moto-4-5-enduro-blue-pair-3023050650-95hxax5p8qvtfpap-1.webp"
+               ]
 }

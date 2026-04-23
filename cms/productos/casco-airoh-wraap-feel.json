@@ -1,9 +1,12 @@
-{
-  "name": "CASCO AIROH WRAAP FEEL",
-  "price": "$1.350.000",
-  "sizes": "S/M/L/XL",
-  "badge": "Premium",
-  "category": "cascos",
-  "description": "Casco AIROH WRAAP FEEL con diseÃ±o exclusivo",
-  "image": "assets/images/nuevas_images/cascoairohwraaapfeelnaranja-2.webp"
+﻿{
+    "name":  "CASCO AIROH WRAAP FEEL",
+    "image":  "assets/images/nuevas_images/cascoairohwraaapfeelnaranja-2.webp",
+    "price":  "$1.350.000",
+    "sizes":  "S/M/L/XL",
+    "badge":  "Premium",
+    "category":  "cascos",
+    "description":  "Casco AIROH WRAAP FEEL con diseÃƒÂ±o exclusivo",
+    "images":  [
+                   "assets/images/nuevas_images/cascoairohwraaapfeelnaranja-2.webp"
+               ]
 }

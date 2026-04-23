@@ -1,9 +1,12 @@
-{
-  "name": "UNIFORME FLY KINETIC RED WHITE BLUE",
-  "price": "$949.000",
-  "sizes": "S/M/L/XL",
-  "badge": "Top Ventas",
-  "category": "uniformes",
-  "description": "Uniforme FLY KINETIC clásico",
-  "image": "/assets/images/uniformes/fly-racing-2026-29.png"
+﻿{
+    "name":  "UNIFORME FLY KINETIC RED WHITE BLUE",
+    "image":  "assets/images/uniformes/fly-racing-2026-29.png",
+    "price":  "$949.000",
+    "sizes":  "S/M/L/XL",
+    "badge":  "Top Ventas",
+    "category":  "uniformes",
+    "description":  "Uniforme FLY KINETIC clÃ¡sico",
+    "images":  [
+                   "assets/images/uniformes/fly-racing-2026-29.png"
+               ]
 }
