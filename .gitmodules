@@ -1,0 +1,3 @@
+[submodule "mxzone-landing"]
+	path = mxzone-landing
+	url = https://github.com/SevenTryhard/mxzone-landing.git
