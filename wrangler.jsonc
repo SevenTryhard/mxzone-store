@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mxzonestore",
+  "compatibility_date": "2026-04-13",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "."
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "routes": [
+    {
+      "pattern": "mxzonestore.com",
+      "zone_name": "mxzonestore.com"
+    },
+    {
+      "pattern": "www.mxzonestore.com",
+      "zone_name": "mxzonestore.com"
+    }
+  ]
+}
