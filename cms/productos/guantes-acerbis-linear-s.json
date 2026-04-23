@@ -1,11 +1,11 @@
-{
-  "name": "GUANTES ACERBIS LINEAR",
-  "price": "$149.900",
-  "sizes": "S",
-  "badge": "",
-  "category": "guantes",
-  "description": "Guante para motocross: GUANTES ACERBIS LINEAR",
-  "images": [
-    "assets/images/guantes/guantes-acerbis-linear-s.jpg"
-  ]
+﻿{
+    "name":  "GUANTES ACERBIS LINEAR",
+    "image":  "assets/images/guantes/guantes-acerbis-linear-s.jpg",
+    "price":  "$149.900",
+    "sizes":  "S",
+    "category":  "guantes",
+    "description":  "Guante para motocross: GUANTES ACERBIS LINEAR",
+    "images":  [
+                   "assets/images/guantes/guantes-acerbis-linear-s.jpg"
+               ]
 }

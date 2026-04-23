@@ -1,11 +1,11 @@
-{
-  "name": "ONEAL ELEMENT ROLLER",
-  "price": "$169.000",
-  "sizes": "XL",
-  "badge": "",
-  "category": "jersey",
-  "description": "Jersey para motocross: ONEAL ELEMENT ROLLER",
-  "images": [
-    "assets/images/jersey/oneal-element-roller-xl.jpg"
-  ]
+﻿{
+    "name":  "ONEAL ELEMENT ROLLER",
+    "image":  "assets/images/jersey/oneal-element-roller-xl.jpg",
+    "price":  "$169.000",
+    "sizes":  "XL",
+    "category":  "jersey",
+    "description":  "Jersey para motocross: ONEAL ELEMENT ROLLER",
+    "images":  [
+                   "assets/images/jersey/oneal-element-roller-xl.jpg"
+               ]
 }

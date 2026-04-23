@@ -1,11 +1,11 @@
-{
-  "name": "PROTECTOR PUNTA DONA",
-  "price": "$69.000",
-  "sizes": "Unica",
-  "badge": "",
-  "category": "accesorios",
-  "description": "Accesorio para motocross: PROTECTOR PUNTA DONA",
-  "images": [
-    "assets/images/accesorios/protector-punta-dona.jpg"
-  ]
+﻿{
+    "name":  "PROTECTOR PUNTA DONA",
+    "image":  "assets/images/accesorios/protector-punta-dona.jpg",
+    "price":  "$69.000",
+    "sizes":  "Unica",
+    "category":  "accesorios",
+    "description":  "Accesorio para motocross: PROTECTOR PUNTA DONA",
+    "images":  [
+                   "assets/images/accesorios/protector-punta-dona.jpg"
+               ]
 }

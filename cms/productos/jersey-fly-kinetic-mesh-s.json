@@ -1,11 +1,11 @@
-{
-  "name": "JERSEY FLY KINETIC MESH",
-  "price": "$199.900",
-  "sizes": "S",
-  "badge": "",
-  "category": "jersey",
-  "description": "Jersey para motocross: JERSEY FLY KINETIC MESH",
-  "images": [
-    "assets/images/jersey/jersey-fly-kinetic-mesh-s.jpg"
-  ]
+﻿{
+    "name":  "JERSEY FLY KINETIC MESH",
+    "image":  "assets/images/jersey/jersey-fly-kinetic-mesh-s.jpg",
+    "price":  "$199.900",
+    "sizes":  "S",
+    "category":  "jersey",
+    "description":  "Jersey para motocross: JERSEY FLY KINETIC MESH",
+    "images":  [
+                   "assets/images/jersey/jersey-fly-kinetic-mesh-s.jpg"
+               ]
 }

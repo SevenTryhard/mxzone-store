@@ -1,11 +1,11 @@
-{
-  "name": "PROTECTOR DE PUNTA SILICONADO",
-  "price": "$79.900",
-  "sizes": "Unica",
-  "badge": "",
-  "category": "accesorios",
-  "description": "Accesorio para motocross: PROTECTOR DE PUNTA SILICONADO",
-  "images": [
-    "assets/images/accesorios/protector-de-punta-siliconado.jpg"
-  ]
+﻿{
+    "name":  "PROTECTOR DE PUNTA SILICONADO",
+    "image":  "assets/images/accesorios/protector-de-punta-siliconado.jpg",
+    "price":  "$79.900",
+    "sizes":  "Unica",
+    "category":  "accesorios",
+    "description":  "Accesorio para motocross: PROTECTOR DE PUNTA SILICONADO",
+    "images":  [
+                   "assets/images/accesorios/protector-de-punta-siliconado.jpg"
+               ]
 }

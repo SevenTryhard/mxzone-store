@@ -1,11 +1,11 @@
-{
-  "name": "MEDIDOR DE PRESION DIGITAL",
-  "price": "$25.000",
-  "sizes": "Unica",
-  "badge": "",
-  "category": "accesorios",
-  "description": "Accesorio para motocross: MEDIDOR DE PRESION DIGITAL",
-  "images": [
-    "assets/images/accesorios/medidor-de-presion-digital.jpg"
-  ]
+﻿{
+    "name":  "MEDIDOR DE PRESION DIGITAL",
+    "image":  "assets/images/accesorios/medidor-de-presion-digital.jpg",
+    "price":  "$25.000",
+    "sizes":  "Unica",
+    "category":  "accesorios",
+    "description":  "Accesorio para motocross: MEDIDOR DE PRESION DIGITAL",
+    "images":  [
+                   "assets/images/accesorios/medidor-de-presion-digital.jpg"
+               ]
 }

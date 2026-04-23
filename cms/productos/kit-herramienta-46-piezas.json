@@ -1,11 +1,11 @@
-{
-  "name": "KIT HERRAMIENTA 46 PIEZAS",
-  "price": "$149.000",
-  "sizes": "Unica",
-  "badge": "",
-  "category": "accesorios",
-  "description": "Accesorio para motocross: KIT HERRAMIENTA 46 PIEZAS",
-  "images": [
-    "assets/images/accesorios/kit-herramienta-46-piezas.jpg"
-  ]
+﻿{
+    "name":  "KIT HERRAMIENTA 46 PIEZAS",
+    "image":  "assets/images/accesorios/kit-herramienta-46-piezas.jpg",
+    "price":  "$149.000",
+    "sizes":  "Unica",
+    "category":  "accesorios",
+    "description":  "Accesorio para motocross: KIT HERRAMIENTA 46 PIEZAS",
+    "images":  [
+                   "assets/images/accesorios/kit-herramienta-46-piezas.jpg"
+               ]
 }

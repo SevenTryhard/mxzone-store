@@ -1,11 +1,11 @@
-{
-  "name": "GORRA FOX OPTICAL FLEXFIT [ROJO]",
-  "price": "$189.000",
-  "sizes": "S/M",
-  "badge": "",
-  "category": "gorras",
-  "description": "Gorra para motocross: GORRA FOX OPTICAL FLEXFIT [ROJO]",
-  "images": [
-    "assets/images/gorras/gorra-fox-optical-flexfit-rojo.jpg"
-  ]
+﻿{
+    "name":  "GORRA FOX OPTICAL FLEXFIT [ROJO]",
+    "image":  "assets/images/gorras/gorra-fox-optical-flexfit-rojo.jpg",
+    "price":  "$189.000",
+    "sizes":  "S/M",
+    "category":  "gorras",
+    "description":  "Gorra para motocross: GORRA FOX OPTICAL FLEXFIT [ROJO]",
+    "images":  [
+                   "assets/images/gorras/gorra-fox-optical-flexfit-rojo.jpg"
+               ]
 }

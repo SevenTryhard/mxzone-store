@@ -1,11 +1,11 @@
-{
-  "name": "GUANTE FIST STOCKER CAMO",
-  "price": "$149.000",
-  "sizes": "S",
-  "badge": "",
-  "category": "guantes",
-  "description": "Guante para motocross: GUANTE FIST STOCKER CAMO",
-  "images": [
-    "assets/images/guantes/guante-fist-stocker-camo-s.jpg"
-  ]
+﻿{
+    "name":  "GUANTE FIST STOCKER CAMO",
+    "image":  "assets/images/guantes/guante-fist-stocker-camo-s.jpg",
+    "price":  "$149.000",
+    "sizes":  "S",
+    "category":  "guantes",
+    "description":  "Guante para motocross: GUANTE FIST STOCKER CAMO",
+    "images":  [
+                   "assets/images/guantes/guante-fist-stocker-camo-s.jpg"
+               ]
 }

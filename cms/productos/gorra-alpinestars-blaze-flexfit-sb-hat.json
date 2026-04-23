@@ -1,11 +1,11 @@
-{
-  "name": "GORRA ALPINESTARS BLAZE FLEXFIT SB HAT",
-  "price": "$99.000",
-  "sizes": "L/XL",
-  "badge": "",
-  "category": "gorras",
-  "description": "Gorra para motocross: GORRA ALPINESTARS BLAZE FLEXFIT SB HAT",
-  "images": [
-    "assets/images/gorras/gorra-alpinestars-blaze-flexfit-sb-hat.jpg"
-  ]
+﻿{
+    "name":  "GORRA ALPINESTARS BLAZE FLEXFIT SB HAT",
+    "image":  "assets/images/gorras/gorra-alpinestars-blaze-flexfit-sb-hat.jpg",
+    "price":  "$99.000",
+    "sizes":  "L/XL",
+    "category":  "gorras",
+    "description":  "Gorra para motocross: GORRA ALPINESTARS BLAZE FLEXFIT SB HAT",
+    "images":  [
+                   "assets/images/gorras/gorra-alpinestars-blaze-flexfit-sb-hat.jpg"
+               ]
 }

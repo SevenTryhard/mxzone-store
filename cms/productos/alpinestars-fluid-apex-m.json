@@ -1,11 +1,11 @@
-{
-  "name": "ALPINESTARS FLUID APEX",
-  "price": "$199.900",
-  "sizes": "M",
-  "badge": "",
-  "category": "jersey",
-  "description": "Jersey para motocross: ALPINESTARS FLUID APEX",
-  "images": [
-    "assets/images/jersey/alpinestars-fluid-apex-m.jpg"
-  ]
+﻿{
+    "name":  "ALPINESTARS FLUID APEX",
+    "image":  "assets/images/jersey/alpinestars-fluid-apex-m.jpg",
+    "price":  "$199.900",
+    "sizes":  "M",
+    "category":  "jersey",
+    "description":  "Jersey para motocross: ALPINESTARS FLUID APEX",
+    "images":  [
+                   "assets/images/jersey/alpinestars-fluid-apex-m.jpg"
+               ]
 }

@@ -1,11 +1,11 @@
-{
-  "name": "JERSEY FOX 180 BLACK OUT",
-  "price": "$209.000",
-  "sizes": "S",
-  "badge": "",
-  "category": "jersey",
-  "description": "Jersey para motocross: JERSEY FOX 180 BLACK OUT",
-  "images": [
-    "assets/images/jersey/jersey-fox-180-black-out-s.jpg"
-  ]
+﻿{
+    "name":  "JERSEY FOX 180 BLACK OUT",
+    "image":  "assets/images/jersey/jersey-fox-180-black-out-s.jpg",
+    "price":  "$209.000",
+    "sizes":  "S",
+    "category":  "jersey",
+    "description":  "Jersey para motocross: JERSEY FOX 180 BLACK OUT",
+    "images":  [
+                   "assets/images/jersey/jersey-fox-180-black-out-s.jpg"
+               ]
 }

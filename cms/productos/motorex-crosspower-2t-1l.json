@@ -1,11 +1,11 @@
-{
-  "name": "MOTOREX CROSSPOWER 2T 1L",
-  "price": "$85.000",
-  "sizes": "Unica",
-  "badge": "",
-  "category": "accesorios",
-  "description": "Accesorio para motocross: MOTOREX CROSSPOWER 2T 1L",
-  "images": [
-    "assets/images/accesorios/motorex-crosspower-2t-1l.jpg"
-  ]
+﻿{
+    "name":  "MOTOREX CROSSPOWER 2T 1L",
+    "image":  "assets/images/accesorios/motorex-crosspower-2t-1l.jpg",
+    "price":  "$85.000",
+    "sizes":  "Unica",
+    "category":  "accesorios",
+    "description":  "Accesorio para motocross: MOTOREX CROSSPOWER 2T 1L",
+    "images":  [
+                   "assets/images/accesorios/motorex-crosspower-2t-1l.jpg"
+               ]
 }

@@ -1,11 +1,11 @@
-{
-  "name": "MORRAL HIDRATACIÓN LEATT CACTUS 1.5",
-  "price": "$499.000",
-  "sizes": "Única",
-  "badge": "",
-  "category": "maletas",
-  "description": "Accesorio de transporte: MORRAL HIDRATACIÓN LEATT CACTUS 1.5",
-  "images": [
-    "assets/images/maletas/morral-hidratación-leatt-cactus-15.jpg"
-  ]
+﻿{
+    "name":  "MORRAL HIDRATACIÃ“N LEATT CACTUS 1.5",
+    "image":  "assets/images/maletas/morral-hidrataciÃ³n-leatt-cactus-15.jpg",
+    "price":  "$499.000",
+    "sizes":  "Ãšnica",
+    "category":  "maletas",
+    "description":  "Accesorio de transporte: MORRAL HIDRATACIÃ“N LEATT CACTUS 1.5",
+    "images":  [
+                   "assets/images/maletas/morral-hidrataciÃ³n-leatt-cactus-15.jpg"
+               ]
 }

@@ -1,11 +1,11 @@
-{
-  "name": "CANGURO RIÑONERA ACERBIS",
-  "price": "$299.000",
-  "sizes": "Única",
-  "badge": "",
-  "category": "maletas",
-  "description": "Accesorio de transporte: CANGURO RIÑONERA ACERBIS",
-  "images": [
-    "assets/images/maletas/canguro-riñonera-acerbis.jpg"
-  ]
+﻿{
+    "name":  "CANGURO RIÃ‘ONERA ACERBIS",
+    "image":  "assets/images/maletas/canguro-riÃ±onera-acerbis.jpg",
+    "price":  "$299.000",
+    "sizes":  "Ãšnica",
+    "category":  "maletas",
+    "description":  "Accesorio de transporte: CANGURO RIÃ‘ONERA ACERBIS",
+    "images":  [
+                   "assets/images/maletas/canguro-riÃ±onera-acerbis.jpg"
+               ]
 }

@@ -1,11 +1,11 @@
-{
-  "name": "JERSEY FLY KINETIC REBEL",
-  "price": "$215.000",
-  "sizes": "YL (YOUTH LARGE)",
-  "badge": "",
-  "category": "jersey",
-  "description": "Jersey para motocross: JERSEY FLY KINETIC REBEL",
-  "images": [
-    "assets/images/jersey/jersey-fly-kinetic-rebel-yl (youth large).jpg"
-  ]
+﻿{
+    "name":  "JERSEY FLY KINETIC REBEL",
+    "image":  "assets/images/jersey/jersey-fly-kinetic-rebel-yl (youth large).jpg",
+    "price":  "$215.000",
+    "sizes":  "YL (YOUTH LARGE)",
+    "category":  "jersey",
+    "description":  "Jersey para motocross: JERSEY FLY KINETIC REBEL",
+    "images":  [
+                   "assets/images/jersey/jersey-fly-kinetic-rebel-yl (youth large).jpg"
+               ]
 }
