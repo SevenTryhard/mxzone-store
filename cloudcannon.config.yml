@@ -20,7 +20,6 @@ collections_config:
     disable_add: false
     disable_add_folder: false
     disable_file_actions: false
-
 _inputs:
   whatsapp:
     type: text
@@ -30,31 +29,28 @@ _inputs:
     cascade: true
   image:
     type: image
-    options:
-      storage: cloudcannon
+    options: {}
+    cascade: true
   images:
     type: array
+    cascade: true
     array_item:
       type: image
-      options:
-        storage: cloudcannon
+      options: {}
   gallery:
     type: array
+    cascade: true
     array_item:
       type: image
-      options:
-        storage: cloudcannon
-
+      options: {}
 base_url: https://mxzonestore.motocross.workers.dev
 timezone: America/Bogota
-
 media:
   cloudcannon:
     - source: assets/images
       path: assets/images
       optimize: true
       max_size: 10MB
-
 collections:
   productos:
     path: cms/productos
@@ -110,7 +106,6 @@ collections:
             - gorras
             - jersey
             - accesorios
-
   promociones:
     path: cms/promociones
     type: json
@@ -150,7 +145,6 @@ collections:
       - name: promoPrice
         label: Precio Promocional
         type: number
-
   settings:
     path: cms/settings
     type: yaml
