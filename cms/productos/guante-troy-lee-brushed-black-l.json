@@ -1,11 +1,11 @@
-﻿{
-    "name":  "GUANTE TROY LEE BRUSHED BLACK",
-    "image":  "/assets/images/guantes/guante-troy-lee-brushed-black-l.jpg",
-    "price":  "$175.000",
-    "sizes":  "L",
-    "category":  "guantes",
-    "description":  "Guante para motocross: GUANTE TROY LEE BRUSHED BLACK",
-    "images":  [
-                   "/assets/images/guantes/guante-troy-lee-brushed-black-l.jpg"
-               ]
+{
+    "name": "GUANTE TROY LEE BRUSHED BLACK",
+    "image": "/assets/images/guantes/troy-lee-designs-air-gloves-brushed-black-glo-green-1-1032430.jpg",
+    "price": "$175.000",
+    "sizes": "L",
+    "category": "guantes",
+    "description": "Guante para motocross: GUANTE TROY LEE BRUSHED BLACK",
+    "images": [
+        "/assets/images/guantes/guante-troy-lee-brushed-black-l.jpg"
+    ]
 }

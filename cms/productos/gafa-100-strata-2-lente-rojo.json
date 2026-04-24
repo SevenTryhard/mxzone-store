@@ -1,11 +1,11 @@
-﻿{
-    "name":  "GAFA 100% STRATA 2 - LENTE ROJO",
-    "image":  "/assets/images/gafas/gafa-100-strata-2-lente-rojo.jpg",
-    "price":  "$189.900",
-    "sizes":  "Unica",
-    "category":  "gafas",
-    "description":  "Gafas para motocross: GAFA 100% STRATA 2 - LENTE ROJO",
-    "images":  [
-                   "/assets/images/gafas/gafa-100-strata-2-lente-rojo.jpg"
-               ]
+{
+    "name": "GAFA 100% STRATA 2 - LENTE ROJO",
+    "image": "/assets/images/gafas/gafas-100-strata-2-m2-rojo-rojo-espejo.jpg",
+    "price": "$189.900",
+    "sizes": "Unica",
+    "category": "gafas",
+    "description": "Gafas para motocross: GAFA 100% STRATA 2 - LENTE ROJO",
+    "images": [
+        "/assets/images/gafas/gafa-100-strata-2-lente-rojo.jpg"
+    ]
 }

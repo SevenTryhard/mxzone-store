@@ -1,11 +1,11 @@
-﻿{
-    "name":  "GAFA 100% STRATA 2 - SMOKE",
-    "image":  "/assets/images/gafas/gafa-100-strata-2-smoke.jpg",
-    "price":  "$189.900",
-    "sizes":  "Unica",
-    "category":  "gafas",
-    "description":  "Gafas para motocross: GAFA 100% STRATA 2 - SMOKE",
-    "images":  [
-                   "/assets/images/gafas/gafa-100-strata-2-smoke.jpg"
-               ]
+{
+    "name": "GAFA 100% STRATA 2 - SMOKE",
+    "image": "/assets/images/gafas/100-percent-strata2-neon-orange-mirror.jpg",
+    "price": "$189.900",
+    "sizes": "Unica",
+    "category": "gafas",
+    "description": "Gafas para motocross: GAFA 100% STRATA 2 - SMOKE",
+    "images": [
+        "/assets/images/gafas/gafa-100-strata-2-smoke.jpg"
+    ]
 }

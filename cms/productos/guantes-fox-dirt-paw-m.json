@@ -1,11 +1,11 @@
-﻿{
-    "name":  "GUANTES FOX DIRT PAW",
-    "image":  "/assets/images/guantes/guantes-fox-dirt-paw-m.jpg",
-    "price":  "$199.900",
-    "sizes":  "M",
-    "category":  "guantes",
-    "description":  "Guante para motocross: GUANTES FOX DIRT PAW",
-    "images":  [
-                   "/assets/images/guantes/guantes-fox-dirt-paw-m.jpg"
-               ]
+{
+    "name": "GUANTES FOX DIRT PAW",
+    "image": "/assets/images/guantes/25868130-1-1200x1200.webp",
+    "price": "$199.900",
+    "sizes": "M",
+    "category": "guantes",
+    "description": "Guante para motocross: GUANTES FOX DIRT PAW",
+    "images": [
+        "/assets/images/guantes/guantes-fox-dirt-paw-m.jpg"
+    ]
 }

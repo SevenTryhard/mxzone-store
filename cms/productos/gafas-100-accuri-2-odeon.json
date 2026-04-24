@@ -1,11 +1,11 @@
-﻿{
-    "name":  "GAFAS 100% ACCURI 2 ODEON",
-    "image":  "/assets/images/gafas/gafas-100-accuri-2-odeon.jpg",
-    "price":  "$280.000",
-    "sizes":  "Unica",
-    "category":  "gafas",
-    "description":  "Gafas para motocross: GAFAS 100% ACCURI 2 ODEON",
-    "images":  [
-                   "/assets/images/gafas/gafas-100-accuri-2-odeon.jpg"
-               ]
+{
+    "name": "GAFAS 100% ACCURI 2 ODEON",
+    "image": "/assets/images/gafas/gafas100-accuri2odeonlenteplata.webp",
+    "price": "$280.000",
+    "sizes": "Unica",
+    "category": "gafas",
+    "description": "Gafas para motocross: GAFAS 100% ACCURI 2 ODEON",
+    "images": [
+        "/assets/images/gafas/gafas-100-accuri-2-odeon.jpg"
+    ]
 }

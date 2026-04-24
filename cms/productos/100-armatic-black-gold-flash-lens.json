@@ -1,11 +1,11 @@
-﻿{
-    "name":  "100% ARMATIC BLACK (GOLD FLASH LENS)",
-    "image":  "/assets/images/gafas/100-armatic-black-gold-flash-lens.jpg",
-    "price":  "$449.000",
-    "sizes":  "Unica",
-    "category":  "gafas",
-    "description":  "Gafas para motocross: 100% ARMATIC BLACK (GOLD FLASH LENS)",
-    "images":  [
-                   "/assets/images/gafas/100-armatic-black-gold-flash-lens.jpg"
-               ]
+{
+    "name": "100% ARMATIC BLACK (GOLD FLASH LENS)",
+    "image": "/assets/images/gafas/fa24-armatic-20-50060-00004-1.webp",
+    "price": "$449.000",
+    "sizes": "Unica",
+    "category": "gafas",
+    "description": "Gafas para motocross: 100% ARMATIC BLACK (GOLD FLASH LENS)",
+    "images": [
+        "/assets/images/gafas/100-armatic-black-gold-flash-lens.jpg"
+    ]
 }

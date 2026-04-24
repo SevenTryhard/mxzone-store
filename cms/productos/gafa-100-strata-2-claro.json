@@ -1,11 +1,11 @@
-﻿{
-    "name":  "GAFA 100% STRATA 2 - CLARO",
-    "image":  "/assets/images/gafas/gafa-100-strata-2-claro.jpg",
-    "price":  "$149.900",
-    "sizes":  "Unica",
-    "category":  "gafas",
-    "description":  "Gafas para motocross: GAFA 100% STRATA 2 - CLARO",
-    "images":  [
-                   "/assets/images/gafas/gafa-100-strata-2-claro.jpg"
-               ]
+{
+    "name": "GAFA 100% STRATA 2 - CLARO",
+    "image": "/assets/images/gafas/583610-4931846.webp",
+    "price": "$149.900",
+    "sizes": "Unica",
+    "category": "gafas",
+    "description": "Gafas para motocross: GAFA 100% STRATA 2 - CLARO",
+    "images": [
+        "/assets/images/gafas/gafa-100-strata-2-claro.jpg"
+    ]
 }
