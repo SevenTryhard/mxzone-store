@@ -1,11 +1,11 @@
 {
-  "name": "CANGURO RIÃ‘ONERA ACERBIS",
-  "image": "/assets/images/maletas/canguro-riÃ±onera-acerbis.jpg",
+  "name": "CANGURO RIÑONERA ACERBIS",
+  "image": "/assets/images/maletas/ac-0017032-318-camguro-impact-acerbisa.webp",
   "price": "$299.000",
-  "sizes": "Ãšnica",
+  "sizes": "Unica",
   "category": "maletas",
   "description": "Accesorio de transporte: CANGURO RIÃ‘ONERA ACERBIS",
   "images": [
-    "/assets/images/maletas/canguro-riÃ±onera-acerbis.jpg"
+    null
   ]
 }
