@@ -1,11 +1,11 @@
 {
-  "name": "JERSEY FLY KINETIC KORE",
-  "image": "/assets/images/jersey/jersey-fly-kinetic-kore-l.jpg",
+  "name": "JERSEY FLY KINETIC KORE BLUE",
+  "image": "/assets/images/jersey/fly-kinetic-kore-23-jersey-blue-black-2.webp",
   "price": "$199.900",
-  "sizes": "L",
+  "sizes": "S",
   "category": "jersey",
   "description": "Jersey para motocross: JERSEY FLY KINETIC KORE",
   "images": [
-    "/assets/images/jersey/jersey-fly-kinetic-kore-l.jpg"
+    null
   ]
 }
