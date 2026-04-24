@@ -1,11 +1,11 @@
-﻿{
-    "name":  "RIÃ‘ONERA KTM ORANGE",
-    "image":  "/assets/images/protecciones/ca-6.webp",
-    "price":  "$200.000",
-    "sizes":  "ÃšNICA",
-    "category":  "protecciones",
-    "description":  "RiÃ±onera KTM ORANGE oficial",
-    "images":  [
-                   "/assets/images/protecciones/ca-6.webp"
-               ]
+{
+  "name": "RIÃ‘ONERA KTM ORANGE",
+  "image": "/assets/images/protecciones/ca-6.webp",
+  "price": "$200.000",
+  "sizes": "ÃšNICA",
+  "category": "protecciones",
+  "description": "RiÃ±onera KTM ORANGE oficial",
+  "images": [
+    "/assets/images/protecciones/ca-6.webp"
+  ]
 }

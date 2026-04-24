@@ -1,11 +1,11 @@
-﻿{
-    "name":  "CASCO FOX V1 LEED FLUO RED",
-    "image":  "/assets/images/nuevas_images/1-3a9e5cd9-2cca-45ae-a375-1bf1e0595340-2x.webp",
-    "price":  "$1.150.000",
-    "sizes":  "S/M/L/XL",
-    "category":  "cascos",
-    "description":  "Casco FOX V1 LEED en rojo flÃƒÂºor",
-    "images":  [
-                   "/assets/images/nuevas_images/1-3a9e5cd9-2cca-45ae-a375-1bf1e0595340-2x.webp"
-               ]
+{
+  "name": "CASCO FOX V1 LEED FLUO RED",
+  "image": "/assets/images/nuevas_images/1-3a9e5cd9-2cca-45ae-a375-1bf1e0595340-2x.webp",
+  "price": "$1.150.000",
+  "sizes": "S/M/L/XL",
+  "category": "cascos",
+  "description": "Casco FOX V1 LEED en rojo flÃƒÂºor",
+  "images": [
+    "/assets/images/nuevas_images/1-3a9e5cd9-2cca-45ae-a375-1bf1e0595340-2x.webp"
+  ]
 }

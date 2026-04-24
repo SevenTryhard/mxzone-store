@@ -1,11 +1,11 @@
-﻿{
-    "name":  "CASCO FLY KINETIC MENACE",
-    "image":  "/assets/images/nuevas_images/fly-racing-2024-kinetic-menace-helmet-red-black-yellow-fy-73-8658-front-left-55024-03240.webp",
-    "price":  "$890.000",
-    "sizes":  "S/M/L/XL",
-    "category":  "cascos",
-    "description":  "Casco FLY KINETIC MENACE con diseÃƒÂ±o agresivo",
-    "images":  [
-                   "/assets/images/nuevas_images/fly-racing-2024-kinetic-menace-helmet-red-black-yellow-fy-73-8658-front-left-55024-03240.webp"
-               ]
+{
+  "name": "CASCO FLY KINETIC MENACE",
+  "image": "/assets/images/nuevas_images/fly-racing-2024-kinetic-menace-helmet-red-black-yellow-fy-73-8658-front-left-55024-03240.webp",
+  "price": "$890.000",
+  "sizes": "S/M/L/XL",
+  "category": "cascos",
+  "description": "Casco FLY KINETIC MENACE con diseÃƒÂ±o agresivo",
+  "images": [
+    "/assets/images/nuevas_images/fly-racing-2024-kinetic-menace-helmet-red-black-yellow-fy-73-8658-front-left-55024-03240.webp"
+  ]
 }

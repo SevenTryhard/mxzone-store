@@ -1,3 +1,11 @@
+# CloudCannon Git Auto-Sync Configuration
+git:
+  enabled: true
+  commit_message: "CloudCannon CMS: Actualizar {{collection}} - {{count}} archivos"
+  auto_push: true
+  branches:
+    publish: main
+
 collections_config:
   cms_productos:
     path: cms/productos
@@ -36,7 +44,11 @@ _inputs:
     cascade: true
     array_item:
       type: image
-      options: {}
+      options:
+        picker: true
+        media:
+          source: cloudcannon
+          path: assets/images
   gallery:
     type: array
     cascade: true
@@ -74,7 +86,12 @@ collections:
         type: array
         array_item:
           type: image
-        comment: Click en + para agregar más imágenes
+          options:
+            picker: true
+            media:
+              source: cloudcannon
+              path: assets/images
+        comment: 'Click en "+" → "Browse" → Explora y selecciona imágenes del CDN de CloudCannon'
       - name: price
         label: Precio
         type: text

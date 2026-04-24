@@ -1,11 +1,11 @@
-﻿{
-    "name":  "UNIFORME ONEAL ELEMENT BLK RED",
-    "image":  "/assets/images/uniformes/712-th-1myl.jpg",
-    "price":  "$649.900",
-    "sizes":  "S/M/L/XL",
-    "category":  "uniformes",
-    "description":  "Uniforme ONEAL ELEMENT black red de competiciÃ³n",
-    "images":  [
-                   "/assets/images/uniformes/712-th-1myl.jpg"
-               ]
+{
+  "name": "UNIFORME ONEAL ELEMENT BLK RED",
+  "image": "/assets/images/uniformes/712-th-1myl.jpg",
+  "price": "$649.900",
+  "sizes": "S/M/L/XL",
+  "category": "uniformes",
+  "description": "Uniforme ONEAL ELEMENT black red de competiciÃ³n",
+  "images": [
+    "/assets/images/uniformes/712-th-1myl.jpg"
+  ]
 }

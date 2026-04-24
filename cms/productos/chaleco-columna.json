@@ -1,11 +1,11 @@
-﻿{
-    "name":  "CHALECO COLUMNA",
-    "image":  "/assets/images/protecciones/captura-de-pantalla-2026-04-21-142940.png",
-    "price":  "$45.000",
-    "sizes":  "S/M/L/XL",
-    "category":  "protecciones",
-    "description":  "Chaleco de protecciÃ³n para columna",
-    "images":  [
-                   "/assets/images/protecciones/captura-de-pantalla-2026-04-21-142940.png"
-               ]
+{
+  "name": "CHALECO COLUMNA",
+  "image": "/assets/images/protecciones/captura-de-pantalla-2026-04-21-142940.png",
+  "price": "$45.000",
+  "sizes": "S/M/L/XL",
+  "category": "protecciones",
+  "description": "Chaleco de protecciÃ³n para columna",
+  "images": [
+    "/assets/images/protecciones/captura-de-pantalla-2026-04-21-142940.png"
+  ]
 }

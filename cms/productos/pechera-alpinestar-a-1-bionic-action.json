@@ -1,12 +1,12 @@
-﻿{
-    "name":  "PECHERA ALPINESTARS A1 BIONIC ACTION",
-    "image":  "/assets/images/protecciones/pecheraalpinestarsbionicactionnegrorojo.webp",
-    "price":  "$489.900",
-    "sizes":  "S/M/L/XL",
-    "badge":  "Premium",
-    "category":  "protecciones",
-    "description":  "Pechera ALPINESTARS A1 BIONIC ACTION de protecciÃ³n",
-    "images":  [
-                   "/assets/images/protecciones/pecheraalpinestarsbionicactionnegrorojo.webp"
-               ]
+{
+  "name": "PECHERA ALPINESTARS A1 BIONIC ACTION",
+  "image": "/assets/images/protecciones/pecheraalpinestarsbionicactionnegrorojo.webp",
+  "price": "$489.900",
+  "sizes": "S/M/L/XL",
+  "badge": "Premium",
+  "category": "protecciones",
+  "description": "Pechera ALPINESTARS A1 BIONIC ACTION de protecciÃ³n",
+  "images": [
+    "/assets/images/protecciones/pecheraalpinestarsbionicactionnegrorojo.webp"
+  ]
 }

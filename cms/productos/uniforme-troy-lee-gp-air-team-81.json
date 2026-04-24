@@ -1,12 +1,12 @@
-﻿{
-    "name":  "UNIFORME TROY LEE GP AIR TEAM 81",
-    "image":  "/assets/images/uniformes/pantalon-troy-lee-gp-mono-royal-05-725x725.webp",
-    "price":  "$919.000",
-    "sizes":  "S/M/L/XL",
-    "badge":  "Edicion Limitada",
-    "category":  "uniformes",
-    "description":  "Uniforme TROY LEE GP AIR TEAM 81 ediciÃ³n especial",
-    "images":  [
-                   "/assets/images/uniformes/pantalon-troy-lee-gp-mono-royal-05-725x725.webp"
-               ]
+{
+  "name": "UNIFORME TROY LEE GP AIR TEAM 81",
+  "image": "/assets/images/uniformes/pantalon-troy-lee-gp-mono-royal-05-725x725.webp",
+  "price": "$919.000",
+  "sizes": "S/M/L/XL",
+  "badge": "Edicion Limitada",
+  "category": "uniformes",
+  "description": "Uniforme TROY LEE GP AIR TEAM 81 ediciÃ³n especial",
+  "images": [
+    "/assets/images/uniformes/pantalon-troy-lee-gp-mono-royal-05-725x725.webp"
+  ]
 }

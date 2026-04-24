@@ -1,11 +1,11 @@
-﻿{
-    "name":  "RIÃ‘ONERA ONEAL ADULTO",
-    "image":  "/assets/images/protecciones/oneal-element-kidney-belt-black-2-705x70511-8f449ae954d860e42c17078419043693-480-0.png",
-    "price":  "$199.000",
-    "sizes":  "ÃšNICA",
-    "category":  "protecciones",
-    "description":  "RiÃ±onera ONEAL para adulto",
-    "images":  [
-                   "/assets/images/protecciones/oneal-element-kidney-belt-black-2-705x70511-8f449ae954d860e42c17078419043693-480-0.png"
-               ]
+{
+  "name": "RIÃ‘ONERA ONEAL ADULTO",
+  "image": "/assets/images/protecciones/oneal-element-kidney-belt-black-2-705x70511-8f449ae954d860e42c17078419043693-480-0.png",
+  "price": "$199.000",
+  "sizes": "ÃšNICA",
+  "category": "protecciones",
+  "description": "RiÃ±onera ONEAL para adulto",
+  "images": [
+    "/assets/images/protecciones/oneal-element-kidney-belt-black-2-705x70511-8f449ae954d860e42c17078419043693-480-0.png"
+  ]
 }

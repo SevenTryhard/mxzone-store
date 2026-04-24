@@ -1,11 +1,11 @@
-﻿{
-    "name":  "CASCO FOX V1 LEED",
-    "image":  "/assets/images/nuevas_images/71q3mwvif8l-ac-uf894-1000-ql80.jpg",
-    "price":  "$1.150.000",
-    "sizes":  "S/M/L/XL",
-    "category":  "cascos",
-    "description":  "Casco FOX V1 LEED clÃƒÂ¡sico",
-    "images":  [
-                   "/assets/images/nuevas_images/71q3mwvif8l-ac-uf894-1000-ql80.jpg"
-               ]
+{
+  "name": "CASCO FOX V1 LEED",
+  "image": "/assets/images/nuevas_images/71q3mwvif8l-ac-uf894-1000-ql80.jpg",
+  "price": "$1.150.000",
+  "sizes": "S/M/L/XL",
+  "category": "cascos",
+  "description": "Casco FOX V1 LEED clÃƒÂ¡sico",
+  "images": [
+    "/assets/images/nuevas_images/71q3mwvif8l-ac-uf894-1000-ql80.jpg"
+  ]
 }

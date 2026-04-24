@@ -1,12 +1,12 @@
-﻿{
-    "name":  "UNIFORME FXR REVO COMP",
-    "image":  "/assets/images/uniformes/fxr-revo-mx-jersey-750x750.jpg",
-    "price":  "$749.000",
-    "sizes":  "S/M/L/XL",
-    "badge":  "Premium",
-    "category":  "uniformes",
-    "description":  "Uniforme FXR REVO COMP de competiciÃ³n",
-    "images":  [
-                   "/assets/images/uniformes/fxr-revo-mx-jersey-750x750.jpg"
-               ]
+{
+  "name": "UNIFORME FXR REVO COMP",
+  "image": "/assets/images/uniformes/fxr-revo-mx-jersey-750x750.jpg",
+  "price": "$749.000",
+  "sizes": "S/M/L/XL",
+  "badge": "Premium",
+  "category": "uniformes",
+  "description": "Uniforme FXR REVO COMP de competiciÃ³n",
+  "images": [
+    "/assets/images/uniformes/fxr-revo-mx-jersey-750x750.jpg"
+  ]
 }

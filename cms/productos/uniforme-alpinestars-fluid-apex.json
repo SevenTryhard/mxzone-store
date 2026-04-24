@@ -1,12 +1,12 @@
-﻿{
-    "name":  "UNIFORME ALPINESTARS FLUID APEX MULTI",
-    "image":  "/assets/images/uniformes/unif-alp-mult-923a088ac68c4e6c2017606563908341-480-0.webp",
-    "price":  "$799.000",
-    "sizes":  "S/M/L/XL",
-    "badge":  "Premium",
-    "category":  "uniformes",
-    "description":  "Uniforme ALPINESTARS FLUID APEX de competiciÃ³n",
-    "images":  [
-                   "/assets/images/uniformes/unif-alp-mult-923a088ac68c4e6c2017606563908341-480-0.webp"
-               ]
+{
+  "name": "UNIFORME ALPINESTARS FLUID APEX MULTI",
+  "image": "/assets/images/uniformes/unif-alp-mult-923a088ac68c4e6c2017606563908341-480-0.webp",
+  "price": "$799.000",
+  "sizes": "S/M/L/XL",
+  "badge": "Premium",
+  "category": "uniformes",
+  "description": "Uniforme ALPINESTARS FLUID APEX de competiciÃ³n",
+  "images": [
+    "/assets/images/uniformes/unif-alp-mult-923a088ac68c4e6c2017606563908341-480-0.webp"
+  ]
 }

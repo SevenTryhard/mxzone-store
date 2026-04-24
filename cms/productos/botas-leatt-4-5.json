@@ -1,12 +1,12 @@
-﻿{
-    "name":  "BOTAS LEATT 4.5",
-    "image":  "/assets/images/botas/botas-de-motocross-leatt-45-negro-1080x.webp",
-    "price":  "$1.890.000",
-    "sizes":  "38/39/40/41/42/43/44/45",
-    "badge":  "Top Ventas",
-    "category":  "botas",
-    "description":  "Botas LEATT 4.5 estÃ¡ndar de competiciÃ³n",
-    "images":  [
-                   "/assets/images/botas/botas-de-motocross-leatt-45-negro-1080x.webp"
-               ]
+{
+  "name": "BOTAS LEATT 4.5",
+  "image": "/assets/images/botas/botas-de-motocross-leatt-45-negro-1080x.webp",
+  "price": "$1.890.000",
+  "sizes": "38/39/40/41/42/43/44/45",
+  "badge": "Top Ventas",
+  "category": "botas",
+  "description": "Botas LEATT 4.5 estÃ¡ndar de competiciÃ³n",
+  "images": [
+    "/assets/images/botas/botas-de-motocross-leatt-45-negro-1080x.webp"
+  ]
 }

@@ -1,11 +1,11 @@
-﻿{
-    "name":  "CASCO FOX V1 KOZMIK",
-    "image":  "/assets/images/nuevas_images/30439-018-7-1200x1200.webp",
-    "price":  "$1.429.900",
-    "sizes":  "S/M/L/XL",
-    "category":  "cascos",
-    "description":  "Casco FOX V1 KOZMIK con diseÃƒÂ±o agresivo y moderno",
-    "images":  [
-                   "/assets/images/nuevas_images/30439-018-7-1200x1200.webp"
-               ]
+{
+  "name": "CASCO FOX V1 KOZMIK",
+  "image": "/assets/images/nuevas_images/30439-018-7-1200x1200.webp",
+  "price": "$1.429.900",
+  "sizes": "S/M/L/XL",
+  "category": "cascos",
+  "description": "Casco FOX V1 KOZMIK con diseÃƒÂ±o agresivo y moderno",
+  "images": [
+    "/assets/images/nuevas_images/30439-018-7-1200x1200.webp"
+  ]
 }

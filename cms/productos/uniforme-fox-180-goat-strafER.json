@@ -1,12 +1,12 @@
-﻿{
-    "name":  "UNIFORME FOX 180 GOAT STRAFER",
-    "image":  "/assets/images/uniformes/fox-sale-jersey-pant-bundle-180-goat-strafer-red-grey-p25120-287669-image.jpg",
-    "price":  "$1.070.000",
-    "sizes":  "S/M/L/XL",
-    "badge":  "Premium",
-    "category":  "uniformes",
-    "description":  "Uniforme FOX 180 GOAT STRAFER ediciÃ³n especial",
-    "images":  [
-                   "/assets/images/uniformes/fox-sale-jersey-pant-bundle-180-goat-strafer-red-grey-p25120-287669-image.jpg"
-               ]
+{
+  "name": "UNIFORME FOX 180 GOAT STRAFER",
+  "image": "/assets/images/uniformes/fox-sale-jersey-pant-bundle-180-goat-strafer-red-grey-p25120-287669-image.jpg",
+  "price": "$1.070.000",
+  "sizes": "S/M/L/XL",
+  "badge": "Premium",
+  "category": "uniformes",
+  "description": "Uniforme FOX 180 GOAT STRAFER ediciÃ³n especial",
+  "images": [
+    "/assets/images/uniformes/fox-sale-jersey-pant-bundle-180-goat-strafer-red-grey-p25120-287669-image.jpg"
+  ]
 }

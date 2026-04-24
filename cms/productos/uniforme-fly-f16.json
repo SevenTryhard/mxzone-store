@@ -1,12 +1,12 @@
-﻿{
-    "name":  "UNIFORME FLY F16",
-    "image":  "/assets/images/uniformes/379-931-4-f16-2026-7e0346522d91b82d7617602034908720-480-0.webp",
-    "price":  "$320.000",
-    "sizes":  "S/M/L/XL",
-    "badge":  "Top Ventas",
-    "category":  "uniformes",
-    "description":  "Uniforme FLY F16 clÃ¡sico",
-    "images":  [
-                   "/assets/images/uniformes/379-931-4-f16-2026-7e0346522d91b82d7617602034908720-480-0.webp"
-               ]
+{
+  "name": "UNIFORME FLY F16",
+  "image": "/assets/images/uniformes/379-931-4-f16-2026-7e0346522d91b82d7617602034908720-480-0.webp",
+  "price": "$320.000",
+  "sizes": "S/M/L/XL",
+  "badge": "Top Ventas",
+  "category": "uniformes",
+  "description": "Uniforme FLY F16 clÃ¡sico",
+  "images": [
+    "/assets/images/uniformes/379-931-4-f16-2026-7e0346522d91b82d7617602034908720-480-0.webp"
+  ]
 }
