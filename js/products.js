@@ -133,7 +133,7 @@ function createProductCard(product) {
   // IMPORTANTE: Los JSON del CMS usan "image" (singular), no "images" (array)
   // Primero intentar con images (array), luego fallback a image (singular)
   if (product.images && Array.isArray(product.images)) {
-    images = product.images.filter(img => img && img.trim() !== '');
+    images = product.images.filter(img => img != null && typeof img === 'string' && img.trim() !== '');
   }
   // Fallback: usar product.image (singular) si no hay array
   if (!images.length && product.image) {
