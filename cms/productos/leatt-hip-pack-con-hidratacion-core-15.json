@@ -1,11 +1,11 @@
-﻿{
-    "name":  "LEATT HIP PACK CON HIDRATACION CORE 1.5",
-    "image":  "/assets/images/maletas/leatt-hip-pack-con-hidratacion-core-15.jpg",
-    "price":  "$149.900",
-    "sizes":  "Ãšnica",
-    "category":  "maletas",
-    "description":  "Accesorio de transporte: LEATT HIP PACK CON HIDRATACION CORE 1.5",
-    "images":  [
-                   "/assets/images/maletas/leatt-hip-pack-con-hidratacion-core-15.jpg"
-               ]
+{
+  "name": "LEATT HIP PACK CON HIDRATACION CORE 1.5",
+  "image": "/assets/images/maletas/leatt-hip-pack-con-hidratacion-core-15.jpg",
+  "price": "$149.900",
+  "sizes": "Ãšnica",
+  "category": "maletas",
+  "description": "Accesorio de transporte: LEATT HIP PACK CON HIDRATACION CORE 1.5",
+  "images": [
+    "/assets/images/maletas/leatt-hip-pack-con-hidratacion-core-15.jpg"
+  ]
 }

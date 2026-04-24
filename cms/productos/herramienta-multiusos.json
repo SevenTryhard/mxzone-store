@@ -1,11 +1,11 @@
-﻿{
-    "name":  "HERRAMIENTA MULTIUSOS",
-    "image":  "/assets/images/accesorios/herramienta-multiusos.jpg",
-    "price":  "$40.000",
-    "sizes":  "Unica",
-    "category":  "accesorios",
-    "description":  "Accesorio para motocross: HERRAMIENTA MULTIUSOS",
-    "images":  [
-                   "/assets/images/accesorios/herramienta-multiusos.jpg"
-               ]
+{
+  "name": "HERRAMIENTA MULTIUSOS",
+  "image": "/assets/images/accesorios/herramienta-multiusos.jpg",
+  "price": "$40.000",
+  "sizes": "Unica",
+  "category": "accesorios",
+  "description": "Accesorio para motocross: HERRAMIENTA MULTIUSOS",
+  "images": [
+    "/assets/images/accesorios/herramienta-multiusos.jpg"
+  ]
 }

@@ -1,11 +1,11 @@
-﻿{
-    "name":  "TRIANGULO MOTO",
-    "image":  "/assets/images/accesorios/triangulo-moto.jpg",
-    "price":  "$84.900",
-    "sizes":  "Unica",
-    "category":  "accesorios",
-    "description":  "Accesorio para motocross: TRIANGULO MOTO",
-    "images":  [
-                   "/assets/images/accesorios/triangulo-moto.jpg"
-               ]
+{
+  "name": "TRIANGULO MOTO",
+  "image": "/assets/images/accesorios/triangulo-moto.jpg",
+  "price": "$84.900",
+  "sizes": "Unica",
+  "category": "accesorios",
+  "description": "Accesorio para motocross: TRIANGULO MOTO",
+  "images": [
+    "/assets/images/accesorios/triangulo-moto.jpg"
+  ]
 }

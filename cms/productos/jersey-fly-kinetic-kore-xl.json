@@ -1,11 +1,11 @@
-﻿{
-    "name":  "JERSEY FLY KINETIC KORE",
-    "image":  "/assets/images/jersey/jersey-fly-kinetic-kore-xl.jpg",
-    "price":  "$199.900",
-    "sizes":  "XL",
-    "category":  "jersey",
-    "description":  "Jersey para motocross: JERSEY FLY KINETIC KORE",
-    "images":  [
-                   "/assets/images/jersey/jersey-fly-kinetic-kore-xl.jpg"
-               ]
+{
+  "name": "JERSEY FLY KINETIC KORE",
+  "image": "/assets/images/jersey/jersey-fly-kinetic-kore-xl.jpg",
+  "price": "$199.900",
+  "sizes": "XL",
+  "category": "jersey",
+  "description": "Jersey para motocross: JERSEY FLY KINETIC KORE",
+  "images": [
+    "/assets/images/jersey/jersey-fly-kinetic-kore-xl.jpg"
+  ]
 }

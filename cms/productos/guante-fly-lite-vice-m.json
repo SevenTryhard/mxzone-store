@@ -1,11 +1,11 @@
 {
-    "name": "GUANTE FLY LITE VICE",
-    "image": "/assets/images/guantes/eb9e-66033befbfbd1-1555394a-ff91-4bea-bbe0-e74eac1e934c.webp",
-    "price": "$129.000",
-    "sizes": "M",
-    "category": "guantes",
-    "description": "Guante para motocross: GUANTE FLY LITE VICE",
-    "images": [
-        "/assets/images/guantes/guante-fly-lite-vice-m.jpg"
-    ]
+  "name": "GUANTE FLY LITE VICE",
+  "image": "/assets/images/guantes/eb9e-66033befbfbd1-1555394a-ff91-4bea-bbe0-e74eac1e934c.webp",
+  "price": "$129.000",
+  "sizes": "M",
+  "category": "guantes",
+  "description": "Guante para motocross: GUANTE FLY LITE VICE",
+  "images": [
+    "/assets/images/guantes/eb9e-66033befbfbd1-1555394a-ff91-4bea-bbe0-e74eac1e934c.webp"
+  ]
 }

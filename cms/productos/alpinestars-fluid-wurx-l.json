@@ -1,11 +1,11 @@
-﻿{
-    "name":  "ALPINESTARS FLUID WURX",
-    "image":  "/assets/images/jersey/alpinestars-fluid-wurx-l.jpg",
-    "price":  "$199.900",
-    "sizes":  "L",
-    "category":  "jersey",
-    "description":  "Jersey para motocross: ALPINESTARS FLUID WURX",
-    "images":  [
-                   "/assets/images/jersey/alpinestars-fluid-wurx-l.jpg"
-               ]
+{
+  "name": "ALPINESTARS FLUID WURX",
+  "image": "/assets/images/jersey/alpinestars-fluid-wurx-l.jpg",
+  "price": "$199.900",
+  "sizes": "L",
+  "category": "jersey",
+  "description": "Jersey para motocross: ALPINESTARS FLUID WURX",
+  "images": [
+    "/assets/images/jersey/alpinestars-fluid-wurx-l.jpg"
+  ]
 }

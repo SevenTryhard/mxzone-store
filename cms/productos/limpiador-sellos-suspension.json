@@ -1,11 +1,11 @@
-﻿{
-    "name":  "LIMPIADOR SELLOS SUSPENSION",
-    "image":  "/assets/images/accesorios/limpiador-sellos-suspension.jpg",
-    "price":  "$45.000",
-    "sizes":  "Unica",
-    "category":  "accesorios",
-    "description":  "Accesorio para motocross: LIMPIADOR SELLOS SUSPENSION",
-    "images":  [
-                   "/assets/images/accesorios/limpiador-sellos-suspension.jpg"
-               ]
+{
+  "name": "LIMPIADOR SELLOS SUSPENSION",
+  "image": "/assets/images/accesorios/limpiador-sellos-suspension.jpg",
+  "price": "$45.000",
+  "sizes": "Unica",
+  "category": "accesorios",
+  "description": "Accesorio para motocross: LIMPIADOR SELLOS SUSPENSION",
+  "images": [
+    "/assets/images/accesorios/limpiador-sellos-suspension.jpg"
+  ]
 }

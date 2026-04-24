@@ -1,11 +1,11 @@
-﻿{
-    "name":  "GORRA FOX ABSOLUTE MESH SNAPBACK",
-    "image":  "/assets/images/gorras/gorra-fox-absolute-mesh-snapback.jpg",
-    "price":  "$165.000",
-    "sizes":  "Ãšnica",
-    "category":  "gorras",
-    "description":  "Gorra para motocross: GORRA FOX ABSOLUTE MESH SNAPBACK",
-    "images":  [
-                   "/assets/images/gorras/gorra-fox-absolute-mesh-snapback.jpg"
-               ]
+{
+  "name": "GORRA FOX ABSOLUTE MESH SNAPBACK",
+  "image": "/assets/images/gorras/gorra-fox-absolute-mesh-snapback.jpg",
+  "price": "$165.000",
+  "sizes": "Ãšnica",
+  "category": "gorras",
+  "description": "Gorra para motocross: GORRA FOX ABSOLUTE MESH SNAPBACK",
+  "images": [
+    "/assets/images/gorras/gorra-fox-absolute-mesh-snapback.jpg"
+  ]
 }

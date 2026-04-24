@@ -1,11 +1,11 @@
-﻿{
-    "name":  "KIT TORNILLOS 60 PIEZAS",
-    "image":  "/assets/images/accesorios/kit-tornillos-60-piezas.jpg",
-    "price":  "$60.000",
-    "sizes":  "Unica",
-    "category":  "accesorios",
-    "description":  "Accesorio para motocross: KIT TORNILLOS 60 PIEZAS",
-    "images":  [
-                   "/assets/images/accesorios/kit-tornillos-60-piezas.jpg"
-               ]
+{
+  "name": "KIT TORNILLOS 60 PIEZAS",
+  "image": "/assets/images/accesorios/kit-tornillos-60-piezas.jpg",
+  "price": "$60.000",
+  "sizes": "Unica",
+  "category": "accesorios",
+  "description": "Accesorio para motocross: KIT TORNILLOS 60 PIEZAS",
+  "images": [
+    "/assets/images/accesorios/kit-tornillos-60-piezas.jpg"
+  ]
 }

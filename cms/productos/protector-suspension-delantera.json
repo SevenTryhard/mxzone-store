@@ -1,11 +1,11 @@
-﻿{
-    "name":  "PROTECTOR SUSPENSION DELANTERA",
-    "image":  "/assets/images/accesorios/protector-suspension-delantera.jpg",
-    "price":  "$85.000",
-    "sizes":  "Unica",
-    "category":  "accesorios",
-    "description":  "Accesorio para motocross: PROTECTOR SUSPENSION DELANTERA",
-    "images":  [
-                   "/assets/images/accesorios/protector-suspension-delantera.jpg"
-               ]
+{
+  "name": "PROTECTOR SUSPENSION DELANTERA",
+  "image": "/assets/images/accesorios/protector-suspension-delantera.jpg",
+  "price": "$85.000",
+  "sizes": "Unica",
+  "category": "accesorios",
+  "description": "Accesorio para motocross: PROTECTOR SUSPENSION DELANTERA",
+  "images": [
+    "/assets/images/accesorios/protector-suspension-delantera.jpg"
+  ]
 }

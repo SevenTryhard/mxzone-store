@@ -1,11 +1,11 @@
-﻿{
-    "name":  "BOLSA HERRAMIENTAS MANUBRIO 2.5 L",
-    "image":  "/assets/images/maletas/bolsa-herramientas-manubrio-25-l.jpg",
-    "price":  "$179.000",
-    "sizes":  "Ãšnica",
-    "category":  "maletas",
-    "description":  "Accesorio de transporte: BOLSA HERRAMIENTAS MANUBRIO 2.5 L",
-    "images":  [
-                   "/assets/images/maletas/bolsa-herramientas-manubrio-25-l.jpg"
-               ]
+{
+  "name": "BOLSA HERRAMIENTAS MANUBRIO 2.5 L",
+  "image": "/assets/images/maletas/bolsa-herramientas-manubrio-25-l.jpg",
+  "price": "$179.000",
+  "sizes": "Ãšnica",
+  "category": "maletas",
+  "description": "Accesorio de transporte: BOLSA HERRAMIENTAS MANUBRIO 2.5 L",
+  "images": [
+    "/assets/images/maletas/bolsa-herramientas-manubrio-25-l.jpg"
+  ]
 }

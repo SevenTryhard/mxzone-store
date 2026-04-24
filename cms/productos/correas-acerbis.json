@@ -1,11 +1,11 @@
-﻿{
-    "name":  "CORREAS ACERBIS",
-    "image":  "/assets/images/accesorios/correas-acerbis.jpg",
-    "price":  "$199.900",
-    "sizes":  "Unica",
-    "category":  "accesorios",
-    "description":  "Accesorio para motocross: CORREAS ACERBIS",
-    "images":  [
-                   "/assets/images/accesorios/correas-acerbis.jpg"
-               ]
+{
+  "name": "CORREAS ACERBIS",
+  "image": "/assets/images/accesorios/correas-acerbis.jpg",
+  "price": "$199.900",
+  "sizes": "Unica",
+  "category": "accesorios",
+  "description": "Accesorio para motocross: CORREAS ACERBIS",
+  "images": [
+    "/assets/images/accesorios/correas-acerbis.jpg"
+  ]
 }

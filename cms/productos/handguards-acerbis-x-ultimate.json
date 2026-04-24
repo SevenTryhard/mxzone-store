@@ -1,11 +1,11 @@
-﻿{
-    "name":  "HANDGUARDS ACERBIS X-ULTIMATE",
-    "image":  "/assets/images/accesorios/handguards-acerbis-x-ultimate.jpg",
-    "price":  "$249.900",
-    "sizes":  "Unica",
-    "category":  "accesorios",
-    "description":  "Accesorio para motocross: HANDGUARDS ACERBIS X-ULTIMATE",
-    "images":  [
-                   "/assets/images/accesorios/handguards-acerbis-x-ultimate.jpg"
-               ]
+{
+  "name": "HANDGUARDS ACERBIS X-ULTIMATE",
+  "image": "/assets/images/accesorios/handguards-acerbis-x-ultimate.jpg",
+  "price": "$249.900",
+  "sizes": "Unica",
+  "category": "accesorios",
+  "description": "Accesorio para motocross: HANDGUARDS ACERBIS X-ULTIMATE",
+  "images": [
+    "/assets/images/accesorios/handguards-acerbis-x-ultimate.jpg"
+  ]
 }

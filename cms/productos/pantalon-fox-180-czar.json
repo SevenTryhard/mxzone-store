@@ -1,11 +1,11 @@
-﻿{
-    "name":  "PANTALON FOX 180 CZAR",
-    "image":  "/assets/images/uniformes/pantalon-fox-180-czar.jpg",
-    "price":  "$389.000",
-    "sizes":  "26",
-    "category":  "uniformes",
-    "description":  "PantalÃ³n FOX 180 CZAR para motocross",
-    "images":  [
-                   "/assets/images/uniformes/pantalon-fox-180-czar.jpg"
-               ]
+{
+  "name": "PANTALON FOX 180 CZAR",
+  "image": "/assets/images/uniformes/pantalon-fox-180-czar.jpg",
+  "price": "$389.000",
+  "sizes": "26",
+  "category": "uniformes",
+  "description": "PantalÃ³n FOX 180 CZAR para motocross",
+  "images": [
+    "/assets/images/uniformes/pantalon-fox-180-czar.jpg"
+  ]
 }

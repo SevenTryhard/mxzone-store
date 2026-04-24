@@ -1,11 +1,11 @@
-﻿{
-    "name":  "FILTRO DE AIRE PROFILTER",
-    "image":  "/assets/images/accesorios/filtro-de-aire-profilter.jpg",
-    "price":  "$129.000",
-    "sizes":  "Unica",
-    "category":  "accesorios",
-    "description":  "Accesorio para motocross: FILTRO DE AIRE PROFILTER",
-    "images":  [
-                   "/assets/images/accesorios/filtro-de-aire-profilter.jpg"
-               ]
+{
+  "name": "FILTRO DE AIRE PROFILTER",
+  "image": "/assets/images/accesorios/filtro-de-aire-profilter.jpg",
+  "price": "$129.000",
+  "sizes": "Unica",
+  "category": "accesorios",
+  "description": "Accesorio para motocross: FILTRO DE AIRE PROFILTER",
+  "images": [
+    "/assets/images/accesorios/filtro-de-aire-profilter.jpg"
+  ]
 }

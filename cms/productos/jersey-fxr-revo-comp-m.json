@@ -1,11 +1,11 @@
-﻿{
-    "name":  "JERSEY FXR REVO COMP",
-    "image":  "/assets/images/jersey/jersey-fxr-revo-comp-m.jpg",
-    "price":  "$215.000",
-    "sizes":  "M",
-    "category":  "jersey",
-    "description":  "Jersey para motocross: JERSEY FXR REVO COMP",
-    "images":  [
-                   "/assets/images/jersey/jersey-fxr-revo-comp-m.jpg"
-               ]
+{
+  "name": "JERSEY FXR REVO COMP",
+  "image": "/assets/images/jersey/jersey-fxr-revo-comp-m.jpg",
+  "price": "$215.000",
+  "sizes": "M",
+  "category": "jersey",
+  "description": "Jersey para motocross: JERSEY FXR REVO COMP",
+  "images": [
+    "/assets/images/jersey/jersey-fxr-revo-comp-m.jpg"
+  ]
 }

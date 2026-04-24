@@ -1,11 +1,11 @@
-﻿{
-    "name":  "GORRA FOX SYZ FLEXFIT HAT",
-    "image":  "/assets/images/gorras/gorra-fox-syz-flexfit-hat.jpg",
-    "price":  "$159.000",
-    "sizes":  "S/M",
-    "category":  "gorras",
-    "description":  "Gorra para motocross: GORRA FOX SYZ FLEXFIT HAT",
-    "images":  [
-                   "/assets/images/gorras/gorra-fox-syz-flexfit-hat.jpg"
-               ]
+{
+  "name": "GORRA FOX SYZ FLEXFIT HAT",
+  "image": "/assets/images/gorras/gorra-fox-syz-flexfit-hat.jpg",
+  "price": "$159.000",
+  "sizes": "S/M",
+  "category": "gorras",
+  "description": "Gorra para motocross: GORRA FOX SYZ FLEXFIT HAT",
+  "images": [
+    "/assets/images/gorras/gorra-fox-syz-flexfit-hat.jpg"
+  ]
 }

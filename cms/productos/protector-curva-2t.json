@@ -1,11 +1,11 @@
-﻿{
-    "name":  "PROTECTOR CURVA 2T",
-    "image":  "/assets/images/accesorios/protector-curva-2t.jpg",
-    "price":  "$219.900",
-    "sizes":  "Unica",
-    "category":  "accesorios",
-    "description":  "Accesorio para motocross: PROTECTOR CURVA 2T",
-    "images":  [
-                   "/assets/images/accesorios/protector-curva-2t.jpg"
-               ]
+{
+  "name": "PROTECTOR CURVA 2T",
+  "image": "/assets/images/accesorios/protector-curva-2t.jpg",
+  "price": "$219.900",
+  "sizes": "Unica",
+  "category": "accesorios",
+  "description": "Accesorio para motocross: PROTECTOR CURVA 2T",
+  "images": [
+    "/assets/images/accesorios/protector-curva-2t.jpg"
+  ]
 }

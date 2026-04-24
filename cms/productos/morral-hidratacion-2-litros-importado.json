@@ -1,11 +1,11 @@
-﻿{
-    "name":  "MORRAL HIDRATACION 2 LITROS IMPORTADO",
-    "image":  "/assets/images/maletas/morral-hidratacion-2-litros-importado.jpg",
-    "price":  "$319.000",
-    "sizes":  "Ãšnica",
-    "category":  "maletas",
-    "description":  "Accesorio de transporte: MORRAL HIDRATACION 2 LITROS IMPORTADO",
-    "images":  [
-                   "/assets/images/maletas/morral-hidratacion-2-litros-importado.jpg"
-               ]
+{
+  "name": "MORRAL HIDRATACION 2 LITROS IMPORTADO",
+  "image": "/assets/images/maletas/morral-hidratacion-2-litros-importado.jpg",
+  "price": "$319.000",
+  "sizes": "Ãšnica",
+  "category": "maletas",
+  "description": "Accesorio de transporte: MORRAL HIDRATACION 2 LITROS IMPORTADO",
+  "images": [
+    "/assets/images/maletas/morral-hidratacion-2-litros-importado.jpg"
+  ]
 }

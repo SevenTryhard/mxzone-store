@@ -1,11 +1,11 @@
 {
-    "name": "GUANTE FIST STRAPPED STOCKER",
-    "image": "/assets/images/guantes/fgs00695m.webp",
-    "price": "$149.000",
-    "sizes": "L",
-    "category": "guantes",
-    "description": "Guante para motocross: GUANTE FIST STRAPPED STOCKER",
-    "images": [
-        "/assets/images/guantes/guante-fist-strapped-stocker-l.jpg"
-    ]
+  "name": "GUANTE FIST STRAPPED STOCKER",
+  "image": "/assets/images/guantes/fgs00695m.webp",
+  "price": "$149.000",
+  "sizes": "L",
+  "category": "guantes",
+  "description": "Guante para motocross: GUANTE FIST STRAPPED STOCKER",
+  "images": [
+    "/assets/images/guantes/fgs00695m.webp"
+  ]
 }

@@ -1,11 +1,11 @@
 {
-    "name": "GUANTE FLY LITE RED/WHITE",
-    "image": "/assets/images/guantes/fly-375-712yl.webp",
-    "price": "$129.900",
-    "sizes": "L",
-    "category": "guantes",
-    "description": "Guante para motocross: GUANTE FLY LITE RED",
-    "images": [
-        "/assets/images/guantes/guante-fly-lite-red-l.jpg"
-    ]
+  "name": "GUANTE FLY LITE RED/WHITE",
+  "image": "/assets/images/guantes/fly-375-712yl.webp",
+  "price": "$129.900",
+  "sizes": "L",
+  "category": "guantes",
+  "description": "Guante para motocross: GUANTE FLY LITE RED",
+  "images": [
+    "/assets/images/guantes/fly-375-712yl.webp"
+  ]
 }

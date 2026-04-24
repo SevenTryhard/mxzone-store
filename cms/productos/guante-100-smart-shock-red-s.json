@@ -1,11 +1,11 @@
 {
-    "name": "GUANTE 100% SMART SHOCK RED",
-    "image": "/assets/images/guantes/5182k8bm7vl.jpg",
-    "price": "$175.000",
-    "sizes": "S",
-    "category": "guantes",
-    "description": "Guante para motocross: GUANTE 100% SMART SHOCK RED",
-    "images": [
-        "/assets/images/guantes/guante-100-smart-shock-red-s.jpg"
-    ]
+  "name": "GUANTE 100% SMART SHOCK RED",
+  "image": "/assets/images/guantes/5182k8bm7vl.jpg",
+  "price": "$175.000",
+  "sizes": "S",
+  "category": "guantes",
+  "description": "Guante para motocross: GUANTE 100% SMART SHOCK RED",
+  "images": [
+    "/assets/images/guantes/5182k8bm7vl.jpg"
+  ]
 }

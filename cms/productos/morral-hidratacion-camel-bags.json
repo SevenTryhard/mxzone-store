@@ -1,11 +1,11 @@
-﻿{
-    "name":  "MORRAL HIDRATACION CAMEL BAGS",
-    "image":  "/assets/images/maletas/morral-hidratacion-camel-bags.jpg",
-    "price":  "$319.000",
-    "sizes":  "Ãšnica",
-    "category":  "maletas",
-    "description":  "Accesorio de transporte: MORRAL HIDRATACION CAMEL BAGS",
-    "images":  [
-                   "/assets/images/maletas/morral-hidratacion-camel-bags.jpg"
-               ]
+{
+  "name": "MORRAL HIDRATACION CAMEL BAGS",
+  "image": "/assets/images/maletas/morral-hidratacion-camel-bags.jpg",
+  "price": "$319.000",
+  "sizes": "Ãšnica",
+  "category": "maletas",
+  "description": "Accesorio de transporte: MORRAL HIDRATACION CAMEL BAGS",
+  "images": [
+    "/assets/images/maletas/morral-hidratacion-camel-bags.jpg"
+  ]
 }

@@ -1,11 +1,11 @@
-﻿{
-    "name":  "GOGGLES FMF POWERBOMB",
-    "image":  "/assets/images/gafas/goggles-fmf-powerbomb.jpg",
-    "price":  "$229.000",
-    "sizes":  "Unica",
-    "category":  "gafas",
-    "description":  "Gafas para motocross: GOGGLES FMF POWERBOMB",
-    "images":  [
-                   "/assets/images/gafas/goggles-fmf-powerbomb.jpg"
-               ]
+{
+  "name": "GOGGLES FMF POWERBOMB",
+  "image": "/assets/images/gafas/goggles-fmf-powerbomb.jpg",
+  "price": "$229.000",
+  "sizes": "Unica",
+  "category": "gafas",
+  "description": "Gafas para motocross: GOGGLES FMF POWERBOMB",
+  "images": [
+    "/assets/images/gafas/goggles-fmf-powerbomb.jpg"
+  ]
 }
