@@ -545,6 +545,26 @@ function initShopFiltersInternal() {
 
         console.log('Calling filterProducts...');
         filterProducts();
+
+        // Scroll to products section on mobile
+        if (window.innerWidth <= 768) {
+          setTimeout(() => {
+            const productsGrid = document.getElementById('productsGrid');
+            const productsTitle = document.querySelector('.shop-title, .section-title');
+            const target = productsTitle || productsGrid;
+
+            if (target) {
+              const headerOffset = 120;
+              const elementPosition = target.getBoundingClientRect().top;
+              const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+              window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+              });
+            }
+          }, 300);
+        }
       });
     });
   };
