@@ -182,7 +182,7 @@
                   "rodilleras-nucleon-plasma-alpinestar.json",
                   "rodillo-de-cadena.json",
                   "triangulo-moto.json",
-                  "uniforme-alpinestars-fluid-apex.json",
+                  "uniforme-alpinestars-fluid-apex-copy.json",
                   "uniforme-alpinestars-fluid-grid-red-black-purple.json",
                   "uniforme-fly-evolution-dst.json",
                   "uniforme-fly-f16.json",
@@ -203,8 +203,7 @@
                   "uniforme-fxr-revo-comp.json",
                   "uniforme-oneal-element-blk-red.json",
                   "uniforme-oneal-element-v6-blk-gry.json",
-                  "uniforme-thor-tarmac.json",
-                  "uniforme-troy-lee-gp-air-team-81.json"
+                  "uniforme-thor-tarmac.json"
               ],
-    "total":  204
+    "total":  203
 }
