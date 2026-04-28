@@ -1,11 +1,11 @@
-﻿{
-    "name":  "UNIFORME FOX 180 STL GRY",
-    "image":  "/assets/images/uniformes/unif-fox-statk-4c25efa8d4cb56a0b417749998955851-480-0.webp",
-    "price":  "$965.800",
-    "sizes":  "32-M a 34-L",
-    "category":  "uniformes",
-    "description":  "Uniforme FOX 180 STL en color gris",
-    "images":  [
-                   "/assets/images/uniformes/unif-fox-statk-4c25efa8d4cb56a0b417749998955851-480-0.webp"
-               ]
+{
+    "name": "UNIFORME FOX 180 STL GREY",
+    "image": "/assets/images/uniformes/unif-fox-statk-4c25efa8d4cb56a0b417749998955851-480-0.webp",
+    "price": "$965.800",
+    "sizes": "32-M a 34-L",
+    "category": "uniformes",
+    "description": "Uniforme FOX 180 STL en color gris",
+    "images": [
+        "/assets/images/uniformes/unif-fox-statk-4c25efa8d4cb56a0b417749998955851-480-0.webp"
+    ]
 }
