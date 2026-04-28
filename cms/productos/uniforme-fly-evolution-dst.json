@@ -1,11 +1,11 @@
-﻿{
-    "name":  "UNIFORME FLY EVOLUTION DST",
-    "image":  "/assets/images/uniformes/image1660336931534.png",
-    "price":  "$380.000",
-    "sizes":  "S/M/L/XL",
-    "category":  "uniformes",
-    "description":  "Uniforme FLY EVOLUTION DST de rendimiento",
-    "images":  [
-                   "/assets/images/uniformes/image1660336931534.png"
-               ]
+{
+    "name": "UNIFORME FLY EVOLUTION DST",
+    "image": "/assets/images/uniformes/image1660336931534.png",
+    "price": "$899.000",
+    "sizes": "34-L",
+    "category": "uniformes",
+    "description": "Uniforme FLY EVOLUTION DST de rendimiento",
+    "images": [
+        null
+    ]
 }

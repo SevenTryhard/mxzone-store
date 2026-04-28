@@ -1,12 +1,12 @@
-﻿{
-    "name":  "UNIFORME FLY KINETIC JET MINT",
-    "image":  "/assets/images/uniformes/kinetic-jet-teal.png",
-    "price":  "$380.000",
-    "sizes":  "S/M/L/XL",
-    "badge":  "Top Ventas",
-    "category":  "uniformes",
-    "description":  "Uniforme FLY KINETIC JET de rendimiento",
-    "images":  [
-                   "/assets/images/uniformes/kinetic-jet-teal.png"
-               ]
+{
+    "name": "UNIFORME FLY KINETIC JET MINT",
+    "image": "/assets/images/uniformes/kinetic-jet-teal.png",
+    "price": "$949.000",
+    "sizes": "32-M",
+    "badge": "Top Ventas",
+    "category": "uniformes",
+    "description": "Uniforme FLY KINETIC JET de rendimiento",
+    "images": [
+        "/assets/images/uniformes/kinetic-jet-teal.png"
+    ]
 }

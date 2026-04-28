@@ -1,12 +1,12 @@
-﻿{
-    "name":  "UNIFORME FLY KINETIC KORE",
-    "image":  "/assets/images/uniformes/376-431-4-kinetic-kore-2023main-4000x-3x-progressive.webp",
-    "price":  "$949.000",
-    "sizes":  "30-S a 32-M",
-    "badge":  "Popular",
-    "category":  "uniformes",
-    "description":  "Uniforme FLY KINETIC KORE de alto rendimiento",
-    "images":  [
-                   "/assets/images/uniformes/376-431-4-kinetic-kore-2023main-4000x-3x-progressive.webp"
-               ]
+{
+    "name": "UNIFORME FLY KINETIC KORE",
+    "image": "/assets/images/uniformes/376-431-4-kinetic-kore-2023main-4000x-3x-progressive.webp",
+    "price": "$949.000",
+    "sizes": "30-S/32-M",
+    "badge": "Popular",
+    "category": "uniformes",
+    "description": "Uniforme FLY KINETIC KORE de alto rendimiento",
+    "images": [
+        "/assets/images/uniformes/376-431-4-kinetic-kore-2023main-4000x-3x-progressive.webp"
+    ]
 }

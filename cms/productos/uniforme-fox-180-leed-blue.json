@@ -1,12 +1,12 @@
-﻿{
-    "name":  "UNIFORME FOX 180 LEED BLUE",
-    "image":  "/assets/images/uniformes/i6400433762.webp",
-    "price":  "$1.250.000",
-    "sizes":  "S/M/L/XL",
-    "badge":  "Nuevo",
-    "category":  "uniformes",
-    "description":  "Uniforme FOX 180 LEED en color azul",
-    "images":  [
-                   "/assets/images/uniformes/i6400433762.webp"
-               ]
+{
+    "name": "UNIFORME FOX 180 LEED BLUE",
+    "image": "/assets/images/uniformes/i6400433762.webp",
+    "price": "$965.000",
+    "sizes": "36-XL",
+    "badge": "Nuevo",
+    "category": "uniformes",
+    "description": "Uniforme FOX 180 LEED en color azul",
+    "images": [
+        "/assets/images/uniformes/i6400433762.webp"
+    ]
 }

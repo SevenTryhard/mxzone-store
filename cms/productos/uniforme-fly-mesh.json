@@ -1,11 +1,11 @@
-﻿{
-    "name":  "UNIFORME FLY MESH",
-    "image":  "/assets/images/uniformes/captura-de-pantalla-2026-04-21-120545.png",
-    "price":  "$649.000",
-    "sizes":  "S/M/L/XL",
-    "category":  "uniformes",
-    "description":  "Uniforme FLY MESH transpirable",
-    "images":  [
-                   "/assets/images/uniformes/captura-de-pantalla-2026-04-21-120545.png"
-               ]
+{
+    "name": "UNIFORME FLY MESH",
+    "image": "/assets/images/uniformes/captura-de-pantalla-2026-04-21-120545.png",
+    "price": "$649.000",
+    "sizes": "26-XL",
+    "category": "uniformes",
+    "description": "Uniforme FLY MESH transpirable",
+    "images": [
+        "/assets/images/uniformes/captura-de-pantalla-2026-04-21-120545.png"
+    ]
 }
