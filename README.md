@@ -2,6 +2,8 @@
 
 Sitio web premium para tienda de equipamiento de motocross con panel administrativo CMS.
 
+[![Sincronización de Productos](https://github.com/SevenTryhard/mxzone-store/actions/workflows/sync-product-index.yml/badge.svg)](https://github.com/SevenTryhard/mxzone-store/actions/workflows/sync-product-index.yml)
+
 ---
 
 ## 🚀 Deploy en Netlify (Paso a Paso)

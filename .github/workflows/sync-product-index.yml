@@ -1,0 +1,78 @@
+name: Sincronizar Índice de Productos
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'cms/productos/**/*.json'
+
+jobs:
+  regenerate-index:
+    runs-on: ubuntu-latest
+    if: |
+      contains(github.event.head_commit.message, 'via CloudCannon') &&
+      !contains(github.event.head_commit.message, '[skip-ci]')
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Configurar Git
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+      
+      - name: Detectar productos eliminados
+        id: check-deleted
+        run: |
+          deleted=$(git diff --name-only --diff-filter=D HEAD~1 HEAD | grep -E 'cms/productos/.*\.json$' | grep -v 'index.json' || true)
+          echo "deleted_files=$deleted" >> $GITHUB_OUTPUT
+          if [ -n "$deleted" ]; then
+            echo "has_deletes=true" >> $GITHUB_OUTPUT
+            echo "🗑️ Archivos borrados detectados:"
+            echo "$deleted"
+          else
+            echo "has_deletes=false" >> $GITHUB_OUTPUT
+            echo "✅ No hay archivos borrados, saltar regeneración"
+          fi
+      
+      - name: Regenerar index.json
+        if: steps.check-deleted.outputs.has_deletes == 'true'
+        run: |
+          cd cms/productos
+          files=$(find . -name "*.json" ! -name "index.json" | sort | sed 's/^\.\///')
+          count=$(echo "$files" | wc -l)
+          
+          # Crear JSON
+          echo "{" > index.json
+          echo '  "files": [' >> index.json
+          first=true
+          for f in $files; do
+            if [ "$first" = true ]; then
+              echo "    \"$f\"" >> index.json
+              first=false
+            else
+              echo "    ,\"$f\"" >> index.json
+            fi
+          done
+          echo '  ],' >> index.json
+          echo "  \"total\": $count," >> index.json
+          echo "  \"generated\": \"$(date +%Y-%m-%d)\"" >> index.json
+          echo "}" >> index.json
+          
+          echo "✅ index.json regenerado: $count productos"
+      
+      - name: Commit y Push
+        if: steps.check-deleted.outputs.has_deletes == 'true'
+        run: |
+          git add cms/productos/index.json
+          git commit -m "chore: sincronizar index.json después de borrar productos [skip-ci]"
+          
+          # Push con retry en caso de conflicto
+          for i in 1 2 3; do
+            git pull --rebase && git push && break || sleep 5
+          done
+          
+          echo "✅ Push completado"
