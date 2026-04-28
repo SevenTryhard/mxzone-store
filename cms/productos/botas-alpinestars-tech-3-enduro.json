@@ -1,12 +1,12 @@
-﻿{
-    "name":  "BOTAS ALPINESTARS TECH 3 ENDURO",
-    "image":  "/assets/images/botas/d-nq-np-642957-mco96498143791-102025-o.webp",
-    "price":  "$1.250.000",
-    "sizes":  "38/39/40/41/42/43/44/45",
-    "badge":  "Top Ventas",
-    "category":  "botas",
-    "description":  "Botas ALPINESTARS TECH 3 para enduro",
-    "images":  [
-                   "/assets/images/botas/d-nq-np-642957-mco96498143791-102025-o.webp"
-               ]
+{
+    "name": "BOTAS ALPINESTARS TECH 3 ENDUROTE",
+    "image": "/assets/images/botas/d-nq-np-642957-mco96498143791-102025-o.webp",
+    "price": "$1.250.000",
+    "sizes": "38/39/40/41/42/43/44/45",
+    "badge": "Top Ventas",
+    "category": "botas",
+    "description": "Botas ALPINESTARS TECH 3 para enduro",
+    "images": [
+        "/assets/images/botas/d-nq-np-642957-mco96498143791-102025-o.webp"
+    ]
 }
