@@ -18,12 +18,16 @@ window.MXZONE_CONFIG = {
     'gorras': { label: 'Gorras', icon: '🧢', order: 9 },
     'maletas': { label: 'Maletas', icon: '🎒', order: 10 },
     'accesorios': { label: 'Accesorios', icon: '🔧', order: 11 },
-    'uniformes-ninos': { label: 'Uniformes Niños', icon: '👶', order: 12 },
-    'cascos-ninos': { label: 'Cascos Niños', icon: '🧒', order: 13 },
-    'botas-ninos': { label: 'Botas Niños', icon: '👣', order: 14 },
-    'guantes-ninos': { label: 'Guantes Niños', icon: '🤚', order: 15 },
-    'gafas-ninos': { label: 'Gafas Niños', icon: '👓', order: 16 },
-    'protecciones-ninos': { label: 'Protecciones Niños', icon: '🛡️', order: 17 }
+    'uniformes-ninos': { label: 'Uniformes Niños', icon: '👶', order: 12, parent: 'ninos' },
+    'cascos-ninos': { label: 'Cascos Niños', icon: '🧒', order: 13, parent: 'ninos' },
+    'botas-ninos': { label: 'Botas Niños', icon: '👣', order: 14, parent: 'ninos' },
+    'guantes-ninos': { label: 'Guantes Niños', icon: '🤚', order: 15, parent: 'ninos' },
+    'gafas-ninos': { label: 'Gafas Niños', icon: '👓', order: 16, parent: 'ninos' },
+    'protecciones-ninos': { label: 'Protecciones Niños', icon: '🛡️', order: 17, parent: 'ninos' }
+  },
+  
+  parentCategories: {
+    'ninos': { label: 'Niños', icon: '🧒', order: 100 }
   },
   
   brands: {

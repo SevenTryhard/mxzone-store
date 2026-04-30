@@ -2396,6 +2396,60 @@ a {
   gap: var(--spacing-xs);
 }
 
+/* Category Parent-Child Collapsible */
+.category-parent-wrapper {
+  margin-top: var(--spacing-sm);
+  border-top: 1px solid var(--gray-lighter);
+  padding-top: var(--spacing-sm);
+}
+
+.category-parent-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  padding: var(--spacing-xs) 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--white);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: var(--transition-fast);
+}
+
+.category-parent-toggle:hover {
+  color: var(--orange-primary);
+}
+
+.category-parent-toggle .toggle-icon {
+  font-size: 0.7rem;
+  transition: transform var(--transition-base);
+  color: var(--orange-primary);
+}
+
+.category-parent-toggle.collapsed .toggle-icon {
+  transform: rotate(-90deg);
+}
+
+.category-children {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
+  padding-left: var(--spacing-md);
+  overflow: hidden;
+  max-height: 500px;
+  transition: max-height var(--transition-base), opacity var(--transition-base);
+}
+
+.category-children.collapsed {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .checkbox-label {
   display: flex;
   align-items: center;

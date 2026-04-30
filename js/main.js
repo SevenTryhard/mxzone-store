@@ -327,6 +327,49 @@ function initShopFiltersInternal() {
     }
   }
 
+  // Hide empty categories (no products)
+  function hideEmptyCategories() {
+    const categoryCount = {};
+    
+    // Count products per category
+    productCards.forEach(card => {
+      const category = card.dataset.category;
+      if (category) {
+        categoryCount[category] = (categoryCount[category] || 0) + 1;
+      }
+    });
+
+    console.log('📊 Productos por categoría:', categoryCount);
+
+    // Hide category checkboxes without products
+    categoryFilters.forEach(cb => {
+      const category = cb.dataset.category;
+      if (category && category !== 'all') {
+        const hasProducts = categoryCount[category] > 0;
+        const filterGroup = cb.closest('.checkbox-label') || cb.parentElement;
+        
+        if (filterGroup) {
+          filterGroup.style.display = hasProducts ? 'flex' : 'none';
+          if (!hasProducts) {
+            console.log('🚫 Ocultando categoría sin productos:', category);
+          }
+        }
+      }
+    });
+
+    // Hide parent category (Niños) if all children are empty
+    const ninosChildren = ['uniformes-ninos', 'cascos-ninos', 'botas-ninos', 'guantes-ninos', 'gafas-ninos', 'protecciones-ninos'];
+    const hasNinosProducts = ninosChildren.some(cat => categoryCount[cat] > 0);
+    
+    const ninosParent = document.querySelector('.category-parent-wrapper');
+    if (ninosParent) {
+      ninosParent.style.display = hasNinosProducts ? 'block' : 'none';
+      if (!hasNinosProducts) {
+        console.log('🚫 Ocultando categoría padre Niños (sin productos)');
+      }
+    }
+  }
+
   // Expose filterProducts globally for price slider
   window.filterProducts = filterProducts;
 
@@ -402,19 +445,9 @@ function initShopFiltersInternal() {
 
   // Helper to create category divider element
   function createCategoryDivider(category) {
-    const labels = {
-      'botas': { label: 'Botas', icon: '👢' },
-      'cascos': { label: 'Cascos', icon: '⛑️' },
-      'uniformes': { label: 'Uniformes', icon: '👕' },
-      'protecciones': { label: 'Protecciones', icon: '🛡️' },
-      'uniformes-ninos': { label: 'Uniformes Niños', icon: '👶' },
-      'cascos-ninos': { label: 'Cascos Niños', icon: '🧒' },
-      'botas-ninos': { label: 'Botas Niños', icon: '👣' },
-      'guantes-ninos': { label: 'Guantes Niños', icon: '🤚' },
-      'gafas-ninos': { label: 'Gafas Niños', icon: '👓' },
-      'protecciones-ninos': { label: 'Protecciones Niños', icon: '🛡️' }
-    };
-    const catData = labels[category] || { label: category, icon: '📦' };
+    const config = window.MXZONE_CONFIG || {};
+    const categories = config.categories || {};
+    const catData = categories[category] || { label: category, icon: '📦' };
 
     const divider = document.createElement('div');
     divider.className = 'category-divider';
@@ -519,6 +552,32 @@ function initShopFiltersInternal() {
               console.warn('Category checkbox not found:', filter);
             }
           }
+        } else if (filterType === 'parent-category') {
+          // Parent category (Niños) - expand sidebar and select all children
+          if (window.innerWidth <= 768) {
+            // Open mobile sidebar
+            if (mobileFiltersTrigger) mobileFiltersTrigger.click();
+          }
+
+          // Expand the parent category in sidebar
+          const parentToggle = document.getElementById('ninosCategoryToggle');
+          const parentChildren = document.getElementById('ninosCategoryChildren');
+
+          if (parentToggle && parentChildren) {
+            parentToggle.classList.remove('collapsed');
+            parentChildren.classList.remove('collapsed');
+          }
+
+          // Select all children categories
+          categoryFilters.forEach(cb => cb.checked = false);
+          const childrenCategories = ['uniformes-ninos', 'cascos-ninos', 'botas-ninos', 'guantes-ninos', 'gafas-ninos', 'protecciones-ninos'];
+          childrenCategories.forEach(cat => {
+            const childCheckbox = document.querySelector(`.category-filter[data-category="${cat}"]`);
+            if (childCheckbox) childCheckbox.checked = true;
+          });
+
+          chip.classList.add('active');
+          console.log('Selected parent category:', filter);
         } else if (filterType === 'brand') {
           // Remove active class from all brand chips
           document.querySelectorAll('.quick-filter-chip[data-type="brand"]').forEach(c => c.classList.remove('active'));
@@ -719,6 +778,23 @@ function initShopFiltersInternal() {
       }
     }
   });
+
+  // Hide empty categories after products are loaded
+  hideEmptyCategories();
+
+  // Category Parent Toggle (Niños desplegable)
+  const ninosToggle = document.getElementById('ninosCategoryToggle');
+  const ninosChildren = document.getElementById('ninosCategoryChildren');
+
+  if (ninosToggle && ninosChildren) {
+    ninosToggle.addEventListener('click', () => {
+      ninosToggle.classList.toggle('collapsed');
+      ninosChildren.classList.toggle('collapsed');
+    });
+
+    // Expandir por defecto
+    ninosChildren.classList.remove('collapsed');
+  }
 
   // ========================================
   // DUAL-HANDLE PRICE RANGE SLIDER
