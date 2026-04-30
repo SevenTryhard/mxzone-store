@@ -651,39 +651,46 @@ function initShopFiltersInternal() {
               return; // Don't filter, just toggle
             }
           }
-        } else if (filterType === 'parent-all') {
-          // "Todo" - select all categories
-          document.querySelectorAll('.quick-filter-chip[data-type]').forEach(c => c.classList.remove('active'));
-          chip.classList.add('active');
-
-          // Check all categories
-          categoryFilters.forEach(cb => {
-            cb.checked = true;
-          });
-
-          console.log('Selected: ALL categories');
         } else if (filterType === 'category') {
-          // Regular category
-          document.querySelectorAll('.quick-filter-chip[data-type="parent"]').forEach(c => {
-            c.classList.remove('active');
-            c.classList.add('collapsed');
-          });
-          document.querySelectorAll('.quick-filter-chip[data-type="parent-all"]').forEach(c => c.classList.remove('active'));
-          document.querySelectorAll('.quick-filter-chip[data-type="category"]').forEach(c => c.classList.remove('active'));
+          // Regular category (including "Ver Todo")
           
-          // Add active to clicked chip
-          chip.classList.add('active');
+          if (filter === 'all') {
+            // "Ver Todo" - select all
+            document.querySelectorAll('.quick-filter-chip[data-type]').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
 
-          // Update category filters in sidebar
-          categoryFilters.forEach(cb => cb.checked = false);
+            // Check all categories and uncheck individual ones
+            categoryFilters.forEach(cb => {
+              if (cb.dataset.category === 'all') {
+                cb.checked = true;
+              } else {
+                cb.checked = false;
+              }
+            });
 
-          // Check the selected category
-          const categoryCheckbox = document.querySelector(`.category-filter[data-category="${filter}"]`);
-          if (categoryCheckbox) {
-            categoryCheckbox.checked = true;
-            console.log('Selected category:', filter);
+            console.log('Selected: Ver Todo (all products)');
           } else {
-            console.warn('Category checkbox not found:', filter);
+            // Individual category
+            document.querySelectorAll('.quick-filter-chip[data-type="parent"]').forEach(c => {
+              c.classList.remove('active');
+              c.classList.add('collapsed');
+            });
+            document.querySelectorAll('.quick-filter-chip[data-type="category"]').forEach(c => c.classList.remove('active'));
+            
+            // Add active to clicked chip
+            chip.classList.add('active');
+
+            // Update category filters in sidebar
+            categoryFilters.forEach(cb => cb.checked = false);
+
+            // Check the selected category
+            const categoryCheckbox = document.querySelector(`.category-filter[data-category="${filter}"]`);
+            if (categoryCheckbox) {
+              categoryCheckbox.checked = true;
+              console.log('Selected category:', filter);
+            } else {
+              console.warn('Category checkbox not found:', filter);
+            }
           }
         }
 
@@ -894,7 +901,52 @@ function initShopFiltersInternal() {
   // Hide empty categories after products are loaded
   hideEmptyCategories();
 
-  // Category Parent Toggle (Niños desplegable)
+  // Category Parent Toggle - "Catálogos" (sidebar PC)
+  const catalogosToggle = document.getElementById('catalogosToggle');
+  const catalogosChildren = document.getElementById('catalogosChildren');
+
+  if (catalogosToggle && catalogosChildren) {
+    catalogosToggle.addEventListener('click', () => {
+      catalogosToggle.classList.toggle('collapsed');
+      catalogosChildren.classList.toggle('collapsed');
+    });
+
+    // Expand by default
+    catalogosChildren.classList.remove('collapsed');
+
+    // Handle "Todo" checkbox inside Catálogos
+    const todoCheckbox = catalogosChildren.querySelector('.category-filter[data-category="all"]');
+    const categoryCheckboxes = catalogosChildren.querySelectorAll('.category-filter:not([data-category="all"])');
+
+    if (todoCheckbox) {
+      todoCheckbox.addEventListener('change', () => {
+        if (todoCheckbox.checked) {
+          // Check all categories
+          categoryCheckboxes.forEach(cb => {
+            cb.checked = false;
+          });
+        } else {
+          // Uncheck all - user must select individual categories
+          console.log('Deseleccionar Todo - seleccionar categorías individuales');
+        }
+        filterProducts();
+      });
+    }
+
+    // Handle individual category checkboxes
+    categoryCheckboxes.forEach(cb => {
+      cb.addEventListener('change', () => {
+        // If any individual category is checked, uncheck "Todo"
+        const anyChecked = Array.from(categoryCheckboxes).some(c => c.checked);
+        if (anyChecked && todoCheckbox.checked) {
+          todoCheckbox.checked = false;
+        }
+        filterProducts();
+      });
+    });
+  }
+
+  // Category Parent Toggle - "Niños" (sidebar PC)
   const ninosToggle = document.getElementById('ninosCategoryToggle');
   const ninosChildren = document.getElementById('ninosCategoryChildren');
 
@@ -904,8 +956,50 @@ function initShopFiltersInternal() {
       ninosChildren.classList.toggle('collapsed');
     });
 
-    // Expandir por defecto
+    // Expand by default
     ninosChildren.classList.remove('collapsed');
+  }
+
+  // Category Parent Toggle - "Marcas" (sidebar PC)
+  const marcasToggle = document.getElementById('marcasToggle');
+  const marcasChildren = document.getElementById('marcasChildren');
+
+  if (marcasToggle && marcasChildren) {
+    marcasToggle.addEventListener('click', () => {
+      marcasToggle.classList.toggle('collapsed');
+      marcasChildren.classList.toggle('collapsed');
+    });
+
+    // Expand by default
+    marcasChildren.classList.remove('collapsed');
+
+    // Handle "Todas" checkbox inside Marcas
+    const todasCheckbox = marcasChildren.querySelector('.brand-filter[data-brand="all"]');
+    const brandCheckboxes = marcasChildren.querySelectorAll('.brand-filter:not([data-brand="all"])');
+
+    if (todasCheckbox) {
+      todasCheckbox.addEventListener('change', () => {
+        if (todasCheckbox.checked) {
+          // Uncheck all individual brands
+          brandCheckboxes.forEach(cb => {
+            cb.checked = false;
+          });
+        }
+        filterProducts();
+      });
+    }
+
+    // Handle individual brand checkboxes
+    brandCheckboxes.forEach(cb => {
+      cb.addEventListener('change', () => {
+        // If any individual brand is checked, uncheck "Todas"
+        const anyChecked = Array.from(brandCheckboxes).some(c => c.checked);
+        if (anyChecked && todasCheckbox.checked) {
+          todasCheckbox.checked = false;
+        }
+        filterProducts();
+      });
+    });
   }
 
   // Quick Filter Arrow Navigation

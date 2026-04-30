@@ -2613,6 +2613,19 @@ a {
   border-bottom: none;
 }
 
+/* Filter Section Titles (CATÁLOGOS, MARCAS) */
+.filter-section-title {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: var(--spacing-md);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 2px solid var(--orange-primary);
+}
+
 .filter-label {
   display: block;
   font-family: var(--font-primary);
@@ -2678,6 +2691,21 @@ a {
   margin-bottom: var(--spacing-sm);
 }
 
+/* Category Divider Line */
+.category-divider-line {
+  width: 100%;
+  height: 1px;
+  background: var(--gray-lighter);
+  margin: var(--spacing-sm) 0;
+}
+
+/* Niños subcategory */
+.category-ninos {
+  margin-top: var(--spacing-sm);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--gray-lighter);
+}
+
 .category-parent-toggle {
   display: flex;
   align-items: center;
@@ -2723,6 +2751,25 @@ a {
   opacity: 0;
   padding-top: 0;
   padding-bottom: 0;
+}
+
+/* "Todo" and "Todas" checkbox styling */
+.checkbox-label-todo {
+  margin-bottom: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: rgba(255, 102, 0, 0.1);
+  border: 1px solid rgba(255, 102, 0, 0.3);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+}
+
+.checkbox-label-todo .todo-label {
+  color: var(--orange-primary);
+  font-weight: 800;
+}
+
+.checkbox-label-todo input:checked + .checkmark + .todo-label {
+  color: var(--orange-primary);
 }
 
 .checkbox-label {
@@ -3025,7 +3072,7 @@ a {
   z-index: 997;
 }
 
-/* Navigation Arrows */
+/* Navigation Arrows - MUST be on sides */
 .quick-filter-nav {
   flex-shrink: 0;
   width: 36px;
@@ -3087,6 +3134,7 @@ a {
   flex-direction: row;
   white-space: nowrap;
   margin: 0 4px;
+  align-items: center;
 }
 
 .mobile-quick-filters-scroll::-webkit-scrollbar {

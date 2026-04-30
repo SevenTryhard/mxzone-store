@@ -168,15 +168,6 @@
             <button class="sidebar-close" id="sidebarClose">&times;</button>
           </div>
 
-          <!-- Search -->
-          <div class="filter-group">
-            <label class="filter-label">Buscar producto</label>
-            <div class="search-box">
-              <input type="text" id="productSearch" class="search-input" placeholder="Nombre del producto...">
-              <span class="search-icon">🔍</span>
-            </div>
-          </div>
-
           <!-- Price Range (moved up) -->
           <div class="filter-group">
             <label class="filter-label">Rango de precio</label>
@@ -200,17 +191,24 @@
             <button id="applyPriceFilter" class="btn btn-filter">Aplicar</button>
           </div>
 
-          <!-- Category Filter -->
+          <!-- CATÁLOGOS Section -->
           <div class="filter-group">
-            <label class="filter-label">Categoría</label>
+            <label class="filter-section-title">CATÁLOGOS</label>
             <div class="checkbox-group">
-              <!-- Categoría Padre: Todo (con toggle) -->
-              <div class="category-parent-wrapper category-parent-top">
-                <button class="category-parent-toggle" id="allCategoriesToggle" type="button">
+              <!-- Catálogos Desplegable -->
+              <div class="category-parent-wrapper">
+                <button class="category-parent-toggle" id="catalogosToggle" type="button">
                   <span class="toggle-icon">▼</span>
-                  <span class="toggle-label">Todo</span>
+                  <span class="toggle-label">Catálogos</span>
                 </button>
-                <div class="category-children" id="allCategoriesChildren">
+                <div class="category-children" id="catalogosChildren">
+                  <!-- "Todo" dentro del desplegable (primera posición) -->
+                  <label class="checkbox-label checkbox-label-todo">
+                    <input type="checkbox" class="category-filter" data-category="all" checked>
+                    <span class="checkmark"></span>
+                    <span class="todo-label">Todo</span>
+                  </label>
+                  
                   <label class="checkbox-label">
                     <input type="checkbox" class="category-filter" data-category="cascos">
                     <span class="checkmark"></span>
@@ -261,10 +259,12 @@
                     <span class="checkmark"></span>
                     Maletas
                   </label>
+                  
                   <!-- Separador -->
-                  <div class="category-divider-line" style="width: 100%; height: 1px; background: var(--gray-lighter); margin: var(--spacing-xs) 0;"></div>
-                  <!-- Categoría Padre: Niños (con toggle) -->
-                  <div class="category-parent-wrapper">
+                  <div class="category-divider-line"></div>
+                  
+                  <!-- Niños Subcategory -->
+                  <div class="category-parent-wrapper category-ninos">
                     <button class="category-parent-toggle" id="ninosCategoryToggle" type="button">
                       <span class="toggle-icon">▼</span>
                       <span class="toggle-label">Niños</span>
@@ -304,8 +304,91 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
 
-              <!-- Brand Filter -->
+          <!-- MARCAS Section -->
+          <div class="filter-group">
+            <label class="filter-section-title">MARCAS</label>
+            <div class="checkbox-group">
+              <!-- Marcas Desplegable -->
+              <div class="category-parent-wrapper">
+                <button class="category-parent-toggle" id="marcasToggle" type="button">
+                  <span class="toggle-icon">▼</span>
+                  <span class="toggle-label">Marcas</span>
+                </button>
+                <div class="category-children" id="marcasChildren">
+                  <!-- "Todas" dentro del desplegable (primera posición) -->
+                  <label class="checkbox-label checkbox-label-todo">
+                    <input type="checkbox" class="brand-filter" data-brand="all" checked>
+                    <span class="checkmark"></span>
+                    <span class="todo-label">Todas</span>
+                  </label>
+                  
+                  <label class="checkbox-label">
+                    <input type="checkbox" class="brand-filter" data-brand="fox">
+                    <span class="checkmark"></span>
+                    Fox
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" class="brand-filter" data-brand="fly">
+                    <span class="checkmark"></span>
+                    Fly
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" class="brand-filter" data-brand="alpinestars">
+                    <span class="checkmark"></span>
+                    Alpinestars
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" class="brand-filter" data-brand="leatt">
+                    <span class="checkmark"></span>
+                    Leatt
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" class="brand-filter" data-brand="troy-lee">
+                    <span class="checkmark"></span>
+                    Troy Lee
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" class="brand-filter" data-brand="oneal">
+                    <span class="checkmark"></span>
+                    Oneal
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" class="brand-filter" data-brand="airoh">
+                    <span class="checkmark"></span>
+                    Airoh
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" class="brand-filter" data-brand="acerbis">
+                    <span class="checkmark"></span>
+                    Acerbis
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" class="brand-filter" data-brand="gaerne">
+                    <span class="checkmark"></span>
+                    Gaerne
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" class="brand-filter" data-brand="fxr">
+                    <span class="checkmark"></span>
+                    FXR
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" class="brand-filter" data-brand="thor">
+                    <span class="checkmark"></span>
+                    Thor
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" class="brand-filter" data-brand="ktm">
+                    <span class="checkmark"></span>
+                    KTM
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="filter-group">
             <label class="filter-label">Marca</label>
             <div class="checkbox-group">
