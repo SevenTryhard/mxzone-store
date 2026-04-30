@@ -215,7 +215,13 @@ function getCategoryLabel(category) {
     'gafas': 'Gafas',
     'gorras': 'Gorras',
     'guantes': 'Guantes',
-    'maletas': 'Maletas'
+    'maletas': 'Maletas',
+    'uniformes-ninos': 'Uniformes Niños',
+    'cascos-ninos': 'Cascos Niños',
+    'botas-ninos': 'Botas Niños',
+    'guantes-ninos': 'Guantes Niños',
+    'gafas-ninos': 'Gafas Niños',
+    'protecciones-ninos': 'Protecciones Niños'
   };
   return labels[category] || category || 'Sin categoría';
 }
@@ -322,7 +328,7 @@ async function renderShopProducts() {
 
   if (container && products.length > 0) {
     // Ordenar productos por categoría para agruparlos
-    const categoryOrder = ['botas', 'cascos', 'uniformes', 'jersey', 'guantes', 'gorras', 'protecciones', 'accesorios', 'maletas', 'gafas'];
+    const categoryOrder = ['botas', 'cascos', 'uniformes', 'jersey', 'guantes', 'gorras', 'protecciones', 'accesorios', 'maletas', 'gafas', 'uniformes-ninos', 'cascos-ninos', 'botas-ninos', 'guantes-ninos', 'gafas-ninos', 'protecciones-ninos'];
     const sortedProducts = [...products].sort((a, b) => {
       const indexA = categoryOrder.indexOf(a.category);
       const indexB = categoryOrder.indexOf(b.category);

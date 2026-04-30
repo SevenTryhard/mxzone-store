@@ -123,6 +123,12 @@ collections:
             - gorras
             - jersey
             - accesorios
+            - uniformes-ninos
+            - cascos-ninos
+            - botas-ninos
+            - guantes-ninos
+            - gafas-ninos
+            - protecciones-ninos
   promociones:
     path: cms/promociones
     type: json

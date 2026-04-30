@@ -371,7 +371,7 @@ function initShopFiltersInternal() {
 
     // Re-insert products with category dividers (only for default sort)
     if (sortBy === 'default') {
-      const categoryOrder = ['botas', 'cascos', 'uniformes', 'protecciones'];
+      const categoryOrder = ['botas', 'cascos', 'uniformes', 'jersey', 'guantes', 'gorras', 'protecciones', 'accesorios', 'maletas', 'gafas', 'uniformes-ninos', 'cascos-ninos', 'botas-ninos', 'guantes-ninos', 'gafas-ninos', 'protecciones-ninos'];
       let lastCategory = null;
 
       productsArray.forEach(card => {
@@ -406,7 +406,13 @@ function initShopFiltersInternal() {
       'botas': { label: 'Botas', icon: '👢' },
       'cascos': { label: 'Cascos', icon: '⛑️' },
       'uniformes': { label: 'Uniformes', icon: '👕' },
-      'protecciones': { label: 'Protecciones', icon: '🛡️' }
+      'protecciones': { label: 'Protecciones', icon: '🛡️' },
+      'uniformes-ninos': { label: 'Uniformes Niños', icon: '👶' },
+      'cascos-ninos': { label: 'Cascos Niños', icon: '🧒' },
+      'botas-ninos': { label: 'Botas Niños', icon: '👣' },
+      'guantes-ninos': { label: 'Guantes Niños', icon: '🤚' },
+      'gafas-ninos': { label: 'Gafas Niños', icon: '👓' },
+      'protecciones-ninos': { label: 'Protecciones Niños', icon: '🛡️' }
     };
     const catData = labels[category] || { label: category, icon: '📦' };
 

@@ -17,7 +17,13 @@ window.MXZONE_CONFIG = {
     'protecciones': { label: 'Protecciones', icon: '🛡️', order: 8 },
     'gorras': { label: 'Gorras', icon: '🧢', order: 9 },
     'maletas': { label: 'Maletas', icon: '🎒', order: 10 },
-    'accesorios': { label: 'Accesorios', icon: '🔧', order: 11 }
+    'accesorios': { label: 'Accesorios', icon: '🔧', order: 11 },
+    'uniformes-ninos': { label: 'Uniformes Niños', icon: '👶', order: 12 },
+    'cascos-ninos': { label: 'Cascos Niños', icon: '🧒', order: 13 },
+    'botas-ninos': { label: 'Botas Niños', icon: '👣', order: 14 },
+    'guantes-ninos': { label: 'Guantes Niños', icon: '🤚', order: 15 },
+    'gafas-ninos': { label: 'Gafas Niños', icon: '👓', order: 16 },
+    'protecciones-ninos': { label: 'Protecciones Niños', icon: '🛡️', order: 17 }
   },
   
   brands: {
