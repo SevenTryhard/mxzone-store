@@ -112,15 +112,61 @@ function initHeader() {
 function initMobileMenu() {
   const menuToggle = document.getElementById('menuToggle');
   const navLinks = document.getElementById('navLinks');
+  const mobileMenuPanel = document.getElementById('mobileMenuPanel');
+  const mobileMenuClose = document.getElementById('mobileMenuClose');
+  const mobileMenuSearch = document.getElementById('mobileMenuSearch');
+  const mobileMenuSearchBtn = document.getElementById('mobileMenuSearchBtn');
+
+  // Create overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'mobile-menu-overlay';
+  overlay.id = 'mobileMenuOverlay';
+  document.body.appendChild(overlay);
 
   if (!menuToggle || !navLinks) return;
 
-  menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('active');
-    navLinks.classList.toggle('active');
+  // Desktop menu toggle (nav links)
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (window.innerWidth > 768) {
+      menuToggle.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    } else {
+      // Mobile - open panel
+      openMobileMenuPanel();
+    }
   });
 
-  // Close menu when clicking a link
+  // Close panel
+  if (mobileMenuClose) {
+    mobileMenuClose.addEventListener('click', closeMobileMenuPanel);
+  }
+
+  // Close when clicking overlay
+  overlay.addEventListener('click', closeMobileMenuPanel);
+
+  // Search functionality - "En el Bolsillo"
+  if (mobileMenuSearchBtn && mobileMenuSearch) {
+    mobileMenuSearchBtn.addEventListener('click', () => {
+      const searchTerm = mobileMenuSearch.value.trim();
+      if (searchTerm) {
+        // Redirect to shop with search query
+        window.location.href = `shop.html?search=${encodeURIComponent(searchTerm)}`;
+      }
+    });
+
+    // Allow Enter key
+    mobileMenuSearch.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        const searchTerm = mobileMenuSearch.value.trim();
+        if (searchTerm) {
+          window.location.href = `shop.html?search=${encodeURIComponent(searchTerm)}`;
+        }
+      }
+    });
+  }
+
+  // Close menu when clicking a link (desktop)
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       menuToggle.classList.remove('active');
@@ -128,11 +174,43 @@ function initMobileMenu() {
     });
   });
 
-  // Close menu when clicking outside
+  // Close panel when clicking a link (mobile)
+  if (mobileMenuPanel) {
+    mobileMenuPanel.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        closeMobileMenuPanel();
+      });
+    });
+  }
+
+  // Helper functions
+  function openMobileMenuPanel() {
+    if (mobileMenuPanel) mobileMenuPanel.classList.add('active');
+    if (overlay) overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Focus search input
+    setTimeout(() => {
+      if (mobileMenuSearch) mobileMenuSearch.focus();
+    }, 300);
+  }
+
+  function closeMobileMenuPanel() {
+    if (mobileMenuPanel) mobileMenuPanel.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
+    document.body.style.overflow = '';
+    
+    // Clear search
+    if (mobileMenuSearch) mobileMenuSearch.value = '';
+  }
+
+  // Close menu when clicking outside (desktop)
   document.addEventListener('click', (e) => {
-    if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
-      menuToggle.classList.remove('active');
-      navLinks.classList.remove('active');
+    if (window.innerWidth > 768) {
+      if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+        menuToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+      }
     }
   });
 }
