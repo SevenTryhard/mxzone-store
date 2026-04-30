@@ -604,30 +604,8 @@ function initShopFiltersInternal() {
         console.log('Quick filter clicked:', filter, filterType);
 
         if (filterType === 'parent') {
-          // Parent category (Todo, Niños) - toggle expand/collapse
-          if (filter === 'all') {
-            // "Todo" - toggle all categories
-            const isExpanded = chip.classList.contains('active');
-            
-            if (!isExpanded) {
-              // Expand - select all
-              document.querySelectorAll('.quick-filter-chip[data-type]').forEach(c => c.classList.remove('active'));
-              chip.classList.add('active');
-              chip.classList.remove('collapsed');
-
-              // Check "all" and uncheck everything else
-              categoryFilters.forEach(cb => cb.checked = false);
-              const allCheckbox = document.querySelector('.category-filter[data-category="all"]');
-              if (allCheckbox) allCheckbox.checked = true;
-              console.log('Selected: ALL (padre universal) - EXPANDIR');
-            } else {
-              // Collapse - deselect all
-              chip.classList.remove('active');
-              chip.classList.add('collapsed');
-              console.log('Selected: ALL (padre universal) - COLAPSAR');
-              return; // Don't filter, just toggle
-            }
-          } else if (filter === 'ninos') {
+          // Parent category (solo Niños en móvil)
+          if (filter === 'ninos') {
             // "Niños" - toggle expand/collapse
             const isExpanded = chip.classList.contains('active');
             
@@ -674,7 +652,7 @@ function initShopFiltersInternal() {
             }
           }
         } else if (filterType === 'category') {
-          // Regular category - remove active from all parents and categories
+          // Regular category (including "Todo" en móvil)
           document.querySelectorAll('.quick-filter-chip[data-type="parent"]').forEach(c => {
             c.classList.remove('active');
             c.classList.add('collapsed');
@@ -818,6 +796,28 @@ function initShopFiltersInternal() {
       targetCb.checked = true;
       filterProducts();
     }
+  }
+
+  // Category Parent Toggle - "Todo" (sidebar PC)
+  const allCategoriesToggle = document.getElementById('allCategoriesToggle');
+  const allCategoriesChildren = document.getElementById('allCategoriesChildren');
+
+  if (allCategoriesToggle && allCategoriesChildren) {
+    allCategoriesToggle.addEventListener('click', () => {
+      allCategoriesToggle.classList.toggle('collapsed');
+      allCategoriesChildren.classList.toggle('collapsed');
+      
+      // Select "all" when expanding
+      if (!allCategoriesToggle.classList.contains('collapsed')) {
+        categoryFilters.forEach(cb => cb.checked = false);
+        const allCheckbox = document.querySelector('.category-filter[data-category="all"]');
+        if (allCheckbox) allCheckbox.checked = true;
+        filterProducts();
+      }
+    });
+
+    // Expand by default
+    allCategoriesChildren.classList.remove('collapsed');
   }
 
   // Mobile filter toggle (legacy support)

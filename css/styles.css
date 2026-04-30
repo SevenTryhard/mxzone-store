@@ -2670,6 +2670,14 @@ a {
   padding-top: var(--spacing-sm);
 }
 
+/* Category Parent Top (Todo) - different styling */
+.category-parent-top {
+  margin-top: 0;
+  border-top: none;
+  padding-top: 0;
+  margin-bottom: var(--spacing-sm);
+}
+
 .category-parent-toggle {
   display: flex;
   align-items: center;
@@ -3002,7 +3010,7 @@ a {
 
 /* Mobile Quick Filters - Horizontal Scrollable Category Bar with Arrow Navigation */
 .mobile-quick-filters {
-  display: flex;
+  display: none; /* Solo en móvil */
   align-items: center;
   justify-content: space-between;
   padding: 8px 0;
@@ -3083,6 +3091,13 @@ a {
 
 .mobile-quick-filters-scroll::-webkit-scrollbar {
   display: none;
+}
+
+/* Mostrar quick filters solo en móvil */
+@media (max-width: 768px) {
+  .mobile-quick-filters {
+    display: flex;
+  }
 }
 
 /* Quick Filter Separator - Vertical divider between categories and brands */
