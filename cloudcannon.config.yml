@@ -35,6 +35,47 @@ collections_config:
     disable_add: false
     disable_add_folder: false
     disable_file_actions: false
+    display:
+      image: icon
+      title: label
+      subtitle: name
+    fields:
+      - name: name
+        label: Nombre Interno (ID)
+        type: text
+        comment: "ID único sin espacios (ej: uniformes-ninos)"
+      - name: label
+        label: Nombre Visible
+        type: text
+        comment: "Como aparece en la tienda"
+      - name: icon
+        label: Ícono (Emoji)
+        type: text
+        comment: "Un solo emoji (ej: 👕)"
+      - name: parent
+        label: Categoría Padre
+        type: select
+        options:
+          values:
+            - ""
+            - ninos
+        comment: "Dejar vacío si es categoría padre"
+      - name: order
+        label: Orden de Aparición
+        type: number
+        comment: "1 = primero, 999 = último"
+      - name: enabled
+        label: Habilitada
+        type: boolean
+        comment: "Mostrar/ocultar categoría en tienda"
+      - name: showInQuickFilters
+        label: Mostrar en Quick Filters
+        type: boolean
+        comment: "Solo para categorías padre (sin hijos)"
+      - name: description
+        label: Descripción
+        type: text
+        comment: "Descripción opcional de la categoría"
 _inputs:
   whatsapp:
     type: text

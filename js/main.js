@@ -114,14 +114,9 @@ function initMobileMenu() {
   const navLinks = document.getElementById('navLinks');
   const mobileMenuPanel = document.getElementById('mobileMenuPanel');
   const mobileMenuClose = document.getElementById('mobileMenuClose');
+  const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
   const mobileMenuSearch = document.getElementById('mobileMenuSearch');
   const mobileMenuSearchBtn = document.getElementById('mobileMenuSearchBtn');
-
-  // Create overlay
-  const overlay = document.createElement('div');
-  overlay.className = 'mobile-menu-overlay';
-  overlay.id = 'mobileMenuOverlay';
-  document.body.appendChild(overlay);
 
   if (!menuToggle || !navLinks) return;
 
@@ -143,7 +138,9 @@ function initMobileMenu() {
   }
 
   // Close when clicking overlay
-  overlay.addEventListener('click', closeMobileMenuPanel);
+  if (mobileMenuOverlay) {
+    mobileMenuOverlay.addEventListener('click', closeMobileMenuPanel);
+  }
 
   // Search functionality - "En el Bolsillo"
   if (mobileMenuSearchBtn && mobileMenuSearch) {
@@ -186,7 +183,7 @@ function initMobileMenu() {
   // Helper functions
   function openMobileMenuPanel() {
     if (mobileMenuPanel) mobileMenuPanel.classList.add('active');
-    if (overlay) overlay.classList.add('active');
+    if (mobileMenuOverlay) mobileMenuOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
     
     // Focus search input
@@ -197,7 +194,7 @@ function initMobileMenu() {
 
   function closeMobileMenuPanel() {
     if (mobileMenuPanel) mobileMenuPanel.classList.remove('active');
-    if (overlay) overlay.classList.remove('active');
+    if (mobileMenuOverlay) mobileMenuOverlay.classList.remove('active');
     document.body.style.overflow = '';
     
     // Clear search
@@ -607,46 +604,82 @@ function initShopFiltersInternal() {
         console.log('Quick filter clicked:', filter, filterType);
 
         if (filterType === 'parent') {
-          // Parent category (Todo, Niños) - handle differently
+          // Parent category (Todo, Niños) - toggle expand/collapse
           if (filter === 'all') {
-            // "Todo" - select all categories
-            document.querySelectorAll('.quick-filter-chip[data-type]').forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
+            // "Todo" - toggle all categories
+            const isExpanded = chip.classList.contains('active');
+            
+            if (!isExpanded) {
+              // Expand - select all
+              document.querySelectorAll('.quick-filter-chip[data-type]').forEach(c => c.classList.remove('active'));
+              chip.classList.add('active');
+              chip.classList.remove('collapsed');
 
-            // Check "all" and uncheck everything else
-            categoryFilters.forEach(cb => cb.checked = false);
-            const allCheckbox = document.querySelector('.category-filter[data-category="all"]');
-            if (allCheckbox) allCheckbox.checked = true;
-            console.log('Selected: ALL (padre universal)');
+              // Check "all" and uncheck everything else
+              categoryFilters.forEach(cb => cb.checked = false);
+              const allCheckbox = document.querySelector('.category-filter[data-category="all"]');
+              if (allCheckbox) allCheckbox.checked = true;
+              console.log('Selected: ALL (padre universal) - EXPANDIR');
+            } else {
+              // Collapse - deselect all
+              chip.classList.remove('active');
+              chip.classList.add('collapsed');
+              console.log('Selected: ALL (padre universal) - COLAPSAR');
+              return; // Don't filter, just toggle
+            }
           } else if (filter === 'ninos') {
-            // "Niños" - expand sidebar and select all children
-            if (window.innerWidth <= 768) {
-              if (mobileFiltersTrigger) mobileFiltersTrigger.click();
+            // "Niños" - toggle expand/collapse
+            const isExpanded = chip.classList.contains('active');
+            
+            if (!isExpanded) {
+              // Expand
+              document.querySelectorAll('.quick-filter-chip[data-type]').forEach(c => c.classList.remove('active'));
+              chip.classList.add('active');
+              chip.classList.remove('collapsed');
+
+              if (window.innerWidth <= 768) {
+                if (mobileFiltersTrigger) mobileFiltersTrigger.click();
+              }
+
+              const parentToggle = document.getElementById('ninosCategoryToggle');
+              const parentChildren = document.getElementById('ninosCategoryChildren');
+
+              if (parentToggle && parentChildren) {
+                parentToggle.classList.remove('collapsed');
+                parentChildren.classList.remove('collapsed');
+              }
+
+              // Select all children
+              categoryFilters.forEach(cb => cb.checked = false);
+              const childrenCategories = ['uniformes-ninos', 'cascos-ninos', 'botas-ninos', 'guantes-ninos', 'gafas-ninos', 'protecciones-ninos'];
+              childrenCategories.forEach(cat => {
+                const childCheckbox = document.querySelector(`.category-filter[data-category="${cat}"]`);
+                if (childCheckbox) childCheckbox.checked = true;
+              });
+
+              console.log('Selected parent category: Niños - EXPANDIR');
+            } else {
+              // Collapse
+              chip.classList.remove('active');
+              chip.classList.add('collapsed');
+              
+              const parentToggle = document.getElementById('ninosCategoryToggle');
+              const parentChildren = document.getElementById('ninosCategoryChildren');
+              
+              if (parentToggle) parentToggle.classList.add('collapsed');
+              if (parentChildren) parentChildren.classList.add('collapsed');
+              
+              console.log('Selected parent category: Niños - COLAPSAR');
+              return; // Don't filter, just toggle
             }
-
-            const parentToggle = document.getElementById('ninosCategoryToggle');
-            const parentChildren = document.getElementById('ninosCategoryChildren');
-
-            if (parentToggle && parentChildren) {
-              parentToggle.classList.remove('collapsed');
-              parentChildren.classList.remove('collapsed');
-            }
-
-            // Uncheck all and select children
-            categoryFilters.forEach(cb => cb.checked = false);
-            const childrenCategories = ['uniformes-ninos', 'cascos-ninos', 'botas-ninos', 'guantes-ninos', 'gafas-ninos', 'protecciones-ninos'];
-            childrenCategories.forEach(cat => {
-              const childCheckbox = document.querySelector(`.category-filter[data-category="${cat}"]`);
-              if (childCheckbox) childCheckbox.checked = true;
-            });
-
-            chip.classList.add('active');
-            console.log('Selected parent category: Niños');
           }
         } else if (filterType === 'category') {
-          // Regular category - remove active from all categories
+          // Regular category - remove active from all parents and categories
+          document.querySelectorAll('.quick-filter-chip[data-type="parent"]').forEach(c => {
+            c.classList.remove('active');
+            c.classList.add('collapsed');
+          });
           document.querySelectorAll('.quick-filter-chip[data-type="category"]').forEach(c => c.classList.remove('active'));
-          document.querySelectorAll('.quick-filter-chip[data-type="parent"]').forEach(c => c.classList.remove('active'));
           
           // Add active to clicked chip
           chip.classList.add('active');
