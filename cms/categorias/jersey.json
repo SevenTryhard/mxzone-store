@@ -1,0 +1,10 @@
+{
+  "name": "jersey",
+  "label": "Jerseys",
+  "icon": "👕",
+  "parent": "",
+  "order": 4,
+  "enabled": true,
+  "showInQuickFilters": true,
+  "description": "Jerseys para motocross"
+}

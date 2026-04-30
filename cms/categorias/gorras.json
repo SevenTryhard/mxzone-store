@@ -1,0 +1,10 @@
+{
+  "name": "gorras",
+  "label": "Gorras",
+  "icon": "🧢",
+  "parent": "",
+  "order": 8,
+  "enabled": true,
+  "showInQuickFilters": true,
+  "description": "Gorras y headwear"
+}

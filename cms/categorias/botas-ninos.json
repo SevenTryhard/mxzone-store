@@ -1,0 +1,10 @@
+{
+  "name": "botas-ninos",
+  "label": "Botas Niños",
+  "icon": "👣",
+  "parent": "ninos",
+  "order": 3,
+  "enabled": true,
+  "showInQuickFilters": false,
+  "description": "Botas para niños de motocross"
+}

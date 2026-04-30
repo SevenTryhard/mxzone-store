@@ -1,0 +1,10 @@
+{
+  "name": "gafas-ninos",
+  "label": "Gafas Niños",
+  "icon": "👓",
+  "parent": "ninos",
+  "order": 5,
+  "enabled": true,
+  "showInQuickFilters": false,
+  "description": "Gafas para niños de motocross"
+}

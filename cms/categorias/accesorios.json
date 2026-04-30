@@ -1,0 +1,10 @@
+{
+  "name": "accesorios",
+  "label": "Accesorios",
+  "icon": "🔧",
+  "parent": "",
+  "order": 10,
+  "enabled": true,
+  "showInQuickFilters": true,
+  "description": "Accesorios y repuestos"
+}

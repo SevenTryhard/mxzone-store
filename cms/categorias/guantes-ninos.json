@@ -1,0 +1,10 @@
+{
+  "name": "guantes-ninos",
+  "label": "Guantes Niños",
+  "icon": "🤚",
+  "parent": "ninos",
+  "order": 4,
+  "enabled": true,
+  "showInQuickFilters": false,
+  "description": "Guantes para niños de motocross"
+}

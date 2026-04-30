@@ -1,0 +1,10 @@
+{
+  "name": "gafas",
+  "label": "Gafas",
+  "icon": "👓",
+  "parent": "",
+  "order": 6,
+  "enabled": true,
+  "showInQuickFilters": true,
+  "description": "Gafas y lentes para motocross"
+}

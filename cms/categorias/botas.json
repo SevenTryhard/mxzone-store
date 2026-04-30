@@ -1,0 +1,10 @@
+{
+  "name": "botas",
+  "label": "Botas",
+  "icon": "👢",
+  "parent": "",
+  "order": 3,
+  "enabled": true,
+  "showInQuickFilters": true,
+  "description": "Botas de motocross y enduro"
+}

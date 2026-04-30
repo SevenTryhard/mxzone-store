@@ -2,9 +2,22 @@
   "files": [
     "cascos.json",
     "uniformes.json",
+    "botas.json",
+    "jersey.json",
+    "guantes.json",
+    "gafas.json",
+    "protecciones.json",
+    "gorras.json",
+    "maletas.json",
+    "accesorios.json",
     "ninos.json",
-    "uniformes-ninos.json"
+    "uniformes-ninos.json",
+    "cascos-ninos.json",
+    "botas-ninos.json",
+    "guantes-ninos.json",
+    "gafas-ninos.json",
+    "protecciones-ninos.json"
   ],
-  "total": 4,
+  "total": 17,
   "generated": "2026-04-30"
 }

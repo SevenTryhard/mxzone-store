@@ -1,0 +1,10 @@
+{
+  "name": "protecciones-ninos",
+  "label": "Protecciones Niños",
+  "icon": "🛡️",
+  "parent": "ninos",
+  "order": 6,
+  "enabled": true,
+  "showInQuickFilters": false,
+  "description": "Protecciones para niños de motocross"
+}

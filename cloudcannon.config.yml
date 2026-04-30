@@ -123,12 +123,12 @@ collections:
             - cascos
             - uniformes
             - botas
-            - protecciones
-            - gafas
-            - guantes
-            - maletas
-            - gorras
             - jersey
+            - guantes
+            - gafas
+            - protecciones
+            - gorras
+            - maletas
             - accesorios
             - uniformes-ninos
             - cascos-ninos
@@ -136,6 +136,7 @@ collections:
             - guantes-ninos
             - gafas-ninos
             - protecciones-ninos
+        comment: 'Selecciona la categoría. Usa el CMS de Categorías para administrar'
   promociones:
     path: cms/promociones
     type: json

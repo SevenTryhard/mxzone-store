@@ -1,0 +1,10 @@
+{
+  "name": "maletas",
+  "label": "Maletas",
+  "icon": "🎒",
+  "parent": "",
+  "order": 9,
+  "enabled": true,
+  "showInQuickFilters": true,
+  "description": "Maletas y bags para motocross"
+}

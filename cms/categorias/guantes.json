@@ -1,0 +1,10 @@
+{
+  "name": "guantes",
+  "label": "Guantes",
+  "icon": "🧤",
+  "parent": "",
+  "order": 5,
+  "enabled": true,
+  "showInQuickFilters": true,
+  "description": "Guantes para motocross"
+}
