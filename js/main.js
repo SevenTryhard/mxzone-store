@@ -651,12 +651,24 @@ function initShopFiltersInternal() {
               return; // Don't filter, just toggle
             }
           }
+        } else if (filterType === 'parent-all') {
+          // "Todo" - select all categories
+          document.querySelectorAll('.quick-filter-chip[data-type]').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+
+          // Check all categories
+          categoryFilters.forEach(cb => {
+            cb.checked = true;
+          });
+
+          console.log('Selected: ALL categories');
         } else if (filterType === 'category') {
-          // Regular category (including "Todo" en móvil)
+          // Regular category
           document.querySelectorAll('.quick-filter-chip[data-type="parent"]').forEach(c => {
             c.classList.remove('active');
             c.classList.add('collapsed');
           });
+          document.querySelectorAll('.quick-filter-chip[data-type="parent-all"]').forEach(c => c.classList.remove('active'));
           document.querySelectorAll('.quick-filter-chip[data-type="category"]').forEach(c => c.classList.remove('active'));
           
           // Add active to clicked chip
@@ -804,15 +816,22 @@ function initShopFiltersInternal() {
 
   if (allCategoriesToggle && allCategoriesChildren) {
     allCategoriesToggle.addEventListener('click', () => {
-      allCategoriesToggle.classList.toggle('collapsed');
+      const isCollapsed = allCategoriesToggle.classList.toggle('collapsed');
       allCategoriesChildren.classList.toggle('collapsed');
       
-      // Select "all" when expanding
-      if (!allCategoriesToggle.classList.contains('collapsed')) {
-        categoryFilters.forEach(cb => cb.checked = false);
-        const allCheckbox = document.querySelector('.category-filter[data-category="all"]');
-        if (allCheckbox) allCheckbox.checked = true;
+      // When expanding "Todo", select all categories
+      if (!isCollapsed) {
+        // Check all categories inside "Todo"
+        const checkboxes = allCategoriesChildren.querySelectorAll('.category-filter');
+        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+        
+        // If all were checked, uncheck all. Otherwise, check all.
+        checkboxes.forEach(cb => {
+          cb.checked = !allChecked;
+        });
+        
         filterProducts();
+        console.log('Todo: ' + (allChecked ? 'Deseleccionar todo' : 'Seleccionar todo'));
       }
     });
 
