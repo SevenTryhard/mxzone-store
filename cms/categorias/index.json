@@ -1,0 +1,10 @@
+{
+  "files": [
+    "cascos.json",
+    "uniformes.json",
+    "ninos.json",
+    "uniformes-ninos.json"
+  ],
+  "total": 4,
+  "generated": "2026-04-30"
+}

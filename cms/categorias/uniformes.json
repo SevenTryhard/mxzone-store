@@ -1,0 +1,10 @@
+{
+  "name": "uniformes",
+  "label": "Uniformes",
+  "icon": "👕",
+  "parent": "",
+  "order": 2,
+  "enabled": true,
+  "showInQuickFilters": true,
+  "description": "Uniformes completos para motocross"
+}

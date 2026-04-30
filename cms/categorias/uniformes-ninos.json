@@ -1,0 +1,10 @@
+{
+  "name": "uniformes-ninos",
+  "label": "Uniformes Niños",
+  "icon": "👶",
+  "parent": "ninos",
+  "order": 1,
+  "enabled": true,
+  "showInQuickFilters": false,
+  "description": "Uniformes para niños de motocross"
+}

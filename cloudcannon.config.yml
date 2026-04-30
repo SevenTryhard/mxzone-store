@@ -28,6 +28,13 @@ collections_config:
     disable_add: false
     disable_add_folder: false
     disable_file_actions: false
+  cms_categorias:
+    path: cms/categorias
+    icon: category
+    disable_url: false
+    disable_add: false
+    disable_add_folder: false
+    disable_file_actions: false
 _inputs:
   whatsapp:
     type: text
