@@ -528,83 +528,65 @@ function initShopFiltersInternal() {
         const filterType = chip.dataset.type;
         console.log('Quick filter clicked:', filter, filterType);
 
-        if (filterType === 'category') {
-          // Remove active class from all category chips
+        if (filterType === 'parent') {
+          // Parent category (Todo, Niños) - handle differently
+          if (filter === 'all') {
+            // "Todo" - select all categories
+            document.querySelectorAll('.quick-filter-chip[data-type]').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+
+            // Check "all" and uncheck everything else
+            categoryFilters.forEach(cb => cb.checked = false);
+            const allCheckbox = document.querySelector('.category-filter[data-category="all"]');
+            if (allCheckbox) allCheckbox.checked = true;
+            console.log('Selected: ALL (padre universal)');
+          } else if (filter === 'ninos') {
+            // "Niños" - expand sidebar and select all children
+            if (window.innerWidth <= 768) {
+              if (mobileFiltersTrigger) mobileFiltersTrigger.click();
+            }
+
+            const parentToggle = document.getElementById('ninosCategoryToggle');
+            const parentChildren = document.getElementById('ninosCategoryChildren');
+
+            if (parentToggle && parentChildren) {
+              parentToggle.classList.remove('collapsed');
+              parentChildren.classList.remove('collapsed');
+            }
+
+            // Uncheck all and select children
+            categoryFilters.forEach(cb => cb.checked = false);
+            const childrenCategories = ['uniformes-ninos', 'cascos-ninos', 'botas-ninos', 'guantes-ninos', 'gafas-ninos', 'protecciones-ninos'];
+            childrenCategories.forEach(cat => {
+              const childCheckbox = document.querySelector(`.category-filter[data-category="${cat}"]`);
+              if (childCheckbox) childCheckbox.checked = true;
+            });
+
+            chip.classList.add('active');
+            console.log('Selected parent category: Niños');
+          }
+        } else if (filterType === 'category') {
+          // Regular category - remove active from all categories
           document.querySelectorAll('.quick-filter-chip[data-type="category"]').forEach(c => c.classList.remove('active'));
-          // Add active class to clicked chip
+          document.querySelectorAll('.quick-filter-chip[data-type="parent"]').forEach(c => c.classList.remove('active'));
+          
+          // Add active to clicked chip
           chip.classList.add('active');
 
           // Update category filters in sidebar
-          // Uncheck all category filters
           categoryFilters.forEach(cb => cb.checked = false);
 
-          // Check the selected category or "all"
-          if (filter === 'all') {
-            const allCheckbox = document.querySelector('.category-filter[data-category="all"]');
-            if (allCheckbox) allCheckbox.checked = true;
-            console.log('Selected: all categories');
+          // Check the selected category
+          const categoryCheckbox = document.querySelector(`.category-filter[data-category="${filter}"]`);
+          if (categoryCheckbox) {
+            categoryCheckbox.checked = true;
+            console.log('Selected category:', filter);
           } else {
-            const categoryCheckbox = document.querySelector(`.category-filter[data-category="${filter}"]`);
-            if (categoryCheckbox) {
-              categoryCheckbox.checked = true;
-              console.log('Selected category:', filter);
-            } else {
-              console.warn('Category checkbox not found:', filter);
-            }
-          }
-        } else if (filterType === 'parent-category') {
-          // Parent category (Niños) - expand sidebar and select all children
-          if (window.innerWidth <= 768) {
-            // Open mobile sidebar
-            if (mobileFiltersTrigger) mobileFiltersTrigger.click();
-          }
-
-          // Expand the parent category in sidebar
-          const parentToggle = document.getElementById('ninosCategoryToggle');
-          const parentChildren = document.getElementById('ninosCategoryChildren');
-
-          if (parentToggle && parentChildren) {
-            parentToggle.classList.remove('collapsed');
-            parentChildren.classList.remove('collapsed');
-          }
-
-          // Select all children categories
-          categoryFilters.forEach(cb => cb.checked = false);
-          const childrenCategories = ['uniformes-ninos', 'cascos-ninos', 'botas-ninos', 'guantes-ninos', 'gafas-ninos', 'protecciones-ninos'];
-          childrenCategories.forEach(cat => {
-            const childCheckbox = document.querySelector(`.category-filter[data-category="${cat}"]`);
-            if (childCheckbox) childCheckbox.checked = true;
-          });
-
-          chip.classList.add('active');
-          console.log('Selected parent category:', filter);
-        } else if (filterType === 'brand') {
-          // Remove active class from all brand chips
-          document.querySelectorAll('.quick-filter-chip[data-type="brand"]').forEach(c => c.classList.remove('active'));
-          // Add active class to clicked chip
-          chip.classList.add('active');
-
-          // Update brand filters in sidebar
-          // Uncheck all brand filters
-          brandFilters.forEach(cb => cb.checked = false);
-
-          // Check the selected brand or "all"
-          if (filter === 'all') {
-            const allCheckbox = document.querySelector('.brand-filter[data-brand="all"]');
-            if (allCheckbox) allCheckbox.checked = true;
-            console.log('Selected: all brands');
-          } else {
-            const brandCheckbox = document.querySelector(`.brand-filter[data-brand="${filter}"]`);
-            if (brandCheckbox) {
-              brandCheckbox.checked = true;
-              console.log('Selected brand:', filter);
-            } else {
-              console.warn('Brand checkbox not found:', filter);
-            }
+            console.warn('Category checkbox not found:', filter);
           }
         }
 
-        // Sync search inputs
+        // Sync search inputs (clear search when changing category)
         if (mobileSearchInput) mobileSearchInput.value = '';
         if (searchInput) searchInput.value = '';
 
@@ -619,7 +601,7 @@ function initShopFiltersInternal() {
             const target = productsTitle || productsGrid;
 
             if (target) {
-              const headerOffset = 120;
+              const headerOffset = 140;
               const elementPosition = target.getBoundingClientRect().top;
               const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -794,6 +776,43 @@ function initShopFiltersInternal() {
 
     // Expandir por defecto
     ninosChildren.classList.remove('collapsed');
+  }
+
+  // Quick Filter Arrow Navigation
+  const quickFiltersScroll = document.getElementById('quickFiltersScroll');
+  const quickFilterLeft = document.getElementById('quickFilterLeft');
+  const quickFilterRight = document.getElementById('quickFilterRight');
+
+  const scrollAmount = 200; // Pixels to scroll
+
+  if (quickFilterLeft && quickFiltersScroll) {
+    quickFilterLeft.addEventListener('click', () => {
+      quickFiltersScroll.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+  }
+
+  if (quickFilterRight && quickFiltersScroll) {
+    quickFilterRight.addEventListener('click', () => {
+      quickFiltersScroll.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+  }
+
+  // Show/hide arrows based on scroll position
+  if (quickFiltersScroll) {
+    quickFiltersScroll.addEventListener('scroll', () => {
+      const maxScroll = quickFiltersScroll.scrollWidth - quickFiltersScroll.clientWidth;
+      
+      if (quickFilterLeft) {
+        quickFilterLeft.style.opacity = quickFiltersScroll.scrollLeft > 0 ? '0.9' : '0.5';
+      }
+      
+      if (quickFilterRight) {
+        quickFilterRight.style.opacity = quickFiltersScroll.scrollLeft < maxScroll - 10 ? '0.9' : '0.5';
+      }
+    });
+
+    // Initial state
+    if (quickFilterLeft) quickFilterLeft.style.opacity = '0.5';
   }
 
   // ========================================

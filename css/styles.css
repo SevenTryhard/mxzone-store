@@ -2733,10 +2733,10 @@ a {
   pointer-events: none;
 }
 
-/* Mobile Quick Filters - Horizontal Scrollable Category Bar (Compact, part of header) */
+/* Mobile Quick Filters - Horizontal Scrollable Category Bar with Arrow Navigation */
 .mobile-quick-filters {
   display: none;
-  padding: 4px 0;
+  padding: 8px 0;
   background: rgba(26, 26, 26, 0.98);
   backdrop-filter: blur(30px) saturate(200%);
   -webkit-backdrop-filter: blur(30px) saturate(200%);
@@ -2748,19 +2748,55 @@ a {
   z-index: 997;
 }
 
-.mobile-quick-filters-scroll {
+/* Navigation Arrows */
+.quick-filter-nav {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--orange-primary);
+  font-size: 0.9rem;
+  font-weight: bold;
   display: flex;
-  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  opacity: 0.9;
+  margin: 0 8px;
+}
+
+.quick-filter-nav:hover {
+  background: rgba(255, 102, 0, 0.15);
+  border-color: var(--orange-primary);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.quick-filter-nav:active {
+  transform: scale(0.95);
+}
+
+.quick-filter-nav span {
+  line-height: 1;
+}
+
+/* Quick Filter Scroll Container */
+.mobile-quick-filters-scroll {
+  flex: 1;
+  display: flex;
+  gap: 8px;
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  padding: 0 var(--spacing-md);
+  padding: 4px 4px;
   scroll-snap-type: x mandatory;
   mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-  /* Horizontal layout - swipe left/right */
   flex-direction: row;
   white-space: nowrap;
 }
@@ -2779,30 +2815,31 @@ a {
   align-self: center;
 }
 
-/* Quick Filter Chips - Compact category buttons with icons */
+/* Quick Filter Chips - Bigger, "gorditos" buttons */
 .quick-filter-chip {
   scroll-snap-align: start;
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 6px 12px;
-  background: rgba(45, 45, 45, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 6px;
+  padding: 10px 18px;
+  background: rgba(45, 45, 45, 0.85);
+  border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-full);
   color: var(--gray-light-text);
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.85rem;
+  font-weight: 700;
   cursor: pointer;
   transition: var(--transition-fast);
   white-space: nowrap;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
-  height: 32px;
+  letter-spacing: 0.5px;
+  height: 44px;
+  min-width: 100px;
 }
 
 .quick-filter-chip span {
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   filter: grayscale(0.3);
   transition: var(--transition-fast);
   display: inline-block;
@@ -2811,13 +2848,19 @@ a {
 .quick-filter-chip:hover span,
 .quick-filter-chip.active span {
   filter: grayscale(0);
-  transform: scale(1.05);
+  transform: scale(1.1);
+}
+
+.quick-filter-chip:hover {
+  background: rgba(45, 45, 45, 0.95);
+  border-color: rgba(255, 102, 0, 0.3);
 }
 
 .quick-filter-chip.active {
-  background: rgba(255, 102, 0, 0.2);
-  border-color: rgba(255, 102, 0, 0.5);
+  background: rgba(255, 102, 0, 0.25);
+  border-color: var(--orange-primary);
   color: var(--orange-primary);
+  box-shadow: 0 2px 12px rgba(255, 102, 0, 0.3);
 }
 
 /* Divider between categories and brands in mobile filters */

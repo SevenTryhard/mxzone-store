@@ -89,13 +89,20 @@
         </div>
       </div>
 
-      <!-- Mobile Quick Filters - Horizontal Scrollable Bar -->
+      <!-- Mobile Quick Filters - Horizontal Scrollable Bar with Arrow Navigation -->
       <div class="mobile-quick-filters" id="mobileQuickFilters">
-        <div class="mobile-quick-filters-scroll">
-          <!-- Categorías -->
-          <button class="quick-filter-chip active" data-filter="all" data-type="category">
-            <span>📦</span> Todos
+        <!-- Left Arrow Button -->
+        <button class="quick-filter-nav quick-filter-nav-left" id="quickFilterLeft" aria-label="Deslizar izquierda">
+          <span>◀</span>
+        </button>
+        
+        <!-- Chips Scroll Container -->
+        <div class="mobile-quick-filters-scroll" id="quickFiltersScroll">
+          <!-- Categoría Padre: Todo -->
+          <button class="quick-filter-chip active" data-filter="all" data-type="parent">
+            <span>📦</span> Todo
           </button>
+          <!-- Categorías Principales -->
           <button class="quick-filter-chip" data-filter="cascos" data-type="category">
             <span>⛑️</span> Cascos
           </button>
@@ -128,29 +135,16 @@
           </button>
           <!-- Separador -->
           <div class="quick-filter-separator"></div>
-          <!-- Categoría Niños (Solo botón principal en quick filters) -->
+          <!-- Categoría Padre: Niños -->
           <button class="quick-filter-chip" data-filter="ninos" data-type="parent-category">
             <span>🧒</span> Niños
           </button>
-          <!-- Separador -->
-          <div class="quick-filter-separator"></div>
-          <!-- Marcas -->
-          <button class="quick-filter-chip" data-filter="fox" data-type="brand">
-            <span>🦊</span> Fox
-          </button>
-          <button class="quick-filter-chip" data-filter="fly" data-type="brand">
-            <span>🪰</span> Fly
-          </button>
-          <button class="quick-filter-chip" data-filter="alpinestars" data-type="brand">
-            <span>⭐</span> Alpinestars
-          </button>
-          <button class="quick-filter-chip" data-filter="leatt" data-type="brand">
-            <span>🛡️</span> Leatt
-          </button>
-          <button class="quick-filter-chip" data-filter="troy-lee" data-type="brand">
-            <span>🎨</span> TLD
-          </button>
         </div>
+        
+        <!-- Right Arrow Button -->
+        <button class="quick-filter-nav quick-filter-nav-right" id="quickFilterRight" aria-label="Deslizar derecha">
+          <span>▶</span>
+        </button>
       </div>
 
       <!-- Banner de Promociones -->
