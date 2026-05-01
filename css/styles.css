@@ -2613,7 +2613,7 @@ a {
   border-bottom: none;
 }
 
-/* Filter Section Titles (CATÁLOGOS, MARCAS) */
+/* Filter Section Title (legacy label, kept for compatibility) */
 .filter-section-title {
   display: block;
   font-size: 0.95rem;
@@ -2624,6 +2624,40 @@ a {
   letter-spacing: 1px;
   padding-bottom: var(--spacing-xs);
   border-bottom: 2px solid var(--orange-primary);
+}
+
+/* Filter Section Toggle (replaces redundant title + toggle — acts as interactive header) */
+.filter-section-toggle {
+  font-size: 0.95rem !important;
+  font-weight: 800 !important;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0 0 var(--spacing-xs) 0 !important;
+  margin-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--orange-primary);
+  width: 100%;
+}
+
+.filter-section-toggle:hover {
+  color: var(--orange-primary) !important;
+}
+
+.filter-section-toggle .toggle-icon {
+  font-size: 0.7rem;
+  color: var(--orange-primary);
+}
+
+.filter-section-toggle .toggle-label {
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+/* Remove wrapper borders when toggle acts as section header */
+.category-parent-wrapper:has(.filter-section-toggle) {
+  margin-top: 0;
+  border-top: none;
+  padding-top: 0;
 }
 
 .filter-label {
@@ -2742,8 +2776,9 @@ a {
   margin-top: var(--spacing-sm);
   padding-left: var(--spacing-md);
   overflow: hidden;
-  max-height: 500px;
+  max-height: 2000px;
   transition: max-height var(--transition-base), opacity var(--transition-base);
+  padding-bottom: var(--spacing-md);
 }
 
 .category-children.collapsed {
@@ -4942,7 +4977,7 @@ a {
   }
 
   body.shop-page .mobile-quick-filters {
-    display: block;
+    display: flex;
   }
 
   /* Sidebar Header - Visible only on mobile */
