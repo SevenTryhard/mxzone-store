@@ -67,7 +67,7 @@ async function loadProducts() {
     // Cargar todos los archivos en paralelo con cache buster
     const promises = productFiles.map(async (file) => {
       try {
-        const response = await fetch(cmsBaseUrl + file + '?v=' + IMAGE_VERSION);
+        const response = await fetch(cmsBaseUrl + encodeURIComponent(file) + '?v=' + IMAGE_VERSION);
         if (response.ok) {
           const product = await response.json();
           
