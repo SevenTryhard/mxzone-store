@@ -73,7 +73,7 @@ async function loadProducts() {
           
           // Procesar imágenes: codificar espacios y agregar versión
           if (product.images && product.images.length > 0) {
-            product.images = product.images.map(img => encodeImagePath(img) + '?' + IMAGE_VERSION);
+            product.images = product.images.filter(img => img != null && typeof img === 'string' && img.trim() !== '').map(img => encodeImagePath(img) + '?' + IMAGE_VERSION);
           }
           if (product.image) {
             product.image = encodeImagePath(product.image) + '?' + IMAGE_VERSION;
