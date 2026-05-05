@@ -7,52 +7,15 @@
  */
 
 window.MXZONE_CONFIG = {
-  version: 'v6-20260430',
+  version: 'v7-20260504',
   
-  // Categorías base (se sobrescriben con las del CMS si están disponibles)
-  categories: {
-    'cascos': { label: 'Cascos', icon: '⛑️', order: 1, parent: '' },
-    'uniformes': { label: 'Uniformes', icon: '👕', order: 2, parent: '' },
-    'jersey': { label: 'Jerseys', icon: '👕', order: 3, parent: '' },
-    'botas': { label: 'Botas', icon: '👢', order: 4, parent: '' },
-    'guantes': { label: 'Guantes', icon: '🧤', order: 5, parent: '' },
-    'gafas': { label: 'Gafas', icon: '👓', order: 6, parent: '' },
-    'protecciones': { label: 'Protecciones', icon: '🛡️', order: 7, parent: '' },
-    'gorras': { label: 'Gorras', icon: '🧢', order: 8, parent: '' },
-    'maletas': { label: 'Maletas', icon: '🎒', order: 9, parent: '' },
-    'accesorios': { label: 'Accesorios', icon: '🔧', order: 10, parent: '' },
-    'uniformes-ninos': { label: 'Uniformes Niños', icon: '👶', order: 11, parent: 'ninos' },
-    'cascos-ninos': { label: 'Cascos Niños', icon: '🧒', order: 12, parent: 'ninos' },
-    'botas-ninos': { label: 'Botas Niños', icon: '👣', order: 13, parent: 'ninos' },
-    'guantes-ninos': { label: 'Guantes Niños', icon: '🤚', order: 14, parent: 'ninos' },
-    'gafas-ninos': { label: 'Gafas Niños', icon: '👓', order: 15, parent: 'ninos' },
-    'protecciones-ninos': { label: 'Protecciones Niños', icon: '🛡️', order: 16, parent: 'ninos' }
-  },
-  
-  // Categorías Padre
-  parentCategories: {
-    'todos': { label: 'Todo', icon: '📦', order: 0 },
-    'ninos': { label: 'Niños', icon: '🧒', order: 100 }
-  },
-  
-  brands: {
-    'fox': { label: 'Fox', icon: '🦊' },
-    'fly': { label: 'Fly', icon: '🪰' },
-    'alpinestars': { label: 'Alpinestars', icon: '⭐' },
-    'leatt': { label: 'Leatt', icon: '🛡️' },
-    'troy-lee': { label: 'Troy Lee', icon: '🎨' },
-    'oneal': { label: 'Oneal', icon: '1️⃣' },
-    'airoh': { label: 'Airoh', icon: '🅰️' },
-    'acerbis': { label: 'Acerbis', icon: '🔺' },
-    'gaerne': { label: 'Gaerne', icon: '👢' },
-    'fxr': { label: 'FXR', icon: '❌' },
-    'thor': { label: 'Thor', icon: '🔨' },
-    'ktm': { label: 'KTM', icon: '🟠' },
-    'other': { label: 'Otras', icon: '📦' }
-  },
-  
-  // Cache buster para imágenes - actualizar cuando se cambien fotos
-  imageVersion: 'v6-20260430',
+  // URL base del CMS
+  cmsBaseUrl: 'cms/productos/',
+
+  // URL base del CMS de Categorías
+  categoriesBaseUrl: 'cms/categorias/',
+
+  imageVersion: 'v7-20260504',
   
   // URL base del CMS
   cmsBaseUrl: 'cms/productos/',
