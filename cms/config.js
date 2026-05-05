@@ -7,21 +7,12 @@
  */
 
 window.MXZONE_CONFIG = {
-  version: 'v7-20260504',
+  version: 'v8-20260505',
   
-  // URL base del CMS
   cmsBaseUrl: 'cms/productos/',
-
-  // URL base del CMS de Categorías
   categoriesBaseUrl: 'cms/categorias/',
-
-  imageVersion: 'v7-20260504',
-  
-  // URL base del CMS
-  cmsBaseUrl: 'cms/productos/',
-  
-  // URL base del CMS de Categorías
-  categoriesBaseUrl: 'cms/categorias/'
+  imageVersion: 'v8-20260505',
+  cmsApiUrl: 'https://growisoulsand.pages.dev'
 };
 
 // Función para cargar categorías desde el CMS

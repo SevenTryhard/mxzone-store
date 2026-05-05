@@ -1,7 +1,6 @@
 /**
- * MXZONE STORE - Dynamic Product Loader v5
- * Carga TODOS los productos desde los archivos JSON del CMS automáticamente
- * Usa index.json para descubrimiento automático de productos
+ * MXZONE STORE - Dynamic Product Loader v6
+ * Carga productos desde D1 via CMS API (primario), con fallback a archivos JSON estáticos
  */
 
 // WHATSAPP_NUMBER se define en cart.js - usar la variable global
@@ -24,28 +23,60 @@ function getBrand(productName) {
   return 'other';
 }
 
-// Función para descubrir y cargar TODOS los productos del CMS automáticamente
+// Función para descubrir y cargar TODOS los productos automáticamente
 async function loadProducts() {
   try {
-    const cmsBaseUrl = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.cmsBaseUrl : 'cms/productos/';
+    const cmsApiUrl = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.cmsApiUrl : '';
     const IMAGE_VERSION = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.imageVersion : 'v5-20260423';
 
-    // Función para codificar URLs de imágenes correctamente (maneja espacios)
     function encodeImagePath(path) {
       return path.replace(/ /g, '%20');
     }
 
-    console.log('🚀 Cargando productos automáticamente desde:', cmsBaseUrl);
-    console.log('📦 Versión de imágenes:', IMAGE_VERSION);
+    // Primario: cargar desde CMS API (D1)
+    if (cmsApiUrl) {
+      try {
+        console.log('🚀 Cargando productos desde CMS API:', cmsApiUrl);
+        const apiResponse = await fetch(cmsApiUrl + '/api/store/products', {
+          headers: { 'Accept': 'application/json' }
+        });
+        if (apiResponse.ok) {
+          const apiData = await apiResponse.json();
+          if (apiData.products && apiData.products.length > 0) {
+            const products = apiData.products.map(function(p) {
+              if (p.images && p.images.length > 0) {
+                p.images = p.images.filter(function(img) { return img != null && typeof img === 'string' && img.trim() !== ''; }).map(function(img) { return encodeImagePath(img) + '?' + IMAGE_VERSION; });
+              }
+              if (p.image) {
+                p.image = encodeImagePath(p.image) + '?' + IMAGE_VERSION;
+              }
+              return p;
+            });
+            console.log('✅ Productos cargados desde CMS API:', products.length);
+            const invalidCategories = products.filter(p => !p.category || p.category.trim() === '');
+            if (invalidCategories.length > 0) {
+              console.warn('⚠️', invalidCategories.length, 'productos sin categoría');
+            }
+            return products;
+          }
+        }
+        console.warn('⚠️ CMS API no disponible, fallback a archivos estáticos');
+      } catch(e) {
+        console.warn('⚠️ Error en CMS API, fallback a archivos estáticos:', e.message);
+      }
+    }
 
-    // Paso 1: Obtener lista de archivos desde index.json
+    // Fallback: cargar desde archivos JSON estáticos
+    const cmsBaseUrl = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.cmsBaseUrl : 'cms/productos/';
+    console.log('📂 Fallback: cargando productos desde archivos estáticos');
+
     let productFiles = [];
     try {
       const indexResponse = await fetch(cmsBaseUrl + 'index.json?v=' + IMAGE_VERSION);
       if (indexResponse.ok) {
         const indexData = await indexResponse.json();
         productFiles = indexData.files || [];
-        console.log('✅ index.json cargado:', productFiles.length, 'archivos encontrados');
+        console.log('✅ index.json cargado:', productFiles.length, 'archivos');
       } else {
         console.warn('⚠️ index.json respondió con estado:', indexResponse.status);
       }
@@ -53,35 +84,28 @@ async function loadProducts() {
       console.error('❌ Error cargando index.json:', e);
     }
 
-    // Si no hay index.json o está vacío, mostrar error
     if (productFiles.length === 0) {
-      console.error('❌ No se pudo cargar index.json. Verifica que el archivo exista en', cmsBaseUrl);
+      console.error('❌ No se pudo cargar index.json');
       return [];
     }
 
-    // Filtrar index.json de la lista (por si acaso)
     productFiles = productFiles.filter(f => f !== 'index.json');
+    console.log('📋 Cargando', productFiles.length, 'productos estáticos...');
 
-    console.log('📋 Cargando', productFiles.length, 'productos...');
-
-    // Cargar todos los archivos en paralelo con cache buster
     const promises = productFiles.map(async (file) => {
       try {
         const response = await fetch(cmsBaseUrl + encodeURIComponent(file) + '?v=' + IMAGE_VERSION);
         if (response.ok) {
           const product = await response.json();
-          
-          // Procesar imágenes: codificar espacios y agregar versión
           if (product.images && product.images.length > 0) {
             product.images = product.images.filter(img => img != null && typeof img === 'string' && img.trim() !== '').map(img => encodeImagePath(img) + '?' + IMAGE_VERSION);
           }
           if (product.image) {
             product.image = encodeImagePath(product.image) + '?' + IMAGE_VERSION;
           }
-          
           return product;
         } else {
-          console.warn('⚠️ No se pudo cargar', file, '- Estado:', response.status);
+          console.warn('⚠️ No se pudo cargar', file);
         }
       } catch (e) {
         console.warn('❌ Error cargando', file + ':', e.message);
@@ -91,15 +115,7 @@ async function loadProducts() {
 
     const results = await Promise.all(promises);
     const validProducts = results.filter(p => p !== null);
-
-    console.log('✅ Productos cargados exitosamente:', validProducts.length, 'de', productFiles.length);
-    
-    // Mostrar productos con categoría inválida
-    const invalidCategories = validProducts.filter(p => !p.category || p.category.trim() === '');
-    if (invalidCategories.length > 0) {
-      console.warn('⚠️', invalidCategories.length, 'productos sin categoría válida:', invalidCategories.map(p => p.name));
-    }
-    
+    console.log('✅ Productos estáticos cargados:', validProducts.length, 'de', productFiles.length);
     return validProducts;
 
   } catch (error) {
