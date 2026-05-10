@@ -44,6 +44,9 @@
       </ul>
 
       <div class="nav-cta">
+        <!-- Theme Toggle -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">☀️</button>
+
         <!-- Carrito Button -->
         <div class="cart-btn-container">
           <button class="cart-btn" id="cartBtn" aria-label="Ver carrito">
@@ -386,6 +389,37 @@
             </div>
           </div>
 
+          <!-- TALLAS Section -->
+          <div class="filter-group">
+            <div class="checkbox-group">
+              <div class="category-parent-wrapper">
+                <button class="category-parent-toggle filter-section-toggle" id="tallasToggle" type="button">
+                  <span class="toggle-icon">▼</span>
+                  <span class="toggle-label">TALLAS</span>
+                </button>
+                <div class="category-children" id="tallasChildren">
+                  <div class="size-filter-chips">
+                    <button class="size-chip" data-size="S">S</button>
+                    <button class="size-chip" data-size="M">M</button>
+                    <button class="size-chip" data-size="L">L</button>
+                    <button class="size-chip" data-size="XL">XL</button>
+                    <button class="size-chip" data-size="XXL">XXL</button>
+                    <button class="size-chip" data-size="38">38</button>
+                    <button class="size-chip" data-size="39">39</button>
+                    <button class="size-chip" data-size="40">40</button>
+                    <button class="size-chip" data-size="41">41</button>
+                    <button class="size-chip" data-size="42">42</button>
+                    <button class="size-chip" data-size="43">43</button>
+                    <button class="size-chip" data-size="44">44</button>
+                    <button class="size-chip" data-size="45">45</button>
+                    <button class="size-chip" data-size="46">46</button>
+                    <button class="size-chip" data-size="Única">Única</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Clear Filters -->
           <button id="clearFilters" class="btn btn-clear-filters">
             <span>🗑️</span> Limpiar filtros
@@ -401,15 +435,22 @@
             <div class="results-count">
               <span id="resultsCount">104</span> productos encontrados
             </div>
-            <div class="sort-options">
-              <label for="sortSelect">Ordenar por:</label>
-              <select id="sortSelect" class="sort-select">
-                <option value="default">Relevancia</option>
-                <option value="price-asc">Precio: Menor a Mayor</option>
-                <option value="price-desc">Precio: Mayor a Menor</option>
-                <option value="name-asc">Nombre: A-Z</option>
-                <option value="name-desc">Nombre: Z-A</option>
-              </select>
+            <div class="top-bar-controls">
+              <!-- Desktop Search -->
+              <div class="desktop-search">
+                <input type="text" id="productSearch" class="search-input" placeholder="Buscar productos...">
+                <span class="search-icon">🔍</span>
+              </div>
+              <div class="sort-options">
+                <label for="sortSelect">Ordenar por:</label>
+                <select id="sortSelect" class="sort-select">
+                  <option value="default">Relevancia</option>
+                  <option value="price-asc">Precio: Menor a Mayor</option>
+                  <option value="price-desc">Precio: Mayor a Menor</option>
+                  <option value="name-asc">Nombre: A-Z</option>
+                  <option value="name-desc">Nombre: Z-A</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -616,13 +657,85 @@
     </div>
   </div>
 
-  <!-- Shopping Cart Modal -->
-  <div class="cart-modal" id="cartModal">
-    <div class="cart-modal-overlay" id="cartOverlay"></div>
-    <div class="cart-modal-content">
-      <div class="cart-header">
-        <h3 class="cart-title">🛒 Tu Carrito</h3>
-        <button class="cart-close" id="cartClose">&times;</button>
+      <!-- Shopping Cart Modal -->
+      <div class="cart-modal" id="cartModal">
+        <div class="cart-modal-overlay" id="cartOverlay"></div>
+        <div class="cart-modal-content">
+          <div class="cart-header">
+            <h3 class="cart-title" id="cartTitle">🛒 Tu Carrito</h3>
+            <button class="cart-close" id="cartClose">×</button>
+          </div>
+
+          <!-- STEP 1: Carrito simple (productos + botones) -->
+          <div class="cart-step" id="cartStep1">
+            <div class="cart-items" id="cartItemsContainer">
+              <div class="cart-empty" id="cartEmpty">
+                <div class="cart-empty-icon">🛒</div>
+                <p>Tu carrito está vacío</p>
+                <p style="font-size:0.9rem;color:var(--gray-text)">Agrega productos para continuar</p>
+              </div>
+              <div id="cartContent" style="display:none">
+                <div class="cart-items" id="cartItems"></div>
+              </div>
+            </div>
+
+            <div class="cart-footer" id="cartTotal" style="display:none">
+              <div class="cart-total">
+                <span class="cart-total-label">Total:</span>
+                <span class="cart-total-value" id="cartTotalValue">$0</span>
+              </div>
+              <div class="cart-actions-simple">
+                <button class="cart-checkout-btn" id="buyBtn">
+                  <span>🛍️</span><span>Comprar</span>
+                </button>
+                <button class="cart-clear-btn" id="clearCartBtn">🗑️ Vaciar carrito</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2: Formulario de checkout -->
+          <div class="cart-step" id="cartStep2" style="display:none">
+            <div class="cart-form">
+              <div class="cart-form-group">
+                <label for="checkoutName">Nombre completo *</label>
+                <input type="text" id="checkoutName" placeholder="Tu nombre completo" required>
+              </div>
+              <div class="cart-form-row">
+                <div class="cart-form-group" style="flex:1">
+                  <label for="checkoutPhone">Teléfono *</label>
+                  <input type="tel" id="checkoutPhone" placeholder="Ej: 317 669 2997" required>
+                </div>
+                <div class="cart-form-group" style="flex:1">
+                  <label for="checkoutCity">Ciudad *</label>
+                  <input type="text" id="checkoutCity" placeholder="Ej: Bogotá" required>
+                </div>
+              </div>
+              <div class="cart-form-group">
+                <label for="checkoutAddress">Dirección de envío *</label>
+                <input type="text" id="checkoutAddress" placeholder="Calle, número, barrio" required>
+              </div>
+
+              <div class="cart-payment-methods">
+                <p style="font-size:0.9rem;font-weight:600;margin-bottom:var(--spacing-sm)">💳 Método de pago:</p>
+                <div class="payment-methods-grid">
+                  <button class="payment-method-btn" onclick="selectPaymentMethod('nequi')" data-method="nequi">📱 Nequi</button>
+                  <button class="payment-method-btn" onclick="selectPaymentMethod('daviplata')" data-method="daviplata">📱 Daviplata</button>
+                  <button class="payment-method-btn" onclick="selectPaymentMethod('transferencia')" data-method="transferencia">🏦 Transferencia</button>
+                  <button class="payment-method-btn" onclick="selectPaymentMethod('efectivo')" data-method="efectivo">💵 Efectivo</button>
+                  <button class="payment-method-btn" onclick="selectPaymentMethod('tarjeta')" data-method="tarjeta" style="grid-column:span 2">💳 Tarjeta (Próximamente)</button>
+                </div>
+              </div>
+
+              <div class="cart-actions-simple" style="margin-top:var(--spacing-md)">
+                <button class="cart-checkout-btn" id="checkoutBtn">
+                  <span>💬</span><span>Enviar pedido por WhatsApp</span>
+                </button>
+                <button class="cart-clear-btn" id="backToCartBtn">← Volver al carrito</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
 
       <div class="cart-items" id="cartItemsContainer">

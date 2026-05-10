@@ -207,25 +207,21 @@ function updateCartModal() {
 
 // Enviar pedido a WhatsApp
 function checkoutToWhatsApp() {
-  if (cart.length === 0) {
-    showNotification('El carrito está vacío', 'error');
-    return;
-  }
-
-  if (!selectedPaymentMethod) {
-    showNotification('Por favor selecciona un método de pago', 'error');
-    return;
-  }
-
-  const message = buildWhatsAppMessage();
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  window.open(url, '_blank');
+  // No se usa más directamente; se valida desde el paso 2
 }
 
-// Construir mensaje de WhatsApp
-function buildWhatsAppMessage() {
+// Construir mensaje de WhatsApp (con datos de formulario)
+function buildWhatsAppMessage(name, phone, city, address) {
   let message = `*¡Hola MXZONE STORE! 🏍️*\n\n`;
   message += `*QUIERO REALIZAR EL SIGUIENTE PEDIDO:*\n\n`;
+  message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+
+  // Datos del comprador
+  message += `*DATOS DEL COMPRADOR:*\n`;
+  message += `▫️ Nombre: ${name}\n`;
+  message += `▫️ Teléfono: ${phone}\n`;
+  message += `▫️ Ciudad: ${city}\n`;
+  message += `▫️ Dirección: ${address}\n\n`;
   message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
 
   // Agrupar productos por categoría
@@ -368,6 +364,13 @@ window.openCart = function() {
   if (cartModal) {
     cartModal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    // Resetear siempre a paso 1 cuando se abre desde fuera
+    const s1 = document.getElementById('cartStep1');
+    const s2 = document.getElementById('cartStep2');
+    const title = document.getElementById('cartTitle');
+    if (s1) s1.style.display = 'block';
+    if (s2) s2.style.display = 'none';
+    if (title) title.textContent = '\uD83D\uDED2 Tu Carrito';
     updateCartModal();
   }
 };
@@ -380,13 +383,30 @@ window.closeCart = function() {
   }
 };
 
-// Cargar carrito cuando el DOM esté listo
+// ==================== INICIALIZACIÓN ====================
+
 document.addEventListener('DOMContentLoaded', () => {
   // Redefinir loadCart en el objeto global
   window.MXZONECart.loadCart = loadCart;
 
   // Ejecutar carga inicial
   loadCart();
+
+  function showCartStep(step) {
+    const s1 = document.getElementById('cartStep1');
+    const s2 = document.getElementById('cartStep2');
+    const title = document.getElementById('cartTitle');
+    if (!s1 || !s2) return;
+    if (step === 1) {
+      s1.style.display = 'block';
+      s2.style.display = 'none';
+      if (title) title.textContent = '\uD83D\uDED2 Tu Carrito';
+    } else {
+      s1.style.display = 'none';
+      s2.style.display = 'block';
+      if (title) title.textContent = '\uD83D\uDED1 Finalizar Compra';
+    }
+  }
 
   // Abrir modal del carrito - usar delegación de eventos
   document.addEventListener('click', (e) => {
@@ -396,7 +416,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (cartModal) {
         cartModal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        showCartStep(1);
         updateCartModal();
+      } else {
+        window.location.href = 'shop.html?opencart=1';
       }
     }
 
@@ -408,13 +431,49 @@ document.addEventListener('DOMContentLoaded', () => {
       closeCart();
     }
 
+    // Botón COMPRAR → ir al formulario (paso 2)
+    if (e.target.id === 'buyBtn' || e.target.closest('#buyBtn')) {
+      e.preventDefault();
+      if (cart.length === 0) {
+        showNotification('El carrito est\u00e1 vac\u00edo', 'error');
+        return;
+      }
+      showCartStep(2);
+    }
+
+    // Botón VOLVER AL CARRITO
+    if (e.target.id === 'backToCartBtn' || e.target.closest('#backToCartBtn')) {
+      e.preventDefault();
+      showCartStep(1);
+    }
+
+    // Botón CHECKOUT (enviar por WhatsApp)
     if (e.target.id === 'checkoutBtn' || e.target.closest('#checkoutBtn')) {
-      checkoutToWhatsApp();
+      e.preventDefault();
+
+      const name = document.getElementById('checkoutName')?.value.trim();
+      const phone = document.getElementById('checkoutPhone')?.value.trim();
+      const city = document.getElementById('checkoutCity')?.value.trim();
+      const address = document.getElementById('checkoutAddress')?.value.trim();
+
+      if (!name || !phone || !city || !address) {
+        showNotification('Completa todos los campos obligatorios', 'error');
+        return;
+      }
+      if (!selectedPaymentMethod) {
+        showNotification('Selecciona un m\u00e9todo de pago', 'error');
+        return;
+      }
+
+      const message = buildWhatsAppMessage(name, phone, city, address);
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
     }
 
     if (e.target.id === 'clearCartBtn' || e.target.closest('#clearCartBtn')) {
-      if (confirm('¿Estás seguro de vaciar el carrito?')) {
+      if (confirm('\u00bfEst\u00e1s seguro de vaciar el carrito?')) {
         clearCart();
+        showCartStep(1);
       }
     }
   });
@@ -426,6 +485,25 @@ document.addEventListener('DOMContentLoaded', () => {
       closeCart();
     }
   });
+
+  // Auto-open si viene de otra página con ?opencart=1
+  if (window.location.search.includes('opencart=1')) {
+    setTimeout(() => {
+      const cartModal = document.getElementById('cartModal');
+      if (cartModal) {
+        cartModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        showCartStep(1);
+        updateCartModal();
+      }
+      // Limpiar param sin recargar
+      if (window.history.replaceState) {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('opencart');
+        window.history.replaceState({}, document.title, url.toString());
+      }
+    }, 500);
+  }
 });
 
 // Actualizar WhatsApp flotante con productos del carrito
@@ -444,19 +522,3 @@ function updateFloatingWhatsApp() {
     floatBtn.title = `WhatsApp (${cart.length} productos)`;
   }
 }
-
-// Exportar funciones globales
-window.addToCart = addToCart;
-window.removeFromCart = removeFromCart;
-window.updateQuantity = updateQuantity;
-window.updateSize = updateSize;
-window.checkoutToWhatsApp = checkoutToWhatsApp;
-window.MXZONECart = {
-  loadCart,
-  addToCart,
-  removeFromCart,
-  updateQuantity,
-  clearCart,
-  getCartTotal,
-  getCartItems: () => cart
-};

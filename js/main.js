@@ -286,6 +286,7 @@ function initShopFiltersInternal() {
   const mobileSearchInput = document.getElementById('mobileProductSearch');
   const categoryFilters = document.querySelectorAll('.category-filter');
   const brandFilters = document.querySelectorAll('.brand-filter');
+  const sizeChips = document.querySelectorAll('.size-chip');
   const minPriceInput = document.getElementById('minPrice');
   const maxPriceInput = document.getElementById('maxPrice');
   const applyPriceBtn = document.getElementById('applyPriceFilter');
@@ -337,6 +338,11 @@ function initShopFiltersInternal() {
       .filter(cb => cb.checked)
       .map(cb => cb.dataset.brand);
 
+    // Get selected sizes
+    const selectedSizes = Array.from(sizeChips)
+      .filter(c => c.classList.contains('active'))
+      .map(c => c.dataset.size);
+
     // Get price range
     const minPrice = parseInt(minPriceInput?.value) || 0;
     const maxPrice = parseInt(maxPriceInput?.value) || 3000000;
@@ -354,6 +360,7 @@ function initShopFiltersInternal() {
         const category = card.dataset.category;
         const brand = card.dataset.brand;
         const price = parseInt(card.dataset.price) || 0;
+        const cardSizes = (card.dataset.sizes || '').toUpperCase();
 
         // Search filter
         const matchesSearch = name.includes(searchTerm);
@@ -367,7 +374,10 @@ function initShopFiltersInternal() {
         // Price filter
         const matchesPrice = price >= minPrice && price <= maxPrice;
 
-        const isVisible = matchesSearch && matchesCategory && matchesBrand && matchesPrice;
+        // Size filter
+        const matchesSize = selectedSizes.length === 0 || (cardSizes && selectedSizes.some(s => cardSizes.includes(s)));
+
+        const isVisible = matchesSearch && matchesCategory && matchesBrand && matchesPrice && matchesSize;
 
         // Track category visibility
         if (!categoryVisibility[category]) {
@@ -770,6 +780,14 @@ function initShopFiltersInternal() {
     });
   });
 
+  // Size chips event listeners
+  sizeChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chip.classList.toggle('active');
+      filterProducts();
+    });
+  });
+
   if (applyPriceBtn) {
     applyPriceBtn.addEventListener('click', filterProducts);
   }
@@ -788,6 +806,11 @@ function initShopFiltersInternal() {
       // Reset brands
       brandFilters.forEach(cb => {
         cb.checked = cb.dataset.brand === 'all';
+      });
+
+      // Reset sizes
+      sizeChips.forEach(chip => {
+        chip.classList.remove('active');
       });
 
       // Reset price
@@ -1002,41 +1025,62 @@ function initShopFiltersInternal() {
     });
   }
 
-  // Quick Filter Arrow Navigation
+  // Quick Filter Arrow Navigation (debounced + bounds checked)
   const quickFiltersScroll = document.getElementById('quickFiltersScroll');
   const quickFilterLeft = document.getElementById('quickFilterLeft');
   const quickFilterRight = document.getElementById('quickFilterRight');
 
-  const scrollAmount = 200; // Pixels to scroll
+  const scrollAmount = 200;
+  let isScrolling = false;
+
+  function updateArrowStates() {
+    if (!quickFiltersScroll) return;
+    const maxScroll = quickFiltersScroll.scrollWidth - quickFiltersScroll.clientWidth;
+    const nearStart = quickFiltersScroll.scrollLeft <= 5;
+    const nearEnd = quickFiltersScroll.scrollLeft >= maxScroll - 5;
+
+    if (quickFilterLeft) {
+      if (nearStart) {
+        quickFilterLeft.style.opacity = '0.3';
+        quickFilterLeft.style.pointerEvents = 'none';
+        quickFilterLeft.disabled = true;
+      } else {
+        quickFilterLeft.style.opacity = '0.9';
+        quickFilterLeft.style.pointerEvents = '';
+        quickFilterLeft.disabled = false;
+      }
+    }
+    if (quickFilterRight) {
+      if (nearEnd || maxScroll <= 0) {
+        quickFilterRight.style.opacity = '0.3';
+        quickFilterRight.style.pointerEvents = 'none';
+        quickFilterRight.disabled = true;
+      } else {
+        quickFilterRight.style.opacity = '0.9';
+        quickFilterRight.style.pointerEvents = '';
+        quickFilterRight.disabled = false;
+      }
+    }
+  }
+
+  function debouncedScroll(dir) {
+    if (isScrolling || !quickFiltersScroll) return;
+    isScrolling = true;
+    quickFiltersScroll.scrollBy({ left: dir * scrollAmount, behavior: 'smooth' });
+    setTimeout(() => { isScrolling = false; }, 350);
+  }
 
   if (quickFilterLeft && quickFiltersScroll) {
-    quickFilterLeft.addEventListener('click', () => {
-      quickFiltersScroll.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    });
+    quickFilterLeft.addEventListener('click', () => debouncedScroll(-1));
   }
 
   if (quickFilterRight && quickFiltersScroll) {
-    quickFilterRight.addEventListener('click', () => {
-      quickFiltersScroll.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    });
+    quickFilterRight.addEventListener('click', () => debouncedScroll(1));
   }
 
-  // Show/hide arrows based on scroll position
   if (quickFiltersScroll) {
-    quickFiltersScroll.addEventListener('scroll', () => {
-      const maxScroll = quickFiltersScroll.scrollWidth - quickFiltersScroll.clientWidth;
-      
-      if (quickFilterLeft) {
-        quickFilterLeft.style.opacity = quickFiltersScroll.scrollLeft > 0 ? '0.9' : '0.5';
-      }
-      
-      if (quickFilterRight) {
-        quickFilterRight.style.opacity = quickFiltersScroll.scrollLeft < maxScroll - 10 ? '0.9' : '0.5';
-      }
-    });
-
-    // Initial state
-    if (quickFilterLeft) quickFilterLeft.style.opacity = '0.5';
+    quickFiltersScroll.addEventListener('scroll', updateArrowStates);
+    updateArrowStates(); // initial
   }
 
   // ========================================
@@ -2268,3 +2312,86 @@ window.MXZONE = {
   InitProductModal: initProductModalInternal,
   InitPriceSlider: initPriceRangeSlider
 };
+
+// ================================
+// 🌗 THEME TOGGLE (DARK / LIGHT)
+// ================================
+(function initTheme() {
+  const STORAGE_KEY = 'mxzone_theme';
+
+  function applyTheme(theme) {
+    const toggleBtn = document.getElementById('themeToggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    // Si no hay preferencia, usar sistema
+    if (!theme) {
+      theme = prefersDark ? 'dark' : 'light';
+    }
+
+    document.documentElement.setAttribute('data-theme', theme);
+    if (toggleBtn) {
+      toggleBtn.textContent = theme === 'light' ? '🌙' : '☀️';
+      toggleBtn.title = theme === 'light' ? 'Modo oscuro' : 'Modo claro';
+    }
+  }
+
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+    const next = current === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem(STORAGE_KEY, next);
+    applyTheme(next);
+  }
+
+  // Load saved theme on page load
+  const saved = localStorage.getItem(STORAGE_KEY);
+  applyTheme(saved);
+
+  // Watch for system changes (only if no explicit save)
+  if (!saved) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      applyTheme(e.matches ? 'dark' : 'light');
+    });
+  }
+
+  // Bind button after DOM ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('themeToggle');
+    if (btn) btn.addEventListener('click', toggleTheme);
+    // Re-apply icon text
+    applyTheme(saved || document.documentElement.getAttribute('data-theme') || 'dark');
+  });
+})();
+
+// ================================
+// 🛒 GLOBAL: WhatsApp buttons → Cart (except advisory)
+// ================================
+(function interceptWhatsAppButtons() {
+  function isAdvisoryWhatsapp(el) {
+    const text = ((el && (el.textContent || el.title || el.getAttribute('aria-label') || '')) || '').toLowerCase();
+    return text.includes('asesor') || text.includes('consultar') || el.classList.contains('whatsapp-advisory') || (el.closest && el.closest('.whatsapp-advisory'));
+  }
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest('a, button');
+    if (!el) return;
+    const href = (el.getAttribute('href') || '');
+    const isWhatsappBtn = href.includes('wa.me')
+      || el.classList.contains('btn-whatsapp')
+      || el.classList.contains('whatsapp-float')
+      || el.classList.contains('whatsapp-sticky-bar')
+      || el.id === 'modalWhatsapp'
+      || el.id === 'checkoutComboBtn';
+    if (!isWhatsappBtn) return;
+    if (isAdvisoryWhatsapp(el)) return;
+    if (el.textContent && el.textContent.toLowerCase().includes('asesoría por whatsapp')) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const cartModal = document.getElementById('cartModal');
+    if (cartModal && typeof openCart === 'function') {
+      openCart();
+    } else {
+      window.location.href = 'shop.html?opencart=1';
+    }
+  }, true);
+})();
+
