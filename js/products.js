@@ -36,8 +36,13 @@ async function loadProducts() {
     // Primario: cargar desde CMS API (D1)
     if (cmsApiUrl) {
       try {
-        console.log('🚀 Cargando productos desde CMS API:', cmsApiUrl);
-        const apiResponse = await fetch(cmsApiUrl + '/api/store/products', {
+        var projectKey = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.projectKey : '';
+        var apiUrl = cmsApiUrl + '/api/store/products';
+        if (projectKey) {
+          apiUrl += '?project=' + encodeURIComponent(projectKey);
+        }
+        console.log('🚀 Cargando productos desde CMS API:', apiUrl);
+        const apiResponse = await fetch(apiUrl, {
           headers: { 'Accept': 'application/json' }
         });
         if (apiResponse.ok) {

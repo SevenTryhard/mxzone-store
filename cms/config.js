@@ -7,11 +7,12 @@
  */
 
 window.MXZONE_CONFIG = {
-  version: 'v8-20260505',
+  version: 'v9-20260510',
   
+  projectKey: 'SevenTryhard/mxzone-store',
   cmsBaseUrl: 'cms/productos/',
   categoriesBaseUrl: 'cms/categorias/',
-  imageVersion: 'v8-20260505',
+  imageVersion: 'v9-20260510',
   cmsApiUrl: 'https://growisoulsand.pages.dev'
 };
 
@@ -95,4 +96,5 @@ async function loadCategoriesFromCMS() {
 loadCategoriesFromCMS();
 
 console.log('✅ MXZONE_CONFIG cargado:', window.MXZONE_CONFIG.version);
-console.log('📂 Categorías disponibles:', Object.keys(window.MXZONE_CONFIG.categories).length);
+var catCount = window.MXZONE_CONFIG.categories ? Object.keys(window.MXZONE_CONFIG.categories).length : 0;
+console.log('📂 Categorías disponibles:', catCount);
