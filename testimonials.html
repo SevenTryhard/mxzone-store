@@ -379,5 +379,72 @@
   </a>
 
   <script src="js/main.js?v=3d-20260418"></script>
+
+  <!-- Schema.org JSON-LD: Reviews + LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://mxzone-store.pages.dev/#localbusiness",
+        "name": "MXZONE STORE",
+        "image": "https://mxzone-store.pages.dev/assets/logo/logo.png",
+        "url": "https://mxzone-store.pages.dev",
+        "telephone": "+57-317-669-2997",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Calle 36N # 3N-56",
+          "addressLocality": "Cali",
+          "addressRegion": "Valle del Cauca",
+          "addressCountry": "CO"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "3.4516",
+          "longitude": "-76.5320"
+        },
+        "priceRange": "$$",
+        "openingHours": ["Mo-Sa 09:00-18:00", "Su 10:00-14:00"],
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5.0",
+          "reviewCount": "5"
+        },
+        "review": [
+          {
+            "@type": "Review",
+            "author": { "@type": "Person", "name": "Carlos Ramírez" },
+            "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+            "reviewBody": "Excelente servicio, el casco FOX V1 Toxsyk me llegó en perfectas condiciones y al día siguiente. Definitivamente volveré a comprar.",
+            "publisher": { "@type": "Organization", "name": "MXZONE STORE" }
+          },
+          {
+            "@type": "Review",
+            "author": { "@type": "Person", "name": "Juan Martínez" },
+            "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+            "reviewBody": "Compré el uniforme completo Fly Kinetic y las botas Leatt 4.5. Calidad increíble y precios competitivos. MXZONE es ahora mi tienda de confianza para el MX.",
+            "publisher": { "@type": "Organization", "name": "MXZONE STORE" }
+          },
+          {
+            "@type": "Review",
+            "author": { "@type": "Person", "name": "David Gómez" },
+            "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+            "reviewBody": "Muy profesionales. Tenía dudas sobre las protecciones y me ayudaron a armar el kit perfecto para mi nivel. El envío fue súper rápido. 100% recomendados.",
+            "publisher": { "@type": "Organization", "name": "MXZONE STORE" }
+          },
+          {
+            "@type": "Review",
+            "author": { "@type": "Person", "name": "Sebastián Rodríguez" },
+            "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+            "reviewBody": "Llevo 3 compras con MXZONE y nunca me han fallado. La última fue un casco Alpinestars SM5 y llegó perfecto. Lo mejor es que siempre responden rápido por WhatsApp.",
+            "publisher": { "@type": "Organization", "name": "MXZONE STORE" }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
 </body>
 </html>
