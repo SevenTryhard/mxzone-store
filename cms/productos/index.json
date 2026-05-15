@@ -100,6 +100,7 @@
     "gorra-fox-syz-flexfit-hat.json",
     "gorra-non-stop-tech-flexfit-cit.json",
     "grips-progrip.json",
+    "grips-renthal.json",
     "grips-scott.json",
     "guante-100-smart-shock-fluo-m.json",
     "guante-100-smart-shock-fluo.json",
@@ -272,5 +273,5 @@
     "uniforme-tipo-fox-rojo.json",
     "uniforme-tipo-fox.json"
   ],
-  "total": 270
+  "total": 271
 }
