@@ -224,6 +224,7 @@
     "protector-suspension-delantera.json",
     "puff-protaper-cuadrado.json",
     "puff-renthal-originales.json",
+    "puff-renthal-replica.json",
     "rampa-aluminio-plegable-75-pies-capacidad-750-lbs.json",
     "refrigerante-motorx-m50.json",
     "rinionera-acerbis-profile.json",
@@ -279,5 +280,5 @@
     "uniforme-tipo-fox-rojo.json",
     "uniforme-tipo-fox.json"
   ],
-  "total": 277
+  "total": 278
 }
