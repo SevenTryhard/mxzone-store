@@ -142,6 +142,7 @@
     "guantes-troy-lee-air-camp-green.json",
     "handguards-acerbis-x-ultimate.json",
     "handguards-alma-en-aluminio.json",
+    "hanguards-alma-en-aluminio.json",
     "herramienta-multiusos.json",
     "jersey-alpinestar-fluid-grid-prp-red.json",
     "jersey-alpinestars-apex-orn-prp.json",
@@ -273,5 +274,5 @@
     "uniforme-tipo-fox-rojo.json",
     "uniforme-tipo-fox.json"
   ],
-  "total": 271
+  "total": 272
 }
