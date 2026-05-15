@@ -92,6 +92,7 @@
     "gafas-100-accuri-2-wolg-red.json",
     "gafas-100-strata-2-lima-claro.json",
     "gafas-100-strata-2-naranja-claro.json",
+    "gafas-100-strata-2-purpura-lente-clear.json",
     "gafas-100-strata-2-rojo-claro.json",
     "gorra-fox-absolute-flexfit-azul.json",
     "gorra-fox-absolute-flexfit-gris.json",
@@ -288,5 +289,5 @@
     "uniforme-tipo-fox-rojo.json",
     "uniforme-tipo-fox.json"
   ],
-  "total": 286
+  "total": 287
 }
