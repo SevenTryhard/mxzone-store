@@ -28,6 +28,7 @@
     "botas-leatt-4-5-naranja.json",
     "botas-leatt-4-5.json",
     "botas-pvc-impermeables-gris-dakar.json",
+    "boton-apagado-universal.json",
     "canguro-rinionera-acerbis.json",
     "canguro-tipo-ktm.json",
     "casco-airoh-twist-3-dynasty-rosso.json",
@@ -284,5 +285,5 @@
     "uniforme-tipo-fox-rojo.json",
     "uniforme-tipo-fox.json"
   ],
-  "total": 282
+  "total": 283
 }
