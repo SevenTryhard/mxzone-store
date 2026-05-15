@@ -146,6 +146,7 @@
     "handguards-alma-en-aluminio.json",
     "hanguards-alma-en-aluminio.json",
     "herramienta-multiusos.json",
+    "horometro-inalambrico-acerbis.json",
     "jersey-alpinestar-fluid-grid-prp-red.json",
     "jersey-alpinestars-apex-orn-prp.json",
     "jersey-alpinestars-fluid-apex-black.json",
@@ -276,5 +277,5 @@
     "uniforme-tipo-fox-rojo.json",
     "uniforme-tipo-fox.json"
   ],
-  "total": 274
+  "total": 275
 }
