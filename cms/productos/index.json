@@ -84,6 +84,7 @@
     "fox-fixated-flexfit-hat.json",
     "gafa-100-strata-2-claro.json",
     "gafa-100-strata-2-lente-rojo.json",
+    "gafa-100-strata-2-purpura-lente-rojo-azul-espejo.json",
     "gafas-100-1-1.json",
     "gafas-100-accuri-2-fairbranks.json",
     "gafas-100-accuri-2-odeon.json",
@@ -286,5 +287,5 @@
     "uniforme-tipo-fox-rojo.json",
     "uniforme-tipo-fox.json"
   ],
-  "total": 284
+  "total": 285
 }
