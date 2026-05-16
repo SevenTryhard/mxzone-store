@@ -8,5 +8,8 @@
   "description": "Casco AIROH TWIST de diseÃ±o italiano",
   "images": [
     "/assets/images/nuevas_images/1-140.jpg"
-  ]
+  ],
+  "sku": "CAS-XX-CASCO",
+  "color": "",
+  "agotado": false
 }

@@ -7,5 +7,8 @@
   "description": "Guante para motocross: GUANTES ACERBIS LINEAR",
   "images": [
     "/assets/images/guantes/1-324.jpg"
-  ]
+  ],
+  "sku": "GUA-XX-GUAN20",
+  "color": "",
+  "agotado": false
 }

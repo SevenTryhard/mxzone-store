@@ -7,5 +7,8 @@
   "description": "Gafas para motocross: GAFAS 100% ACCURI 2 ODEON",
   "images": [
     "/assets/images/gafas/gafas100-accuri2odeonlenteplata.webp"
-  ]
+  ],
+  "sku": "GAF-XX-GAFA4",
+  "color": "",
+  "agotado": false
 }

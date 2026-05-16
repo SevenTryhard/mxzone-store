@@ -7,5 +7,8 @@
   "description": "Accesorio para motocross: CEPILLO LIMPIADOR CADENA",
   "images": [
     "/assets/images/accesorios/cepillo-limpiador-cadena.jpg"
-  ]
+  ],
+  "sku": "ACC-XX-CEPIL",
+  "color": "",
+  "agotado": false
 }

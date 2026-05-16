@@ -7,5 +7,8 @@
   "description": "Casco AIROH WRAAP con diseÃƒÂ±o FEEL en azul y rojo",
   "images": [
     "/assets/images/nuevas_images/assetsimagescascoscasco-airoh-wraap-feel-azul-rojo.jpg"
-  ]
+  ],
+  "sku": "CAS-AZ-CASCO",
+  "color": "azul",
+  "agotado": false
 }

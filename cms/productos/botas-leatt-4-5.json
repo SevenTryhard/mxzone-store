@@ -8,5 +8,8 @@
   "description": "Botas LEATT 4.5 estÃ¡ndar de competiciÃ³n",
   "images": [
     "/assets/images/botas/botas-de-motocross-leatt-45-negro-1080x.webp"
-  ]
+  ],
+  "sku": "BOT-XX-BOTA8",
+  "color": "",
+  "agotado": false
 }

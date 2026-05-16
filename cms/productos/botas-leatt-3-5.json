@@ -8,5 +8,8 @@
   "description": "Botas LEATT 3.5 de entrada, excelente relaciÃ³n calidad-precio",
   "images": [
     "/assets/images/botas/leatt-botas-moto-3-5.jpg"
-  ]
+  ],
+  "sku": "BOT-XX-BOTA6",
+  "color": "",
+  "agotado": false
 }

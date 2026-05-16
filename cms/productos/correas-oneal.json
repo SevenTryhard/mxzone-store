@@ -7,5 +7,8 @@
   "description": "Accesorio para motocross: CORREAS ONEAL",
   "images": [
     "/assets/images/accesorios/correas-oneal.jpg"
-  ]
+  ],
+  "sku": "ACC-XX-CORR1",
+  "color": "",
+  "agotado": false
 }

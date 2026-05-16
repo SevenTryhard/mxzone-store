@@ -7,5 +7,8 @@
   "description": "Accesorio para motocross: MOTOREX CROSSPOWER 2T 1L",
   "images": [
     "/assets/images/accesorios/motorex-crosspower-2t-1l.jpg"
-  ]
+  ],
+  "sku": "ACC-XX-MOTOR",
+  "color": "",
+  "agotado": false
 }

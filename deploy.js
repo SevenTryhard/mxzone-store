@@ -25,22 +25,10 @@ const excludePatterns = [
 ];
 
 // Copiar solo archivos necesarios
-const filesToCopy = [
-  'index.html',
-  'shop.html',
-  'promociones.html',
-  'about.html',
-  'testimonials.html',
-  'faq.html',
-  'contact.html',
-  'product.html',
-  'shipping.html',
-  'returns.html',
-  'sizes.html',
-  'terms.html',
-  'privacy.html',
-  'admin'
-];
+// Archivos raiz: copiar TODOS los .html dinamicamente
+const filesToCopy = fs.readdirSync(process.cwd())
+  .filter(f => f.endsWith('.html'))
+  .concat(['admin']);
 
 const foldersToCopy = [
   'css',

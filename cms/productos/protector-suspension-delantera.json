@@ -7,5 +7,8 @@
   "description": "Accesorio para motocross: PROTECTOR SUSPENSION DELANTERA",
   "images": [
     "/assets/images/accesorios/protector-suspension-delantera.jpg"
-  ]
+  ],
+  "sku": "ACC-XX-PROT3",
+  "color": "",
+  "agotado": false
 }

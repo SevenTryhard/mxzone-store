@@ -7,5 +7,8 @@
   "description": "Accesorio para motocross: PISA LLANTAS",
   "images": [
     "/assets/images/accesorios/pisa-llantas.jpg"
-  ]
+  ],
+  "sku": "ACC-XX-PISAL",
+  "color": "",
+  "agotado": false
 }

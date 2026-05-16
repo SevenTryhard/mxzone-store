@@ -7,5 +7,8 @@
   "description": "Guante para motocross: GUANTE 100% SMART SHOCK FLUO",
   "images": [
     "/assets/images/guantes/guantes-100-cognito-smart-shock-naranja-fluor.webp"
-  ]
+  ],
+  "sku": "GUA-XX-GUANT",
+  "color": "",
+  "agotado": false
 }

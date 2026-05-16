@@ -5,6 +5,8 @@
   "sizes": "S/M",
   "category": "gorras",
   "description": "Gorra para motocross: GORRA FOX OPTICAL FLEXFIT [ROJO]",
-  "images": []
+  "images": [],
+  "sku": "GOR-RO-GORRA",
+  "color": "rojo",
+  "agotado": false
 }
-

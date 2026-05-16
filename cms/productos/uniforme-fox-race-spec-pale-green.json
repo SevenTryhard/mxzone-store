@@ -8,5 +8,8 @@
   "description": "Uniforme FOX RACE SPEC en verde palido",
   "images": [
     "/assets/images/uniformes/33120-275-33121-275-1-1200x1200.webp"
-  ]
+  ],
+  "sku": "UNI-XX-UNIF18",
+  "color": "",
+  "agotado": false
 }

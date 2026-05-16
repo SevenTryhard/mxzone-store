@@ -1,12 +1,12 @@
 /**
  * MXZONE STORE - Carrito de Compras
- * Sistema de carrito que envía pedidos a WhatsApp
+ * Sistema de carrito que envia pedidos a WhatsApp
  */
 
 const CART_STORAGE_KEY = 'mxzone_cart';
 const WHATSAPP_NUMBER = '573176692997';
 
-// Función para codificar URLs de imágenes correctamente (maneja espacios)
+// Funcion para codificar URLs de imagenes correctamente (maneja espacios)
 function encodeImagePath(path) {
   return path.replace(/ /g, '%20');
 }
@@ -79,7 +79,7 @@ function addToCart(product, size, quantity = 1) {
   }
 
   saveCart();
-  showNotification(`${product.name} agregado al carrito`, 'success');
+  showNotification(product.name + ' agregado al carrito', 'success');
   updateCartModal();
 }
 
@@ -146,7 +146,6 @@ function updateCartModal() {
   const cartTotalValueEl = document.getElementById('cartTotalValue');
 
   if (!cartItemsEl) {
-    console.log('updateCartModal: elementos del DOM no disponibles aún');
     return;
   }
 
@@ -163,39 +162,39 @@ function updateCartModal() {
 
   // Renderizar items
   cartItemsEl.innerHTML = cart.map((item, index) => {
-    const sizesArray = item.selectedSize ? item.selectedSize.split('/') : ['Única'];
+    const sizesArray = item.selectedSize ? item.selectedSize.split('/') : ['Unica'];
     const sizeOptions = sizesArray.map(size =>
-      `<option value="${size.trim()}" ${item.selectedSize === size.trim() ? 'selected' : ''}>${size.trim()}</option>`
+      '<option value="' + size.trim() + '" ' + (item.selectedSize === size.trim() ? 'selected' : '') + '>' + size.trim() + '</option>'
     ).join('');
 
-    return `
-      <div class="cart-item" data-index="${index}">
-        <div class="cart-item-image">
-          <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'">
-        </div>
-        <div class="cart-item-info">
-          <h4 class="cart-item-name">${item.name}</h4>
-          <p class="cart-item-category">${getCategoryLabel(item.category)}</p>
-          <div class="cart-item-details">
-            <div class="cart-item-size">
-              <span>Talla:</span>
-              <select class="size-select" onchange="updateSize(${index}, this.value)">
-                ${sizeOptions}
-              </select>
-            </div>
-            <div class="cart-item-quantity">
-              <button class="qty-btn minus" onclick="updateQuantity(${index}, ${item.quantity - 1})">-</button>
-              <span class="qty-value">${item.quantity}</span>
-              <button class="qty-btn plus" onclick="updateQuantity(${index}, ${item.quantity + 1})">+</button>
-            </div>
-          </div>
-          <p class="cart-item-price">${formatPrice(item.priceNum * item.quantity)}</p>
-        </div>
-        <button class="cart-item-remove" onclick="removeFromCart(${index})" title="Eliminar">
-          <span>&times;</span>
-        </button>
-      </div>
-    `;
+    return (
+      '<div class="cart-item" data-index="' + index + '">' +
+        '<div class="cart-item-image">' +
+          '<img src="' + item.image + '" alt="' + item.name + '" onerror="this.style.display=\'none\'">' +
+        '</div>' +
+        '<div class="cart-item-info">' +
+          '<h4 class="cart-item-name">' + item.name + '</h4>' +
+          '<p class="cart-item-category">' + getCategoryLabel(item.category) + '</p>' +
+          '<div class="cart-item-details">' +
+            '<div class="cart-item-size">' +
+              '<span>Talla:</span>' +
+              '<select class="size-select" onchange="updateSize(' + index + ', this.value)">' +
+                sizeOptions +
+              '</select>' +
+            '</div>' +
+            '<div class="cart-item-quantity">' +
+              '<button class="qty-btn minus" onclick="updateQuantity(' + index + ', ' + (item.quantity - 1) + ')">-</button>' +
+              '<span class="qty-value">' + item.quantity + '</span>' +
+              '<button class="qty-btn plus" onclick="updateQuantity(' + index + ', ' + (item.quantity + 1) + ')">+</button>' +
+            '</div>' +
+          '</div>' +
+          '<p class="cart-item-price">' + formatPrice(item.priceNum * item.quantity) + '</p>' +
+        '</div>' +
+        '<button class="cart-item-remove" onclick="removeFromCart(' + index + ')" title="Eliminar">' +
+          '<span>&times;</span>' +
+        '</button>' +
+      '</div>'
+    );
   }).join('');
 
   if (cartTotalValueEl) {
@@ -203,30 +202,48 @@ function updateCartModal() {
   }
 }
 
-// ==================== WHATSAPP CHECKOUT ====================
+// ==================== CHECKOUT ====================
 
-// Enviar pedido a WhatsApp
-function checkoutToWhatsApp() {
-  // No se usa más directamente; se valida desde el paso 2
+function openCheckout() {
+  if (cart.length === 0) {
+    showNotification('El carrito esta vacio', 'error');
+    return;
+  }
+  const overlay = document.getElementById('checkoutOverlay');
+  if (overlay) {
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    // Resetear metodo de pago
+    selectedPaymentMethod = '';
+    document.querySelectorAll('.payment-method-btn').forEach(btn => btn.classList.remove('active'));
+  }
+}
+
+function closeCheckout() {
+  const overlay = document.getElementById('checkoutOverlay');
+  if (overlay) {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
 }
 
 // Construir mensaje de WhatsApp (con datos de formulario)
 function buildWhatsAppMessage(name, phone, city, address) {
-  let message = `*¡Hola MXZONE STORE! 🏍️*\n\n`;
-  message += `*QUIERO REALIZAR EL SIGUIENTE PEDIDO:*\n\n`;
-  message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  let message = 'Hola MXZONE STORE!\n\n';
+  message += 'QUIERO REALIZAR EL SIGUIENTE PEDIDO:\n\n';
+  message += '---\n\n';
 
   // Datos del comprador
-  message += `*DATOS DEL COMPRADOR:*\n`;
-  message += `▫️ Nombre: ${name}\n`;
-  message += `▫️ Teléfono: ${phone}\n`;
+  message += 'DATOS DEL COMPRADOR:\n';
+  message += 'Nombre: ' + name + '\n';
+  message += 'Telefono: ' + phone + '\n';
   const email = document.getElementById('checkoutEmail')?.value;
-  if (email) message += `▫️ Email: ${email}\n`;
-  message += `▫️ Ciudad: ${city}\n`;
-  message += `▫️ Dirección: ${address}\n\n`;
-  message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  if (email) message += 'Email: ' + email + '\n';
+  message += 'Ciudad: ' + city + '\n';
+  message += 'Direccion: ' + address + '\n\n';
+  message += '---\n\n';
 
-  // Agrupar productos por categoría
+  // Agrupar productos por categoria
   const byCategory = {};
   cart.forEach(item => {
     if (!byCategory[item.category]) {
@@ -235,61 +252,58 @@ function buildWhatsAppMessage(name, phone, city, address) {
     byCategory[item.category].push(item);
   });
 
-  // Listar productos por categoría
+  // Listar productos por categoria
   const categoryNames = {
-    cascos: '*🪖 CASCOS*',
-    uniformes: '*👕 UNIFORMES*',
-    botas: '*👢 BOTAS*',
-    protecciones: '*🛡️ PROTECCIONES*'
+    cascos: 'CASCOS',
+    uniformes: 'UNIFORMES',
+    botas: 'BOTAS',
+    protecciones: 'PROTECCIONES'
   };
 
+  message += 'PRODUCTOS:\n';
   Object.keys(byCategory).forEach(category => {
-    message += `${categoryNames[category] || category}:\n\n`;
-
-    byCategory[category].forEach((item, idx) => {
-      message += `▫️ *${item.name}*\n`;
-      message += `   Talla: ${item.selectedSize}\n`;
-      message += `   Cantidad: ${item.quantity}\n`;
-      message += `   Precio: ${formatPrice(item.priceNum * item.quantity)}\n\n`;
+    message += '\n' + (categoryNames[category] || category.toUpperCase()) + ':\n\n';
+    byCategory[category].forEach((item) => {
+      message += '- ' + item.name + '\n';
+      message += '  Talla: ' + item.selectedSize + '\n';
+      message += '  Cantidad: ' + item.quantity + '\n';
+      message += '  Precio: ' + formatPrice(item.priceNum * item.quantity) + '\n\n';
     });
   });
 
-  message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
-  message += `*TOTAL DEL PEDIDO: ${formatPrice(getCartTotal())}*\n\n`;
-  message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  message += '---\n\n';
+  message += 'TOTAL DEL PEDIDO: ' + formatPrice(getCartTotal()) + '\n\n';
+  message += '---\n\n';
 
-  // Método de pago seleccionado
+  // Metodo de pago seleccionado
   const paymentMethodNames = {
-    'nequi': '📱 Nequi',
-    'daviplata': '📱 Daviplata',
-    'transferencia': '🏦 Transferencia bancaria',
-    'efectivo': '💵 Efectivo contra entrega',
-    'tarjeta': '💳 Tarjeta de crédito/débito (Próximamente)'
+    'nequi': 'Nequi',
+    'daviplata': 'Daviplata',
+    'transferencia': 'Transferencia bancaria',
+    'efectivo': 'Efectivo contra entrega',
+    'tarjeta': 'Tarjeta de credito/debito (Proximamente)'
   };
 
-  message += `*MÉTODO DE PAGO SELECCIONADO:*\n`;
-  message += `${paymentMethodNames[selectedPaymentMethod] || selectedPaymentMethod}\n\n`;
+  message += 'METODO DE PAGO: ' + (paymentMethodNames[selectedPaymentMethod] || selectedPaymentMethod) + '\n\n';
+  message += '---\n\n';
 
-  if (selectedPaymentMethod === 'tarjeta') {
-    message += `⚠️ *Nota:* El pago con tarjeta estará disponible próximamente. Por favor coordina otro método de pago con la tienda.\n\n`;
-    message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
-  }
-
-  message += `Por favor, confirmen disponibilidad y me indican los pasos a seguir para completar mi compra. ¡Gracias! 🙌`;
+  message += 'Por favor, confirmen disponibilidad y me indican los pasos a seguir para completar mi compra. Gracias!';
 
   return message;
 }
 
-// Seleccionar método de pago
+// Seleccionar metodo de pago
 function selectPaymentMethod(method) {
+  if (method === 'tarjeta') {
+    return; // Deshabilitado
+  }
   selectedPaymentMethod = method;
-  console.log('Método de pago seleccionado:', method);
 
-  // Actualizar UI - remover clase active de todos y agregar al seleccionado
+  // Actualizar UI
   document.querySelectorAll('.payment-method-btn').forEach(btn => {
     btn.classList.remove('active');
   });
-  const activeBtn = document.querySelector(`.payment-method-btn[data-method="${method}"]`);
+  const activeBtn = document.querySelector('.payment-method-btn[data-method="' + method + '"]');
   if (activeBtn) {
     activeBtn.classList.add('active');
   }
@@ -316,12 +330,12 @@ function getCategoryLabel(category) {
   return labels[category] || category;
 }
 
-function showNotification(message, type = 'info') {
+function showNotification(message, type) {
   const existing = document.querySelector('.notification');
   if (existing) existing.remove();
 
   const notification = document.createElement('div');
-  notification.className = `notification notification-${type}`;
+  notification.className = 'notification notification-' + type;
   notification.textContent = message;
 
   Object.assign(notification.style, {
@@ -332,7 +346,7 @@ function showNotification(message, type = 'info') {
     borderRadius: '8px',
     color: '#fff',
     fontWeight: '600',
-    zIndex: '1000',
+    zIndex: '10000',
     animation: 'fadeInUp 0.3s ease',
     boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
     background: type === 'success' ? '#25D366' : type === 'error' ? '#E63946' : '#FF6600'
@@ -346,33 +360,24 @@ function showNotification(message, type = 'info') {
   }, 3000);
 }
 
-// ==================== INICIALIZACIÓN ====================
+// ==================== GLOBALES ====================
 
-// Hacer funciones disponibles globalmente INMEDIATAMENTE
 window.MXZONECart = {
-  loadCart: () => {}, // Se redefine después
-  addToCart,
-  removeFromCart,
-  updateQuantity,
-  updateSize,
-  clearCart,
-  getCartTotal,
-  getCartItems: () => cart
+  loadCart: loadCart,
+  addToCart: addToCart,
+  removeFromCart: removeFromCart,
+  updateQuantity: updateQuantity,
+  updateSize: updateSize,
+  clearCart: clearCart,
+  getCartTotal: getCartTotal,
+  getCartItems: function() { return cart; }
 };
 
-// Funciones de UI globales
 window.openCart = function() {
   const cartModal = document.getElementById('cartModal');
   if (cartModal) {
     cartModal.classList.add('active');
     document.body.style.overflow = 'hidden';
-    // Resetear siempre a paso 1 cuando se abre desde fuera
-    const s1 = document.getElementById('cartStep1');
-    const s2 = document.getElementById('cartStep2');
-    const title = document.getElementById('cartTitle');
-    if (s1) s1.style.display = 'block';
-    if (s2) s2.style.display = 'none';
-    if (title) title.textContent = '\uD83D\uDED2 Tu Carrito';
     updateCartModal();
   }
 };
@@ -385,71 +390,50 @@ window.closeCart = function() {
   }
 };
 
-// ==================== INICIALIZACIÓN ====================
+// ==================== INICIALIZACION ====================
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Redefinir loadCart en el objeto global
-  window.MXZONECart.loadCart = loadCart;
-
-  // Ejecutar carga inicial
   loadCart();
 
-  function showCartStep(step) {
-    const s1 = document.getElementById('cartStep1');
-    const s2 = document.getElementById('cartStep2');
-    const title = document.getElementById('cartTitle');
-    if (!s1 || !s2) return;
-    if (step === 1) {
-      s1.style.display = 'block';
-      s2.style.display = 'none';
-      if (title) title.textContent = '\uD83D\uDED2 Tu Carrito';
-    } else {
-      s1.style.display = 'none';
-      s2.style.display = 'block';
-      if (title) title.textContent = '\uD83D\uDED1 Finalizar Compra';
-    }
-  }
-
-  // Abrir modal del carrito - usar delegación de eventos
+  // Delegacion de eventos para clicks en el documento
   document.addEventListener('click', (e) => {
+    // Abrir carrito (boton header)
     if (e.target.id === 'cartBtn' || e.target.closest('#cartBtn')) {
       e.preventDefault();
       const cartModal = document.getElementById('cartModal');
       if (cartModal) {
         cartModal.classList.add('active');
         document.body.style.overflow = 'hidden';
-        showCartStep(1);
         updateCartModal();
       } else {
         window.location.href = 'shop.html?opencart=1';
       }
     }
 
+    // Cerrar carrito (boton X)
     if (e.target.id === 'cartClose' || e.target.closest('#cartClose')) {
       closeCart();
     }
 
+    // Cerrar carrito (overlay)
     if (e.target.id === 'cartOverlay' || e.target.closest('#cartOverlay')) {
       closeCart();
     }
 
-    // Botón COMPRAR → ir al formulario (paso 2)
+    // Boton COMPRAR -> abrir checkout
     if (e.target.id === 'buyBtn' || e.target.closest('#buyBtn')) {
       e.preventDefault();
-      if (cart.length === 0) {
-        showNotification('El carrito est\u00e1 vac\u00edo', 'error');
-        return;
-      }
-      showCartStep(2);
+      openCheckout();
     }
 
-    // Botón VOLVER AL CARRITO
+    // Boton VOLVER AL CARRITO
     if (e.target.id === 'backToCartBtn' || e.target.closest('#backToCartBtn')) {
       e.preventDefault();
-      showCartStep(1);
+      closeCheckout();
+      window.openCart();
     }
 
-    // Botón CHECKOUT (enviar por WhatsApp)
+    // Boton ENVIAR PEDIDO POR WHATSAPP
     if (e.target.id === 'checkoutBtn' || e.target.closest('#checkoutBtn')) {
       e.preventDefault();
 
@@ -463,39 +447,53 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       if (!selectedPaymentMethod) {
-        showNotification('Selecciona un m\u00e9todo de pago', 'error');
+        showNotification('Selecciona un metodo de pago', 'error');
         return;
       }
 
       const message = buildWhatsAppMessage(name, phone, city, address);
-      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
       window.open(url, '_blank');
     }
 
+    // Vaciar carrito
     if (e.target.id === 'clearCartBtn' || e.target.closest('#clearCartBtn')) {
-      if (confirm('\u00bfEst\u00e1s seguro de vaciar el carrito?')) {
+      if (confirm('Estas seguro de vaciar el carrito?')) {
         clearCart();
-        showCartStep(1);
       }
+    }
+
+    // Cerrar checkout con click en overlay
+    if (e.target.id === 'checkoutOverlay' || e.target.closest('#checkoutOverlay')) {
+      closeCheckout();
+    }
+
+    // Boton X del checkout
+    if (e.target.id === 'checkoutClose' || e.target.closest('#checkoutClose')) {
+      closeCheckout();
     }
   });
 
   // Cerrar con Escape
   document.addEventListener('keydown', (e) => {
-    const cartModal = document.getElementById('cartModal');
-    if (e.key === 'Escape' && cartModal && cartModal.classList.contains('active')) {
-      closeCart();
+    if (e.key === 'Escape') {
+      const cartModal = document.getElementById('cartModal');
+      const checkoutOverlay = document.getElementById('checkoutOverlay');
+      if (checkoutOverlay && checkoutOverlay.classList.contains('active')) {
+        closeCheckout();
+      } else if (cartModal && cartModal.classList.contains('active')) {
+        closeCart();
+      }
     }
   });
 
-  // Auto-open si viene de otra página con ?opencart=1
+  // Auto-open si viene de otra pagina con ?opencart=1
   if (window.location.search.includes('opencart=1')) {
     setTimeout(() => {
       const cartModal = document.getElementById('cartModal');
       if (cartModal) {
         cartModal.classList.add('active');
         document.body.style.overflow = 'hidden';
-        showCartStep(1);
         updateCartModal();
       }
       // Limpiar param sin recargar
@@ -514,13 +512,14 @@ function updateFloatingWhatsApp() {
   if (!floatBtn) return;
 
   if (cart.length === 0) {
-    // Sin productos - mensaje genérico
-    floatBtn.href = `https://wa.me/${WHATSAPP_NUMBER}`;
+    // Sin productos - mensaje generico
+    floatBtn.href = 'https://wa.me/' + WHATSAPP_NUMBER;
     floatBtn.title = 'Contactar por WhatsApp';
   } else {
     // Con productos - mensaje con lista del carrito
-    const message = `Hola MXZONE! 👋\n\nTengo estos productos en mi carrito:\n\n${cart.map((item, i) => `${i + 1}. ${item.name} (${item.selectedSize}) - $${item.price}`).join('\n')}\n\n*Total: ${getCartTotal()}*\n\n¿Me ayudan con el pedido?`;
-    floatBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-    floatBtn.title = `WhatsApp (${cart.length} productos)`;
+    const itemsList = cart.map((item, i) => (i + 1) + '. ' + item.name + ' (' + item.selectedSize + ') - ' + item.price).join('\n');
+    const message = 'Hola MXZONE!\n\nTengo estos productos en mi carrito:\n\n' + itemsList + '\n\nTotal: ' + formatPrice(getCartTotal()) + '\n\nMe ayudan con el pedido?';
+    floatBtn.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+    floatBtn.title = 'WhatsApp (' + cart.length + ' productos)';
   }
 }

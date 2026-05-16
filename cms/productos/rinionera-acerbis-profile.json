@@ -7,5 +7,8 @@
   "description": "RiÃ±onera ACERBIS PROFILE para hidrataciÃ³n",
   "images": [
     "/assets/images/protecciones/rinonera-acerbis-ram.webp"
-  ]
+  ],
+  "sku": "PRO-XX-RIAON",
+  "color": "",
+  "agotado": false
 }

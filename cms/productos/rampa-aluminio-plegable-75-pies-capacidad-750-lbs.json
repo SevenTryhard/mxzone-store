@@ -7,5 +7,8 @@
   "description": "Accesorio para motocross: RAMPA ALUMINIO PLEGABLE 7.5 PIES (CAPACIDAD 750 LBS)",
   "images": [
     "/assets/images/accesorios/rampa-aluminio-plegable-75-pies-capacidad-750-lbs.jpg"
-  ]
+  ],
+  "sku": "ACC-XX-RAMPA",
+  "color": "",
+  "agotado": false
 }

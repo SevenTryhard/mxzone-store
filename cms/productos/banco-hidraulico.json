@@ -7,5 +7,8 @@
   "description": "Accesorio para motocross: BANCO HIDRAULICO",
   "images": [
     "/assets/images/accesorios/banco-hidraulico.jpg"
-  ]
+  ],
+  "sku": "ACC-XX-BANCO",
+  "color": "",
+  "agotado": false
 }

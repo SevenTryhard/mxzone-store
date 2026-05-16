@@ -141,6 +141,9 @@ function createProductSlug(productName) {
 
 // Función para crear el HTML de una tarjeta de producto
 function createProductCard(product) {
+  // NO renderizar productos agotados en la tienda
+  if (product.agotado === true) return '';
+
   const whatsappMessage = encodeURIComponent(`Estoy interesado en ${product.name}`);
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
   const brand = getBrand(product.name);
@@ -182,7 +185,7 @@ function createProductCard(product) {
 
   // Parsear tallas
   const sizesArray = product.sizes ? product.sizes.split('/').map(s => s.trim()) : ['Única'];
-  const sizeOptions = `<option value="" disabled selected>TALLAS</option>` + sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
+  const sizeOptions = `<option value="" disabled selected>TALLA</option>` + sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
 
   return `
     <div class="product-card"
@@ -250,13 +253,13 @@ function getCategoryLabel(category) {
 // Función para renderizar productos en la página principal
 async function renderFeaturedProducts() {
   console.log('renderFeaturedProducts: iniciando...');
-  const products = await loadProducts();
-  console.log('renderFeaturedProducts:', products.length, 'productos cargados');
+    const products = await loadProducts();
+    console.log('renderFeaturedProducts:', products.length, 'productos cargados');
 
-  const categories = ['cascos', 'uniformes', 'botas', 'protecciones'];
+    const categories = ['cascos', 'uniformes', 'botas', 'protecciones'];
 
-  categories.forEach(category => {
-    const categoryProducts = products.filter(p => p.category === category).slice(0, 4);
+    categories.forEach(category => {
+      const categoryProducts = products.filter(p => p.category === category && p.agotado !== true).slice(0, 4);
     const container = document.querySelector(`[data-products="${category}"]`);
     console.log(`renderFeaturedProducts: ${category} tiene ${categoryProducts.length} productos, container:`, container);
 
@@ -278,15 +281,15 @@ async function renderRecomendados() {
   const container = document.getElementById('recomendadosCarousel');
   if (!container) return;
 
-  const products = await loadProducts();
-  if (products.length === 0) return;
+    const products = await loadProducts();
+    if (products.length === 0) return;
 
-  // Ordenar por precio (mayor a menor) y tomar los top 8
-  const sortedProducts = [...products].sort((a, b) => {
-    const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
-    const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
-    return priceB - priceA;
-  });
+    // Ordenar por precio (mayor a menor) y tomar los top 8
+    const sortedProducts = [...products].filter(function(p) { return p.agotado !== true; }).sort((a, b) => {
+      const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
+      const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
+      return priceB - priceA;
+    });
 
   const topProducts = sortedProducts.slice(0, 8);
   container.innerHTML = topProducts.map(product => createProductCard(product)).join('');
@@ -350,7 +353,7 @@ async function renderShopProducts() {
   if (container && products.length > 0) {
     // Ordenar productos por categoría para agruparlos
     const categoryOrder = ['botas', 'cascos', 'uniformes', 'jersey', 'guantes', 'gorras', 'protecciones', 'accesorios', 'maletas', 'gafas', 'uniformes-ninos', 'cascos-ninos', 'botas-ninos', 'guantes-ninos', 'gafas-ninos', 'protecciones-ninos'];
-    const sortedProducts = [...products].sort((a, b) => {
+    const sortedProducts = [...products].filter(function(p) { return p.agotado !== true; }).sort((a, b) => {
       const indexA = categoryOrder.indexOf(a.category);
       const indexB = categoryOrder.indexOf(b.category);
       return (indexA !== -1 ? indexA : 999) - (indexB !== -1 ? indexB : 999);

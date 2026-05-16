@@ -8,5 +8,8 @@
   "description": "Casco FOX V1 con diseÃƒÂ±o camuflaje nitro",
   "images": [
     "/assets/images/nuevas_images/31370-330-2-800x.webp"
-  ]
+  ],
+  "sku": "CAS-XX-CASC16",
+  "color": "",
+  "agotado": false
 }

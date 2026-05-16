@@ -7,5 +7,8 @@
   "description": "Casco Alpinestars Force en color azul con verde flÃºo",
   "images": [
     "/assets/images/cascos/casco-alpinestars-force-azul-verde-fluo.jpg"
-  ]
+  ],
+  "sku": "CAS-AZ-CASC1",
+  "color": "azul",
+  "agotado": false
 }

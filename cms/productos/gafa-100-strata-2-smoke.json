@@ -7,5 +7,8 @@
   "description": "Gafas para motocross: GAFA 100% STRATA 2 - SMOKE",
   "images": [
     "/assets/images/gafas/100-percent-strata2-neon-orange-mirror.jpg"
-  ]
+  ],
+  "sku": "GAF-XX-GAFA2",
+  "color": "",
+  "agotado": false
 }

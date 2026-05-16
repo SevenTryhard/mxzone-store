@@ -7,5 +7,8 @@
   "description": "Guante para motocross: GUANTE FIST STOCKER CAMO",
   "images": [
     "/assets/images/guantes/camo-stocker-back.jpg"
-  ]
+  ],
+  "sku": "GUA-XX-GUAN4",
+  "color": "",
+  "agotado": false
 }

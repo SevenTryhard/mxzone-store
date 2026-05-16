@@ -143,6 +143,14 @@ function createProductHTML(product) {
   const badgeHTML = product.badge ?
     `<span class="product-detail-badge">${product.badge}</span>` : '';
 
+  const agotadoHTML = product.agotado === true ?
+    `<span class="product-badge-agotado">AGOTADO</span>` : '';
+
+  const skuHTML = product.sku ?
+    `<div class="product-sku">SKU: ${escapeHtml(product.sku)}</div>` : '';
+  const colorHTML = product.color ?
+    `<div class="product-color">Color: ${escapeHtml(product.color)}</div>` : '';
+
   // Obtener todas las imágenes
   const allImages = getProductImages(product);
   const imageVersion = Date.now();
@@ -164,6 +172,14 @@ function createProductHTML(product) {
       <img src="${img}" alt="${product.name}" onerror="this.style.display='none';">
     </div>
   `).join('');
+
+  const whatsappBtn = product.agotado === true ?
+    `<button class="btn btn-whatsapp btn-large" disabled style="opacity:0.5;cursor:not-allowed;">
+      <img src="../assets/whatsapp-logo.webp" alt="WhatsApp" class="btn-whatsapp-icon"> Producto Agotado
+    </button>` :
+    `<a href="${whatsappUrl}" class="btn btn-whatsapp btn-large" target="_blank">
+      <img src="../assets/whatsapp-logo.webp" alt="WhatsApp" class="btn-whatsapp-icon"> Comprar por WhatsApp
+    </a>`;
 
   return `
     <div class="product-detail-grid">
@@ -197,19 +213,24 @@ function createProductHTML(product) {
         <!-- Nombre -->
         <h1 class="product-detail-title">${product.name}</h1>
 
+        ${skuHTML}
+        ${colorHTML}
+
         <!-- Precio -->
         <div class="product-detail-price">${product.price}</div>
 
+        ${agotadoHTML}
+
         <!-- Tallas -->
         <div class="product-sizes-section">
-          <h4 class="sizes-title">Tallas Disponibles:</h4>
-          <div class="product-size-selector">
-            ${sizes.map(size => `
-              <button class="size-btn-product" data-size="${size.trim()}">${size.trim()}</button>
-            `).join('')}
+          <div class="product-size-wrapper">
+            <select class="product-size-select" id="productSizeSelect" aria-label="Seleccionar talla">
+              <option value="" disabled selected>TALLA</option>
+              ${sizes.map(size => `<option value="${size.trim()}">${size.trim()}</option>`).join('')}
+            </select>
           </div>
           <p class="size-guide-link">
-            ¿Dudas con tu talla? <a href="sizes.html" target="_blank">Ver guía de tallas</a>
+            Dudas con tu talla? <a href="sizes.html" target="_blank">Ver guia de tallas</a>
           </p>
         </div>
 
@@ -229,9 +250,7 @@ function createProductHTML(product) {
 
         <!-- Acciones -->
         <div class="product-actions-section">
-          <a href="${whatsappUrl}" class="btn btn-whatsapp btn-large" target="_blank">
-            <img src="../assets/whatsapp-logo.webp" alt="WhatsApp" class="btn-whatsapp-icon"> Comprar por WhatsApp
-          </a>
+          ${whatsappBtn}
           <a href="shop.html" class="btn btn-secondary btn-large">
             <span>🛒</span> Volver a la Tienda
           </a>
@@ -437,16 +456,17 @@ async function loadRelatedProductsForLayout(currentProduct, currentSlug) {
 
 // Inicializar selector de tallas
 function initSizeSelector() {
-  const sizeBtns = document.querySelectorAll('.size-btn-product');
-  if (!sizeBtns.length) return;
+  const sizeSelect = document.getElementById('productSizeSelect');
+  if (!sizeSelect) return;
 
-  sizeBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      // Remover clase active de todos
-      sizeBtns.forEach(b => b.classList.remove('active'));
-      // Agregar clase active al seleccionado
-      btn.classList.add('active');
-    });
+  sizeSelect.addEventListener('change', () => {
+    const selectedSize = sizeSelect.value;
+    if (selectedSize) {
+      // Highlight opcion seleccionada con borde naranja
+      sizeSelect.style.borderColor = 'var(--orange-primary)';
+    } else {
+      sizeSelect.style.borderColor = '';
+    }
   });
 }
 

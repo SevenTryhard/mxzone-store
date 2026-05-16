@@ -8,5 +8,8 @@
   "image": "/assets/images/cascos/Negro-scaled.jpg.jpg",
   "images": [
     "/assets/images/cascos/Negro-scaled.jpg.jpg"
-  ]
+  ],
+  "sku": "ACC-XX-MANU1",
+  "color": "",
+  "agotado": false
 }

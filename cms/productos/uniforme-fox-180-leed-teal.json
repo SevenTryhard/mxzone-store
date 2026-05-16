@@ -5,5 +5,10 @@
   "sizes": "Unica",
   "category": "uniformes",
   "description": "UNIFORME FOX 180 LEED TEAL",
-  "images": ["/assets/images/uniformes/29610_29624_176_1.webp"]
+  "images": [
+    "/assets/images/uniformes/29610_29624_176_1.webp"
+  ],
+  "sku": "UNI-XX-UNIF16",
+  "color": "",
+  "agotado": false
 }

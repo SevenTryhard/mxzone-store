@@ -8,5 +8,8 @@
   "description": "Casco ALPINESTARS S-M5 SOLID color sÃ³lido",
   "images": [
     "/assets/images/cascos/CASCO ALPINESTARS S-M5 SOLID.jpg"
-  ]
+  ],
+  "sku": "CAS-XX-CASC5",
+  "color": "",
+  "agotado": false
 }

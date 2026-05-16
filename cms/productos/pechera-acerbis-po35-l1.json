@@ -7,5 +7,8 @@
   "description": "Pechera ACERBIS PO35-L1 de protecciÃ³n completa",
   "images": [
     "/assets/images/protecciones/peto-acerbis-deflector-p035-l1-color-gris.jpg"
-  ]
+  ],
+  "sku": "PRO-XX-PECH1",
+  "color": "",
+  "agotado": false
 }

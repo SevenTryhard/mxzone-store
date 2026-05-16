@@ -8,5 +8,8 @@
   "image": "/assets/images/cascos/0000_FA23_STRATA_2_50028-00013.jpg",
   "images": [
     "/assets/images/cascos/0000_FA23_STRATA_2_50028-00013.jpg"
-  ]
+  ],
+  "sku": "CAS-NE-GAFA1",
+  "color": "negro",
+  "agotado": false
 }

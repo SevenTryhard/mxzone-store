@@ -102,7 +102,7 @@
         ],
         "contactPoint": {
           "@type": "ContactPoint",
-          "telephone": "+57-314-312-0587",
+          "telephone": "+57-317-669-2997",
           "contactType": "sales",
           "areaServed": "CO",
           "availableLanguage": "es"
@@ -140,16 +140,7 @@
   <!-- Hreflang -->
   <link rel="alternate" hreflang="es-CO" href="https://www.mxzonestore.com/">
 
-  <meta name="google-site-verification" content="TU-CODIGO-DE-GSC-AQUI">
-  <link rel="alternate" hreflang="es-CO" href="https://www.mxzonestore.com/index.html">
-  <!-- Google tag (gtag.js) - replace G-54DRSXCKFV with your real ID -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-54DRSXCKFV"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-54DRSXCKFV');
-  </script>
+
 </head>
 <body>
 
@@ -652,21 +643,22 @@
     <span class="sticky-cta">Abrir →</span>
   </a>
 
-      <!-- Shopping Cart Modal -->
+      <!-- Shopping Cart Modal (Sidebar) -->
       <div class="cart-modal" id="cartModal">
         <div class="cart-modal-overlay" id="cartOverlay"></div>
         <div class="cart-modal-content">
           <div class="cart-header">
-            <h3 class="cart-title" id="cartTitle">🛒 Tu Carrito</h3>
-            <button class="cart-close" id="cartClose">×</button>
+            <h3 class="cart-title" id="cartTitle">Tu Carrito</h3>
+            <button class="cart-close" id="cartClose">&times;</button>
           </div>
 
-          <!-- STEP 1: Carrito simple (productos + botones) -->
           <div class="cart-step" id="cartStep1">
             <div class="cart-items" id="cartItemsContainer">
               <div class="cart-empty" id="cartEmpty">
-                <div class="cart-empty-icon">🛒</div>
-                <p>Tu carrito está vacío</p>
+                <div class="cart-empty-icon">
+                  <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                </div>
+                <p>Tu carrito esta vacio</p>
                 <p style="font-size:0.9rem;color:var(--gray-text)">Agrega productos para continuar</p>
               </div>
               <div id="cartContent" style="display:none">
@@ -680,59 +672,73 @@
                 <span class="cart-total-value" id="cartTotalValue">$0</span>
               </div>
               <div class="cart-actions-simple">
-                <button class="cart-checkout-btn" id="buyBtn">
-                  <span>🛍️</span><span>Comprar</span>
-                </button>
-                <button class="cart-clear-btn" id="clearCartBtn">🗑️ Vaciar carrito</button>
+                <button class="cart-checkout-btn" id="buyBtn">COMPRAR</button>
+                <button class="cart-clear-btn" id="clearCartBtn">Vaciar Carrito</button>
               </div>
             </div>
           </div>
-
-          <!-- STEP 2: Formulario de checkout -->
-          <div class="cart-step" id="cartStep2" style="display:none">
-            <div class="cart-form">
-              <div class="cart-form-group">
-                <label for="checkoutName">Nombre completo *</label>
-                <input type="text" id="checkoutName" placeholder="Tu nombre completo" required>
-              </div>
-              <div class="cart-form-row">
-                <div class="cart-form-group" style="flex:1">
-                  <label for="checkoutPhone">Teléfono *</label>
-                  <input type="tel" id="checkoutPhone" placeholder="Ej: 317 669 2997" required>
-                </div>
-                <div class="cart-form-group" style="flex:1">
-                  <label for="checkoutCity">Ciudad *</label>
-                  <input type="text" id="checkoutCity" placeholder="Ej: Bogotá" required>
-                </div>
-              </div>
-              <div class="cart-form-group">
-                <label for="checkoutAddress">Dirección de envío *</label>
-                <input type="text" id="checkoutAddress" placeholder="Calle, número, barrio" required>
-              </div>
-
-              <div class="cart-payment-methods">
-                <p style="font-size:0.9rem;font-weight:600;margin-bottom:var(--spacing-sm)">💳 Método de pago:</p>
-                <div class="payment-methods-grid">
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('nequi')" data-method="nequi">📱 Nequi</button>
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('daviplata')" data-method="daviplata">📱 Daviplata</button>
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('transferencia')" data-method="transferencia">🏦 Transferencia</button>
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('efectivo')" data-method="efectivo">💵 Efectivo</button>
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('tarjeta')" data-method="tarjeta" style="grid-column:span 2">💳 Tarjeta (Próximamente)</button>
-                </div>
-              </div>
-
-              <div class="cart-actions-simple" style="margin-top:var(--spacing-md)">
-                <button class="cart-checkout-btn" id="checkoutBtn">
-                  <span>💬</span><span>Enviar pedido por WhatsApp</span>
-                </button>
-                <button class="cart-clear-btn" id="backToCartBtn">← Volver al carrito</button>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
 
+      <!-- Checkout Modal (Fullscreen Centered) -->
+      <div class="checkout-overlay" id="checkoutOverlay">
+        <div class="checkout-container">
+          <div class="checkout-header">
+            <h3 class="checkout-title">Finalizar Compra</h3>
+            <button class="checkout-close" id="checkoutClose">&times;</button>
+          </div>
+
+          <div class="checkout-form-wrapper">
+            <form class="checkout-form" id="checkoutForm" onsubmit="return false;">
+              <div class="checkout-form-group">
+                <label for="checkoutName">Nombre completo *</label>
+                <input type="text" id="checkoutName" placeholder="Tu nombre completo" required autocomplete="name">
+              </div>
+              <div class="checkout-form-group">
+                <label for="checkoutPhone">Telefono *</label>
+                <input type="tel" id="checkoutPhone" placeholder="Ej: 317 669 2997" required autocomplete="tel">
+              </div>
+              <div class="checkout-form-group">
+                <label for="checkoutEmail">Email</label>
+                <input type="email" id="checkoutEmail" placeholder="tu@email.com" autocomplete="email">
+              </div>
+              <div class="checkout-form-group">
+                <label for="checkoutCity">Ciudad *</label>
+                <input type="text" id="checkoutCity" placeholder="Ej: Bogota" required autocomplete="address-level2">
+              </div>
+              <div class="checkout-form-group">
+                <label for="checkoutAddress">Direccion de envio *</label>
+                <input type="text" id="checkoutAddress" placeholder="Calle, numero, barrio" required autocomplete="street-address">
+              </div>
+
+              <div class="checkout-payment-section">
+                <p class="checkout-payment-label">Metodo de pago:</p>
+                <div class="payment-methods-grid">
+                  <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('nequi')" data-method="nequi">
+                    <span class="pm-icon"></span>Nequi
+                  </button>
+                  <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('daviplata')" data-method="daviplata">
+                    <span class="pm-icon"></span>Daviplata
+                  </button>
+                  <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('transferencia')" data-method="transferencia">
+                    <span class="pm-icon"></span>Transferencia bancaria
+                  </button>
+                  <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('efectivo')" data-method="efectivo">
+                    <span class="pm-icon"></span>Efectivo contra entrega
+                  </button>
+                  <button type="button" class="payment-method-btn disabled" onclick="selectPaymentMethod('tarjeta')" data-method="tarjeta" disabled>
+                    <span class="pm-icon"></span>Tarjeta de credito/debito
+                    <span class="pm-badge">Proximamente</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="checkout-actions">
+                <button type="button" class="cart-checkout-btn" id="checkoutBtn">ENVIAR PEDIDO POR WHATSAPP</button>
+                <button type="button" class="cart-clear-btn" id="backToCartBtn">Volver al Carrito</button>
+              </div>
+            </form>
+      </div>
     </div>
   </div>
 

@@ -7,5 +7,8 @@
   "description": "Accesorio para motocross: MEDIDOR DE PRESION DIGITAL",
   "images": [
     "/assets/images/accesorios/medidor-de-presion-digital.jpg"
-  ]
+  ],
+  "sku": "ACC-XX-MEDID",
+  "color": "",
+  "agotado": false
 }

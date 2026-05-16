@@ -8,5 +8,8 @@
   "description": "Casco FOX V1 con diseÃ±o TOXSYK en color negro",
   "images": [
     "/assets/images/cascos/CASCO FOX V1 TOXSYK NEGRO.jpg"
-  ]
+  ],
+  "sku": "CAS-NE-CASCO",
+  "color": "negro",
+  "agotado": false
 }

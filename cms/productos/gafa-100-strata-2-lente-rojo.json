@@ -7,5 +7,8 @@
   "description": "Gafas para motocross: GAFA 100% STRATA 2 - LENTE ROJO",
   "images": [
     "/assets/images/gafas/gafas-100-strata-2-m2-rojo-rojo-espejo.jpg"
-  ]
+  ],
+  "sku": "GAF-RO-GAFA1",
+  "color": "rojo",
+  "agotado": false
 }

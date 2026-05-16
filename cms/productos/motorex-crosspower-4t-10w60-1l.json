@@ -7,5 +7,8 @@
   "description": "Accesorio para motocross: MOTOREX CROSSPOWER 4T 10W60 1L",
   "images": [
     "/assets/images/accesorios/motorex-crosspower-4t-10w60-1l.jpg"
-  ]
+  ],
+  "sku": "ACC-XX-MOTO1",
+  "color": "",
+  "agotado": false
 }

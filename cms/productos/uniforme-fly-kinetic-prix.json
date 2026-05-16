@@ -7,5 +7,8 @@
   "description": "Uniforme FLY KINETIC PRIX de competicion",
   "images": [
     "/assets/images/uniformes/captura-de-pantalla-2026-04-21-115721.png"
-  ]
+  ],
+  "sku": "UNI-XX-UNIF10",
+  "color": "",
+  "agotado": false
 }

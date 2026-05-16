@@ -7,5 +7,8 @@
   "description": "Accesorio para motocross: HANDGUARDS ALMA EN ALUMINIO",
   "images": [
     "/assets/images/accesorios/handguards-alma-en-aluminio.jpg"
-  ]
+  ],
+  "sku": "ACC-XX-HAND1",
+  "color": "",
+  "agotado": false
 }

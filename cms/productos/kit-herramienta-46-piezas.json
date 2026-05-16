@@ -7,5 +7,8 @@
   "description": "Accesorio para motocross: KIT HERRAMIENTA 46 PIEZAS",
   "images": [
     "/assets/images/accesorios/kit-herramienta-46-piezas.jpg"
-  ]
+  ],
+  "sku": "ACC-XX-KITHE",
+  "color": "",
+  "agotado": false
 }

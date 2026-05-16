@@ -8,5 +8,8 @@
   "image": "/assets/images/gafas/s-l1200--4-.jpg",
   "images": [
     "/assets/images/gafas/s-l1200--4-.jpg"
-  ]
+  ],
+  "sku": "GAF-MO-GAFAS",
+  "color": "purpura",
+  "agotado": false
 }
