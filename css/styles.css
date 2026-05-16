@@ -4511,6 +4511,11 @@ a {
   transform: translateY(0);
 }
 
+/* Size Guide Modal - above product modal */
+.size-guide-modal {
+  z-index: 2001;
+}
+
 /* ================================
    PRODUCT MODAL / LIGHTBOX
    ================================ */
@@ -6668,6 +6673,7 @@ a {
   flex: 1;
   overflow-y: auto;
   padding: var(--spacing-md);
+  min-height: 0;
 }
 
 .cart-empty {
@@ -6827,6 +6833,7 @@ a {
   padding: var(--spacing-lg);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   background: var(--gray-medium);
+  flex-shrink: 0;
 }
 
 .cart-total {
@@ -8215,4 +8222,79 @@ a {
   .step-card {
     padding: var(--spacing-lg);
   }
+}
+
+/* Checkout step centered */
+.checkout-step {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Nav Dropdown */
+.nav-dropdown {
+  position: relative;
+}
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--nav-bg, #1a1a1a);
+  border: 1px solid var(--border-color, #333);
+  border-radius: 8px;
+  padding: 0.5rem 0;
+  min-width: 180px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.2s ease;
+  z-index: 1000;
+}
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nav-dropdown-menu li {
+  list-style: none;
+}
+.nav-dropdown-menu a {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: var(--text-primary, #fff);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.nav-dropdown-menu a:hover {
+  background: var(--nav-hover-bg, #333);
+  color: var(--primary-color, #ff6600);
+}
+@media (max-width: 768px) {
+  .nav-links.active .nav-dropdown-menu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    display: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    min-width: auto;
+  }
+  .nav-links.active .nav-dropdown-menu.open {
+    display: block;
+  }
+  .nav-links.active .nav-dropdown-menu a {
+    padding: 0.5rem 1.5rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Mobile performance: content-visibility for product cards */
+.product-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 320px;
 }

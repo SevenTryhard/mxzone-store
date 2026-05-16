@@ -366,10 +366,10 @@ function initShopFiltersInternal() {
         const matchesSearch = name.includes(searchTerm);
 
         // Category filter
-        const matchesCategory = selectedCategories.includes('all') || selectedCategories.includes(category);
+        const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes('all') || selectedCategories.includes(category);
 
         // Brand filter
-        const matchesBrand = selectedBrands.includes('all') || selectedBrands.includes(brand);
+        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes('all') || selectedBrands.includes(brand);
 
         // Price filter
         const matchesPrice = price >= minPrice && price <= maxPrice;
@@ -2394,4 +2394,18 @@ window.MXZONE = {
     }
   }, true);
 })();
+
+// Mobile nav dropdown toggle
+const navDropdowns = document.querySelectorAll('.nav-dropdown > a');
+navDropdowns.forEach(drop => {
+  drop.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768) {
+      const menu = drop.nextElementSibling;
+      if (menu && menu.classList.contains('nav-dropdown-menu')) {
+        e.preventDefault();
+        menu.classList.toggle('open');
+      }
+    }
+  });
+});
 

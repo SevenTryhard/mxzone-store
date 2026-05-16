@@ -109,7 +109,17 @@
       <!-- Nav Links (Desktop) -->
       <ul class="nav-links" id="navLinks">
         <li><a href="https://www.mxzonestore.com/">Inicio</a></li>
-        <li><a href="https://www.mxzonestore.com/shop.html">Tienda</a></li>
+        <li class="nav-dropdown">
+          <a href="https://www.mxzonestore.com/shop.html">Tienda</a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="https://www.mxzonestore.com/shop.html?cat=cascos">Cascos</a></li>
+            <li><a href="https://www.mxzonestore.com/shop.html?cat=uniformes">Uniformes</a></li>
+            <li><a href="https://www.mxzonestore.com/shop.html?cat=botas">Botas</a></li>
+            <li><a href="https://www.mxzonestore.com/shop.html?cat=guantes">Guantes</a></li>
+            <li><a href="https://www.mxzonestore.com/shop.html?cat=protecciones">Protecciones</a></li>
+            <li><a href="https://www.mxzonestore.com/shop.html?cat=accesorios">Accesorios</a></li>
+          </ul>
+        </li>
         <li><a href="https://www.mxzonestore.com/promociones.html">Promociones</a></li>
         <li><a href="https://www.mxzonestore.com/about.html">Nosotros</a></li>
         <li><a href="https://www.mxzonestore.com/testimonials.html">Testimonios</a></li>
@@ -777,6 +787,10 @@
                 <div class="cart-form-group" style="flex:1">
                   <label for="checkoutPhone">Teléfono *</label>
                   <input type="tel" id="checkoutPhone" placeholder="Ej: 317 669 2997" required>
+                </div>
+                <div class="cart-form-group" style="flex:1">
+                  <label for="checkoutEmail">Email (opcional)</label>
+                  <input type="email" id="checkoutEmail" placeholder="tu@email.com">
                 </div>
                 <div class="cart-form-group" style="flex:1">
                   <label for="checkoutCity">Ciudad *</label>

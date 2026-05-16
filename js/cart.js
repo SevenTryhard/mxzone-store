@@ -220,6 +220,8 @@ function buildWhatsAppMessage(name, phone, city, address) {
   message += `*DATOS DEL COMPRADOR:*\n`;
   message += `▫️ Nombre: ${name}\n`;
   message += `▫️ Teléfono: ${phone}\n`;
+  const email = document.getElementById('checkoutEmail')?.value;
+  if (email) message += `▫️ Email: ${email}\n`;
   message += `▫️ Ciudad: ${city}\n`;
   message += `▫️ Dirección: ${address}\n\n`;
   message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
