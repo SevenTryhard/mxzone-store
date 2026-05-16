@@ -209,6 +209,8 @@ function openCheckout() {
     showNotification('El carrito esta vacio', 'error');
     return;
   }
+  // CERRAR CARRITO PRIMERO para que el checkout sea visible
+  closeCart();
   const overlay = document.getElementById('checkoutOverlay');
   if (overlay) {
     overlay.classList.add('active');
