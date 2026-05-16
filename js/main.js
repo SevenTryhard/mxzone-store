@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize all modules
   initHeader();
   initMobileMenu();
+  initNavDropdowns();
   initActiveNavLink();
   highlightActiveNavLink();
   initScrollAnimations();
@@ -2366,6 +2367,24 @@ window.MXZONE = {
 // ================================
 // 🛒 GLOBAL: WhatsApp buttons → Cart (except advisory)
 // ================================
+/**
+ * Mobile nav dropdown toggle for .nav-dropdown (click/tap on mobile)
+ */
+function initNavDropdowns() {
+  const navDropdowns = document.querySelectorAll('.nav-dropdown > a');
+  navDropdowns.forEach(drop => {
+    drop.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768) {
+        e.preventDefault();
+        const menu = drop.nextElementSibling;
+        if (menu) {
+          menu.classList.toggle('open');
+        }
+      }
+    });
+  });
+}
+
 (function interceptWhatsAppButtons() {
   function isAdvisoryWhatsapp(el) {
     const text = ((el && (el.textContent || el.title || el.getAttribute('aria-label') || '')) || '').toLowerCase();

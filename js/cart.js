@@ -211,7 +211,7 @@ function checkoutToWhatsApp() {
 }
 
 // Construir mensaje de WhatsApp (con datos de formulario)
-function buildWhatsAppMessage(name, phone, city, address) {
+function buildWhatsAppMessage(name, phone, city, address, email) {
   let message = `*¡Hola MXZONE STORE! 🏍️*\n\n`;
   message += `*QUIERO REALIZAR EL SIGUIENTE PEDIDO:*\n\n`;
   message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
@@ -220,6 +220,9 @@ function buildWhatsAppMessage(name, phone, city, address) {
   message += `*DATOS DEL COMPRADOR:*\n`;
   message += `▫️ Nombre: ${name}\n`;
   message += `▫️ Teléfono: ${phone}\n`;
+  if (email && email.trim()) {
+    message += `▫️ Email: ${email}\n`;
+  }
   message += `▫️ Ciudad: ${city}\n`;
   message += `▫️ Dirección: ${address}\n\n`;
   message += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
@@ -455,6 +458,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const phone = document.getElementById('checkoutPhone')?.value.trim();
       const city = document.getElementById('checkoutCity')?.value.trim();
       const address = document.getElementById('checkoutAddress')?.value.trim();
+      const email = document.getElementById('checkoutEmail')?.value.trim();
 
       if (!name || !phone || !city || !address) {
         showNotification('Completa todos los campos obligatorios', 'error');
@@ -465,7 +469,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const message = buildWhatsAppMessage(name, phone, city, address);
+      const message = buildWhatsAppMessage(name, phone, city, address, email);
       const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
       window.open(url, '_blank');
     }

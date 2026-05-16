@@ -109,7 +109,17 @@
       <!-- Nav Links (Desktop) -->
       <ul class="nav-links" id="navLinks">
         <li><a href="https://www.mxzonestore.com/">Inicio</a></li>
-        <li><a href="https://www.mxzonestore.com/shop.html">Tienda</a></li>
+        <li class="nav-dropdown">
+          <a href="https://www.mxzonestore.com/shop.html">Tienda</a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="https://www.mxzonestore.com/shop.html?cat=cascos">Cascos</a></li>
+            <li><a href="https://www.mxzonestore.com/shop.html?cat=uniformes">Uniformes</a></li>
+            <li><a href="https://www.mxzonestore.com/shop.html?cat=botas">Botas</a></li>
+            <li><a href="https://www.mxzonestore.com/shop.html?cat=guantes">Guantes</a></li>
+            <li><a href="https://www.mxzonestore.com/shop.html?cat=protecciones">Protecciones</a></li>
+            <li><a href="https://www.mxzonestore.com/shop.html?cat=accesorios">Accesorios</a></li>
+          </ul>
+        </li>
         <li><a href="https://www.mxzonestore.com/promociones.html">Promociones</a></li>
         <li><a href="https://www.mxzonestore.com/about.html">Nosotros</a></li>
         <li><a href="https://www.mxzonestore.com/testimonials.html">Testimonios</a></li>
@@ -767,7 +777,7 @@
           </div>
 
           <!-- STEP 2: Formulario de checkout -->
-          <div class="cart-step" id="cartStep2" style="display:none">
+          <div class="cart-step checkout-step" id="cartStep2" style="display:none">
             <div class="cart-form">
               <div class="cart-form-group">
                 <label for="checkoutName">Nombre completo *</label>
@@ -782,6 +792,10 @@
                   <label for="checkoutCity">Ciudad *</label>
                   <input type="text" id="checkoutCity" placeholder="Ej: Bogotá" required>
                 </div>
+              </div>
+              <div class="cart-form-group">
+                <label for="checkoutEmail">Email (opcional)</label>
+                <input type="email" id="checkoutEmail" placeholder="tu@email.com">
               </div>
               <div class="cart-form-group">
                 <label for="checkoutAddress">Dirección de envío *</label>
@@ -810,58 +824,6 @@
 
         </div>
       </div>
-
-      <div class="cart-items" id="cartItemsContainer">
-        <div class="cart-empty" id="cartEmpty">
-          <div class="cart-empty-icon">🛒</div>
-          <p>Tu carrito está vacío</p>
-          <p style="font-size: 0.9rem; color: var(--gray-text);">Agrega productos para continuar</p>
-        </div>
-        <div id="cartContent" style="display: none;">
-          <div class="cart-items" id="cartItems"></div>
-        </div>
-      </div>
-
-      <div class="cart-footer" id="cartTotal" style="display: none;">
-        <div class="cart-total">
-          <span class="cart-total-label">Total:</span>
-          <span class="cart-total-value" id="cartTotalValue">$0</span>
-        </div>
-        <div class="cart-payment-methods">
-          <p style="font-size: 0.85rem; color: var(--white); margin-bottom: var(--spacing-sm); font-weight: 600;">
-            💳 Selecciona método de pago:
-          </p>
-          <div class="payment-methods-grid">
-            <button class="payment-method-btn" onclick="selectPaymentMethod('nequi')" data-method="nequi">
-              📱 Nequi
-            </button>
-            <button class="payment-method-btn" onclick="selectPaymentMethod('daviplata')" data-method="daviplata">
-              📱 Daviplata
-            </button>
-            <button class="payment-method-btn" onclick="selectPaymentMethod('transferencia')" data-method="transferencia">
-              🏦 Transferencia
-            </button>
-            <button class="payment-method-btn" onclick="selectPaymentMethod('efectivo')" data-method="efectivo">
-              💵 Efectivo
-            </button>
-            <button class="payment-method-btn" onclick="selectPaymentMethod('tarjeta')" data-method="tarjeta">
-              💳 Tarjeta (Próximamente)
-            </button>
-          </div>
-        </div>
-
-        <div class="cart-actions">
-          <button class="cart-checkout-btn" id="checkoutBtn">
-            <span>💬</span>
-            <span>Completar pedido por WhatsApp</span>
-          </button>
-          <button class="cart-clear-btn" id="clearCartBtn">
-            🗑️ Vaciar carrito
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Footer -->
   <footer class="footer">
