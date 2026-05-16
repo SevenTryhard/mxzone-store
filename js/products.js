@@ -444,7 +444,16 @@ function addProductToCart(slug) {
   }
 
   const sizeSelect = card.querySelector('.card-size-select');
-  const selectedSize = sizeSelect ? sizeSelect.value : 'Única';
+  const selectedSize = sizeSelect ? sizeSelect.value : 'Unica';
+
+  if (!selectedSize || selectedSize === '') {
+    showNotification('Selecciona una talla primero', 'error');
+    if (sizeSelect) {
+      sizeSelect.style.border = '2px solid var(--red-accent)';
+      setTimeout(() => { sizeSelect.style.border = ''; }, 1500);
+    }
+    return;
+  }
 
   // Obtener datos del producto
   const name = card.querySelector('.product-name').textContent;
@@ -452,21 +461,31 @@ function addProductToCart(slug) {
   const category = card.dataset.category;
   const image = card.dataset.image;
   const sizes = card.dataset.sizes || selectedSize;
+  
+  // Parsear images array del data-attribute
+  let images = [];
+  try {
+    if (card.dataset.images) {
+      images = JSON.parse(card.dataset.images);
+    }
+  } catch (e) {
+    images = image ? [image] : [];
+  }
 
-  const product = { name, price, category, image, sizes };
+  const product = { name, price, category, image, images, sizes };
 
   console.log('Agregando al carrito:', product, 'Talla:', selectedSize);
 
-  // Agregar al carrito - usar directamente la función global
+  // Agregar al carrito - usar directamente la funcion global
   if (typeof window.MXZONECart !== 'undefined' && typeof window.MXZONECart.addToCart === 'function') {
     window.MXZONECart.addToCart(product, selectedSize);
   } else {
-    // Fallback: intentar con la función directa
+    // Fallback: intentar con la funcion directa
     try {
       addToCart(product, selectedSize);
     } catch (e) {
       console.error('Error al agregar al carrito:', e);
-      alert('Hubo un error al agregar el producto. Por favor recarga la página.');
+      alert('Hubo un error al agregar el producto. Por favor recarga la pagina.');
     }
   }
 }
