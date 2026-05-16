@@ -170,42 +170,15 @@ function updateCartModal() {
   cartItemsEl.innerHTML = cart.map((item, index) => {
     const sizesArray = item.sizes ? item.sizes.split('/') : ['Unica'];
     const sizeOptions = sizesArray.map(size =>
-      '\u003coption value="' + size.trim() + '" ' + (item.selectedSize === size.trim() ? 'selected' : '') + '\u003e' + size.trim() + '\u003c/option\u003e'
+      '<option value="' + size.trim() + '" ' + (item.selectedSize === size.trim() ? 'selected' : '') + '>' + size.trim() + '</option>'
     ).join('');
     
-    return (
-      '\u003cdiv class="cart-item" data-index="' + index + '"\u003e' +
-        '\u003cdiv class="cart-item-image"\u003e' +
-          '\u003cimg src="' + item.image + '" alt="' + item.name + '" onerror="this.style.display=\'none\'"\u003e' +
-        '\u003c/div\u003e' +
-        '\u003cdiv class="cart-item-info"\u003e' +
-          '\u003ch4 class="cart-item-name"\u003e' + item.name + '\u003c/h4\u003e' +
-          '\u003cp class="cart-item-category"\u003e' + getCategoryLabel(item.category) + '\u003c/p\u003e' +
-          '\u003cdiv class="cart-item-details"\u003e' +
-            '\u003cdiv class="cart-item-size"\u003e' +
-              '\u003cspan\u003eTalla:\u003c/span\u003e' +
-              '\u003cselect class="size-select" onchange="updateSize(' + index + ', this.value)"\u003e' +
-                sizeOptions +
-              '\u003c/select\u003e' +
-            '\u003c/div\u003e' +
-            '\u003cdiv class="cart-item-quantity"\u003e' +
-              '\u003cbutton class="qty-btn minus" onclick="updateQuantity(' + index + ', ' + (item.quantity - 1) + ')"\u003e-\u003c/button\u003e' +
-              '\u003cspan class="qty-value"\u003e' + item.quantity + '\u003c/span\u003e' +
-              '\u003cbutton class="qty-btn plus" onclick="updateQuantity(' + index + ', ' + (item.quantity + 1) + ')"\u003e+\u003c/button\u003e' +
-            '\u003c/div\u003e' +
-          '\u003c/div\u003e' +
-          '\u003cp class="cart-item-price"\u003e' + formatPrice(item.priceNum * item.quantity) + '\u003c/p\u003e' +
-        '\u003c/div\u003e' +
-        '\u003cbutton class="cart-item-remove" onclick="removeFromCart(' + index + ')" title="Eliminar"\u003e' +
-          '\u003cspan\u003e\u00d7\u003c/span\u003e' +
-        '\u003c/button\u003e' +
-      '\u003c/div\u003e'
-    );
-  }).join('');
-
-  if (cartTotalValueEl) {
-    cartTotalValueEl.textContent = formatPrice(getCartTotal());
-  }
+    // Convertir imagen relativa a absoluta para vista previa
+    var imagePath = item.image || '';
+    if (imagePath && !imagePath.startsWith('http')) {
+      if (!imagePath.startsWith('/')) imagePath = '/' + imagePath;
+      imagePath = window.location.origin + imagePath;
+    }
 }
 
 // ==================== CHECKOUT ====================
