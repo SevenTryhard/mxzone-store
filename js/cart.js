@@ -27,6 +27,10 @@ function getProductImage(product) {
   if (isCloudCannonUrl(imageSrc)) {
     return imageSrc.replace(/^\/https:/, 'https:');
   }
+  // Si es ruta relativa, convertir a absoluta usando el host actual
+  if (imageSrc && imageSrc.startsWith('/')) {
+    return window.location.origin + imageSrc;
+  }
   return encodeImagePath(imageSrc);
 }
 
@@ -71,8 +75,10 @@ function addToCart(product, size, quantity = 1) {
       price: product.price,
       priceNum: parseInt(product.price.replace(/[^0-9]/g, '')),
       image: getProductImage(product),
+      images: product.images || [],
       category: product.category,
       selectedSize: size,
+      sizes: product.sizes || 'Unica',
       quantity: quantity,
       slug: createProductSlug(product.name)
     });
@@ -162,44 +168,17 @@ function updateCartModal() {
 
   // Renderizar items
   cartItemsEl.innerHTML = cart.map((item, index) => {
-    const sizesArray = item.selectedSize ? item.selectedSize.split('/') : ['Unica'];
+    const sizesArray = item.sizes ? item.sizes.split('/') : ['Unica'];
     const sizeOptions = sizesArray.map(size =>
       '<option value="' + size.trim() + '" ' + (item.selectedSize === size.trim() ? 'selected' : '') + '>' + size.trim() + '</option>'
     ).join('');
-
-    return (
-      '<div class="cart-item" data-index="' + index + '">' +
-        '<div class="cart-item-image">' +
-          '<img src="' + item.image + '" alt="' + item.name + '" onerror="this.style.display=\'none\'">' +
-        '</div>' +
-        '<div class="cart-item-info">' +
-          '<h4 class="cart-item-name">' + item.name + '</h4>' +
-          '<p class="cart-item-category">' + getCategoryLabel(item.category) + '</p>' +
-          '<div class="cart-item-details">' +
-            '<div class="cart-item-size">' +
-              '<span>Talla:</span>' +
-              '<select class="size-select" onchange="updateSize(' + index + ', this.value)">' +
-                sizeOptions +
-              '</select>' +
-            '</div>' +
-            '<div class="cart-item-quantity">' +
-              '<button class="qty-btn minus" onclick="updateQuantity(' + index + ', ' + (item.quantity - 1) + ')">-</button>' +
-              '<span class="qty-value">' + item.quantity + '</span>' +
-              '<button class="qty-btn plus" onclick="updateQuantity(' + index + ', ' + (item.quantity + 1) + ')">+</button>' +
-            '</div>' +
-          '</div>' +
-          '<p class="cart-item-price">' + formatPrice(item.priceNum * item.quantity) + '</p>' +
-        '</div>' +
-        '<button class="cart-item-remove" onclick="removeFromCart(' + index + ')" title="Eliminar">' +
-          '<span>&times;</span>' +
-        '</button>' +
-      '</div>'
-    );
-  }).join('');
-
-  if (cartTotalValueEl) {
-    cartTotalValueEl.textContent = formatPrice(getCartTotal());
-  }
+    
+    // Convertir imagen relativa a absoluta para vista previa
+    var imagePath = item.image || '';
+    if (imagePath && !imagePath.startsWith('http')) {
+      if (!imagePath.startsWith('/')) imagePath = '/' + imagePath;
+      imagePath = window.location.origin + imagePath;
+    }
 }
 
 // ==================== CHECKOUT ====================
@@ -211,14 +190,17 @@ function openCheckout() {
   }
   // CERRAR CARRITO PRIMERO para que el checkout sea visible
   closeCart();
-  const overlay = document.getElementById('checkoutOverlay');
-  if (overlay) {
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    // Resetear metodo de pago
-    selectedPaymentMethod = '';
-    document.querySelectorAll('.payment-method-btn').forEach(btn => btn.classList.remove('active'));
-  }
+  // Esperar a que el carrito termine de cerrarse (transicion CSS)
+  setTimeout(function() {
+    const overlay = document.getElementById('checkoutOverlay');
+    if (overlay) {
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      // Resetear metodo de pago
+      selectedPaymentMethod = '';
+      document.querySelectorAll('.payment-method-btn').forEach(btn => btn.classList.remove('active'));
+    }
+  }, 50);
 }
 
 function closeCheckout() {
