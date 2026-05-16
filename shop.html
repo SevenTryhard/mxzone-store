@@ -766,100 +766,67 @@
             </div>
           </div>
 
-          <!-- STEP 2: Formulario de checkout -->
+          <!-- STEP 2: Formulario de checkout (ahora es el checkout modal centrado) -->
           <div class="cart-step" id="cartStep2" style="display:none">
-            <div class="cart-form">
-              <div class="cart-form-group">
-                <label for="checkoutName">Nombre completo *</label>
-                <input type="text" id="checkoutName" placeholder="Tu nombre completo" required>
-              </div>
-              <div class="cart-form-row">
-                <div class="cart-form-group" style="flex:1">
-                  <label for="checkoutPhone">Teléfono *</label>
-                  <input type="tel" id="checkoutPhone" placeholder="Ej: 317 669 2997" required>
-                </div>
-                <div class="cart-form-group" style="flex:1">
-                  <label for="checkoutCity">Ciudad *</label>
-                  <input type="text" id="checkoutCity" placeholder="Ej: Bogotá" required>
-                </div>
-              </div>
-              <div class="cart-form-group">
-                <label for="checkoutAddress">Dirección de envío *</label>
-                <input type="text" id="checkoutAddress" placeholder="Calle, número, barrio" required>
-              </div>
+            <p style="text-align:center;padding:2rem;">Finalizando pedido...</p>
+          </div>
 
-              <div class="cart-payment-methods">
-                <p style="font-size:0.9rem;font-weight:600;margin-bottom:var(--spacing-sm)">💳 Método de pago:</p>
-                <div class="payment-methods-grid">
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('nequi')" data-method="nequi">📱 Nequi</button>
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('daviplata')" data-method="daviplata">📱 Daviplata</button>
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('transferencia')" data-method="transferencia">🏦 Transferencia</button>
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('efectivo')" data-method="efectivo">💵 Efectivo</button>
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('tarjeta')" data-method="tarjeta" style="grid-column:span 2">💳 Tarjeta (Próximamente)</button>
-                </div>
-              </div>
+        </div>
+      </div>
 
-              <div class="cart-actions-simple" style="margin-top:var(--spacing-md)">
-                <button class="cart-checkout-btn" id="checkoutBtn">
-                  <span>💬</span><span>Enviar pedido por WhatsApp</span>
-                </button>
-                <button class="cart-clear-btn" id="backToCartBtn">← Volver al carrito</button>
+      <!-- Checkout Modal (centered) -->
+      <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-overlay" id="checkoutOverlay"></div>
+        <div class="checkout-content">
+          <button class="checkout-close" id="checkoutClose">×</button>
+          <h2 class="checkout-title">🛍️ Finalizar pedido</h2>
+          <p class="checkout-subtitle">Completa tus datos y te contactaremos por WhatsApp</p>
+
+          <div class="checkout-form">
+            <div class="cart-form-group">
+              <label for="checkoutName">Nombre completo *</label>
+              <input type="text" id="checkoutName" placeholder="Tu nombre completo" required>
+            </div>
+            <div class="cart-form-row">
+              <div class="cart-form-group" style="flex:1">
+                <label for="checkoutPhone">Teléfono *</label>
+                <input type="tel" id="checkoutPhone" placeholder="Ej: 317 669 2997" required>
+              </div>
+              <div class="cart-form-group" style="flex:1">
+                <label for="checkoutCity">Ciudad *</label>
+                <input type="text" id="checkoutCity" placeholder="Ej: Bogotá" required>
               </div>
             </div>
-          </div>
+            <div class="cart-form-group">
+              <label for="checkoutAddress">Dirección de envío *</label>
+              <input type="text" id="checkoutAddress" placeholder="Calle, número, barrio" required>
+            </div>
+            <div class="cart-form-group">
+              <label for="checkoutEmail">Email (opcional)</label>
+              <input type="email" id="checkoutEmail" placeholder="tu@email.com">
+            </div>
 
-        </div>
-      </div>
+            <div class="cart-payment-methods">
+              <p style="font-size:0.9rem;font-weight:600;margin-bottom:var(--spacing-sm)">💳 Método de pago:</p>
+              <div class="payment-methods-grid">
+                <button class="payment-method-btn" onclick="selectPaymentMethod('nequi')" data-method="nequi">📱 Nequi</button>
+                <button class="payment-method-btn" onclick="selectPaymentMethod('daviplata')" data-method="daviplata">📱 Daviplata</button>
+                <button class="payment-method-btn" onclick="selectPaymentMethod('transferencia')" data-method="transferencia">🏦 Transferencia</button>
+                <button class="payment-method-btn" onclick="selectPaymentMethod('efectivo')" data-method="efectivo">💵 Efectivo</button>
+                <button class="payment-method-btn" onclick="selectPaymentMethod('tarjeta')" data-method="tarjeta" style="grid-column:span 2">💳 Tarjeta (Próximamente)</button>
+              </div>
+            </div>
 
-      <div class="cart-items" id="cartItemsContainer">
-        <div class="cart-empty" id="cartEmpty">
-          <div class="cart-empty-icon">🛒</div>
-          <p>Tu carrito está vacío</p>
-          <p style="font-size: 0.9rem; color: var(--gray-text);">Agrega productos para continuar</p>
-        </div>
-        <div id="cartContent" style="display: none;">
-          <div class="cart-items" id="cartItems"></div>
-        </div>
-      </div>
-
-      <div class="cart-footer" id="cartTotal" style="display: none;">
-        <div class="cart-total">
-          <span class="cart-total-label">Total:</span>
-          <span class="cart-total-value" id="cartTotalValue">$0</span>
-        </div>
-        <div class="cart-payment-methods">
-          <p style="font-size: 0.85rem; color: var(--white); margin-bottom: var(--spacing-sm); font-weight: 600;">
-            💳 Selecciona método de pago:
-          </p>
-          <div class="payment-methods-grid">
-            <button class="payment-method-btn" onclick="selectPaymentMethod('nequi')" data-method="nequi">
-              📱 Nequi
-            </button>
-            <button class="payment-method-btn" onclick="selectPaymentMethod('daviplata')" data-method="daviplata">
-              📱 Daviplata
-            </button>
-            <button class="payment-method-btn" onclick="selectPaymentMethod('transferencia')" data-method="transferencia">
-              🏦 Transferencia
-            </button>
-            <button class="payment-method-btn" onclick="selectPaymentMethod('efectivo')" data-method="efectivo">
-              💵 Efectivo
-            </button>
-            <button class="payment-method-btn" onclick="selectPaymentMethod('tarjeta')" data-method="tarjeta">
-              💳 Tarjeta (Próximamente)
-            </button>
+            <div class="cart-actions-simple" style="margin-top:var(--spacing-md)">
+              <button class="cart-checkout-btn" id="checkoutBtnModal">
+                <span>💬</span><span>Enviar pedido por WhatsApp</span>
+              </button>
+              <button class="cart-clear-btn" id="backToCartBtn">← Volver al carrito</button>
+            </div>
           </div>
         </div>
-
-        <div class="cart-actions">
-          <button class="cart-checkout-btn" id="checkoutBtn">
-            <span>💬</span>
-            <span>Completar pedido por WhatsApp</span>
-          </button>
-          <button class="cart-clear-btn" id="clearCartBtn">
-            🗑️ Vaciar carrito
-          </button>
-        </div>
       </div>
+
     </div>
   </div>
 

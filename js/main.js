@@ -1950,6 +1950,10 @@ function initProductModalInternal() {
 
   if (openSizeGuideBtn && sizeGuideModal) {
     openSizeGuideBtn.addEventListener('click', () => {
+      // Cerrar product modal primero para que no quede detrás
+      const productModal = document.getElementById('productModal');
+      if (productModal) productModal.classList.remove('active');
+
       sizeGuideModal.classList.add('active');
       document.body.style.overflow = 'hidden';
     });

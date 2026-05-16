@@ -2168,6 +2168,18 @@ a {
 /* Size Selector in Product Card */
 .product-sizes-selector {
   margin-top: var(--spacing-xs);
+  position: relative;
+}
+
+.product-sizes-selector::before {
+  content: "TALLAS";
+  display: block;
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--gray-light);
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
 }
 
 .card-size-select {
@@ -8215,4 +8227,84 @@ a {
   .step-card {
     padding: var(--spacing-lg);
   }
+}
+
+/* Cart Scroll Fix */
+.cart-step {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+#cartItemsContainer {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding: 0 1rem;
+}
+#cartItems {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* Checkout Modal - Centered */
+.checkout-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.checkout-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+.checkout-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+}
+.checkout-content {
+  position: relative;
+  background: var(--bg-color, #1a1a1a);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 520px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  z-index: 1;
+  border: 1px solid var(--border-color, #333);
+}
+.checkout-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--text-primary, #fff);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.checkout-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+  text-align: center;
+}
+.checkout-subtitle {
+  font-size: 0.85rem;
+  color: var(--gray-text);
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
