@@ -478,7 +478,14 @@ function addProductToCart(slug) {
 
   // Agregar al carrito - usar directamente la funcion global
   if (typeof window.MXZONECart !== 'undefined' && typeof window.MXZONECart.addToCart === 'function') {
-    window.MXZONECart.addToCart(product, selectedSize);
+    try {
+      window.MXZONECart.addToCart(product, selectedSize);
+    } catch (e) {
+      console.error('Error MXZONECart.addToCart:', e);
+      if (typeof showNotification === 'function') {
+        showNotification('Error: ' + e.message, 'error');
+      }
+    }
   } else {
     // Fallback: intentar con la funcion directa
     try {
