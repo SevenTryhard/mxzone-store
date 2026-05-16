@@ -185,7 +185,7 @@ function createProductCard(product) {
 
   // Parsear tallas
   const sizesArray = product.sizes ? product.sizes.split('/').map(s => s.trim()) : ['Única'];
-  const sizeOptions = `<option value="" disabled selected>TALLA</option>` + sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
+  const sizeOptions = `<option value="" disabled selected>Selecciona talla...</option>` + sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
 
   return `
     <div class="product-card"
@@ -474,7 +474,7 @@ function addProductToCart(slug) {
 
   const product = { name, price, category, image, images, sizes };
 
-  console.log('Agregando al carrito:', product, 'Talla:', selectedSize);
+  console.log('Agregando al carrito:', product, 'Selecciona talla...:', selectedSize);
 
   // Agregar al carrito - usar directamente la funcion global
   if (typeof window.MXZONECart !== 'undefined' && typeof window.MXZONECart.addToCart === 'function') {
@@ -485,7 +485,9 @@ function addProductToCart(slug) {
       addToCart(product, selectedSize);
     } catch (e) {
       console.error('Error al agregar al carrito:', e);
-      alert('Hubo un error al agregar el producto. Por favor recarga la pagina.');
+      if (typeof showNotification === 'function') {
+        showNotification('Error al agregar el producto. Intenta de nuevo.', 'error');
+      }
     }
   }
 }
@@ -496,3 +498,6 @@ window.MXZONE_Products = {
   renderShopProducts,
   renderFeaturedProducts
 };
+
+
+
