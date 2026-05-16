@@ -1,9 +1,9 @@
 /**
  * MXZONE STORE - Dynamic Product Loader v6
- * Carga productos desde D1 via CMS API (primario), con fallback a archivos JSON estáticos
+ * Carga productos desde D1 via CMS API (primario), con fallback a archivos JSON estaticos
  */
 
-// WHATSAPP_NUMBER se define en cart.js - usar la variable global
+const WHATSAPP_NUMBER = '573176692997';
 
 // Mapeo de marcas basado en nombres de producto
 function getBrand(productName) {
