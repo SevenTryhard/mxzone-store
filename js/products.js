@@ -3,10 +3,8 @@
  * Carga productos desde D1 via CMS API (primario), con fallback a archivos JSON estaticos
  */
 
-// Evitar redeclaracion si cart.js ya cargo WHATSAPP_NUMBER
-if (typeof WHATSAPP_NUMBER === 'undefined') {
-  var WHATSAPP_NUMBER = '573176692997';
-}
+// Usar window.WHATSAPP_NUMBER para evitar redeclaración entre scripts
+window.WHATSAPP_NUMBER = window.WHATSAPP_NUMBER || '573176692997';
 
 // Mapeo de marcas basado en nombres de producto
 function getBrand(productName) {
@@ -148,7 +146,7 @@ function createProductCard(product) {
   if (product.agotado === true) return '';
 
   const whatsappMessage = encodeURIComponent(`Estoy interesado en ${product.name}`);
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+  const whatsappUrl = `https://wa.me/${window.WHATSAPP_NUMBER}?text=${whatsappMessage}`;
   const brand = getBrand(product.name);
   const priceNum = parseInt(product.price.replace(/[^0-9]/g, ''));
   const productSlug = createProductSlug(product.name);
@@ -501,3 +499,4 @@ window.MXZONE_Products = {
   renderShopProducts,
   renderFeaturedProducts
 };
+

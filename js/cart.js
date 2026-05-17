@@ -4,7 +4,8 @@
  */
 
 const CART_STORAGE_KEY = 'mxzone_cart';
-const WHATSAPP_NUMBER = '573176692997';
+// Usar window.WHATSAPP_NUMBER para evitar redeclaración entre scripts
+window.WHATSAPP_NUMBER = window.WHATSAPP_NUMBER || '573176692997';
 
 // Funcion para codificar URLs de imagenes correctamente (maneja espacios)
 function encodeImagePath(path) {
@@ -463,7 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const message = buildWhatsAppMessage(name, phone, city, address);
-      const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+      const url = 'https://wa.me/' + window.WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
       window.open(url, '_blank');
     }
 
@@ -524,13 +525,14 @@ function updateFloatingWhatsApp() {
 
   if (cart.length === 0) {
     // Sin productos - mensaje generico
-    floatBtn.href = 'https://wa.me/' + WHATSAPP_NUMBER;
+    floatBtn.href = 'https://wa.me/' + window.WHATSAPP_NUMBER;
     floatBtn.title = 'Contactar por WhatsApp';
   } else {
     // Con productos - mensaje con lista del carrito
     const itemsList = cart.map((item, i) => (i + 1) + '. ' + item.name + ' (' + item.selectedSize + ') - ' + item.price).join('\n');
     const message = 'Hola MXZONE!\n\nTengo estos productos en mi carrito:\n\n' + itemsList + '\n\nTotal: ' + formatPrice(getCartTotal()) + '\n\nMe ayudan con el pedido?';
-    floatBtn.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+    floatBtn.href = 'https://wa.me/' + window.WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
     floatBtn.title = 'WhatsApp (' + cart.length + ' productos)';
   }
 }
+

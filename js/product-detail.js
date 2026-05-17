@@ -3,7 +3,8 @@
  * Carga dinámicamente los detalles del producto desde el CMS
  */
 
-const WHATSAPP_NUMBER = '573176692997';
+// Usar window.WHATSAPP_NUMBER para evitar redeclaración entre scripts
+window.WHATSAPP_NUMBER = window.WHATSAPP_NUMBER || '573176692997';
 
 // Mapeo de marcas
 function getBrand(productName) {
@@ -134,7 +135,7 @@ function getProductImages(product) {
 function createProductHTML(product) {
   const brand = getBrand(product.name);
   const whatsappMessage = encodeURIComponent(`Estoy interesado en ${product.name}`);
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+  const whatsappUrl = `https://wa.me/${window.WHATSAPP_NUMBER}?text=${whatsappMessage}`;
   const description = getCategoryDescription(product.category, product.name);
   const features = getCategoryFeatures(product.category);
   const sizes = product.sizes.split('/').map(s => s.trim());
@@ -357,7 +358,7 @@ async function loadRelatedProducts(currentProduct, currentSlug) {
 // Crear tarjeta de producto relacionado
 function createRelatedProductCard(product) {
   const whatsappMessage = encodeURIComponent(`Estoy interesado en ${product.name}`);
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+  const whatsappUrl = `https://wa.me/${window.WHATSAPP_NUMBER}?text=${whatsappMessage}`;
   const brand = getBrand(product.name);
 
   const imageSrc = getProductImage(product);
@@ -493,3 +494,4 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 });
+

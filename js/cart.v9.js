@@ -507,3 +507,4 @@ function updateFloatingWhatsApp() {
     floatBtn.title = 'WhatsApp (' + cart.length + ' productos)';
   }
 }
+

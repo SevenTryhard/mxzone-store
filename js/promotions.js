@@ -566,3 +566,4 @@ document.addEventListener('DOMContentLoaded', () => {
   window.changeGalleryImage = changeGalleryImage;
   window.checkoutComboToWhatsApp = checkoutComboToWhatsApp;
 });
+
