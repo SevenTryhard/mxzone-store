@@ -3,7 +3,10 @@
  * Carga productos desde D1 via CMS API (primario), con fallback a archivos JSON estaticos
  */
 
-const WHATSAPP_NUMBER = '573176692997';
+// Evitar redeclaracion si cart.js ya cargo WHATSAPP_NUMBER
+if (typeof WHATSAPP_NUMBER === 'undefined') {
+  var WHATSAPP_NUMBER = '573176692997';
+}
 
 // Mapeo de marcas basado en nombres de producto
 function getBrand(productName) {
@@ -185,7 +188,7 @@ function createProductCard(product) {
 
   // Parsear tallas
   const sizesArray = product.sizes ? product.sizes.split('/').map(s => s.trim()) : ['Única'];
-  const sizeOptions = `<option value="" disabled selected>Selecciona talla...</option>` + sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
+  const sizeOptions = `<option value="" disabled selected>TALLA</option>` + sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
 
   return `
     <div class="product-card"
@@ -474,18 +477,11 @@ function addProductToCart(slug) {
 
   const product = { name, price, category, image, images, sizes };
 
-  console.log('Agregando al carrito:', product, 'Selecciona talla...:', selectedSize);
+  console.log('Agregando al carrito:', product, 'Talla:', selectedSize);
 
   // Agregar al carrito - usar directamente la funcion global
   if (typeof window.MXZONECart !== 'undefined' && typeof window.MXZONECart.addToCart === 'function') {
-    try {
-      window.MXZONECart.addToCart(product, selectedSize);
-    } catch (e) {
-      console.error('Error MXZONECart.addToCart:', e);
-      if (typeof showNotification === 'function') {
-        showNotification('Error: ' + e.message, 'error');
-      }
-    }
+    window.MXZONECart.addToCart(product, selectedSize);
   } else {
     // Fallback: intentar con la funcion directa
     try {
@@ -505,6 +501,3 @@ window.MXZONE_Products = {
   renderShopProducts,
   renderFeaturedProducts
 };
-
-
-
