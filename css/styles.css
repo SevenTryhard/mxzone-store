@@ -6036,36 +6036,18 @@ a {
   letter-spacing: 0.5px;
 }
 
-/* Label visual integrado sobre el select de tallas */
-.size-select-label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  background: var(--gray-dark);
-  border: 1px solid var(--gray-lighter);
-  border-bottom: none;
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+/* Diferenciar la opción placeholder 'TALLAS' del menú desplegable */
+.card-size-select option:first-child,
+.modal-size-select option:first-child,
+.product-size-select option:first-child {
   color: var(--gray-text);
-  font-size: 0.85rem;
-  font-family: var(--font-primary);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: -1px;
-  position: relative;
-  z-index: 1;
-  cursor: default;
-  user-select: none;
-  pointer-events: none;
+  font-style: italic;
 }
 
-/* Ajustar border-radius del select para unirse al label */
-.product-sizes-selector .card-size-select,
-.modal-product-sizes .modal-size-select,
-.product-size-wrapper .product-size-select {
-  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+/* Centrar texto en los selects de talla */
+.card-size-select,
+.modal-size-select,
+.product-size-select {
   text-align: center;
 }
 

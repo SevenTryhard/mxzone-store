@@ -1750,7 +1750,7 @@ function initProductModalInternal() {
     if (sizesArray.length > 1) {
       modalSizes.style.display = 'none';
       modalSizeSelect.style.display = 'block';
-      modalSizeSelect.innerHTML = sizesArray.map(size =>
+      modalSizeSelect.innerHTML = `<option value="" disabled selected>TALLAS</option>` + sizesArray.map(size =>
         `<option value="${size}">${size}</option>`
       ).join('');
     } else {

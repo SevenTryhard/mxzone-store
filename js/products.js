@@ -186,12 +186,11 @@ function createProductCard(product) {
 
   // Parsear tallas
   const sizesArray = product.sizes ? product.sizes.split('/').map(s => s.trim()) : ['Única'];
-  const sizeOptions = sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
+  const sizeOptions = `<option value="" disabled selected>TALLAS</option>` + sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
 
   return `
     ...
         <div class="product-sizes-selector">
-          <span class="size-select-label">TALLAS</span>
           <select class="card-size-select" aria-label="Seleccionar talla">
             ${sizeOptions}
           </select>
