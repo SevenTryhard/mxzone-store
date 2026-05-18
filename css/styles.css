@@ -2181,6 +2181,7 @@ a {
   font-family: var(--font-primary);
   cursor: pointer;
   transition: var(--transition-fast);
+  text-align: center;
 }
 
 .card-size-select:focus {
@@ -4511,9 +4512,9 @@ a {
   transform: translateY(0);
 }
 
-/* Size Guide Modal - above product modal */
+/* Size Guide Modal - above product modal and cart */
 .size-guide-modal {
-  z-index: 2001;
+  z-index: 4000;
 }
 
 /* ================================
