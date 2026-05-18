@@ -4511,9 +4511,9 @@ a {
   transform: translateY(0);
 }
 
-/* Size Guide Modal - above product modal */
+/* Size Guide Modal - above everything including cart */
 .size-guide-modal {
-  z-index: 2001;
+  z-index: 4000;
 }
 
 /* ================================
@@ -6021,6 +6021,17 @@ a {
   font-size: 1rem;
   color: var(--white);
   margin-bottom: var(--spacing-md);
+}
+
+.size-label {
+  display: block;
+  font-family: var(--font-primary);
+  font-size: 0.85rem;
+  color: var(--gray-text);
+  margin-bottom: var(--spacing-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .product-size-selector {

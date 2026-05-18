@@ -186,7 +186,7 @@ function createProductCard(product) {
 
   // Parsear tallas
   const sizesArray = product.sizes ? product.sizes.split('/').map(s => s.trim()) : ['Única'];
-  const sizeOptions = `<option value="" disabled selected>TALLA</option>` + sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
+  const sizeOptions = sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
 
   return `
     <div class="product-card"
@@ -499,4 +499,3 @@ window.MXZONE_Products = {
   renderShopProducts,
   renderFeaturedProducts
 };
-
