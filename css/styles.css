@@ -2181,7 +2181,6 @@ a {
   font-family: var(--font-primary);
   cursor: pointer;
   transition: var(--transition-fast);
-  text-align: center;
 }
 
 .card-size-select:focus {
@@ -4512,9 +4511,9 @@ a {
   transform: translateY(0);
 }
 
-/* Size Guide Modal - above everything including cart */
+/* Size Guide Modal - above product modal */
 .size-guide-modal {
-  z-index: 4000;
+  z-index: 2001;
 }
 
 /* ================================
@@ -4810,7 +4809,6 @@ a {
   font-family: var(--font-primary);
   cursor: pointer;
   transition: var(--transition-fast);
-  text-align: center;
 }
 
 .modal-size-select:focus {
@@ -6023,32 +6021,6 @@ a {
   font-size: 1rem;
   color: var(--white);
   margin-bottom: var(--spacing-md);
-}
-
-.size-label {
-  display: block;
-  font-family: var(--font-primary);
-  font-size: 0.85rem;
-  color: var(--gray-text);
-  margin-bottom: var(--spacing-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* Diferenciar la opción placeholder 'TALLAS' del menú desplegable */
-.card-size-select option:first-child,
-.modal-size-select option:first-child,
-.product-size-select option:first-child {
-  color: var(--gray-text);
-  font-style: italic;
-}
-
-/* Centrar texto en los selects de talla */
-.card-size-select,
-.modal-size-select,
-.product-size-select {
-  text-align: center;
 }
 
 .product-size-selector {

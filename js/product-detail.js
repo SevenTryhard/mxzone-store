@@ -226,7 +226,7 @@ function createProductHTML(product) {
         <div class="product-sizes-section">
           <div class="product-size-wrapper">
             <select class="product-size-select" id="productSizeSelect" aria-label="Seleccionar talla">
-              <option value="" disabled selected>TALLAS</option>
+              <option value="" disabled selected>TALLA</option>
               ${sizes.map(size => `<option value="${size.trim()}">${size.trim()}</option>`).join('')}
             </select>
           </div>
@@ -494,3 +494,4 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 });
+

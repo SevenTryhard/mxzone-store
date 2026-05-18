@@ -186,10 +186,28 @@ function createProductCard(product) {
 
   // Parsear tallas
   const sizesArray = product.sizes ? product.sizes.split('/').map(s => s.trim()) : ['Única'];
-  const sizeOptions = `<option value="" disabled selected>TALLAS</option>` + sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
+  const sizeOptions = `<option value="" disabled selected>TALLA</option>` + sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
 
   return `
-    ...
+    <div class="product-card"
+         data-category="${product.category || 'sin-categoria'}"
+         data-brand="${brand}"
+         data-price="${priceNum}"
+         data-image="${mainImage}"
+         data-images='${JSON.stringify(images).replace(/'/g, "&#39;")}'
+         data-slug="${productSlug}"
+         data-sizes="${product.sizes || 'Única'}">
+      <div class="product-image">
+        <img src="${mainImage}" alt="${product.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <span class="product-image-placeholder" style="display:none;">MX</span>
+        ${badgeHTML}
+      </div>
+      <div class="product-info">
+        <span class="product-category">${getCategoryLabel(product.category)}</span>
+        <h3 class="product-name">${product.name}</h3>
+        <div class="product-price-wrapper">
+          <span class="product-price">${product.price}</span>
+        </div>
         <div class="product-sizes-selector">
           <select class="card-size-select" aria-label="Seleccionar talla">
             ${sizeOptions}
@@ -481,3 +499,4 @@ window.MXZONE_Products = {
   renderShopProducts,
   renderFeaturedProducts
 };
+

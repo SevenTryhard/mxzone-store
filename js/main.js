@@ -1750,7 +1750,7 @@ function initProductModalInternal() {
     if (sizesArray.length > 1) {
       modalSizes.style.display = 'none';
       modalSizeSelect.style.display = 'block';
-      modalSizeSelect.innerHTML = `<option value="" disabled selected>TALLAS</option>` + sizesArray.map(size =>
+      modalSizeSelect.innerHTML = sizesArray.map(size =>
         `<option value="${size}">${size}</option>`
       ).join('');
     } else {
@@ -1951,7 +1951,6 @@ function initProductModalInternal() {
   if (openSizeGuideBtn && sizeGuideModal) {
     openSizeGuideBtn.addEventListener('click', () => {
       sizeGuideModal.classList.add('active');
-      sizeGuideModal.style.zIndex = '5000';
       document.body.style.overflow = 'hidden';
     });
   }
