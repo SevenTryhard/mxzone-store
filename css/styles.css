@@ -2181,6 +2181,7 @@ a {
   font-family: var(--font-primary);
   cursor: pointer;
   transition: var(--transition-fast);
+  text-align: center;
 }
 
 .card-size-select:focus {
@@ -4809,6 +4810,7 @@ a {
   font-family: var(--font-primary);
   cursor: pointer;
   transition: var(--transition-fast);
+  text-align: center;
 }
 
 .modal-size-select:focus {
@@ -6032,6 +6034,13 @@ a {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+/* Center text in all size dropdowns */
+.card-size-select,
+.modal-size-select,
+.product-size-select {
+  text-align: center;
 }
 
 .product-size-selector {

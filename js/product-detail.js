@@ -225,8 +225,8 @@ function createProductHTML(product) {
         <!-- Tallas -->
         <div class="product-sizes-section">
           <div class="product-size-wrapper">
-            <span class="size-label">TALLA</span>
             <select class="product-size-select" id="productSizeSelect" aria-label="Seleccionar talla">
+              <option value="" disabled selected>TALLAS</option>
               ${sizes.map(size => `<option value="${size.trim()}">${size.trim()}</option>`).join('')}
             </select>
           </div>
