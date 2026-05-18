@@ -211,6 +211,73 @@ function updateCartModal() {
 
 // ==================== CHECKOUT ====================
 
+function injectCheckoutOverlay() {
+  if (document.getElementById('checkoutOverlay')) return;
+
+  const checkoutHTML = `
+  <div class="checkout-overlay" id="checkoutOverlay">
+    <div class="checkout-container">
+      <div class="checkout-header">
+        <h3 class="checkout-title">Finalizar Compra</h3>
+        <button class="checkout-close" id="checkoutClose">×</button>
+      </div>
+      <div class="checkout-form-wrapper">
+        <form class="checkout-form" id="checkoutForm" onsubmit="return false;">
+          <div class="checkout-form-group">
+            <label for="checkoutName">Nombre completo *</label>
+            <input type="text" id="checkoutName" placeholder="Tu nombre completo" required autocomplete="name">
+          </div>
+          <div class="checkout-form-group">
+            <label for="checkoutPhone">Teléfono *</label>
+            <input type="tel" id="checkoutPhone" placeholder="Ej: 317 669 2997" required autocomplete="tel">
+          </div>
+          <div class="checkout-form-group">
+            <label for="checkoutEmail">Email</label>
+            <input type="email" id="checkoutEmail" placeholder="tu@email.com" autocomplete="email">
+          </div>
+          <div class="checkout-form-group">
+            <label for="checkoutCity">Ciudad *</label>
+            <input type="text" id="checkoutCity" placeholder="Ej: Bogotá" required autocomplete="address-level2">
+          </div>
+          <div class="checkout-form-group">
+            <label for="checkoutAddress">Dirección de envío *</label>
+            <input type="text" id="checkoutAddress" placeholder="Calle, número, barrio" required autocomplete="street-address">
+          </div>
+          <div class="checkout-payment-section">
+            <p class="checkout-payment-label">Método de pago:</p>
+            <div class="payment-methods-grid">
+              <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('nequi')" data-method="nequi">
+                <span class="pm-icon"></span>Nequi
+              </button>
+              <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('daviplata')" data-method="daviplata">
+                <span class="pm-icon"></span>Daviplata
+              </button>
+              <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('transferencia')" data-method="transferencia">
+                <span class="pm-icon"></span>Transferencia bancaria
+              </button>
+              <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('efectivo')" data-method="efectivo">
+                <span class="pm-icon"></span>Efectivo contra entrega
+              </button>
+              <button type="button" class="payment-method-btn disabled" onclick="selectPaymentMethod('tarjeta')" data-method="tarjeta" disabled>
+                <span class="pm-icon"></span>Tarjeta de crédito/débito
+                <span class="pm-badge">Próximamente</span>
+              </button>
+            </div>
+          </div>
+          <div class="checkout-actions">
+            <button type="button" class="cart-checkout-btn" id="checkoutBtn">ENVIAR PEDIDO POR WHATSAPP</button>
+            <button type="button" class="cart-clear-btn" id="backToCartBtn">Volver al Carrito</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>`;
+
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = checkoutHTML.trim();
+  document.body.appendChild(tempDiv.firstElementChild);
+}
+
 function openCheckout() {
   if (cart.length === 0) {
     showNotification('El carrito esta vacio', 'error');
@@ -220,6 +287,7 @@ function openCheckout() {
   closeCart();
   // Esperar a que el carrito termine de cerrarse (transicion CSS)
   setTimeout(function() {
+    injectCheckoutOverlay(); // Crear overlay dinámicamente si no existe en esta página
     const overlay = document.getElementById('checkoutOverlay');
     if (overlay) {
       overlay.classList.add('active');
