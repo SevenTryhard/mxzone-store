@@ -1,6 +1,7 @@
 /**
  * MXZONE STORE - Carrito de Compras
  * Sistema de carrito que envia pedidos a WhatsApp
+ * Actualizado: soporte dual-flow checkout (overlay separado + dos pasos en modal)
  */
 
 const CART_STORAGE_KEY = 'mxzone_cart';
@@ -216,26 +217,44 @@ function openCheckout() {
     showNotification('El carrito esta vacio', 'error');
     return;
   }
-  // CERRAR CARRITO PRIMERO para que el checkout sea visible
-  closeCart();
-  // Esperar a que el carrito termine de cerrarse (transicion CSS)
-  setTimeout(function() {
-    const overlay = document.getElementById('checkoutOverlay');
-    if (overlay) {
+
+  const overlay = document.getElementById('checkoutOverlay');
+  const step1 = document.getElementById('cartStep1');
+  const step2 = document.getElementById('cartStep2');
+
+  if (overlay) {
+    // Flow A: overlay separado (index.html)
+    closeCart();
+    setTimeout(function() {
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
       // Resetear metodo de pago
       selectedPaymentMethod = '';
       document.querySelectorAll('.payment-method-btn').forEach(btn => btn.classList.remove('active'));
-    }
-  }, 50);
+    }, 50);
+  } else if (step1 && step2) {
+    // Flow B: dos pasos dentro del mismo modal (shop.html)
+    step1.style.display = 'none';
+    step2.style.display = 'block';
+    // Resetear metodo de pago
+    selectedPaymentMethod = '';
+    document.querySelectorAll('.payment-method-btn').forEach(btn => btn.classList.remove('active'));
+  }
 }
 
 function closeCheckout() {
   const overlay = document.getElementById('checkoutOverlay');
+  const step1 = document.getElementById('cartStep1');
+  const step2 = document.getElementById('cartStep2');
+
   if (overlay) {
+    // Flow A: overlay separado
     overlay.classList.remove('active');
     document.body.style.overflow = '';
+  } else if (step1 && step2) {
+    // Flow B: dos pasos dentro del modal
+    step2.style.display = 'none';
+    step1.style.display = 'block';
   }
 }
 
@@ -391,6 +410,13 @@ window.openCart = function() {
     cartModal.classList.add('active');
     document.body.style.overflow = 'hidden';
     updateCartModal();
+    // Asegurar que siempre empiece en paso 1 (Flow B)
+    const step1 = document.getElementById('cartStep1');
+    const step2 = document.getElementById('cartStep2');
+    if (step1 && step2) {
+      step1.style.display = 'block';
+      step2.style.display = 'none';
+    }
   }
 };
 
@@ -491,7 +517,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') {
       const cartModal = document.getElementById('cartModal');
       const checkoutOverlay = document.getElementById('checkoutOverlay');
+      const step2 = document.getElementById('cartStep2');
+
       if (checkoutOverlay && checkoutOverlay.classList.contains('active')) {
+        closeCheckout();
+      } else if (step2 && step2.style.display === 'block' && cartModal && cartModal.classList.contains('active')) {
+        // Flow B: en paso 2 del modal, volver al paso 1
         closeCheckout();
       } else if (cartModal && cartModal.classList.contains('active')) {
         closeCart();
@@ -535,4 +566,3 @@ function updateFloatingWhatsApp() {
     floatBtn.title = 'WhatsApp (' + cart.length + ' productos)';
   }
 }
-
