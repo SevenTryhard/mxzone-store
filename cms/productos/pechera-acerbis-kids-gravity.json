@@ -1,14 +1,15 @@
 {
   "name": "PECHERA ACERBIS KIDS GRAVITY",
-  "image": "/assets/images/protecciones/pechera-acerbis-kids-gravity.jpg",
+  "sku": "PRO-XX-PECHE",
+  "color": "",
+  "category": "protecciones",
   "price": "$479.000",
   "sizes": "NiÃ±o",
-  "category": "protecciones",
+  "badge": "",
   "description": "Pechera protectora Acerbis Kids Gravity para niÃ±os",
+  "image": "/assets/images/protecciones/pechera-acerbis-kids-gravity.jpg",
   "images": [
     "/assets/images/protecciones/pechera-acerbis-kids-gravity.jpg"
   ],
-  "sku": "PRO-XX-PECHE",
-  "color": "",
-  "agotado": false
+  "agotado": true
 }
