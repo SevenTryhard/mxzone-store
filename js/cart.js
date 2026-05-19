@@ -225,6 +225,14 @@ function openCheckout() {
     return;
   }
 
+  // BLOQUEO FINAL: verificar que no haya productos agotados en el carrito
+  var agotadosEnCarrito = cart.filter(function(item) { return item.agotado === true; });
+  if (agotadosEnCarrito.length > 0) {
+    var nombres = agotadosEnCarrito.map(function(item) { return item.name; }).join(', ');
+    showNotification('El carrito contiene productos agotados: ' + nombres + '. Por favor elimínalos para continuar.', 'error');
+    return;
+  }
+
   const overlay = document.getElementById('checkoutOverlay');
   const step1 = document.getElementById('cartStep1');
   const step2 = document.getElementById('cartStep2');
