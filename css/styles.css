@@ -4514,7 +4514,7 @@ a {
 
 /* Size Guide Modal - above product modal and cart */
 .size-guide-modal {
-  z-index: 4000;
+  z-index: 4000 !important;
 }
 
 /* ================================
