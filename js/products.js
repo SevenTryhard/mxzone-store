@@ -49,7 +49,7 @@ async function loadProducts() {
         });
         if (apiResponse.ok) {
           const apiData = await apiResponse.json();
-          if (apiData.products && apiData.products.length > 0) {
+          if (apiData.products) {
             const products = apiData.products.map(function(p) {
               if (p.images && p.images.length > 0) {
                 p.images = p.images.filter(function(img) { return img != null && typeof img === 'string' && img.trim() !== ''; }).map(function(img) { return encodeImagePath(img) + '?' + IMAGE_VERSION; });
@@ -60,16 +60,12 @@ async function loadProducts() {
               return p;
             });
             console.log('✅ Productos cargados desde CMS API:', products.length);
-            const invalidCategories = products.filter(p => !p.category || p.category.trim() === '');
-            if (invalidCategories.length > 0) {
-              console.warn('⚠️', invalidCategories.length, 'productos sin categoría');
-            }
             return products;
           }
         }
-        console.warn('⚠️ CMS API no disponible, fallback a archivos estáticos');
+        console.warn('⚠️ CMS API respondio con error, intentando fallback...');
       } catch(e) {
-        console.warn('⚠️ Error en CMS API, fallback a archivos estáticos:', e.message);
+        console.warn('⚠️ Error en CMS API, fallback a archivos estaticos:', e.message);
       }
     }
 
