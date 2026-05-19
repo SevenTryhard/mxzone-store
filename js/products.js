@@ -44,7 +44,8 @@ async function loadProducts() {
         }
         console.log('🚀 Cargando productos desde CMS API:', apiUrl);
         const apiResponse = await fetch(apiUrl, {
-          headers: { 'Accept': 'application/json' }
+          headers: { 'Accept': 'application/json' },
+          cache: 'no-store'
         });
         if (apiResponse.ok) {
           const apiData = await apiResponse.json();
@@ -76,9 +77,10 @@ async function loadProducts() {
     const cmsBaseUrl = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.cmsBaseUrl : 'cms/productos/';
     console.log('📂 Fallback: cargando productos desde archivos estáticos');
 
+    const noCache = 'nocache=' + Date.now();
     let productFiles = [];
     try {
-      const indexResponse = await fetch(cmsBaseUrl + 'index.json?v=' + IMAGE_VERSION);
+      const indexResponse = await fetch(cmsBaseUrl + 'index.json?' + noCache);
       if (indexResponse.ok) {
         const indexData = await indexResponse.json();
         productFiles = indexData.files || [];
@@ -100,7 +102,7 @@ async function loadProducts() {
 
     const promises = productFiles.map(async (file) => {
       try {
-        const response = await fetch(cmsBaseUrl + encodeURIComponent(file) + '?v=' + IMAGE_VERSION);
+        const response = await fetch(cmsBaseUrl + encodeURIComponent(file) + '?' + noCache);
         if (response.ok) {
           const product = await response.json();
           if (product.images && product.images.length > 0) {
