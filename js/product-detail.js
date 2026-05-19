@@ -136,7 +136,7 @@ function createProductHTML(product) {
   const brand = getBrand(product.name);
   const whatsappMessage = encodeURIComponent(`Estoy interesado en ${product.name}`);
   const whatsappUrl = `https://wa.me/${window.WHATSAPP_NUMBER}?text=${whatsappMessage}`;
-  const description = getCategoryDescription(product.category, product.name);
+  const description = product.description || getCategoryDescription(product.category, product.name);
   const features = getCategoryFeatures(product.category);
   const sizes = product.sizes.split('/').map(s => s.trim());
 
