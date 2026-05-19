@@ -140,8 +140,9 @@ function createProductSlug(productName) {
 
 // Función para crear el HTML de una tarjeta de producto
 function createProductCard(product) {
-  // NO renderizar productos agotados en la tienda
-  if (product.agotado === true) return '';
+  const isAgotado = product.agotado === true;
+  const agotadoClass = isAgotado ? 'product-agotado' : '';
+  const agotadoStyle = isAgotado ? 'style="opacity:0.5;filter:grayscale(0.8);"' : '';
 
   const whatsappMessage = encodeURIComponent(`Estoy interesado en ${product.name}`);
   const whatsappUrl = `https://wa.me/${window.WHATSAPP_NUMBER}?text=${whatsappMessage}`;
@@ -181,24 +182,32 @@ function createProductCard(product) {
   const mainImage = images.length > 0 ? images[0] : '';
   const badgeHTML = product.badge ?
     `<span class="product-badge">${product.badge}</span>` : '';
+  const agotadoBadge = isAgotado ?
+    '<span class="product-badge" style="background:#dc2626;color:white;font-weight:bold;">AGOTADO</span>' : '';
 
   // Parsear tallas
   const sizesArray = product.sizes ? product.sizes.split('/').map(s => s.trim()) : ['Única'];
   const sizeOptions = `<option value="" disabled selected>TALLA</option>` + sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
 
+  const cartBtn = isAgotado ?
+    `<button class="btn btn-cart-add" disabled style="opacity:0.5;cursor:not-allowed;background:#666;" onclick="showAgotadoAlert('${escapeHtml(product.name)}')">🚫 Agotado</button>` :
+    `<button class="btn btn-cart-add" onclick="addProductToCart('${productSlug}')">Agregar</button>`;
+
   return `
-    <div class="product-card"
+    <div class="product-card ${agotadoClass}"
          data-category="${product.category || 'sin-categoria'}"
          data-brand="${brand}"
          data-price="${priceNum}"
          data-image="${mainImage}"
          data-images='${JSON.stringify(images).replace(/'/g, "&#39;")}'
          data-slug="${productSlug}"
-         data-sizes="${product.sizes || 'Única'}">
+         data-sizes="${product.sizes || 'Única'}"
+         ${agotadoStyle}>
       <div class="product-image">
         <img src="${mainImage}" alt="${product.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <span class="product-image-placeholder" style="display:none;">MX</span>
         ${badgeHTML}
+        ${agotadoBadge}
       </div>
       <div class="product-info">
         <span class="product-category">${getCategoryLabel(product.category)}</span>
@@ -207,7 +216,7 @@ function createProductCard(product) {
           <span class="product-price">${product.price}</span>
         </div>
         <div class="product-sizes-selector">
-          <select class="card-size-select" aria-label="Seleccionar talla">
+          <select class="card-size-select" aria-label="Seleccionar talla" ${isAgotado ? 'disabled' : ''}>
             ${sizeOptions}
           </select>
         </div>
@@ -215,13 +224,15 @@ function createProductCard(product) {
           <a href="product.html?product=${productSlug}" class="btn btn-secondary" target="_blank">
             Ver
           </a>
-          <button class="btn btn-cart-add" onclick="addProductToCart('${productSlug}')">
-            Agregar
-          </button>
+          ${cartBtn}
         </div>
       </div>
     </div>
   `;
+}
+
+function showAgotadoAlert(productName) {
+  alert('El producto "' + productName + '" está agotado. ¡Contáctanos por WhatsApp para consultar disponibilidad!');
 }
 
 // Función para obtener el label de la categoría
@@ -258,7 +269,7 @@ async function renderFeaturedProducts() {
     const categories = ['cascos', 'uniformes', 'botas', 'protecciones'];
 
     categories.forEach(category => {
-      const categoryProducts = products.filter(p => p.category === category && p.agotado !== true).slice(0, 4);
+      const categoryProducts = products.filter(p => p.category === category).slice(0, 4);
     const container = document.querySelector(`[data-products="${category}"]`);
     console.log(`renderFeaturedProducts: ${category} tiene ${categoryProducts.length} productos, container:`, container);
 
@@ -284,7 +295,7 @@ async function renderRecomendados() {
     if (products.length === 0) return;
 
     // Ordenar por precio (mayor a menor) y tomar los top 8
-    const sortedProducts = [...products].filter(function(p) { return p.agotado !== true; }).sort((a, b) => {
+    const sortedProducts = [...products].sort((a, b) => {
       const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
       const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
       return priceB - priceA;
@@ -352,7 +363,7 @@ async function renderShopProducts() {
   if (container && products.length > 0) {
     // Ordenar productos por categoría para agruparlos
     const categoryOrder = ['botas', 'cascos', 'uniformes', 'jersey', 'guantes', 'gorras', 'protecciones', 'accesorios', 'maletas', 'gafas', 'uniformes-ninos', 'cascos-ninos', 'botas-ninos', 'guantes-ninos', 'gafas-ninos', 'protecciones-ninos'];
-    const sortedProducts = [...products].filter(function(p) { return p.agotado !== true; }).sort((a, b) => {
+    const sortedProducts = [...products].sort((a, b) => {
       const indexA = categoryOrder.indexOf(a.category);
       const indexB = categoryOrder.indexOf(b.category);
       return (indexA !== -1 ? indexA : 999) - (indexB !== -1 ? indexB : 999);
