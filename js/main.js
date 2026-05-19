@@ -1833,7 +1833,8 @@ function initProductModalInternal() {
         category,
         image: images[0] || '',
         images,
-        sizes
+        sizes,
+        agotado: card.dataset.agotado === 'true'
       };
 
       currentImages = images;
@@ -1869,6 +1870,12 @@ function initProductModalInternal() {
   if (modalAddToCart) {
     modalAddToCart.addEventListener('click', () => {
       if (!currentProduct) return;
+
+      // BLOQUEO: producto agotado
+      if (currentProduct.agotado === true) {
+        showNotification('Este producto está agotado. Contáctanos por WhatsApp.', 'error');
+        return;
+      }
 
       const selectedSize = getSelectedSize();
       window.MXZONECart.addToCart(currentProduct, selectedSize);

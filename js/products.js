@@ -202,6 +202,7 @@ function createProductCard(product) {
          data-images='${JSON.stringify(images).replace(/'/g, "&#39;")}'
          data-slug="${productSlug}"
          data-sizes="${product.sizes || 'Única'}"
+         data-agotado="${isAgotado ? 'true' : 'false'}"
          ${agotadoStyle}>
       <div class="product-image">
         <img src="${mainImage}" alt="${product.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -450,6 +451,12 @@ function addProductToCart(slug) {
   const card = document.querySelector(`.product-card[data-slug="${slug}"]`);
   if (!card) {
     console.warn('Producto no encontrado:', slug);
+    return;
+  }
+
+  // BLOQUEO: producto agotado
+  if (card.classList.contains('product-agotado')) {
+    showAgotadoAlert(card.querySelector('.product-name')?.textContent || 'Este producto');
     return;
   }
 

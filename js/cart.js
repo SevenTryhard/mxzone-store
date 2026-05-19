@@ -65,6 +65,12 @@ function saveCart() {
 
 // Agregar producto al carrito
 function addToCart(product, size, quantity = 1) {
+  // Defensa: no agregar productos agotados
+  if (product.agotado === true) {
+    showNotification('El producto ' + product.name + ' está agotado', 'error');
+    return;
+  }
+
   const existingIndex = cart.findIndex(item =>
     item.name === product.name && item.selectedSize === size
   );
@@ -82,7 +88,8 @@ function addToCart(product, size, quantity = 1) {
       selectedSize: size,
       sizes: product.sizes || 'Unica',
       quantity: quantity,
-      slug: createProductSlug(product.name)
+      slug: createProductSlug(product.name),
+      agotado: product.agotado || false
     });
   }
 
