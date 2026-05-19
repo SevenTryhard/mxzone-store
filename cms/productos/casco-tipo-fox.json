@@ -1,0 +1,15 @@
+{
+  "name": "CASCO TIPO FOX",
+  "sku": "",
+  "color": "",
+  "category": "cascos",
+  "price": "295.000",
+  "sizes": "M",
+  "badge": "",
+  "description": "CASCO TIPO FOX",
+  "image": "/assets/images/cascos/Captura-de-pantalla-2026-05-07-114407.jpg",
+  "images": [
+    "/assets/images/cascos/Captura-de-pantalla-2026-05-07-114407.jpg"
+  ],
+  "agotado": false
+}
