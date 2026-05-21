@@ -6,6 +6,16 @@
 // Usar window.WHATSAPP_NUMBER para evitar redeclaración entre scripts
 window.WHATSAPP_NUMBER = window.WHATSAPP_NUMBER || '573176692997';
 
+function escapeHtml(str) {
+  if (!str || typeof str !== 'string') return str;
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 // Mapeo de marcas basado en nombres de producto
 function getBrand(productName) {
   const name = productName.toLowerCase();
