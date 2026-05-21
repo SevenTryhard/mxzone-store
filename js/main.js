@@ -2390,7 +2390,6 @@ window.MXZONE = {
   // Re-apply icon text
   applyTheme(saved || document.documentElement.getAttribute('data-theme') || 'dark');
 });
-})();
 
 // ================================
 // 🛒 GLOBAL: WhatsApp buttons → Cart (except advisory)
