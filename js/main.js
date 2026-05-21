@@ -447,7 +447,7 @@ function initShopFiltersInternal() {
       }
     });
 
-    console.log('📊 Productos por categoría:', categoryCount);
+    console.log('[STATS] Productos por categoría:', categoryCount);
 
     // Hide category checkboxes without products
     categoryFilters.forEach(cb => {
@@ -459,7 +459,7 @@ function initShopFiltersInternal() {
         if (filterGroup) {
           filterGroup.style.display = hasProducts ? 'flex' : 'none';
           if (!hasProducts) {
-            console.log('🚫 Ocultando categoría sin productos:', category);
+            console.log('[HIDE] Ocultando categoría sin productos:', category);
           }
         }
       }
@@ -473,7 +473,7 @@ function initShopFiltersInternal() {
     if (ninosParent) {
       ninosParent.style.display = hasNinosProducts ? 'block' : 'none';
       if (!hasNinosProducts) {
-        console.log('🚫 Ocultando categoría padre Niños (sin productos)');
+        console.log('[HIDE] Ocultando categoría padre Niños (sin productos)');
       }
     }
   }
@@ -555,7 +555,7 @@ function initShopFiltersInternal() {
   function createCategoryDivider(category) {
     const config = window.MXZONE_CONFIG || {};
     const categories = config.categories || {};
-    const catData = categories[category] || { label: category, icon: '📦' };
+    const catData = categories[category] || { label: category, icon: '' };
 
     const divider = document.createElement('div');
     divider.className = 'category-divider';
@@ -1904,10 +1904,10 @@ function initProductModalInternal() {
       window.MXZONECart.addToCart(currentProduct, selectedSize);
 
       // Animation feedback
-      modalAddToCart.innerHTML = '✓ Agregado';
+      modalAddToCart.innerHTML = 'AGREGADO';
       modalAddToCart.style.background = '#25D366';
       setTimeout(() => {
-        modalAddToCart.innerHTML = '🛒 Agregar al Carrito';
+        modalAddToCart.innerHTML = 'AGREGAR AL CARRITO';
         modalAddToCart.style.background = '';
       }, 1500);
     });
@@ -2344,7 +2344,7 @@ window.MXZONE = {
 };
 
 // ================================
-// 🌗 THEME TOGGLE (DARK / LIGHT)
+// THEME TOGGLE (DARK / LIGHT)
 // ================================
 (function initTheme() {
   const STORAGE_KEY = 'mxzone_theme';
@@ -2360,7 +2360,7 @@ window.MXZONE = {
 
     document.documentElement.setAttribute('data-theme', theme);
     if (toggleBtn) {
-      toggleBtn.textContent = theme === 'light' ? '🌙' : '☀️';
+      toggleBtn.textContent = theme === 'light' ? 'Oscuro' : 'Claro';
       toggleBtn.title = theme === 'light' ? 'Modo oscuro' : 'Modo claro';
     }
   }
@@ -2392,7 +2392,7 @@ window.MXZONE = {
 });
 
 // ================================
-// 🛒 GLOBAL: WhatsApp buttons → Cart (except advisory)
+// GLOBAL: WhatsApp buttons → Cart (except advisory)
 // ================================
 (function interceptWhatsAppButtons() {
   function isAdvisoryWhatsapp(el) {
