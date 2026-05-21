@@ -54,13 +54,22 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function initActiveNavLink() {
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  const currentQuery = window.location.search;
   const navLinks = document.querySelectorAll('.nav-links a');
 
   navLinks.forEach(link => {
     const href = link.getAttribute('href');
-    // Comparar href exacto o si la página actual empieza con el href (para query params)
-    if (href === currentPage || currentPage.startsWith(href + '?') || currentPage.startsWith(href + '#')) {
-      link.classList.add('active');
+    if (!href) return;
+    const linkPath = href.split('?')[0].split('/').pop() || 'index.html';
+    const linkQuery = href.includes('?') ? href.split('?')[1] : '';
+
+    // Exact page match OR same page with matching query params
+    if (linkPath === currentPage) {
+      if (!linkQuery || currentQuery.includes(linkQuery)) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
     } else {
       link.classList.remove('active');
     }
@@ -73,13 +82,20 @@ function initActiveNavLink() {
 function highlightActiveNavLink() {
   const currentPath = window.location.pathname;
   const currentPage = currentPath.split('/').pop() || 'index.html';
+  const currentQuery = window.location.search;
   const navLinks = document.querySelectorAll('.nav-links a');
 
   navLinks.forEach(link => {
     const href = link.getAttribute('href');
+    if (!href) return;
+    const linkPath = href.split('?')[0].split('/').pop() || 'index.html';
+    const linkQuery = href.includes('?') ? href.split('?')[1] : '';
+
     link.classList.remove('active');
-    if (href === currentPage || currentPath.includes(href)) {
-      link.classList.add('active');
+    if (linkPath === currentPage) {
+      if (!linkQuery || currentQuery.includes(linkQuery)) {
+        link.classList.add('active');
+      }
     }
   });
 }
@@ -2362,12 +2378,11 @@ window.MXZONE = {
   }
 
   // Bind button after DOM ready
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('themeToggle');
-    if (btn) btn.addEventListener('click', toggleTheme);
-    // Re-apply icon text
-    applyTheme(saved || document.documentElement.getAttribute('data-theme') || 'dark');
-  });
+  const btn = document.getElementById('themeToggle');
+  if (btn) btn.addEventListener('click', toggleTheme);
+  // Re-apply icon text
+  applyTheme(saved || document.documentElement.getAttribute('data-theme') || 'dark');
+});
 })();
 
 // ================================
