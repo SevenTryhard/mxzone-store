@@ -1,0 +1,17 @@
+{
+  "name": " morral Fly Racing Hydro Pack",
+  "sku": "",
+  "color": "",
+  "category": "maletas",
+  "price": "$199.900",
+  "sizes": "Unica",
+  "description": "HYDRO PACK",
+  "image": "/assets/images/maletas/Captura-de-pantalla-2026-05-07-131845.png",
+  "images": [
+    "/assets/images/maletas/Captura-de-pantalla-2026-05-07-131845.png"
+  ],
+  "agotado": false,
+  "stock_quantity": 0,
+  "stock_min": 5,
+  "stock_max": 100
+}

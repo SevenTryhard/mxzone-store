@@ -5,11 +5,14 @@
   "sizes": "Unica",
   "badge": "",
   "description": "CANGURO TIPO KTM",
-  "image": "/assets/images/cascos/CA_6--1-.jpg",
+  "image": "/assets/images/maletas/CA_6--1-.webp",
   "images": [
-    "/assets/images/cascos/CA_6--1-.jpg"
+    "/assets/images/maletas/CA_6--1-.webp"
   ],
-  "sku": "ACC-XX-CANG2",
+  "sku": "",
   "color": "",
-  "agotado": false
+  "agotado": false,
+  "stock_quantity": 1,
+  "stock_min": 5,
+  "stock_max": 100
 }
