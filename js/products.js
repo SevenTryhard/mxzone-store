@@ -265,6 +265,11 @@ function getCategoryLabel(category) {
     'cascos-ninos': 'Cascos Niños',
     'botas-ninos': 'Botas Niños',
     'guantes-ninos': 'Guantes Niños',
+    'infantil': 'Niños / Infantil',
+    'uniformes-ninos': 'Uniformes Niños',
+    'cascos-ninos': 'Cascos Niños',
+    'botas-ninos': 'Botas Niños',
+    'guantes-ninos': 'Guantes Niños',
     'gafas-ninos': 'Gafas Niños',
     'protecciones-ninos': 'Protecciones Niños'
   };
@@ -335,7 +340,8 @@ function createCategoryDivider(category, icon) {
     'protecciones': { label: 'Protecciones', icon: '🛡️' },
     'accesorios': { label: 'Accesorios', icon: '🔧' },
     'maletas': { label: 'Maletas', icon: '🎒' },
-    'gafas': { label: 'Gafas', icon: '👓' }
+    'gafas': { label: 'Gafas', icon: '👓' },
+    'infantil': { label: 'Niños / Infantil', icon: '👶' }
   };
   const catData = labels[category] || { label: category, icon: icon || '📦' };
 

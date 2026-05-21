@@ -381,8 +381,8 @@ function initShopFiltersInternal() {
         // Search filter
         const matchesSearch = name.includes(searchTerm);
 
-        // Category filter
-        const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes('all') || selectedCategories.includes(category);
+        // Category filter (supports 'infantil' parent category)
+        const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes('all') || selectedCategories.includes(category) || (selectedCategories.includes('infantil') && category && category.endsWith('-ninos'));
 
         // Brand filter
         const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes('all') || selectedBrands.includes(brand);
