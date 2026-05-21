@@ -140,7 +140,7 @@ function createProductSlug(productName) {
 
 // Función para crear el HTML de una tarjeta de producto
 function createProductCard(product) {
-  const isAgotado = product.agotado === true;
+  const isAgotado = product.agotado === true || (product.stock_quantity !== undefined && product.stock_quantity <= 0);
   const agotadoClass = isAgotado ? 'product-agotado' : '';
   const agotadoStyle = isAgotado ? 'style="opacity:0.5;filter:grayscale(0.8);"' : '';
 

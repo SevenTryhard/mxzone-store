@@ -147,6 +147,12 @@ function createProductHTML(product) {
   const agotadoHTML = product.agotado === true ?
     `<span class="product-badge-agotado">AGOTADO</span>` : '';
 
+  const stockHTML = (product.stock_quantity !== undefined && product.stock_quantity <= 0) ?
+    '<div class="product-stock-status" style="color:#dc2626;font-weight:600;margin-top:8px;">Sin stock disponible</div>' :
+    (product.stock_quantity !== undefined && product.stock_quantity <= (product.stock_min || 5)) ?
+    '<div class="product-stock-status" style="color:#f59e0b;font-weight:600;margin-top:8px;">Pocas unidades: ' + product.stock_quantity + '</div>' :
+    '';
+
   const skuHTML = product.sku ?
     `<div class="product-sku">SKU: ${escapeHtml(product.sku)}</div>` : '';
   const colorHTML = product.color ?
@@ -219,6 +225,8 @@ function createProductHTML(product) {
 
         <!-- Precio -->
         <div class="product-detail-price">${product.price}</div>
+
+        ${stockHTML}
 
         ${agotadoHTML}
 
@@ -294,18 +302,62 @@ function getCategoryLabel(category) {
   return labels[category] || category;
 }
 
+// Función para crear el slug del producto (para la URL)
+function createProductSlug(productName) {
+  return productName
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+// Cargar producto desde CMS API (primario)
+async function loadProductFromCMS(productSlug) {
+  const cmsApiUrl = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.cmsApiUrl : '';
+  const projectKey = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.projectKey : '';
+  if (!cmsApiUrl) return null;
+  try {
+    let url = cmsApiUrl + '/api/store/products';
+    if (projectKey) url += '?project=' + encodeURIComponent(projectKey);
+    const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
+    if (response.ok) {
+      const data = await response.json();
+      if (data.products) {
+        const found = data.products.find(p => {
+          const slug = createProductSlug(p.name);
+          return slug === productSlug;
+        });
+        if (found) {
+          if (found.image && found.images && found.images.length > 0) {
+            found.images = found.images.filter(img => img != null && typeof img === 'string');
+          }
+          return found;
+        }
+      }
+    }
+  } catch(e) {
+    console.warn('CMS API fallback for product detail:', e.message);
+  }
+  return null;
+}
+
 // Cargar producto desde JSON
 async function loadProduct(productSlug) {
+  // Try CMS API first
+  const cmsProduct = await loadProductFromCMS(productSlug);
+  if (cmsProduct) return cmsProduct;
+
+  // Fallback to static JSON
   try {
     const response = await fetch(`cms/productos/${productSlug}.json`);
     if (response.ok) {
       return await response.json();
     }
-    return null;
   } catch (error) {
     console.error('Error cargando producto:', error);
-    return null;
   }
+  return null;
 }
 
 // Cargar productos relacionados
