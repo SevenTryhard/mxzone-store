@@ -52,7 +52,7 @@ async function loadProducts() {
         if (projectKey) {
           apiUrl += '?project=' + encodeURIComponent(projectKey);
         }
-        console.log('🚀 Cargando productos desde CMS API:', apiUrl);
+        console.log('[CMS] Cargando productos desde CMS API:', apiUrl);
         const apiResponse = await fetch(apiUrl, {
           headers: { 'Accept': 'application/json' },
           cache: 'no-store'
@@ -69,19 +69,19 @@ async function loadProducts() {
               }
               return p;
             });
-            console.log('✅ Productos cargados desde CMS API:', products.length);
+            console.log('[OK] Productos cargados desde CMS API:', products.length);
             return products;
           }
         }
-        console.warn('⚠️ CMS API respondio con error, intentando fallback...');
+        console.warn('[WARN] CMS API respondio con error, intentando fallback...');
       } catch(e) {
-        console.warn('⚠️ Error en CMS API, fallback a archivos estaticos:', e.message);
+        console.warn('[WARN] Error en CMS API, fallback a archivos estaticos:', e.message);
       }
     }
 
     // Fallback: cargar desde archivos JSON estáticos
     const cmsBaseUrl = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.cmsBaseUrl : 'cms/productos/';
-    console.log('📂 Fallback: cargando productos desde archivos estáticos');
+    console.log('[FILES] Fallback: cargando productos desde archivos estáticos');
 
     const noCache = 'nocache=' + Date.now();
     let productFiles = [];
@@ -90,21 +90,21 @@ async function loadProducts() {
       if (indexResponse.ok) {
         const indexData = await indexResponse.json();
         productFiles = indexData.files || [];
-        console.log('✅ index.json cargado:', productFiles.length, 'archivos');
+        console.log('[OK] index.json cargado:', productFiles.length, 'archivos');
       } else {
-        console.warn('⚠️ index.json respondió con estado:', indexResponse.status);
+        console.warn('[WARN] index.json respondió con estado:', indexResponse.status);
       }
     } catch (e) {
-      console.error('❌ Error cargando index.json:', e);
+      console.error('[ERROR] Error cargando index.json:', e);
     }
 
     if (productFiles.length === 0) {
-      console.error('❌ No se pudo cargar index.json');
+      console.error('[ERROR] No se pudo cargar index.json');
       return [];
     }
 
     productFiles = productFiles.filter(f => f !== 'index.json');
-    console.log('📋 Cargando', productFiles.length, 'productos estáticos...');
+    console.log('[LOAD] Cargando', productFiles.length, 'productos estáticos...');
 
     const promises = productFiles.map(async (file) => {
       try {
@@ -119,21 +119,21 @@ async function loadProducts() {
           }
           return product;
         } else {
-          console.warn('⚠️ No se pudo cargar', file);
+          console.warn('[WARN] No se pudo cargar', file);
         }
       } catch (e) {
-        console.warn('❌ Error cargando', file + ':', e.message);
+        console.warn('[ERROR] Error cargando', file + ':', e.message);
       }
       return null;
     });
 
     const results = await Promise.all(promises);
     const validProducts = results.filter(p => p !== null);
-    console.log('✅ Productos estáticos cargados:', validProducts.length, 'de', productFiles.length);
+    console.log('[OK] Productos estáticos cargados:', validProducts.length, 'de', productFiles.length);
     return validProducts;
 
   } catch (error) {
-    console.error('❌ Error crítico cargando productos:', error);
+    console.error('[ERROR] Error crítico cargando productos:', error);
     return [];
   }
 }
@@ -331,19 +331,19 @@ async function renderRecomendados() {
 // Función para crear un separador de categoría
 function createCategoryDivider(category, icon) {
   const labels = {
-    'botas': { label: 'Botas', icon: '👢' },
-    'cascos': { label: 'Cascos', icon: '⛑️' },
-    'uniformes': { label: 'Uniformes', icon: '👕' },
-    'jersey': { label: 'Jerseys', icon: '👕' },
-    'guantes': { label: 'Guantes', icon: '🧤' },
-    'gorras': { label: 'Gorras', icon: '🧢' },
-    'protecciones': { label: 'Protecciones', icon: '🛡️' },
-    'accesorios': { label: 'Accesorios', icon: '🔧' },
-    'maletas': { label: 'Maletas', icon: '🎒' },
-    'gafas': { label: 'Gafas', icon: '👓' },
-    'infantil': { label: 'Niños / Infantil', icon: '👶' }
+    'botas': { label: 'Botas', icon: '' },
+    'cascos': { label: 'Cascos', icon: '' },
+    'uniformes': { label: 'Uniformes', icon: '' },
+    'jersey': { label: 'Jerseys', icon: '' },
+    'guantes': { label: 'Guantes', icon: '' },
+    'gorras': { label: 'Gorras', icon: '' },
+    'protecciones': { label: 'Protecciones', icon: '' },
+    'accesorios': { label: 'Accesorios', icon: '' },
+    'maletas': { label: 'Maletas', icon: '' },
+    'gafas': { label: 'Gafas', icon: '' },
+    'infantil': { label: 'Niños / Infantil', icon: '' }
   };
-  const catData = labels[category] || { label: category, icon: icon || '📦' };
+  const catData = labels[category] || { label: category, icon: '' };
 
   return `
     <div class="category-divider" data-category="${category}">
