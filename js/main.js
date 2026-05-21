@@ -329,7 +329,7 @@ function initShopFiltersInternal() {
   }
 
   // Add data-brand attribute to all products
-  productCards.forEach(card => {
+  document.querySelectorAll('.product-card').forEach(card => {
     const name = card.querySelector('.product-name').textContent;
     const brand = getBrand(name);
     card.dataset.brand = brand;
@@ -342,7 +342,14 @@ function initShopFiltersInternal() {
 
   // Filter function
   function filterProducts() {
-    const searchTerm = searchInput?.value.toLowerCase() || '';
+    // FRESH selection — product cards may have been re-rendered
+    const activeCards = document.querySelectorAll('.product-card');
+    if (!activeCards.length) {
+      console.warn('[filterProducts] No product cards found in DOM');
+      return;
+    }
+
+    const searchTerm = ((searchInput && searchInput.value) || '').toLowerCase();
 
     // Get selected categories
     const selectedCategories = Array.from(categoryFilters)
@@ -367,7 +374,7 @@ function initShopFiltersInternal() {
     const categoryVisibility = {};
 
     // First pass: determine which categories have visible products
-    productCards.forEach(card => {
+    activeCards.forEach(card => {
       try {
         const nameEl = card.querySelector('.product-name');
         if (!nameEl) return;
@@ -433,7 +440,7 @@ function initShopFiltersInternal() {
     const categoryCount = {};
     
     // Count products per category
-    productCards.forEach(card => {
+    document.querySelectorAll('.product-card').forEach(card => {
       const category = card.dataset.category;
       if (category) {
         categoryCount[category] = (categoryCount[category] || 0) + 1;
@@ -477,7 +484,7 @@ function initShopFiltersInternal() {
   // Sort function
   function sortProducts() {
     const sortBy = sortSelect?.value || 'default';
-    const productsArray = Array.from(productCards);
+    const productsArray = Array.from(document.querySelectorAll('.product-card'));
     const grid = document.querySelector('.products-grid');
     const dividers = document.querySelectorAll('.category-divider');
 
