@@ -2350,27 +2350,38 @@ window.MXZONE = {
   const STORAGE_KEY = 'mxzone_theme';
 
   function applyTheme(theme) {
+    console.log('[THEME] Aplicando tema:', theme);
     const toggleBtn = document.getElementById('themeToggle');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     // Si no hay preferencia, usar sistema
     if (!theme) {
       theme = prefersDark ? 'dark' : 'light';
+      console.log('[THEME] Sin preferencia guardada, usando sistema:', theme);
     }
 
     document.documentElement.setAttribute('data-theme', theme);
+    console.log('[THEME] data-theme set to:', theme);
     if (toggleBtn) {
+      console.log('[THEME] Botón encontrado, actualizando icono');
       toggleBtn.title = theme === 'light' ? 'Modo oscuro' : 'Modo claro';
       const iconSpan = toggleBtn.querySelector('.theme-icon');
       if (iconSpan) {
         iconSpan.textContent = theme === 'light' ? '☀️' : '🌙';
+        console.log('[THEME] Icono actualizado a:', iconSpan.textContent);
+      } else {
+        console.warn('[THEME] No se encontró .theme-icon dentro del botón');
       }
+    } else {
+      console.warn('[THEME] Botón #themeToggle no encontrado en DOM');
     }
   }
 
   function toggleTheme() {
+    console.log('[THEME] toggleTheme ejecutado');
     const current = document.documentElement.getAttribute('data-theme') || 'dark';
     const next = current === 'light' ? 'dark' : 'light';
+    console.log('[THEME] Cambiando de', current, 'a', next);
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem(STORAGE_KEY, next);
     applyTheme(next);
@@ -2378,18 +2389,26 @@ window.MXZONE = {
 
   // Load saved theme on page load
   const saved = localStorage.getItem(STORAGE_KEY);
+  console.log('[THEME] Tema guardado en localStorage:', saved);
   applyTheme(saved);
 
   // Watch for system changes (only if no explicit save)
   if (!saved) {
+    console.log('[THEME] Sin tema guardado, escuchando cambios del sistema');
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      console.log('[THEME] Cambio en prefers-color-scheme:', e.matches);
       applyTheme(e.matches ? 'dark' : 'light');
     });
   }
 
   // Bind button after DOM ready
   const btn = document.getElementById('themeToggle');
-  if (btn) btn.addEventListener('click', toggleTheme);
+  if (btn) {
+    console.log('[THEME] Event listener agregado al botón #themeToggle');
+    btn.addEventListener('click', toggleTheme);
+  } else {
+    console.warn('[THEME] No se pudo agregar listener — botón no encontrado');
+  }
   // Re-apply icon text
   applyTheme(saved || document.documentElement.getAttribute('data-theme') || 'dark');
 });
