@@ -2459,25 +2459,4 @@ navDropdowns.forEach(drop => {
   });
 });
 
-// ================================
-// DEBUG: Global click logger for theme toggle
-// ================================
-document.addEventListener('click', function(e) {
-  const themeToggle = document.getElementById('themeToggle');
-  if (themeToggle) {
-    const rect = themeToggle.getBoundingClientRect();
-    const clickX = e.clientX;
-    const clickY = e.clientY;
-    const isOverButton = clickX >= rect.left && clickX <= rect.right && clickY >= rect.top && clickY <= rect.bottom;
-    if (isOverButton) {
-      console.log('[DEBUG] Click detectado sobre #themeToggle');
-    }
-    // Log every click near the button area for debugging
-    const distance = Math.sqrt(Math.pow(clickX - (rect.left + rect.width/2), 2) + Math.pow(clickY - (rect.top + rect.height/2), 2));
-    if (distance < 100) {
-      console.log('[DEBUG] Click cerca de themeToggle. distance:', distance, 'target:', e.target.tagName, 'id:', e.target.id, 'class:', e.target.className);
-    }
-  }
-});
-
 
