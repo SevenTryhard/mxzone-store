@@ -2360,8 +2360,11 @@ window.MXZONE = {
 
     document.documentElement.setAttribute('data-theme', theme);
     if (toggleBtn) {
-      toggleBtn.textContent = theme === 'light' ? 'Oscuro' : 'Claro';
       toggleBtn.title = theme === 'light' ? 'Modo oscuro' : 'Modo claro';
+      const iconSpan = toggleBtn.querySelector('.theme-icon');
+      if (iconSpan) {
+        iconSpan.textContent = theme === 'light' ? '☀️' : '🌙';
+      }
     }
   }
 

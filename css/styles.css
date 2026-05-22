@@ -2706,7 +2706,6 @@ a {
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: var(--spacing-xl);
-  align-items: start;
 }
 
 /* Sidebar Filters - Glassmorphism Style */
