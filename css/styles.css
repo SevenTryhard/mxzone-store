@@ -27,6 +27,7 @@
   --white: #FFFFFF;
   --white-off: #F5F5F5;
   --black: #000000;
+  --hero-bg: #0a0a0a;
 
   /* Gradientes */
   --gradient-orange: linear-gradient(135deg, var(--orange-primary) 0%, var(--orange-dark) 100%);
@@ -109,6 +110,8 @@
   --glow-orange: 0 0 20px rgba(255, 102, 0, 0.2);
   --glow-orange-sm: 0 0 10px rgba(255, 102, 0, 0.12);
   --glow-red: 0 0 20px rgba(230, 57, 70, 0.2);
+
+  --hero-bg: #f0f0f0;
 }
 
 /* Light mode specific overrides */
@@ -1494,7 +1497,7 @@ a {
   position: relative;
   overflow: hidden;
   padding-top: 80px;
-  background: #0a0a0a;
+  background: var(--hero-bg, #0a0a0a);
   perspective: 1000px;
 }
 
@@ -2710,6 +2713,7 @@ a {
 .shop-sidebar {
   position: sticky;
   top: 100px;
+  z-index: 10;
   background: rgba(45, 45, 45, 0.7);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -5191,8 +5195,8 @@ a {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 85vh;
-    max-height: 85vh;
+    height: 70vh;
+    max-height: 70vh;
     max-width: 100%;
     z-index: 1001;
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;

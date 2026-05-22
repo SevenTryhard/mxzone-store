@@ -2425,12 +2425,13 @@ window.MXZONE = {
     const el = e.target.closest('a, button');
     if (!el) return;
     const href = (el.getAttribute('href') || '');
-    const isWhatsappBtn = href.includes('wa.me')
+    const isWhatsappBtn = (href.includes('wa.me')
       || el.classList.contains('btn-whatsapp')
       || el.classList.contains('whatsapp-float')
       || el.classList.contains('whatsapp-sticky-bar')
       || el.id === 'modalWhatsapp'
-      || el.id === 'checkoutComboBtn';
+      || el.id === 'checkoutComboBtn')
+      && !el.closest('.modal-product-actions');
     if (!isWhatsappBtn) return;
     if (isAdvisoryWhatsapp(el)) return;
     if (el.textContent && el.textContent.toLowerCase().includes('asesoría por whatsapp')) return;
