@@ -262,267 +262,269 @@
         <aside class="shop-sidebar" id="shopSidebar">
           <div class="sidebar-header">
             <h3 class="sidebar-title">Filtros</h3>
-            <button class="sidebar-close" id="sidebarClose">&times;</button>
+            <button class="sidebar-close" id="sidebarClose">×</button>
           </div>
 
-          <!-- Price Range (moved up) -->
-          <div class="filter-group">
-            <label class="filter-label">Rango de precio</label>
-            <div class="price-slider">
-              <div class="price-inputs">
-                <div class="price-input">
-                  <span class="price-label">Mín</span>
-                  <input type="number" id="minPrice" class="price-field" value="0" min="0" max="3000000" step="50000">
+          <div class="sidebar-scrollable">
+            <!-- Price Range (moved up) -->
+            <div class="filter-group">
+              <label class="filter-label">Rango de precio</label>
+              <div class="price-slider">
+                <div class="price-inputs">
+                  <div class="price-input">
+                    <span class="price-label">Mín</span>
+                    <input type="number" id="minPrice" class="price-field" value="0" min="0" max="3000000" step="50000">
+                  </div>
+                  <div class="price-input">
+                    <span class="price-label">Máx</span>
+                    <input type="number" id="maxPrice" class="price-field" value="3000000" min="0" max="3000000" step="50000">
+                  </div>
                 </div>
-                <div class="price-input">
-                  <span class="price-label">Máx</span>
-                  <input type="number" id="maxPrice" class="price-field" value="3000000" min="0" max="3000000" step="50000">
+                <div class="slider-track">
+                  <div class="slider-fill"></div>
+                  <div class="slider-thumb" id="minThumb"></div>
+                  <div class="slider-thumb" id="maxThumb"></div>
                 </div>
               </div>
-              <div class="slider-track">
-                <div class="slider-fill"></div>
-                <div class="slider-thumb" id="minThumb"></div>
-                <div class="slider-thumb" id="maxThumb"></div>
-              </div>
+              <button id="applyPriceFilter" class="btn btn-filter">Aplicar</button>
             </div>
-            <button id="applyPriceFilter" class="btn btn-filter">Aplicar</button>
-          </div>
 
-          <!-- CATEGORÍAS Section -->
-          <div class="filter-group">
-            <div class="checkbox-group">
-              <div class="category-parent-wrapper">
-                <button class="category-parent-toggle filter-section-toggle" id="catalogosToggle" type="button">
-                  <span class="toggle-icon">▼</span>
-                  <span class="toggle-label">CATEGORÍAS</span>
-                </button>
-                <div class="category-children" id="catalogosChildren">
-                  <!-- "Todo" dentro del desplegable (primera posición) -->
-                  <label class="checkbox-label checkbox-label-todo">
-                    <input type="checkbox" class="category-filter" data-category="all" checked>
-                    <span class="checkmark"></span>
-                    <span class="todo-label">Todo</span>
-                  </label>
-                  
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="category-filter" data-category="cascos">
-                    <span class="checkmark"></span>
-                    Cascos
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="category-filter" data-category="uniformes">
-                    <span class="checkmark"></span>
-                    Uniformes
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="category-filter" data-category="jersey">
-                    <span class="checkmark"></span>
-                    Jerseys
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="category-filter" data-category="botas">
-                    <span class="checkmark"></span>
-                    Botas
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="category-filter" data-category="protecciones">
-                    <span class="checkmark"></span>
-                    Protecciones
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="category-filter" data-category="accesorios">
-                    <span class="checkmark"></span>
-                    Accesorios
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="category-filter" data-category="gafas">
-                    <span class="checkmark"></span>
-                    Gafas
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="category-filter" data-category="guantes">
-                    <span class="checkmark"></span>
-                    Guantes
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="category-filter" data-category="gorras">
-                    <span class="checkmark"></span>
-                    Gorras
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="category-filter" data-category="maletas">
-                    <span class="checkmark"></span>
-                    Maletas
-                  </label>
-                  
-                  <!-- Separador -->
-                  <div class="category-divider-line"></div>
-                  
-                  <!-- Niños Subcategory -->
-                  <div class="category-parent-wrapper category-ninos">
-                    <button class="category-parent-toggle" id="ninosCategoryToggle" type="button">
-                      <span class="toggle-icon">▼</span>
-                      <span class="toggle-label">Niños</span>
-                    </button>
-                    <div class="category-children" id="ninosCategoryChildren">
-                      <label class="checkbox-label">
-                        <input type="checkbox" class="category-filter" data-category="infantil">
-                        <span class="checkmark"></span>
-                        👶 Niños / Infantil
-                      </label>
-                      <label class="checkbox-label">
-                        <input type="checkbox" class="category-filter" data-category="uniformes-ninos">
-                        <span class="checkmark"></span>
-                        Uniformes Niños
-                      </label>
-                      <label class="checkbox-label">
-                        <input type="checkbox" class="category-filter" data-category="cascos-ninos">
-                        <span class="checkmark"></span>
-                        Cascos Niños
-                      </label>
-                      <label class="checkbox-label">
-                        <input type="checkbox" class="category-filter" data-category="botas-ninos">
-                        <span class="checkmark"></span>
-                        Botas Niños
-                      </label>
-                      <label class="checkbox-label">
-                        <input type="checkbox" class="category-filter" data-category="guantes-ninos">
-                        <span class="checkmark"></span>
-                        Guantes Niños
-                      </label>
-                      <label class="checkbox-label">
-                        <input type="checkbox" class="category-filter" data-category="gafas-ninos">
-                        <span class="checkmark"></span>
-                        Gafas Niños
-                      </label>
-                      <label class="checkbox-label">
-                        <input type="checkbox" class="category-filter" data-category="protecciones-ninos">
-                        <span class="checkmark"></span>
-                        Protecciones Niños
-                      </label>
+            <!-- CATEGORÍAS Section -->
+            <div class="filter-group">
+              <div class="checkbox-group">
+                <div class="category-parent-wrapper">
+                  <button class="category-parent-toggle filter-section-toggle" id="catalogosToggle" type="button">
+                    <span class="toggle-icon">▼</span>
+                    <span class="toggle-label">CATEGORÍAS</span>
+                  </button>
+                  <div class="category-children" id="catalogosChildren">
+                    <!-- "Todo" dentro del desplegable (primera posición) -->
+                    <label class="checkbox-label checkbox-label-todo">
+                      <input type="checkbox" class="category-filter" data-category="all" checked>
+                      <span class="checkmark"></span>
+                      <span class="todo-label">Todo</span>
+                    </label>
+                    
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="category-filter" data-category="cascos">
+                      <span class="checkmark"></span>
+                      Cascos
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="category-filter" data-category="uniformes">
+                      <span class="checkmark"></span>
+                      Uniformes
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="category-filter" data-category="jersey">
+                      <span class="checkmark"></span>
+                      Jerseys
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="category-filter" data-category="botas">
+                      <span class="checkmark"></span>
+                      Botas
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="category-filter" data-category="protecciones">
+                      <span class="checkmark"></span>
+                      Protecciones
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="category-filter" data-category="accesorios">
+                      <span class="checkmark"></span>
+                      Accesorios
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="category-filter" data-category="gafas">
+                      <span class="checkmark"></span>
+                      Gafas
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="category-filter" data-category="guantes">
+                      <span class="checkmark"></span>
+                      Guantes
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="category-filter" data-category="gorras">
+                      <span class="checkmark"></span>
+                      Gorras
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="category-filter" data-category="maletas">
+                      <span class="checkmark"></span>
+                      Maletas
+                    </label>
+                    
+                    <!-- Separador -->
+                    <div class="category-divider-line"></div>
+                    
+                    <!-- Niños Subcategory -->
+                    <div class="category-parent-wrapper category-ninos">
+                      <button class="category-parent-toggle" id="ninosCategoryToggle" type="button">
+                        <span class="toggle-icon">▼</span>
+                        <span class="toggle-label">Niños</span>
+                      </button>
+                      <div class="category-children" id="ninosCategoryChildren">
+                        <label class="checkbox-label">
+                          <input type="checkbox" class="category-filter" data-category="infantil">
+                          <span class="checkmark"></span>
+                          👶 Niños / Infantil
+                        </label>
+                        <label class="checkbox-label">
+                          <input type="checkbox" class="category-filter" data-category="uniformes-ninos">
+                          <span class="checkmark"></span>
+                          Uniformes Niños
+                        </label>
+                        <label class="checkbox-label">
+                          <input type="checkbox" class="category-filter" data-category="cascos-ninos">
+                          <span class="checkmark"></span>
+                          Cascos Niños
+                        </label>
+                        <label class="checkbox-label">
+                          <input type="checkbox" class="category-filter" data-category="botas-ninos">
+                          <span class="checkmark"></span>
+                          Botas Niños
+                        </label>
+                        <label class="checkbox-label">
+                          <input type="checkbox" class="category-filter" data-category="guantes-ninos">
+                          <span class="checkmark"></span>
+                          Guantes Niños
+                        </label>
+                        <label class="checkbox-label">
+                          <input type="checkbox" class="category-filter" data-category="gafas-ninos">
+                          <span class="checkmark"></span>
+                          Gafas Niños
+                        </label>
+                        <label class="checkbox-label">
+                          <input type="checkbox" class="category-filter" data-category="protecciones-ninos">
+                          <span class="checkmark"></span>
+                          Protecciones Niños
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- MARCAS Section -->
-          <div class="filter-group">
-            <div class="checkbox-group">
-              <div class="category-parent-wrapper">
-                <button class="category-parent-toggle filter-section-toggle" id="marcasToggle" type="button">
-                  <span class="toggle-icon">▼</span>
-                  <span class="toggle-label">MARCAS</span>
-                </button>
-                <div class="category-children" id="marcasChildren">
-                  <!-- "Todas" dentro del desplegable (primera posición) -->
-                  <label class="checkbox-label checkbox-label-todo">
-                    <input type="checkbox" class="brand-filter" data-brand="all" checked>
-                    <span class="checkmark"></span>
-                    <span class="todo-label">Todas</span>
-                  </label>
-                  
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="brand-filter" data-brand="fox">
-                    <span class="checkmark"></span>
-                    Fox
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="brand-filter" data-brand="fly">
-                    <span class="checkmark"></span>
-                    Fly
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="brand-filter" data-brand="alpinestars">
-                    <span class="checkmark"></span>
-                    Alpinestars
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="brand-filter" data-brand="leatt">
-                    <span class="checkmark"></span>
-                    Leatt
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="brand-filter" data-brand="troy-lee">
-                    <span class="checkmark"></span>
-                    Troy Lee
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="brand-filter" data-brand="oneal">
-                    <span class="checkmark"></span>
-                    Oneal
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="brand-filter" data-brand="airoh">
-                    <span class="checkmark"></span>
-                    Airoh
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="brand-filter" data-brand="acerbis">
-                    <span class="checkmark"></span>
-                    Acerbis
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="brand-filter" data-brand="gaerne">
-                    <span class="checkmark"></span>
-                    Gaerne
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="brand-filter" data-brand="fxr">
-                    <span class="checkmark"></span>
-                    FXR
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="brand-filter" data-brand="thor">
-                    <span class="checkmark"></span>
-                    Thor
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" class="brand-filter" data-brand="ktm">
-                    <span class="checkmark"></span>
-                    KTM
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- TALLAS Section -->
-          <div class="filter-group">
-            <div class="checkbox-group">
-              <div class="category-parent-wrapper">
-                <button class="category-parent-toggle filter-section-toggle" id="tallasToggle" type="button">
-                  <span class="toggle-icon">▼</span>
-                  <span class="toggle-label">TALLAS</span>
-                </button>
-                <div class="category-children" id="tallasChildren">
-                  <div class="size-filter-chips">
-                    <button class="size-chip" data-size="S">S</button>
-                    <button class="size-chip" data-size="M">M</button>
-                    <button class="size-chip" data-size="L">L</button>
-                    <button class="size-chip" data-size="XL">XL</button>
-                    <button class="size-chip" data-size="XXL">XXL</button>
-                    <button class="size-chip" data-size="38">38</button>
-                    <button class="size-chip" data-size="39">39</button>
-                    <button class="size-chip" data-size="40">40</button>
-                    <button class="size-chip" data-size="41">41</button>
-                    <button class="size-chip" data-size="42">42</button>
-                    <button class="size-chip" data-size="43">43</button>
-                    <button class="size-chip" data-size="44">44</button>
-                    <button class="size-chip" data-size="45">45</button>
-                    <button class="size-chip" data-size="46">46</button>
-                    <button class="size-chip" data-size="Única">Única</button>
+            <!-- MARCAS Section -->
+            <div class="filter-group">
+              <div class="checkbox-group">
+                <div class="category-parent-wrapper">
+                  <button class="category-parent-toggle filter-section-toggle" id="marcasToggle" type="button">
+                    <span class="toggle-icon">▼</span>
+                    <span class="toggle-label">MARCAS</span>
+                  </button>
+                  <div class="category-children" id="marcasChildren">
+                    <!-- "Todas" dentro del desplegable (primera posición) -->
+                    <label class="checkbox-label checkbox-label-todo">
+                      <input type="checkbox" class="brand-filter" data-brand="all" checked>
+                      <span class="checkmark"></span>
+                      <span class="todo-label">Todas</span>
+                    </label>
+                    
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="brand-filter" data-brand="fox">
+                      <span class="checkmark"></span>
+                      Fox
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="brand-filter" data-brand="fly">
+                      <span class="checkmark"></span>
+                      Fly
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="brand-filter" data-brand="alpinestars">
+                      <span class="checkmark"></span>
+                      Alpinestars
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="brand-filter" data-brand="leatt">
+                      <span class="checkmark"></span>
+                      Leatt
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="brand-filter" data-brand="troy-lee">
+                      <span class="checkmark"></span>
+                      Troy Lee
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="brand-filter" data-brand="oneal">
+                      <span class="checkmark"></span>
+                      Oneal
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="brand-filter" data-brand="airoh">
+                      <span class="checkmark"></span>
+                      Airoh
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="brand-filter" data-brand="acerbis">
+                      <span class="checkmark"></span>
+                      Acerbis
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="brand-filter" data-brand="gaerne">
+                      <span class="checkmark"></span>
+                      Gaerne
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="brand-filter" data-brand="fxr">
+                      <span class="checkmark"></span>
+                      FXR
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="brand-filter" data-brand="thor">
+                      <span class="checkmark"></span>
+                      Thor
+                    </label>
+                    <label class="checkbox-label">
+                      <input type="checkbox" class="brand-filter" data-brand="ktm">
+                      <span class="checkmark"></span>
+                      KTM
+                    </label>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Clear Filters -->
-          <button id="clearFilters" class="btn btn-clear-filters">
-            <span></span> Limpiar filtros
-          </button>
+            <!-- TALLAS Section -->
+            <div class="filter-group">
+              <div class="checkbox-group">
+                <div class="category-parent-wrapper">
+                  <button class="category-parent-toggle filter-section-toggle" id="tallasToggle" type="button">
+                    <span class="toggle-icon">▼</span>
+                    <span class="toggle-label">TALLAS</span>
+                  </button>
+                  <div class="category-children" id="tallasChildren">
+                    <div class="size-filter-chips">
+                      <button class="size-chip" data-size="S">S</button>
+                      <button class="size-chip" data-size="M">M</button>
+                      <button class="size-chip" data-size="L">L</button>
+                      <button class="size-chip" data-size="XL">XL</button>
+                      <button class="size-chip" data-size="XXL">XXL</button>
+                      <button class="size-chip" data-size="38">38</button>
+                      <button class="size-chip" data-size="39">39</button>
+                      <button class="size-chip" data-size="40">40</button>
+                      <button class="size-chip" data-size="41">41</button>
+                      <button class="size-chip" data-size="42">42</button>
+                      <button class="size-chip" data-size="43">43</button>
+                      <button class="size-chip" data-size="44">44</button>
+                      <button class="size-chip" data-size="45">45</button>
+                      <button class="size-chip" data-size="46">46</button>
+                      <button class="size-chip" data-size="Única">Única</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Clear Filters -->
+            <button id="clearFilters" class="btn btn-clear-filters">
+              <span></span> Limpiar filtros
+            </button>
+          </div>
 
         </aside>
 
