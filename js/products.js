@@ -157,8 +157,8 @@ function createProductCard(product) {
   const whatsappMessage = encodeURIComponent(`Estoy interesado en ${product.name}`);
   const whatsappUrl = `https://wa.me/${window.WHATSAPP_NUMBER}?text=${whatsappMessage}`;
   const brand = getBrand(product.name);
-  const priceNum = parseInt(product.price.replace(/[^0-9]/g, ''));
-  const productSlug = createProductSlug(product.name);
+  const priceNum = parseInt((product.price || '0').toString().replace(/[^0-9]/g, '')) || 0;
+  const productSlug = createProductSlug(product.name || 'producto');
 
   // Soporte para múltiples imágenes (array images)
   const isCloudCannonUrl = (url) => url && url.includes('cloudvent.net');
@@ -391,12 +391,16 @@ async function renderShopProducts() {
     let lastCategory = null;
 
     sortedProducts.forEach(product => {
-      // Agregar separador si cambia la categoría
-      if (product.category !== lastCategory) {
-        html += createCategoryDivider(product.category);
-        lastCategory = product.category;
+      try {
+        // Agregar separador si cambia la categoría
+        if (product.category !== lastCategory) {
+          html += createCategoryDivider(product.category);
+          lastCategory = product.category;
+        }
+        html += createProductCard(product);
+      } catch (e) {
+        console.error('[RENDER] Producto malformado omitido:', product.name || 'sin-nombre', e.message);
       }
-      html += createProductCard(product);
     });
 
     container.innerHTML = html;
