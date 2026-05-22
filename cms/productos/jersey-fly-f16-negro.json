@@ -1,15 +1,15 @@
 {
   "name": "JERSEY FLY F16 NEGRO",
-  "sku": "",
-  "color": "",
-  "category": "jersey",
+  "image": "/assets/images/jersey/whatsapp-image-2024-09-06-at-12-40-25-pm-8cf281693ef3d1852b17256445773761-640-0.jpg",
   "price": "$149.000",
   "sizes": "M/L/XL",
   "badge": "",
+  "category": "jersey",
   "description": "JERSEY FLY F16 NEGRO",
-  "image": "/assets/images/jersey/whatsapp-image-2024-09-06-at-12-40-25-pm-8cf281693ef3d1852b17256445773761-640-0.jpg",
   "images": [
     "/assets/images/jersey/whatsapp-image-2024-09-06-at-12-40-25-pm-8cf281693ef3d1852b17256445773761-640-0.jpg"
   ],
+  "sku": "",
+  "color": "",
   "agotado": false
 }

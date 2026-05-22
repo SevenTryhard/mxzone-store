@@ -1,14 +1,15 @@
 {
   "name": "LUBRICANTE CADENA OFFROAD 500ML",
-  "image": "/assets/images/accesorios/lubricante-cadena-offroad-500ml.jpg",
+  "image": "/assets/images/accesorios/1512297-800-800.jpg",
   "price": "$50.000",
   "sizes": "Unica",
+  "badge": "",
   "category": "accesorios",
-  "description": "Accesorio para motocross: LUBRICANTE CADENA OFFROAD 500ML",
+  "description": "LUBRICANTE CADENA OFFROAD 500ML",
   "images": [
-    "/assets/images/accesorios/lubricante-cadena-offroad-500ml.jpg"
+    "/assets/images/accesorios/1512297-800-800.jpg"
   ],
-  "sku": "ACC-XX-LUBRI",
+  "sku": "",
   "color": "",
   "agotado": false
 }

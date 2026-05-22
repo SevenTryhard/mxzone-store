@@ -1,17 +1,15 @@
 {
   "name": " morral hidratacion 2 litros importado",
-  "sku": "",
-  "color": "",
-  "category": "maletas",
+  "image": "/assets/images/maletas/Captura-de-pantalla-2026-05-07-131646.png",
   "price": "$149.900",
   "sizes": "Unica",
+  "badge": "",
+  "category": "maletas",
   "description": "MORRAL DE HIDRATACION 2 Litros de capacidad IMPORTADO!!! Calidad 1.1",
-  "image": "/assets/images/maletas/Captura-de-pantalla-2026-05-07-131646.png",
   "images": [
     "/assets/images/maletas/Captura-de-pantalla-2026-05-07-131646.png"
   ],
-  "agotado": false,
-  "stock_quantity": 1,
-  "stock_min": 5,
-  "stock_max": 100
+  "sku": "",
+  "color": "",
+  "agotado": false
 }

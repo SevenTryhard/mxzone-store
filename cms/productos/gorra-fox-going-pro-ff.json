@@ -3,10 +3,13 @@
   "image": "/assets/images/gorras/191972605765-1.jpg",
   "price": "$149.000",
   "sizes": "S/M",
+  "badge": "",
   "category": "gorras",
   "description": "Gorra para motocross: GORRA FOX GOING PRO FF",
-  "images": [],
-  "sku": "GOR-XX-GORR3",
+  "images": [
+    "/assets/images/gorras/191972605765-1.jpg"
+  ],
+  "sku": "",
   "color": "",
   "agotado": false
 }

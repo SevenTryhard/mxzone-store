@@ -1,15 +1,15 @@
 {
   "name": "ALPINESTARS FLUID GRID BLU/RED",
-  "category": "jersey",
+  "image": "/assets/images/jersey/JerseyAlpinestarsFluidGridAzulRojo1.webp",
   "price": "$199.900",
   "sizes": "XXL",
   "badge": "",
+  "category": "jersey",
   "description": "ALPINESTARS FLUID GRID BLU/RED",
-  "image": "/assets/images/jersey/JerseyAlpinestarsFluidGridAzulRojo1.jpg",
   "images": [
-    "/assets/images/jersey/JerseyAlpinestarsFluidGridAzulRojo1.jpg"
+    "/assets/images/jersey/JerseyAlpinestarsFluidGridAzulRojo1.webp"
   ],
-  "sku": "UNI-XX-ALPI1",
+  "sku": "",
   "color": "",
   "agotado": false
 }

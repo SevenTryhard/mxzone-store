@@ -1,14 +1,15 @@
 {
   "name": "CASCO ALPINESTARS S-M5 BOND",
   "image": "/assets/images/nuevas_images/8059175891434-001-750wx750h.webp",
-  "price": "$1.650.000",
-  "sizes": "S/M/L/XL",
+  "price": "$1.069.900",
+  "sizes": "M",
   "badge": "Top Ventas",
   "category": "cascos",
-  "description": "Casco ALPINESTARS S-M5 BOND de alta resistencia",
+  "description": "CASCO ALPINESTARS S-M5 BOND",
   "images": [
     "/assets/images/nuevas_images/8059175891434-001-750wx750h.webp"
   ],
-  "sku": "CAS-XX-CASC23",
+  "sku": "",
+  "color": "",
   "agotado": false
 }

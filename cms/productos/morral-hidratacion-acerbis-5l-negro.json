@@ -2,11 +2,14 @@
   "name": "MORRAL HIDRATACION ACERBIS 5L NEGRO",
   "image": "/assets/images/maletas/acerbis-drink-bag-5-litres.jpg",
   "price": "$319.000",
-  "sizes": "Unica",
+  "sizes": "AGOTADO",
+  "badge": "",
   "category": "maletas",
-  "description": "Accesorio de transporte: MORRAL HIDRATACION ACERBIS 5L NEGRO",
-  "images": [],
-  "sku": "ACC-NE-MORRA",
-  "color": "negro",
+  "description": "MORRAL HIDRATACION ACERBIS 5L NEGRO",
+  "images": [
+    "/assets/images/maletas/acerbis-drink-bag-5-litres.jpg"
+  ],
+  "sku": "",
+  "color": "",
   "agotado": false
 }

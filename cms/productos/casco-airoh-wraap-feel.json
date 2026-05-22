@@ -1,15 +1,15 @@
 {
   "name": "CASCO AIROH WRAAP FEEL",
   "image": "/assets/images/nuevas_images/cascoairohwraaapfeelnaranja-2.webp",
-  "price": "$869.900",
-  "sizes": "S/M/L/XL",
+  "price": "$899.900",
+  "sizes": "S/M",
   "badge": "Premium",
   "category": "cascos",
-  "description": "Casco AIROH WRAAP FEEL con diseÃƒÂ±o exclusivo",
+  "description": "CASCO AIROH WRAAP FEEL",
   "images": [
     "/assets/images/nuevas_images/cascoairohwraaapfeelnaranja-2.webp"
   ],
-  "sku": "CAS-XX-CASC1",
+  "sku": "",
   "color": "",
   "agotado": false
 }

@@ -3,12 +3,13 @@
   "image": "/assets/images/gafas/100percent-armega-mirror-soledad-mirror-red-01-1725950.jpg",
   "price": "$550.000",
   "sizes": "Unica",
+  "badge": "Premium",
   "category": "gafas",
-  "description": "Gafas para motocross: 100% ARMEGA SOLEDAD (RED LENS)",
+  "description": "100% ARMEGA SOLEDAD (RED LENS)",
   "images": [
     "/assets/images/gafas/100percent-armega-mirror-soledad-mirror-red-01-1725950.jpg"
   ],
-  "sku": "GAF-XX-100A3",
+  "sku": "",
   "color": "",
   "agotado": false
 }

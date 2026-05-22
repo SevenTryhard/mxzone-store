@@ -1,14 +1,15 @@
 {
   "name": "BANCO HIDRAULICO",
-  "image": "/assets/images/accesorios/banco-hidraulico.jpg",
+  "image": "/assets/images/accesorios/s-l1200.jpg",
   "price": "$319.000",
   "sizes": "Unica",
+  "badge": "",
   "category": "accesorios",
-  "description": "Accesorio para motocross: BANCO HIDRAULICO",
+  "description": "BANCO HIDRAULICO",
   "images": [
-    "/assets/images/accesorios/banco-hidraulico.jpg"
+    "/assets/images/accesorios/s-l1200.jpg"
   ],
-  "sku": "ACC-XX-BANCO",
+  "sku": "",
   "color": "",
   "agotado": false
 }

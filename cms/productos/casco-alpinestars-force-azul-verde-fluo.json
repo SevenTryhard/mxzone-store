@@ -1,14 +1,15 @@
 {
   "name": "CASCO ALPINESTARS FORCE AZUL VERDE FLUO",
-  "image": "/assets/images/cascos/casco-alpinestars-force-azul-verde-fluo.jpg",
+  "image": "/assets/images/edited-1779204269443.png",
   "price": "$1.199.000",
   "sizes": "XL",
+  "badge": "Premium",
   "category": "cascos",
-  "description": "Casco Alpinestars Force en color azul con verde flÃºo",
+  "description": "CASCO ALPINESTARS FORCE AZUL VERDE FLUO",
   "images": [
-    "/assets/images/cascos/casco-alpinestars-force-azul-verde-fluo.jpg"
+    "/assets/images/edited-1779204269443.png"
   ],
-  "sku": "CAS-AZ-CASC1",
-  "color": "azul",
+  "sku": "",
+  "color": "",
   "agotado": false
 }

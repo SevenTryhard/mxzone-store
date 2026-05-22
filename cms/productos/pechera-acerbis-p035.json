@@ -1,15 +1,15 @@
 {
   "name": "PECHERA ACERBIS P035 ",
-  "sku": "",
-  "color": "",
-  "category": "protecciones",
+  "image": "/assets/images/protecciones/D_NQ_NP_711614-MLA100859069131_122025-O.webp",
   "price": "$559.900",
   "sizes": "Unica",
   "badge": "",
+  "category": "protecciones",
   "description": "PECHERA ACERBIS P035 ",
-  "image": "/assets/images/protecciones/peto-acerbis-deflector-p035-l1-color-gris.jpg",
   "images": [
-    "/assets/images/protecciones/peto-acerbis-deflector-p035-l1-color-gris.jpg"
+    "/assets/images/protecciones/D_NQ_NP_711614-MLA100859069131_122025-O.webp"
   ],
+  "sku": "",
+  "color": "",
   "agotado": false
 }

@@ -1,15 +1,15 @@
 {
   "name": "JERSEY FLY F16 MINT",
-  "sku": "",
-  "color": "",
-  "category": "jersey",
+  "image": "/assets/images/jersey/379-923-0-jersey-f16-2026-645e82ab-7ebf-4c93-a762-e2bb92554fa7-785x.webp",
   "price": "$149.900",
   "sizes": "M",
   "badge": "",
+  "category": "jersey",
   "description": "JERSEY FLY F16 MINT",
-  "image": "/assets/images/jersey/379-923-0-jersey-f16-2026-645e82ab-7ebf-4c93-a762-e2bb92554fa7-785x.webp",
   "images": [
     "/assets/images/jersey/379-923-0-jersey-f16-2026-645e82ab-7ebf-4c93-a762-e2bb92554fa7-785x.webp"
   ],
+  "sku": "",
+  "color": "",
   "agotado": false
 }

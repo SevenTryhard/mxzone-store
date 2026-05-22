@@ -1,15 +1,15 @@
 {
   "name": "JERSEY FLY KINETIC KORE FLUO",
-  "sku": "",
-  "color": "",
-  "category": "jersey",
+  "image": "/assets/images/jersey/fly-racing-mx-jersey-kinetic-kore-hi-vis-black-1.jpg",
   "price": "$199.900",
   "sizes": "M",
   "badge": "",
+  "category": "jersey",
   "description": "JERSEY FLY KINETIC KORE FLUO",
-  "image": "/assets/images/jersey/fly-racing-mx-jersey-kinetic-kore-hi-vis-black-1.jpg",
   "images": [
     "/assets/images/jersey/fly-racing-mx-jersey-kinetic-kore-hi-vis-black-1.jpg"
   ],
+  "sku": "",
+  "color": "",
   "agotado": false
 }

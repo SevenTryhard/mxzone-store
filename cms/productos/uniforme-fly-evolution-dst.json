@@ -3,10 +3,13 @@
   "image": "/assets/images/uniformes/image1660336931534.png",
   "price": "$899.000",
   "sizes": "34-L",
+  "badge": "",
   "category": "uniformes",
   "description": "Uniforme FLY EVOLUTION DST de rendimiento",
-  "images": [],
-  "sku": "UNI-XX-UNIF2",
+  "images": [
+    "/assets/images/uniformes/image1660336931534.png"
+  ],
+  "sku": "",
   "color": "",
   "agotado": false
 }

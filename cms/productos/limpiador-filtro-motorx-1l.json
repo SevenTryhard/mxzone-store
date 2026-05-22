@@ -1,14 +1,15 @@
 {
   "name": "LIMPIADOR FILTRO MOTORX 1L",
-  "image": "/assets/images/accesorios/limpiador-filtro-motorx-1l.jpg",
+  "image": "/assets/images/accesorios/limpiador-filtro-de-aire-motorex-1l-mt152h00pm.jpg",
   "price": "$50.000",
   "sizes": "Unica",
+  "badge": "",
   "category": "accesorios",
-  "description": "Accesorio para motocross: LIMPIADOR FILTRO MOTORX 1L",
+  "description": "LIMPIADOR FILTRO MOTORX 1L",
   "images": [
-    "/assets/images/accesorios/limpiador-filtro-motorx-1l.jpg"
+    "/assets/images/accesorios/limpiador-filtro-de-aire-motorex-1l-mt152h00pm.jpg"
   ],
-  "sku": "ACC-XX-LIMPI",
+  "sku": "",
   "color": "",
   "agotado": false
 }

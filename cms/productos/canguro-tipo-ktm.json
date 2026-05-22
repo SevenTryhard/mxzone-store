@@ -1,18 +1,15 @@
 {
   "name": "CANGURO TIPO KTM",
-  "category": "maletas",
+  "image": "/assets/images/maletas/CA_6--1-.webp",
   "price": "209.900",
   "sizes": "Unica",
   "badge": "",
+  "category": "maletas",
   "description": "CANGURO TIPO KTM",
-  "image": "/assets/images/maletas/CA_6--1-.webp",
   "images": [
     "/assets/images/maletas/CA_6--1-.webp"
   ],
   "sku": "",
   "color": "",
-  "agotado": false,
-  "stock_quantity": 1,
-  "stock_min": 5,
-  "stock_max": 100
+  "agotado": false
 }

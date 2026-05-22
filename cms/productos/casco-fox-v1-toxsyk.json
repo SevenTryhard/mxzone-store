@@ -1,15 +1,15 @@
 {
   "name": "CASCO FOX V1 TOXSYK",
-  "sku": "",
-  "color": "",
-  "category": "cascos",
+  "image": "/assets/images/cascos/D_NQ_NP_743646-MCO74270063566_022024-O.jpg",
   "price": "$1.429.000",
   "sizes": "XL",
   "badge": "Top Ventas",
+  "category": "cascos",
   "description": "CASCO FOX V1 TOXSYK",
-  "image": "/assets/images/cascos/D_NQ_NP_743646-MCO74270063566_022024-O.jpg",
   "images": [
     "/assets/images/cascos/D_NQ_NP_743646-MCO74270063566_022024-O.jpg"
   ],
+  "sku": "",
+  "color": "",
   "agotado": false
 }

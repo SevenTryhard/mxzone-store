@@ -1,14 +1,15 @@
 {
   "name": "PISA LLANTAS",
-  "image": "/assets/images/accesorios/pisa-llantas.jpg",
+  "image": "/assets/images/accesorios/Fermacopertonevicma_grande.jpg",
   "price": "$60.000",
   "sizes": "Unica",
+  "badge": "",
   "category": "accesorios",
-  "description": "Accesorio para motocross: PISA LLANTAS",
+  "description": "PISA LLANTAS",
   "images": [
-    "/assets/images/accesorios/pisa-llantas.jpg"
+    "/assets/images/accesorios/Fermacopertonevicma_grande.jpg"
   ],
-  "sku": "ACC-XX-PISAL",
+  "sku": "",
   "color": "",
   "agotado": false
 }

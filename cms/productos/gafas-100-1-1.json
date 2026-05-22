@@ -1,15 +1,15 @@
 {
   "name": "GAFAS 100% 1.1",
-  "sku": "",
-  "color": "",
-  "category": "gafas",
+  "image": "/assets/images/gafas/Captura-de-pantalla-2026-05-07-122232.png",
   "price": "$119.900",
   "sizes": "Unica",
   "badge": "",
+  "category": "gafas",
   "description": "GAFAS 100% 1.1",
-  "image": "/assets/images/gafas/Captura-de-pantalla-2026-05-07-122232.png",
   "images": [
     "/assets/images/gafas/Captura-de-pantalla-2026-05-07-122232.png"
   ],
+  "sku": "",
+  "color": "",
   "agotado": false
 }

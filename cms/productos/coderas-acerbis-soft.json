@@ -1,15 +1,15 @@
 {
   "name": "CODERAS ACERBIS SOFT",
-  "sku": "",
-  "color": "",
-  "category": "protecciones",
+  "image": "/assets/images/protecciones/39811-acerbis-23456110_1.png",
   "price": "$269.900",
   "sizes": "Unica",
   "badge": "",
+  "category": "protecciones",
   "description": "CODERAS ACERBIS SOFT",
-  "image": "/assets/images/protecciones/39811-acerbis-23456110_1.png",
   "images": [
     "/assets/images/protecciones/39811-acerbis-23456110_1.png"
   ],
+  "sku": "",
+  "color": "",
   "agotado": false
 }

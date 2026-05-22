@@ -2,13 +2,14 @@
   "name": "PECHERA FLY REVEL RACE",
   "image": "/assets/images/protecciones/pechera-fly-36-16040-1-2x.webp",
   "price": "$649.900",
-  "sizes": "S/M/L/XL",
+  "sizes": "Unica",
+  "badge": "",
   "category": "protecciones",
-  "description": "Pechera FLY REVEL RACE de competiciÃ³n",
+  "description": "PECHERA FLY REVEL RACE",
   "images": [
     "/assets/images/protecciones/pechera-fly-36-16040-1-2x.webp"
   ],
-  "sku": "PRO-XX-PECH4",
+  "sku": "",
   "color": "",
   "agotado": false
 }

@@ -1,15 +1,15 @@
 {
   "name": "TIMON ODI PODIUM RC-4 NEGRO",
-  "category": "accesorios",
+  "image": "/assets/images/cascos/s-l1200--2-.jpg",
   "price": "$599.000",
   "sizes": "Unica",
   "badge": "",
+  "category": "accesorios",
   "description": "TIMON ODI PODIUM RC-4 NEGRO",
-  "image": "/assets/images/cascos/s-l1200--2-.jpg",
   "images": [
     "/assets/images/cascos/s-l1200--2-.jpg"
   ],
-  "sku": "ACC-NE-TIMON",
-  "color": "negro",
+  "sku": "",
+  "color": "",
   "agotado": false
 }

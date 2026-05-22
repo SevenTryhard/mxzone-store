@@ -1,14 +1,15 @@
 {
   "name": "FILTRO DE AIRE PROFILTER",
-  "image": "/assets/images/accesorios/filtro-de-aire-profilter.jpg",
+  "image": "/assets/images/accesorios/fd806c755dc3385d488aadf367adb1a6.jpg",
   "price": "$129.000",
   "sizes": "Unica",
+  "badge": "",
   "category": "accesorios",
-  "description": "Accesorio para motocross: FILTRO DE AIRE PROFILTER",
+  "description": "FILTRO DE AIRE PROFILTER",
   "images": [
-    "/assets/images/accesorios/filtro-de-aire-profilter.jpg"
+    "/assets/images/accesorios/fd806c755dc3385d488aadf367adb1a6.jpg"
   ],
-  "sku": "ACC-XX-FILTR",
+  "sku": "",
   "color": "",
   "agotado": false
 }

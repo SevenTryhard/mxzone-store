@@ -1,15 +1,15 @@
 {
   "name": "CASCO RACING FORMULA",
   "image": "/assets/images/nuevas_images/fly-racing-formula-cp-s-e-speeder-helmet-black-yellow-red.webp",
-  "price": "$1.450.000",
-  "sizes": "S/M/L/XL",
+  "price": "$1.449.000",
+  "sizes": "M",
   "badge": "Premium",
   "category": "cascos",
-  "description": "Casco RACING FORMULA de competiciÃƒÂ³n",
+  "description": "CASCO RACING FORMULA",
   "images": [
     "/assets/images/nuevas_images/fly-racing-formula-cp-s-e-speeder-helmet-black-yellow-red.webp"
   ],
-  "sku": "CAS-XX-CASC19",
+  "sku": "",
   "color": "",
   "agotado": false
 }

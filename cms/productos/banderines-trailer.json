@@ -1,15 +1,15 @@
 {
   "name": "BANDERINES TRAILER",
-  "category": "accesorios",
+  "image": "/assets/images/accesorios/Banderin_Antena_Cuatrimoto_Trailer_verde.webp",
   "price": "$35.000",
   "sizes": "Unica",
   "badge": "",
+  "category": "accesorios",
   "description": "BANDERINES TRAILER",
-  "image": "/assets/images/accesorios/Banderin_Antena_Cuatrimoto_Trailer_verde.webp",
   "images": [
     "/assets/images/accesorios/Banderin_Antena_Cuatrimoto_Trailer_verde.webp"
   ],
-  "sku": "ACC-XX-BANDE",
+  "sku": "",
   "color": "",
   "agotado": false
 }

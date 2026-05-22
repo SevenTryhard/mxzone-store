@@ -1,14 +1,15 @@
 {
   "name": "CORREAS ONEAL",
-  "image": "/assets/images/accesorios/correas-oneal.jpg",
+  "image": "/assets/images/cascos/3073-200.jpg",
   "price": "$199.000",
   "sizes": "Unica",
+  "badge": "Top Ventas",
   "category": "accesorios",
-  "description": "Accesorio para motocross: CORREAS ONEAL",
+  "description": "CORREAS ONEAL",
   "images": [
-    "/assets/images/accesorios/correas-oneal.jpg"
+    "/assets/images/cascos/3073-200.jpg"
   ],
-  "sku": "ACC-XX-CORR1",
+  "sku": "",
   "color": "",
   "agotado": false
 }

@@ -2,13 +2,14 @@
   "name": "CASCO AIROH TWIST 3 DYNASTY ROSSO",
   "image": "/assets/images/nuevas_images/tw3di18-1.png",
   "price": "$1.150.000",
-  "sizes": "S/M/L/XL",
+  "sizes": "M",
   "badge": "Premium",
   "category": "cascos",
-  "description": "Casco AIROH TWIST 3 DYNASTY en color rosso italiano",
+  "description": "CASCO AIROH TWIST 3 DYNASTY ROSSO",
   "images": [
     "/assets/images/nuevas_images/tw3di18-1.png"
   ],
-  "sku": "CAS-XX-CASC22",
+  "sku": "",
+  "color": "",
   "agotado": false
 }

@@ -1,14 +1,15 @@
 {
   "name": "CASCO FLY RACING KINETIC BLK RED",
   "image": "/assets/images/nuevas_images/s-l1200-1.webp",
-  "price": "$890.000",
-  "sizes": "S/M/L/XL",
+  "price": "$799.900",
+  "sizes": "L",
   "badge": "Top Ventas",
   "category": "cascos",
-  "description": "Casco FLY RACING KINETIC negro rojo",
+  "description": "CASCO FLY RACING KINETIC BLK RED",
   "images": [
     "/assets/images/nuevas_images/s-l1200-1.webp"
   ],
-  "sku": "CAS-XX-CASC27",
+  "sku": "",
+  "color": "",
   "agotado": false
 }

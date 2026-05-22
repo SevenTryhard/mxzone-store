@@ -1,14 +1,15 @@
 {
   "name": "CASCO FLY V1 INTERFERE GRIS",
   "image": "/assets/images/nuevas_images/32044-037-2-2x.webp",
-  "price": "$750.000",
-  "sizes": "S/M/L/XL",
+  "price": "$1.449.000",
+  "sizes": "XL",
+  "badge": "",
   "category": "cascos",
-  "description": "Casco FLY V1 INTERFERE en color gris",
+  "description": "CASCO FLY V1 INTERFERE GRIS",
   "images": [
     "/assets/images/nuevas_images/32044-037-2-2x.webp"
   ],
-  "sku": "CAS-GR-CASCO",
-  "color": "gris",
+  "sku": "",
+  "color": "",
   "agotado": false
 }

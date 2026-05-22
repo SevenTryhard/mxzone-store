@@ -1,15 +1,15 @@
 {
   "name": "BOTAS LEATT 3.5 RED",
-  "category": "botas",
+  "image": "/assets/images/botas/outlet-botas-leatt-35-color-rojo.jpg",
   "price": "1.099.000",
   "sizes": "10-US",
   "badge": "Top Ventas",
+  "category": "botas",
   "description": "BOTAS LEATT 3.5 RED",
-  "image": "/assets/images/botas/outlet-botas-leatt-35-color-rojo.jpg",
   "images": [
     "/assets/images/botas/outlet-botas-leatt-35-color-rojo.jpg"
   ],
-  "sku": "BOT-XX-BOTA5",
+  "sku": "",
   "color": "",
   "agotado": false
 }

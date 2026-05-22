@@ -1,15 +1,15 @@
 {
   "name": "JERSEY FOX 180 NOBLE",
-  "sku": "",
-  "color": "",
-  "category": "jersey",
+  "image": "/assets/images/jersey/13.ee.05.ARG31315001Fox180NOBLED1.webp",
   "price": "$224.900",
   "sizes": "S/M/XL",
   "badge": "",
+  "category": "jersey",
   "description": "JERSEY FOX 180 NOBLE",
-  "image": "/assets/images/jersey/13.ee.05.ARG31315001Fox180NOBLED1.webp",
   "images": [
     "/assets/images/jersey/13.ee.05.ARG31315001Fox180NOBLED1.webp"
   ],
+  "sku": "",
+  "color": "",
   "agotado": false
 }

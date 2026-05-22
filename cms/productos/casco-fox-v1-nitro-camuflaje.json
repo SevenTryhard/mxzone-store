@@ -2,14 +2,14 @@
   "name": "CASCO FOX V1 NITRO CAMUFLAJE",
   "image": "/assets/images/nuevas_images/31370-330-2-800x.webp",
   "price": "$1.429.900",
-  "sizes": "S/M/L/XL",
+  "sizes": "XL",
   "badge": "Top Ventas",
   "category": "cascos",
-  "description": "Casco FOX V1 con diseÃƒÂ±o camuflaje nitro",
+  "description": "CASCO FOX V1 NITRO CAMUFLAJE",
   "images": [
     "/assets/images/nuevas_images/31370-330-2-800x.webp"
   ],
-  "sku": "CAS-XX-CASC16",
+  "sku": "",
   "color": "",
   "agotado": false
 }

@@ -1,15 +1,15 @@
 {
   "name": "BOTAS ALPINESTARS TECH 7 BLUE",
-  "category": "botas",
+  "image": "/assets/images/botas/1363E5C2-7228-48D2-9694-0FD14702AA63.webp",
   "price": "2.199.000",
   "sizes": "9-US",
   "badge": "Premium",
+  "category": "botas",
   "description": "BOTAS ALPINESTARS TECH 7 BLUE",
-  "image": "/assets/images/botas/1363E5C2-7228-48D2-9694-0FD14702AA63.webp",
   "images": [
     "/assets/images/botas/1363E5C2-7228-48D2-9694-0FD14702AA63.webp"
   ],
-  "sku": "BOT-XX-BOTA1",
+  "sku": "",
   "color": "",
   "agotado": false
 }

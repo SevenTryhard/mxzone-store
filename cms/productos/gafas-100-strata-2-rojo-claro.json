@@ -1,15 +1,15 @@
 {
   "name": "GAFAS 100% STRATA 2  ROJO CLARO",
-  "sku": "",
-  "color": "",
-  "category": "gafas",
+  "image": "/assets/images/gafas/goggle_roja_100__STRATA_2_bicicletas_motos_50027-00018_61517474-d972-439a-915d-44ebe265bec8.webp",
   "price": "$149.900",
   "sizes": "Unica",
   "badge": "",
+  "category": "gafas",
   "description": "GAFAS 100% STRATA 2  ROJO CLARO",
-  "image": "/assets/images/gafas/goggle_roja_100__STRATA_2_bicicletas_motos_50027-00018_61517474-d972-439a-915d-44ebe265bec8.webp",
   "images": [
     "/assets/images/gafas/goggle_roja_100__STRATA_2_bicicletas_motos_50027-00018_61517474-d972-439a-915d-44ebe265bec8.webp"
   ],
+  "sku": "",
+  "color": "",
   "agotado": false
 }

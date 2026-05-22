@@ -1,14 +1,15 @@
 {
   "name": "MEDIDOR DE PRESION DIGITAL",
-  "image": "/assets/images/accesorios/medidor-de-presion-digital.jpg",
+  "image": "/assets/images/accesorios/0356-311-cfd6fc5c60a25531c417127664750401-640-0.jpg",
   "price": "$25.000",
   "sizes": "Unica",
+  "badge": "",
   "category": "accesorios",
-  "description": "Accesorio para motocross: MEDIDOR DE PRESION DIGITAL",
+  "description": "MEDIDOR DE PRESION DIGITAL",
   "images": [
-    "/assets/images/accesorios/medidor-de-presion-digital.jpg"
+    "/assets/images/accesorios/0356-311-cfd6fc5c60a25531c417127664750401-640-0.jpg"
   ],
-  "sku": "ACC-XX-MEDID",
+  "sku": "",
   "color": "",
   "agotado": false
 }

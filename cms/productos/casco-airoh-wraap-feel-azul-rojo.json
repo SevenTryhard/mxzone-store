@@ -1,14 +1,15 @@
 {
   "name": "CASCO AIROH WRAAP FEEL AZUL/ROJO",
   "image": "/assets/images/nuevas_images/assetsimagescascoscasco-airoh-wraap-feel-azul-rojo.jpg",
-  "price": "$869.900",
+  "price": "$899.900",
   "sizes": "S/M",
+  "badge": "",
   "category": "cascos",
-  "description": "Casco AIROH WRAAP con diseÃƒÂ±o FEEL en azul y rojo",
+  "description": "CASCO AIROH WRAAP FEEL AZUL/ROJO",
   "images": [
     "/assets/images/nuevas_images/assetsimagescascoscasco-airoh-wraap-feel-azul-rojo.jpg"
   ],
-  "sku": "CAS-AZ-CASCO",
-  "color": "azul",
+  "sku": "",
+  "color": "",
   "agotado": false
 }

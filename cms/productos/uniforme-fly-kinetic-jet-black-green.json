@@ -3,12 +3,13 @@
   "image": "/assets/images/uniformes/kinetic-jet-olive.webp",
   "price": "$949.000",
   "sizes": "30-S",
+  "badge": "",
   "category": "uniformes",
   "description": "Uniforme FLY KINETIC JET en negro verde",
   "images": [
     "/assets/images/uniformes/kinetic-jet-olive.webp"
   ],
-  "sku": "UNI-XX-UNIF6",
+  "sku": "",
   "color": "",
   "agotado": false
 }

@@ -1,18 +1,16 @@
 {
   "name": "MALETA FOX RACE SPEC SHUTTLE 180 ROLLER BLU/ORN",
-  "sku": "",
-  "color": "",
-  "category": "maletas",
+  "image": "/assets/images/maletas/32513_188_1-2x-webp-2026-05-21-19-29-40-n22c.jpg",
   "price": "$1.339.900",
   "sizes": "GRANDE",
+  "badge": "",
+  "category": "maletas",
   "description": "MALETA FOX RACE SPEC SHUTTLE 180 ROLLER BLU/ORN",
-  "image": "/assets/images/maletas/32513_188_1-2x-webp-2026-05-21-19-29-40-n22c.jpg",
   "images": [
     "/assets/images/maletas/32513_188_1-2x-webp-2026-05-21-19-29-40-n22c.jpg",
     "/assets/images/maletas/32513_188_5-2x-webp-2026-05-21-19-29-48-9y38.jpg"
   ],
-  "agotado": false,
-  "stock_quantity": 1,
-  "stock_min": 5,
-  "stock_max": 100
+  "sku": "",
+  "color": "",
+  "agotado": false
 }

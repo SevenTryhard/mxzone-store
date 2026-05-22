@@ -1,14 +1,15 @@
 {
   "name": "MOTOREX CROSSPOWER 4T 10W60 1L",
-  "image": "/assets/images/accesorios/motorex-crosspower-4t-10w60-1l.jpg",
+  "image": "/assets/images/accesorios/308242_1_MOTOREX_CROSS_POWER_4T_10W60_1L.jpg",
   "price": "$74.900",
   "sizes": "Unica",
+  "badge": "",
   "category": "accesorios",
-  "description": "Accesorio para motocross: MOTOREX CROSSPOWER 4T 10W60 1L",
+  "description": "MOTOREX CROSSPOWER 4T 10W60 1L",
   "images": [
-    "/assets/images/accesorios/motorex-crosspower-4t-10w60-1l.jpg"
+    "/assets/images/accesorios/308242_1_MOTOREX_CROSS_POWER_4T_10W60_1L.jpg"
   ],
-  "sku": "ACC-XX-MOTO1",
+  "sku": "",
   "color": "",
   "agotado": false
 }

@@ -1,15 +1,15 @@
 {
   "name": "GAFA 100% STRATA 2 SOLAR ECLIPSE LENTE CLEAR",
-  "category": "gafas",
+  "image": "/assets/images/cascos/481.jpg",
   "price": "$149.900",
   "sizes": "Unica",
   "badge": "",
+  "category": "gafas",
   "description": "GAFA 100% STRATA 2 SOLAR ECLIPSE LENTE CLEAR",
-  "image": "/assets/images/cascos/481.jpg",
   "images": [
     "/assets/images/cascos/481.jpg"
   ],
-  "sku": "GAF-XX-GAFA3",
+  "sku": "",
   "color": "",
   "agotado": false
 }

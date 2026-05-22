@@ -1,14 +1,15 @@
 {
   "name": "PROTECTOR CURVA 2T",
-  "image": "/assets/images/accesorios/protector-curva-2t.jpg",
+  "image": "/assets/images/accesorios/protector-de-escape-armadillo-2t-polisport.jpg",
   "price": "$219.900",
   "sizes": "Unica",
+  "badge": "",
   "category": "accesorios",
-  "description": "Accesorio para motocross: PROTECTOR CURVA 2T",
+  "description": "PROTECTOR CURVA 2T",
   "images": [
-    "/assets/images/accesorios/protector-curva-2t.jpg"
+    "/assets/images/accesorios/protector-de-escape-armadillo-2t-polisport.jpg"
   ],
-  "sku": "ACC-XX-PROTE",
+  "sku": "",
   "color": "",
   "agotado": false
 }

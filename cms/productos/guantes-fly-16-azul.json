@@ -1,15 +1,15 @@
 {
   "name": "GUANTES FLY 16 AZUL",
-  "sku": "",
-  "color": "",
-  "category": "guantes",
+  "image": "/assets/images/guantes/379-912-0-Glove-F16-2026_d5c4ae6c-876d-41b4-81f9-8074096357b6.webp",
   "price": "$129.000",
   "sizes": "XL",
   "badge": "",
+  "category": "guantes",
   "description": "GUANTES FLY 16 AZUL",
-  "image": "/assets/images/guantes/379-912-0-Glove-F16-2026_d5c4ae6c-876d-41b4-81f9-8074096357b6.webp",
   "images": [
     "/assets/images/guantes/379-912-0-Glove-F16-2026_d5c4ae6c-876d-41b4-81f9-8074096357b6.webp"
   ],
+  "sku": "",
+  "color": "",
   "agotado": false
 }

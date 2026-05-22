@@ -1,14 +1,15 @@
 {
   "name": "RODILLO DE CADENA",
-  "image": "/assets/images/accesorios/rodillo-de-cadena.jpg",
+  "image": "/assets/images/accesorios/51SVEo7n52L.jpg",
   "price": "$45.000",
   "sizes": "Unica",
+  "badge": "",
   "category": "accesorios",
-  "description": "Accesorio para motocross: RODILLO DE CADENA",
+  "description": "RODILLO DE CADENA",
   "images": [
-    "/assets/images/accesorios/rodillo-de-cadena.jpg"
+    "/assets/images/accesorios/51SVEo7n52L.jpg"
   ],
-  "sku": "ACC-XX-RODIL",
+  "sku": "",
   "color": "",
   "agotado": false
 }

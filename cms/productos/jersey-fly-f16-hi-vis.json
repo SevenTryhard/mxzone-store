@@ -1,15 +1,15 @@
 {
   "name": "JERSEY FLY F16 Hi Vis",
-  "sku": "",
-  "color": "",
-  "category": "jersey",
+  "image": "/assets/images/jersey/jersey_hi-vis_fly_racing_f-16_bicicleta_moto_376-920_1_f20e4584-5e47-431b-9a99-bf55519596c6.jpg",
   "price": "$149.000",
   "sizes": "M",
   "badge": "",
+  "category": "jersey",
   "description": "JERSEY FLY F16 Hi Vis",
-  "image": "/assets/images/jersey/jersey_hi-vis_fly_racing_f-16_bicicleta_moto_376-920_1_f20e4584-5e47-431b-9a99-bf55519596c6.jpg",
   "images": [
     "/assets/images/jersey/jersey_hi-vis_fly_racing_f-16_bicicleta_moto_376-920_1_f20e4584-5e47-431b-9a99-bf55519596c6.jpg"
   ],
+  "sku": "",
+  "color": "",
   "agotado": false
 }

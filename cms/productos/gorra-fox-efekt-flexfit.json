@@ -2,11 +2,14 @@
   "name": "GORRA FOX EFEKT FLEXFIT",
   "image": "/assets/images/gorras/006-29901-046-1.webp",
   "price": "$165.000",
-  "sizes": "S/M",
+  "sizes": "SM",
+  "badge": "",
   "category": "gorras",
-  "description": "Gorra para motocross: GORRA FOX EFEKT FLEXFIT",
-  "images": [],
-  "sku": "GOR-XX-GORR2",
+  "description": "GORRA FOX EFEKT FLEXFIT",
+  "images": [
+    "/assets/images/gorras/006-29901-046-1.webp"
+  ],
+  "sku": "",
   "color": "",
   "agotado": false
 }

@@ -2,11 +2,14 @@
   "name": "GORRA FOX ABSOLUTE FLEXFIT [GRIS]",
   "image": "/assets/images/gorras/31618-172-1-2x.jpg",
   "price": "$169.000",
-  "sizes": "S/M",
+  "sizes": "SM",
+  "badge": "",
   "category": "gorras",
-  "description": "Gorra para motocross: GORRA FOX ABSOLUTE FLEXFIT [GRIS]",
-  "images": [],
-  "sku": "GOR-GR-GORRA",
-  "color": "gris",
+  "description": "GORRA FOX ABSOLUTE FLEXFIT [GRIS]",
+  "images": [
+    "/assets/images/gorras/31618-172-1-2x.jpg"
+  ],
+  "sku": "",
+  "color": "",
   "agotado": false
 }

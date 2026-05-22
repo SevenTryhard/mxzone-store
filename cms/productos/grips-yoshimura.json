@@ -1,15 +1,15 @@
 {
   "name": "GRIPS YOSHIMURA",
-  "category": "accesorios",
+  "image": "/assets/images/cascos/D_NQ_NP_610747-MCO84469334034_052025-O.jpg",
   "price": "$39.900",
   "sizes": "Unica",
   "badge": "",
+  "category": "accesorios",
   "description": "GRIPS YOSHIMURA",
-  "image": "/assets/images/cascos/D_NQ_NP_610747-MCO84469334034_052025-O.jpg",
   "images": [
     "/assets/images/cascos/D_NQ_NP_610747-MCO84469334034_052025-O.jpg"
   ],
-  "sku": "ACC-XX-GRIP4",
+  "sku": "",
   "color": "",
   "agotado": false
 }

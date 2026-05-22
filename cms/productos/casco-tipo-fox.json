@@ -1,15 +1,15 @@
 {
   "name": "CASCO TIPO FOX",
-  "sku": "",
-  "color": "",
-  "category": "cascos",
+  "image": "/assets/images/cascos/Gemini_Generated_Image_kh1tr3kh1tr3kh1t.jpg",
   "price": "295.000",
   "sizes": "M",
   "badge": "",
+  "category": "cascos",
   "description": "CASCO TIPO FOX",
-  "image": "/assets/images/cascos/Captura-de-pantalla-2026-05-07-114407.jpg",
   "images": [
-    "/assets/images/cascos/Captura-de-pantalla-2026-05-07-114407.jpg"
+    "/assets/images/cascos/Gemini_Generated_Image_kh1tr3kh1tr3kh1t.jpg"
   ],
+  "sku": "",
+  "color": "",
   "agotado": false
 }

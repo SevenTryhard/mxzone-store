@@ -1,14 +1,15 @@
 {
   "name": "CORREAS ACERBIS",
-  "image": "/assets/images/accesorios/correas-acerbis.jpg",
+  "image": "/assets/images/cascos/5-9.jpg",
   "price": "$199.900",
   "sizes": "Unica",
+  "badge": "Top Ventas",
   "category": "accesorios",
-  "description": "Accesorio para motocross: CORREAS ACERBIS",
+  "description": "CORREAS ACERBIS",
   "images": [
-    "/assets/images/accesorios/correas-acerbis.jpg"
+    "/assets/images/cascos/5-9.jpg"
   ],
-  "sku": "ACC-XX-CORRE",
+  "sku": "",
   "color": "",
   "agotado": false
 }

@@ -1,15 +1,15 @@
 {
   "name": "CASCO TROY LEE SE5 GASGAS",
-  "image": "/assets/images/cascos/CASCO TROY LEE GP AIR TEAM 81.jpg",
-  "price": "$2.890.000",
-  "sizes": "S/M/L/XL",
+  "image": "/assets/images/cascos/TLD_M24D2_SE5CM_GASGAS_FUMES_REDBLK_04.jpg",
+  "price": "$1.899.000",
+  "sizes": "M",
   "badge": "Premium",
   "category": "cascos",
-  "description": "Casco TROY LEE SE5 GASGAS de ediciÃ³n especial",
+  "description": "CASCO TROY LEE SE5 GASGAS",
   "images": [
-    "/assets/images/cascos/CASCO TROY LEE GP AIR TEAM 81.jpg"
+    "/assets/images/cascos/TLD_M24D2_SE5CM_GASGAS_FUMES_REDBLK_04.jpg"
   ],
-  "sku": "CAS-XX-CASC20",
+  "sku": "",
   "color": "",
   "agotado": false
 }

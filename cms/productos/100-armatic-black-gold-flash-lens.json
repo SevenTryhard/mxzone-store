@@ -3,12 +3,13 @@
   "image": "/assets/images/gafas/fa24-armatic-20-50060-00004-1.webp",
   "price": "$449.000",
   "sizes": "Unica",
+  "badge": "",
   "category": "gafas",
   "description": "Gafas para motocross: 100% ARMATIC BLACK (GOLD FLASH LENS)",
   "images": [
     "/assets/images/gafas/fa24-armatic-20-50060-00004-1.webp"
   ],
-  "sku": "GAF-XX-100A1",
+  "sku": "",
   "color": "",
   "agotado": false
 }

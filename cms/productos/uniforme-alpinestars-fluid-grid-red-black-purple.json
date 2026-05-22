@@ -1,12 +1,15 @@
 {
   "name": "UNIFORME ALPINESTARS FLUID GRID RED BLACK PURPLE",
-  "image": "/assets/images/uniformes/pag-2.webp",
+  "image": "/assets/images/uniformes/3761126-3176_r4-Fluid-Grid_d1884165-478b-4f02-8d83-d374d5d9660e.jpg",
   "price": "$800.000",
   "sizes": "32-M",
+  "badge": "",
   "category": "uniformes",
-  "description": "Uniforme ALPINESTARS FLUID GRID en rojo negro morado",
-  "images": [],
-  "sku": "UNI-XX-UNIF1",
+  "description": "UNIFORME ALPINESTARS FLUID GRID RED BLACK PURPLE",
+  "images": [
+    "/assets/images/uniformes/3761126-3176_r4-Fluid-Grid_d1884165-478b-4f02-8d83-d374d5d9660e.jpg"
+  ],
+  "sku": "",
   "color": "",
   "agotado": false
 }

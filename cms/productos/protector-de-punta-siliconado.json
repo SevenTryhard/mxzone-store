@@ -1,14 +1,15 @@
 {
   "name": "PROTECTOR DE PUNTA SILICONADO",
-  "image": "/assets/images/accesorios/protector-de-punta-siliconado.jpg",
+  "image": "/assets/images/accesorios/0022754_090A_800x.jpg",
   "price": "$79.900",
   "sizes": "Unica",
+  "badge": "",
   "category": "accesorios",
-  "description": "Accesorio para motocross: PROTECTOR DE PUNTA SILICONADO",
+  "description": "PROTECTOR DE PUNTA SILICONADO",
   "images": [
-    "/assets/images/accesorios/protector-de-punta-siliconado.jpg"
+    "/assets/images/accesorios/0022754_090A_800x.jpg"
   ],
-  "sku": "ACC-XX-PROT1",
+  "sku": "",
   "color": "",
   "agotado": false
 }

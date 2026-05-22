@@ -1,15 +1,15 @@
 {
   "name": "PANTALON THOR TARMAC",
-  "category": "uniformes",
+  "image": "/assets/images/uniformes/s-l1200.jpg",
   "price": "$360.000",
   "sizes": "8",
   "badge": "",
+  "category": "jersey",
   "description": "PANTALON THOR TARMAC",
-  "image": "/assets/images/cascos/s-l1200.jpg",
   "images": [
-    "/assets/images/cascos/s-l1200.jpg"
+    "/assets/images/uniformes/s-l1200.jpg"
   ],
-  "sku": "UNI-XX-PANTA",
+  "sku": "",
   "color": "",
   "agotado": false
 }

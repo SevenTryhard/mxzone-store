@@ -1,15 +1,15 @@
 {
   "name": "PUFF RENTHAL REPLICA",
-  "category": "accesorios",
+  "image": "/assets/images/accesorios/REP213.jpg",
   "price": "$25.000",
   "sizes": "Unica",
   "badge": "",
+  "category": "accesorios",
   "description": "PUFF RENTHAL REPLICA",
-  "image": "/assets/images/accesorios/REP213.jpg",
   "images": [
     "/assets/images/accesorios/REP213.jpg"
   ],
-  "sku": "ACC-XX-PUFF1",
+  "sku": "",
   "color": "",
   "agotado": false
 }

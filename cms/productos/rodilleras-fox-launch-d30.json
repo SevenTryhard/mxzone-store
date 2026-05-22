@@ -3,12 +3,13 @@
   "image": "/assets/images/protecciones/26430001-1-2x.webp",
   "price": "$649.900",
   "sizes": "S/M",
+  "badge": "",
   "category": "protecciones",
   "description": "Rodilleras FOX LAUNCH con protecciÃ³n D3O",
   "images": [
     "/assets/images/protecciones/26430001-1-2x.webp"
   ],
-  "sku": "PRO-XX-RODI4",
+  "sku": "",
   "color": "",
   "agotado": false
 }

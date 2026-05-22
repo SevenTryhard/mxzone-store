@@ -73,16 +73,64 @@ async function loadProducts() {
             return products;
           }
         }
-        console.warn('[WARN] CMS API respondio con error o vacio.');
+        console.warn('[WARN] CMS API respondio con error o vacio. Intentando fallback a JSON locales...');
       } catch(e) {
         console.warn('[WARN] Error en CMS API:', e.message);
       }
-      console.error('[CRITICAL] No se puede cargar catalogo. API no disponible y archivos locales deshabilitados.');
+    }
+
+    // Fallback: cargar desde archivos JSON estáticos (ESPEJO LIMPIO DEL CMS via GitHub Action)
+    const cmsBaseUrl = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.cmsBaseUrl : 'cms/productos/';
+    console.log('[FILES] Fallback: cargando productos desde archivos estáticos');
+
+    const noCache = 'nocache=' + Date.now();
+    let productFiles = [];
+    try {
+      const indexResponse = await fetch(cmsBaseUrl + 'index.json?' + noCache);
+      if (indexResponse.ok) {
+        const indexData = await indexResponse.json();
+        productFiles = indexData.files || [];
+        console.log('[OK] index.json cargado:', productFiles.length, 'archivos');
+      } else {
+        console.warn('[WARN] index.json respondió con estado:', indexResponse.status);
+      }
+    } catch (e) {
+      console.error('[ERROR] Error cargando index.json:', e);
+    }
+
+    if (productFiles.length === 0) {
+      console.error('[ERROR] No se pudo cargar index.json');
       return [];
     }
 
-    console.error('[CRITICAL] MXZONE_CONFIG.cmsApiUrl no configurado. No se puede cargar catalogo.');
-    return [];
+    productFiles = productFiles.filter(f => f !== 'index.json');
+    console.log('[LOAD] Cargando', productFiles.length, 'productos estáticos...');
+
+    const promises = productFiles.map(async (file) => {
+      try {
+        const response = await fetch(cmsBaseUrl + encodeURIComponent(file) + '?' + noCache);
+        if (response.ok) {
+          const product = await response.json();
+          if (product.images && product.images.length > 0) {
+            product.images = product.images.filter(img => img != null && typeof img === 'string' && img.trim() !== '').map(img => encodeImagePath(img) + '?' + IMAGE_VERSION);
+          }
+          if (product.image) {
+            product.image = encodeImagePath(product.image) + '?' + IMAGE_VERSION;
+          }
+          return product;
+        } else {
+          console.warn('[WARN] No se pudo cargar', file);
+        }
+      } catch (e) {
+        console.warn('[ERROR] Error cargando', file + ':', e.message);
+      }
+      return null;
+    });
+
+    const results = await Promise.all(promises);
+    const validProducts = results.filter(p => p !== null);
+    console.log('[OK] Productos estáticos cargados:', validProducts.length, 'de', productFiles.length);
+    return validProducts;
 
   } catch (error) {
     console.error('[ERROR] Error critico cargando productos:', error);

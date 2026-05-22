@@ -1,15 +1,15 @@
 {
   "name": "JERSEY FLY OFF-ROAD",
-  "sku": "",
-  "color": "",
-  "category": "jersey",
+  "image": "/assets/images/jersey/fly_racing_2025_0003.jpg",
   "price": "$149.000",
   "sizes": "M",
   "badge": "",
+  "category": "jersey",
   "description": "JERSEY FLY OFF-ROAD",
-  "image": "/assets/images/jersey/fly_racing_2025_0003.jpg",
   "images": [
     "/assets/images/jersey/fly_racing_2025_0003.jpg"
   ],
+  "sku": "",
+  "color": "",
   "agotado": false
 }

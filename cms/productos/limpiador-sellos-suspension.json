@@ -1,14 +1,15 @@
 {
   "name": "LIMPIADOR SELLOS SUSPENSION",
-  "image": "/assets/images/accesorios/limpiador-sellos-suspension.jpg",
+  "image": "/assets/images/accesorios/s-l500.jpg",
   "price": "$45.000",
   "sizes": "Unica",
+  "badge": "",
   "category": "accesorios",
-  "description": "Accesorio para motocross: LIMPIADOR SELLOS SUSPENSION",
+  "description": "LIMPIADOR SELLOS SUSPENSION",
   "images": [
-    "/assets/images/accesorios/limpiador-sellos-suspension.jpg"
+    "/assets/images/accesorios/s-l500.jpg"
   ],
-  "sku": "ACC-XX-LIMP1",
+  "sku": "",
   "color": "",
   "agotado": false
 }

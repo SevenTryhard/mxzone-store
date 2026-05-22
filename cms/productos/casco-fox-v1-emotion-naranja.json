@@ -1,15 +1,15 @@
 {
   "name": "CASCO FOX V1 EMOTION NARANJA",
   "image": "/assets/images/nuevas_images/1505988-800-800.webp",
-  "price": "$1.150.000",
-  "sizes": "S/M/L/XL",
-  "badge": "Nuevo",
+  "price": "$1.429.000",
+  "sizes": "XL",
+  "badge": "",
   "category": "cascos",
-  "description": "Casco FOX V1 EMOTION en naranja",
+  "description": "CASCO FOX V1 EMOTION NARANJA",
   "images": [
     "/assets/images/nuevas_images/1505988-800-800.webp"
   ],
-  "sku": "CAS-NA-CASCO",
-  "color": "naranja",
+  "sku": "",
+  "color": "",
   "agotado": false
 }

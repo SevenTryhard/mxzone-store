@@ -1,14 +1,15 @@
 {
   "name": "CEPILLO LIMPIADOR CADENA",
-  "image": "/assets/images/accesorios/cepillo-limpiador-cadena.jpg",
+  "image": "/assets/images/accesorios/CepilloDeLimpiezaCadenaAzul_grande.jpg",
   "price": "$20.000",
   "sizes": "Unica",
+  "badge": "",
   "category": "accesorios",
-  "description": "Accesorio para motocross: CEPILLO LIMPIADOR CADENA",
+  "description": "CEPILLO LIMPIADOR CADENA",
   "images": [
-    "/assets/images/accesorios/cepillo-limpiador-cadena.jpg"
+    "/assets/images/accesorios/CepilloDeLimpiezaCadenaAzul_grande.jpg"
   ],
-  "sku": "ACC-XX-CEPIL",
+  "sku": "",
   "color": "",
   "agotado": false
 }

@@ -1,15 +1,15 @@
 {
   "name": "BOTAS FOX COMP TEAL",
-  "category": "botas",
+  "image": "/assets/images/botas/28373_176_1_800x.jpg",
   "price": "1.500.000",
   "sizes": "10-US",
   "badge": "",
+  "category": "botas",
   "description": "BOTAS FOX COMP TEAL",
-  "image": "/assets/images/botas/28373_176_1_800x.webp",
   "images": [
-    "/assets/images/botas/28373_176_1_800x.webp"
+    "/assets/images/botas/28373_176_1_800x.jpg"
   ],
-  "sku": "BOT-XX-BOTA4",
+  "sku": "",
   "color": "",
   "agotado": false
 }

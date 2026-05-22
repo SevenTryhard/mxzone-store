@@ -1,15 +1,15 @@
 {
   "name": "GRIPS PROGRIP",
-  "category": "accesorios",
+  "image": "/assets/images/accesorios/h01rfb_2_black_1200x1200_549d230e-95d3-4467-b6de-8d949bb48d30.jpg",
   "price": "$39.900",
   "sizes": "Unica",
   "badge": "",
+  "category": "accesorios",
   "description": "GRIPS PROGRIP",
-  "image": "/assets/images/accesorios/h01rfb_2_black_1200x1200_549d230e-95d3-4467-b6de-8d949bb48d30.jpg",
   "images": [
     "/assets/images/accesorios/h01rfb_2_black_1200x1200_549d230e-95d3-4467-b6de-8d949bb48d30.jpg"
   ],
-  "sku": "ACC-XX-GRIP1",
+  "sku": "",
   "color": "",
   "agotado": false
 }
