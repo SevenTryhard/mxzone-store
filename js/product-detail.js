@@ -342,51 +342,35 @@ async function loadProductFromCMS(productSlug) {
   return null;
 }
 
-// Cargar producto desde JSON
+// Cargar producto desde CMS API (unica fuente de datos)
 async function loadProduct(productSlug) {
-  // Try CMS API first
   const cmsProduct = await loadProductFromCMS(productSlug);
   if (cmsProduct) return cmsProduct;
-
-  // Fallback to static JSON
-  try {
-    const response = await fetch(`cms/productos/${productSlug}.json`);
-    if (response.ok) {
-      return await response.json();
-    }
-  } catch (error) {
-    console.error('Error cargando producto:', error);
-  }
+  console.warn('[CRITICAL] loadProduct: no se pudo obtener', productSlug, 'desde la API. No hay fallback a archivos locales.');
   return null;
 }
 
-// Cargar productos relacionados
+// Cargar productos relacionados desde CMS API
 async function loadRelatedProducts(currentProduct, currentSlug) {
   try {
-    const productFiles = [
-      'cms/productos/casco-fly-formula-cp.json',
-      'cms/productos/casco-fox-v1-toxsyk-negro.json',
-      'cms/productos/casco-airoh-wraap-feel-azul-rojo.json',
-      'cms/productos/uniforme-thor-tarmac.json',
-      'cms/productos/uniforme-fly-kinetic-kore.json',
-      'cms/productos/uniforme-fox-180-stl-gry.json',
-      'cms/productos/botas-leatt-4-5-naranja.json',
-      'cms/productos/botas-alpinestars-tech-3.json',
-      'cms/productos/botas-fly-maverick-lt-enduro.json',
-      'cms/productos/pechera-fox-raceframe-roost.json',
-      'cms/productos/rodilleras-fox-launch-d30.json',
-      'cms/productos/rinionera-fox-titan-race.json'
-    ];
-
-    const products = [];
-    const categoryProducts = [];
-
-    for (const file of productFiles) {
-      try {
-        const response = await fetch(file);
-        if (response.ok) {
-          const product = await response.json();
-          products.push(product);
+    let products = [];
+    if (typeof window.MXZONE_Products !== 'undefined' && typeof window.MXZONE_Products.loadProducts === 'function') {
+      products = await window.MXZONE_Products.loadProducts();
+    } else {
+      // esperar a que products.js cargue
+      await new Promise(resolve => setTimeout(resolve, 300));
+      if (typeof window.MXZONE_Products !== 'undefined' && typeof window.MXZONE_Products.loadProducts === 'function') {
+        products = await window.MXZONE_Products.loadProducts();
+      }
+    }
+    if (!products || products.length === 0) return [];
+    const categoryProducts = products.filter(p => p.category === currentProduct.category && createProductSlug(p.name) !== currentSlug).slice(0, 4);
+    return categoryProducts;
+  } catch (e) {
+    console.error('Error cargando relacionados:', e);
+    return [];
+  }
+}
 
           // Filtrar productos de la misma categoría (excluyendo el actual)
           if (product.category === currentProduct.category &&
