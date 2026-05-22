@@ -1,117 +1,132 @@
-# MXZONE STORE - Sitio Web + CMS
+# MXZONE STORE
 
-Sitio web premium para tienda de equipamiento de motocross con panel administrativo CMS.
+**Tienda online de equipamiento premium para motocross y enduro.**
 
-[![Sincronización de Productos](https://github.com/SevenTryhard/mxzone-store/actions/workflows/sync-product-index.yml/badge.svg)](https://github.com/SevenTryhard/mxzone-store/actions/workflows/sync-product-index.yml)
+[![Cloudflare Pages Status](https://img.shields.io/badge/deployed%20on-Cloudflare%20Pages-orange)](https://pages.cloudflare.com/)
+[![CMS Sync](https://github.com/SevenTryhard/mxzone-store/actions/workflows/sync-cms-to-json.yml/badge.svg)](https://github.com/SevenTryhard/mxzone-store/actions/workflows/sync-cms-to-json.yml)
 
 ---
 
-## 🚀 Deploy en Netlify (Paso a Paso)
+## Sobre el Proyecto
 
-### 1. Subir a GitHub
+MXZONE STORE es una tienda de e-commerce estática especializada en equipamiento de motocross, enduro y off-road. Desarrollada con HTML5, CSS3 y JavaScript vanilla, está diseñada para ser rápida, accesible y fácil de mantener.
 
-```bash
-# En la carpeta del proyecto
-git init
-git add .
-git commit -m "Initial commit - MXZONE STORE con CMS"
-git branch -M main
-git remote add origin https://github.com/TU_USUARIO/mxzone-store.git
-git push -u origin main
+- **Sitio en vivo:** [www.mxzonestore.com](https://www.mxzonestore.com/)
+- **Ubicación:** Cali, Colombia
+- **Instagram:** [@mxzoneoficial](https://www.instagram.com/mxzoneoficial/)
+
+---
+
+## Stack Tecnológico
+
+| Tecnología | Uso |
+|---|---|
+| **HTML5** | Estructura semántica y SEO-friendly |
+| **CSS3** | Diseño responsive con variables CSS y animaciones |
+| **JavaScript (Vanilla)** | Lógica de negocio, carrito, filtros y carga dinámica de productos |
+| **Cloudflare Pages** | Hosting y deploy automático desde GitHub |
+| **Cloudflare Workers** | CMS API (Growisoulsand) para gestión de productos |
+| **GitHub Actions** | Sincronización automatizada de productos cada hora |
+
+---
+
+## Estructura del Proyecto
+
+```
+mxzone-store/
+├── index.html              # Página de inicio
+├── shop.html               # Catálogo de productos
+├── product.html            # Detalle de producto individual
+├── about.html              # Sobre nosotros
+├── contact.html            # Contacto
+├── css/
+│   └── styles.css          # Estilos globales
+├── js/
+│   ├── products.js         # Motor de carga y renderizado de productos
+│   ├── product-detail.js   # Detalle de producto y recomendados
+│   ├── main.js             # Interacciones: filtros, carrito, animaciones
+│   └── cart.js             # Lógica del carrito de compras
+├── cms/
+│   ├── productos/          # JSONs de productos (espejo del CMS)
+│   ├── categorias/         # Definiciones de categorías
+│   └── config.js           # Configuración global de la tienda
+├── assets/
+│   ├── images/             # Imágenes de productos y branding
+│   └── logo/               # Logotipos
+├── .github/workflows/
+│   └── sync-cms-to-json.yml  # Sincronización automática horaria
+└── README.md
 ```
 
-### 2. Conectar a Netlify
+---
 
-1. Ve a [netlify.com](https://netlify.com) y crea una cuenta (gratis)
-2. Haz clic en **"Add new site"** → **"Import an existing project"**
-3. Selecciona **GitHub** y autoriza Netlify
-4. Busca tu repositorio `mxzone-store` y selecciónalo
-5. En **Build settings**:
-   - Build command: `echo "No build needed"`
-   - Publish directory: `.` (déjalo vacío)
-6. Haz clic en **"Deploy site"**
+## Cómo Funciona el Sistema de Productos
 
-### 3. Activar Git Gateway (para el CMS)
+Los productos se gestionan desde el CMS (`growisoulsand.pages.dev`). Desde allí, los vendedores agregan, editan o eliminan productos.
 
-1. En Netlify, ve a **Site settings** → **Identity**
-2. Haz clic en **"Enable Identity service"**
-3. En **Registration preferences**, selecciona **"Open"** o **"Invite only"**
-4. Ve a **Services** → **Git Gateway**
-5. Haz clic en **"Enable Git Gateway"**
-6. Sigue las instrucciones para conectar con GitHub
+### Flujo de sincronización
 
-### 4. Acceder al CMS
+1. **CMS:** El administrador actualiza un producto.
+2. **GitHub:** El CMS hace `git push` con los cambios al repo.
+3. **Cloudflare Pages:** Detecta el push y redeploya el sitio automáticamente.
+4. **Sitio Web:** Carga los productos vía API directamente al abrir la página.
 
-Una vez desplegado:
+### Sincronización horaria (GitHub Action)
 
-1. Ve a `https://TU-SITIO.netlify.app/admin`
-2. Inicia sesión con tu cuenta de GitHub
-3. ¡Listo! Ya puedes editar productos, precios e imágenes
+Adicionalmente, una **GitHub Action** corre cada una hora para:
+- Descargar todos los productos desde la API del CMS.
+- Actualizar los archivos JSON locales en `cms/productos/`.
+- Borrar productos que ya no existan en el CMS.
+- Mantener `cms/productos/index.json` al día.
+
+Esto garantiza que, incluso si la API tiene una interrupción momentánea, el sitio pueda seguir funcionando con los datos más recientes almacenados localmente.
 
 ---
 
-## 📋 Estructura del CMS
+## Guía Rápida para Desarrolladores
 
-El panel administrativo te permite editar:
+### Requisitos previos
 
-| Sección | Qué puedes editar |
-|---------|-------------------|
-| 🪖 Cascos | Nombre, precio, tallas, imagen, badge |
-| 👕 Uniformes | Nombre, precio, tallas, imagen, badge |
-| 👢 Botas | Nombre, precio, tallas, imagen, badge |
-| 🛡️ Protecciones | Nombre, precio, tallas, imagen, badge |
-| ⭐ Testimonios | Nombre, ubicación, testimonio, avatar |
-| ⚙️ Configuración | WhatsApp, dirección, email, redes sociales |
+- Git
+- Node.js (opcional, solo si querés ejecutar scripts de sincronización)
+- Un editor de código (VS Code recomendado)
 
----
-
-## 🎨 Personalización
-
-### Cambiar colores
-Edita `css/styles.css`, línea 11:
-```css
---orange-primary: #FF6600; /* Tu color principal */
-```
-
-### Cambiar logo
-Reemplaza el archivo `assets/logo/logo.png`
-
----
-
-## 📱 URLs del sitio
-
-| Página | URL |
-|--------|-----|
-| Inicio | `/index.html` |
-| Tienda | `/shop.html` |
-| Nosotros | `/about.html` |
-| Testimonios | `/testimonials.html` |
-| FAQ | `/faq.html` |
-| Contacto | `/contact.html` |
-| Envíos | `/shipping.html` |
-| Devoluciones | `/returns.html` |
-| **CMS Admin** | `/admin/` |
-
----
-
-## 🔧 Comandos útiles
+### Clonar y correr localmente
 
 ```bash
-# Ver sitio localmente
+git clone https://github.com/SevenTryhard/mxzone-store.git
+cd mxzone-store
 npx serve .
-
-# O con Python
-python -m http.server 8000
-
-# Luego abre http://localhost:8000
 ```
 
+Abre `http://localhost:3000` en tu navegador.
+
+### Notas importantes para contribuidores
+
+- **NO edites los archivos JSON en `cms/productos/` manualmente.** Son un espejo del CMS y serán sobreescritos por la GitHub Action.
+- **Si modificás `js/products.js`, probá en modo incógnito.** El navegador cachea agresivamente los archivos JS.
+- **Toda función nueva que cargue productos debe incluir un fallback** a los JSON locales en caso de que la API no responda.
+- **Validá los datos que vienen de la API** antes de manipularlos (asumí que pueden ser `null`, números o strings vacíos).
+
 ---
 
-## 📞 Soporte
+## Reportar Problemas o Sugerencias
 
-Para cambios en el CMS o el sitio, edita los archivos en GitHub y Netlify hará el deploy automáticamente.
+Si encontrás un bug o querés proponer una mejora:
+
+1. Abrí un [Issue en GitHub](https://github.com/SevenTryhard/mxzone-store/issues).
+2. Incluí el paso a paso para reproducirlo.
+3. Adjuntá capturas de pantalla si es necesario.
 
 ---
 
-**Hecho con 🏍️ para MXZONE STORE**
+## Contacto
+
+- **WhatsApp:** +57 317 669 2997
+- **Instagram:** [@mxzoneoficial](https://www.instagram.com/mxzoneoficial/)
+- **TikTok:** [@mx_zonestore](https://www.tiktok.com/@mx_zonestore)
+- **Email:** MXZONEOFICIAL
+
+---
+
+© 2026 MXZONE STORE. Todos los derechos reservados.
