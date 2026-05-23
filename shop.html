@@ -58,7 +58,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=css202605222338">
+  <link rel="stylesheet" href="css/styles.css?v=css202605222350">
   <!-- Schema.org JSON-LD: WebPage + Organization -->
   <script type="application/ld+json">
   {
@@ -792,66 +792,102 @@
             </div>
           </div>
 
-          <!-- STEP 2: Formulario de checkout -->
+          <!-- STEP 2: Formulario de checkout (legacy, hidden — replaced by checkout overlay below) -->
           <div class="cart-step" id="cartStep2" style="display:none">
-            <div class="cart-form">
-              <div class="cart-form-group">
-                <label for="checkoutName">Nombre completo *</label>
-                <input type="text" id="checkoutName" placeholder="Tu nombre completo" required>
-              </div>
-              <div class="cart-form-row">
-                <div class="cart-form-group" style="flex:1">
-                  <label for="checkoutPhone">Teléfono *</label>
-                  <input type="tel" id="checkoutPhone" placeholder="Ej: 317 669 2997" required>
-                </div>
-                <div class="cart-form-group" style="flex:1">
-                  <label for="checkoutEmail">Email (opcional)</label>
-                  <input type="email" id="checkoutEmail" placeholder="tu@email.com">
-                </div>
-                <div class="cart-form-group" style="flex:1">
-                  <label for="checkoutCity">Ciudad *</label>
-                  <input type="text" id="checkoutCity" placeholder="Ej: Bogotá" required>
-                </div>
-              </div>
-              <div class="cart-form-group">
-                <label for="checkoutAddress">Dirección de envío *</label>
-                <input type="text" id="checkoutAddress" placeholder="Calle, número, barrio" required>
-              </div>
+            <!-- Legacy checkout — now handled by checkoutOverlay -->
+          </div>
+        </div>
+      </div>
 
-              <div class="cart-payment-methods">
-                <p class="payment-title">💳 Método de pago</p>
-                <div class="payment-methods-grid">
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('nequi')" data-method="nequi">
-                    <span class="payment-icon" style="--brand:#FF0082">N</span>
-                    <span class="payment-name">Nequi</span>
-                  </button>
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('daviplata')" data-method="daviplata">
-                    <span class="payment-icon" style="--brand:#E31837">D</span>
-                    <span class="payment-name">Daviplata</span>
-                  </button>
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('transferencia')" data-method="transferencia">
-                    <span class="payment-icon" style="--brand:#FF6600">⟲</span>
-                    <span class="payment-name">Transferencia</span>
-                  </button>
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('efectivo')" data-method="efectivo">
-                    <span class="payment-icon" style="--brand:#25D366">$</span>
-                    <span class="payment-name">Efectivo</span>
-                  </button>
-                  <button class="payment-method-btn payment-soon" onclick="selectPaymentMethod('tarjeta')" data-method="tarjeta">
-                    <span class="payment-icon" style="--brand:#6B6B6B">💳</span>
-                    <span class="payment-name">Tarjeta<br><small>(Próximamente)</small></span>
-                  </button>
-                </div>
-              </div>
+      <!-- ============================================
+           CHECKOUT OVERLAY — Centrado, Premium, Validado
+           ============================================ -->
+      <div class="checkout-overlay" id="checkoutOverlay">
+        <div class="checkout-overlay-bg" id="checkoutOverlayBg"></div>
+        <div class="checkout-panel" id="checkoutPanel">
+          <!-- Header -->
+          <div class="checkout-header">
+            <div class="checkout-header-icon">📦</div>
+            <div class="checkout-header-text">
+              <h3 class="checkout-title">Finalizar Pedido</h3>
+              <p class="checkout-subtitle">Completa tus datos para enviar el pedido por WhatsApp</p>
+            </div>
+            <button class="checkout-close" id="checkoutClose" aria-label="Cerrar">×</button>
+          </div>
 
-              <div class="cart-actions-simple" style="margin-top:var(--spacing-md)">
-                <button class="cart-checkout-btn" id="checkoutBtn">
-                  <span>WA</span><span>Enviar pedido por WhatsApp</span>
+          <!-- Body (scrollable) -->
+          <div class="checkout-body" id="checkoutBody">
+            <!-- Nombre -->
+            <div class="checkout-field" id="fieldName">
+              <label for="checkoutName">Nombre completo <span class="required">*</span></label>
+              <input type="text" id="checkoutName" placeholder="Tu nombre completo" required>
+              <span class="field-error" id="errorName">⚠️ Ingresa tu nombre</span>
+            </div>
+
+            <!-- Teléfono -->
+            <div class="checkout-field" id="fieldPhone">
+              <label for="checkoutPhone">Teléfono <span class="required">*</span></label>
+              <input type="tel" id="checkoutPhone" placeholder="Ej: 317 669 2997" required>
+              <span class="field-error" id="errorPhone">⚠️ Ingresa tu número de teléfono</span>
+            </div>
+
+            <!-- Email -->
+            <div class="checkout-field" id="fieldEmail">
+              <label for="checkoutEmail">Email <span class="optional">(opcional)</span></label>
+              <input type="email" id="checkoutEmail" placeholder="tu@email.com">
+            </div>
+
+            <!-- Ciudad -->
+            <div class="checkout-field" id="fieldCity">
+              <label for="checkoutCity">Ciudad <span class="required">*</span></label>
+              <input type="text" id="checkoutCity" placeholder="Ej: Bogotá, Medellín, Cali" required>
+              <span class="field-error" id="errorCity">⚠️ Ingresa tu ciudad</span>
+            </div>
+
+            <!-- Dirección -->
+            <div class="checkout-field" id="fieldAddress">
+              <label for="checkoutAddress">Dirección de envío <span class="required">*</span></label>
+              <input type="text" id="checkoutAddress" placeholder="Calle, número, barrio, torre/apto" required>
+              <span class="field-error" id="errorAddress">⚠️ Ingresa tu dirección</span>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="checkout-payment" id="fieldPayment">
+              <p class="checkout-payment-title">💳 Método de pago</p>
+              <div class="checkout-payment-grid">
+                <button class="checkout-payment-btn" type="button" data-method="nequi" onclick="selectPaymentMethod('nequi')">
+                  <span class="cp-icon" style="--c:#FF0082">N</span>
+                  <span class="cp-name">Nequi</span>
                 </button>
-                <button class="cart-clear-btn" id="backToCartBtn">← Volver al carrito</button>
+                <button class="checkout-payment-btn" type="button" data-method="daviplata" onclick="selectPaymentMethod('daviplata')">
+                  <span class="cp-icon" style="--c:#E31837">D</span>
+                  <span class="cp-name">Daviplata</span>
+                </button>
+                <button class="checkout-payment-btn" type="button" data-method="transferencia" onclick="selectPaymentMethod('transferencia')">
+                  <span class="cp-icon" style="--c:#FF6600">⟲</span>
+                  <span class="cp-name">Transferencia</span>
+                </button>
+                <button class="checkout-payment-btn" type="button" data-method="efectivo" onclick="selectPaymentMethod('efectivo')">
+                  <span class="cp-icon" style="--c:#25D366">$</span>
+                  <span class="cp-name">Efectivo</span>
+                </button>
               </div>
+              <span class="field-error" id="errorPayment">⚠️ Selecciona un método de pago</span>
             </div>
           </div>
+
+          <!-- Footer (fixed) -->
+          <div class="checkout-footer">
+            <button class="checkout-submit" id="checkoutSubmit">
+              <span class="submit-icon">📱</span>
+              <span class="submit-text">Enviar pedido por WhatsApp</span>
+            </button>
+            <button class="checkout-back" id="checkoutBack">
+              <span>← Volver al carrito</span>
+            </button>
+          </div>
+        </div>
+      </div>
 
         </div>
       </div>
@@ -935,8 +971,8 @@
 
 
   <!-- Scripts -->
-  <script src="js/cart.js?v=js202605222338"></script>
-  <script src="js/main.js?v=js202605222338"></script>
+  <script src="js/cart.js?v=js202605222350"></script>
+  <script src="js/main.js?v=js202605222350"></script>
   <script src="cms/config.js?v=v6-20260428"></script>
   <script src="js/products.js?v=js202605221838"></script>
   <!-- Floating WhatsApp Button (Desktop) / Sticky Bar (Mobile) -->

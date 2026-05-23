@@ -235,25 +235,31 @@ function openCheckout() {
 
   const overlay = document.getElementById('checkoutOverlay');
   const step1 = document.getElementById('cartStep1');
-  const step2 = document.getElementById('cartStep2');
 
   if (overlay) {
-    // Flow A: overlay separado (index.html)
+    // Flow A: overlay centrado (nuevo diseño)
     closeCart();
     setTimeout(function() {
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
       // Resetear metodo de pago
       selectedPaymentMethod = '';
-      document.querySelectorAll('.payment-method-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.checkout-payment-btn').forEach(btn => btn.classList.remove('active'));
+      // Limpiar errores
+      clearCheckoutErrors();
+      // Resetear scroll del body del checkout
+      const body = document.getElementById('checkoutBody');
+      if (body) body.scrollTop = 0;
     }, 50);
-  } else if (step1 && step2) {
-    // Flow B: dos pasos dentro del mismo modal (shop.html)
-    step1.style.display = 'none';
-    step2.style.display = 'block';
-    // Resetear metodo de pago
-    selectedPaymentMethod = '';
-    document.querySelectorAll('.payment-method-btn').forEach(btn => btn.classList.remove('active'));
+  } else if (step1) {
+    // Fallback: modal lateral viejo
+    const step2 = document.getElementById('cartStep2');
+    if (step2) {
+      step1.style.display = 'none';
+      step2.style.display = 'block';
+      selectedPaymentMethod = '';
+      document.querySelectorAll('.payment-method-btn').forEach(btn => btn.classList.remove('active'));
+    }
   }
 }
 
@@ -263,19 +269,70 @@ function closeCheckout() {
   const step2 = document.getElementById('cartStep2');
 
   if (overlay) {
-    // Flow A: overlay separado
     overlay.classList.remove('active');
     document.body.style.overflow = '';
-  } else if (step1 && step2) {
-    // Flow B: dos pasos dentro del modal
+    // Limpiar errores al cerrar
+    clearCheckoutErrors();
+  }
+
+  if (step1 && step2) {
     step2.style.display = 'none';
     step1.style.display = 'block';
-    // FIX: reset scroll position
-    const formEl = step2.querySelector('.cart-form');
     const itemsEl = step1.querySelector('.cart-items');
-    if (formEl) formEl.scrollTop = 0;
     if (itemsEl) itemsEl.scrollTop = 0;
   }
+}
+
+function clearCheckoutErrors() {
+  document.querySelectorAll('.checkout-field').forEach(f => f.classList.remove('has-error'));
+  document.getElementById('fieldPayment')?.classList.remove('has-error');
+}
+
+function validateCheckoutForm() {
+  const fields = [
+    { id: 'checkoutName', fieldId: 'fieldName', errorId: 'errorName' },
+    { id: 'checkoutPhone', fieldId: 'fieldPhone', errorId: 'errorPhone' },
+    { id: 'checkoutCity', fieldId: 'fieldCity', errorId: 'errorCity' },
+    { id: 'checkoutAddress', fieldId: 'fieldAddress', errorId: 'errorAddress' }
+  ];
+
+  let firstInvalid = null;
+  let isValid = true;
+
+  // Limpiar errores previos
+  clearCheckoutErrors();
+
+  // Validar campos de texto
+  fields.forEach(function(item) {
+    const input = document.getElementById(item.id);
+    const field = document.getElementById(item.fieldId);
+    if (!input || !field) return;
+
+    const value = input.value.trim();
+    if (!value) {
+      field.classList.add('has-error');
+      isValid = false;
+      if (!firstInvalid) firstInvalid = input;
+    }
+  });
+
+  // Validar método de pago
+  if (!selectedPaymentMethod) {
+    const paymentField = document.getElementById('fieldPayment');
+    if (paymentField) {
+      paymentField.classList.add('has-error');
+      isValid = false;
+      if (!firstInvalid) firstInvalid = paymentField;
+    }
+  }
+
+  // Focus en el primer campo inválido
+  if (firstInvalid) {
+    firstInvalid.focus();
+    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  return isValid;
 }
 
 // Construir mensaje de WhatsApp (con datos de formulario)
@@ -350,14 +407,27 @@ function selectPaymentMethod(method) {
   }
   selectedPaymentMethod = method;
 
-  // Actualizar UI
+  // Actualizar UI (botones viejos del carrito lateral)
   document.querySelectorAll('.payment-method-btn').forEach(btn => {
     btn.classList.remove('active');
   });
-  const activeBtn = document.querySelector('.payment-method-btn[data-method="' + method + '"]');
-  if (activeBtn) {
-    activeBtn.classList.add('active');
+  const activeBtnOld = document.querySelector('.payment-method-btn[data-method="' + method + '"]');
+  if (activeBtnOld) {
+    activeBtnOld.classList.add('active');
   }
+
+  // Actualizar UI (botones nuevos del checkout centrado)
+  document.querySelectorAll('.checkout-payment-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  const activeBtnNew = document.querySelector('.checkout-payment-btn[data-method="' + method + '"]');
+  if (activeBtnNew) {
+    activeBtnNew.classList.add('active');
+  }
+
+  // Limpiar error de pago si existe
+  const paymentField = document.getElementById('fieldPayment');
+  if (paymentField) paymentField.classList.remove('has-error');
 }
 
 // ==================== UTILIDADES ====================
@@ -491,7 +561,23 @@ document.addEventListener('DOMContentLoaded', () => {
       window.openCart();
     }
 
-    // Boton ENVIAR PEDIDO POR WHATSAPP
+    // Boton ENVIAR PEDIDO POR WHATSAPP (nuevo checkout centrado)
+    if (e.target.id === 'checkoutSubmit' || e.target.closest('#checkoutSubmit')) {
+      e.preventDefault();
+
+      if (!validateCheckoutForm()) return;
+
+      const name = document.getElementById('checkoutName').value.trim();
+      const phone = document.getElementById('checkoutPhone').value.trim();
+      const city = document.getElementById('checkoutCity').value.trim();
+      const address = document.getElementById('checkoutAddress').value.trim();
+
+      const message = buildWhatsAppMessage(name, phone, city, address);
+      const url = 'https://wa.me/' + window.WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+      window.open(url, '_blank');
+    }
+
+    // Boton ENVIAR PEDIDO POR WHATSAPP (checkout viejo lateral)
     if (e.target.id === 'checkoutBtn' || e.target.closest('#checkoutBtn')) {
       e.preventDefault();
 
@@ -514,6 +600,13 @@ document.addEventListener('DOMContentLoaded', () => {
       window.open(url, '_blank');
     }
 
+    // Boton VOLVER AL CARRITO (nuevo checkout centrado)
+    if (e.target.id === 'checkoutBack' || e.target.closest('#checkoutBack')) {
+      e.preventDefault();
+      closeCheckout();
+      window.openCart();
+    }
+
     // Vaciar carrito
     if (e.target.id === 'clearCartBtn' || e.target.closest('#clearCartBtn')) {
       if (confirm('Estas seguro de vaciar el carrito?')) {
@@ -521,12 +614,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Cerrar checkout con click en overlay
+    // Cerrar checkout con click en overlay bg (nuevo checkout centrado)
+    if (e.target.id === 'checkoutOverlayBg' || e.target.closest('#checkoutOverlayBg')) {
+      closeCheckout();
+    }
+
+    // Cerrar checkout con click en overlay (checkout viejo)
     if (e.target.id === 'checkoutOverlay' || e.target.closest('#checkoutOverlay')) {
       closeCheckout();
     }
 
-    // Boton X del checkout
+    // Boton X del checkout (nuevo checkout centrado)
     if (e.target.id === 'checkoutClose' || e.target.closest('#checkoutClose')) {
       closeCheckout();
     }
