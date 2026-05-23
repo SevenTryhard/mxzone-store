@@ -270,6 +270,11 @@ function closeCheckout() {
     // Flow B: dos pasos dentro del modal
     step2.style.display = 'none';
     step1.style.display = 'block';
+    // FIX: reset scroll position
+    const formEl = step2.querySelector('.cart-form');
+    const itemsEl = step1.querySelector('.cart-items');
+    if (formEl) formEl.scrollTop = 0;
+    if (itemsEl) itemsEl.scrollTop = 0;
   }
 }
 

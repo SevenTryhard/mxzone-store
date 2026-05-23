@@ -58,7 +58,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=css202605222254">
+  <link rel="stylesheet" href="css/styles.css?v=css202605222338">
   <!-- Schema.org JSON-LD: WebPage + Organization -->
   <script type="application/ld+json">
   {
@@ -819,13 +819,28 @@
               </div>
 
               <div class="cart-payment-methods">
-                <p style="font-size:0.9rem;font-weight:600;margin-bottom:var(--spacing-sm)"> Método de pago:</p>
+                <p class="payment-title">💳 Método de pago</p>
                 <div class="payment-methods-grid">
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('nequi')" data-method="nequi"> Nequi</button>
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('daviplata')" data-method="daviplata"> Daviplata</button>
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('transferencia')" data-method="transferencia"> Transferencia</button>
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('efectivo')" data-method="efectivo"> Efectivo</button>
-                  <button class="payment-method-btn" onclick="selectPaymentMethod('tarjeta')" data-method="tarjeta" style="grid-column:span 2"> Tarjeta (Próximamente)</button>
+                  <button class="payment-method-btn" onclick="selectPaymentMethod('nequi')" data-method="nequi">
+                    <span class="payment-icon" style="--brand:#FF0082">N</span>
+                    <span class="payment-name">Nequi</span>
+                  </button>
+                  <button class="payment-method-btn" onclick="selectPaymentMethod('daviplata')" data-method="daviplata">
+                    <span class="payment-icon" style="--brand:#E31837">D</span>
+                    <span class="payment-name">Daviplata</span>
+                  </button>
+                  <button class="payment-method-btn" onclick="selectPaymentMethod('transferencia')" data-method="transferencia">
+                    <span class="payment-icon" style="--brand:#FF6600">⟲</span>
+                    <span class="payment-name">Transferencia</span>
+                  </button>
+                  <button class="payment-method-btn" onclick="selectPaymentMethod('efectivo')" data-method="efectivo">
+                    <span class="payment-icon" style="--brand:#25D366">$</span>
+                    <span class="payment-name">Efectivo</span>
+                  </button>
+                  <button class="payment-method-btn payment-soon" onclick="selectPaymentMethod('tarjeta')" data-method="tarjeta">
+                    <span class="payment-icon" style="--brand:#6B6B6B">💳</span>
+                    <span class="payment-name">Tarjeta<br><small>(Próximamente)</small></span>
+                  </button>
                 </div>
               </div>
 
@@ -920,8 +935,8 @@
 
 
   <!-- Scripts -->
-  <script src="js/cart.js?v=js202605221838"></script>
-  <script src="js/main.js?v=js202605222254"></script>
+  <script src="js/cart.js?v=js202605222338"></script>
+  <script src="js/main.js?v=js202605222338"></script>
   <script src="cms/config.js?v=v6-20260428"></script>
   <script src="js/products.js?v=js202605221838"></script>
   <!-- Floating WhatsApp Button (Desktop) / Sticky Bar (Mobile) -->
