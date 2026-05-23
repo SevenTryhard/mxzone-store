@@ -8801,8 +8801,8 @@ a {
 .checkout-overlay-bg {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.75);
+  z-index: 0;
 }
 
 .checkout-overlay.active {
@@ -8812,6 +8812,7 @@ a {
 
 .checkout-panel {
   position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 540px;
   max-height: 90vh;

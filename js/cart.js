@@ -615,12 +615,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Cerrar checkout con click en overlay bg (nuevo checkout centrado)
-    if (e.target.id === 'checkoutOverlayBg' || e.target.closest('#checkoutOverlayBg')) {
+    // SOLO si el click fue DIRECTAMENTE en el fondo oscuro, no dentro del panel
+    if (e.target.id === 'checkoutOverlayBg') {
       closeCheckout();
     }
 
-    // Cerrar checkout con click en overlay (checkout viejo)
-    if (e.target.id === 'checkoutOverlay' || e.target.closest('#checkoutOverlay')) {
+    // Cerrar checkout con click en overlay viejo (index.html)
+    // Solo aplicar si NO es el nuevo checkout (que tiene .checkout-panel dentro)
+    const checkoutOverlayEl = document.getElementById('checkoutOverlay');
+    const isNewCheckout = checkoutOverlayEl && checkoutOverlayEl.querySelector('.checkout-panel');
+    if (!isNewCheckout && (e.target.id === 'checkoutOverlay' || e.target.closest('#checkoutOverlay'))) {
       closeCheckout();
     }
 
