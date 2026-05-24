@@ -372,25 +372,6 @@ async function loadRelatedProducts(currentProduct, currentSlug) {
   }
 }
 
-          // Filtrar productos de la misma categoría (excluyendo el actual)
-          if (product.category === currentProduct.category &&
-              file !== `cms/productos/${currentSlug}.json`) {
-            categoryProducts.push(product);
-          }
-        }
-      } catch (e) {
-        console.warn(`No se pudo cargar ${file}:`, e);
-      }
-    }
-
-    // Retornar máximo 4 productos relacionados de la misma categoría
-    return categoryProducts.slice(0, 4);
-  } catch (error) {
-    console.error('Error cargando productos relacionados:', error);
-    return [];
-  }
-}
-
 // Crear tarjeta de producto relacionado
 function createRelatedProductCard(product) {
   const whatsappMessage = encodeURIComponent(`Estoy interesado en ${product.name}`);
@@ -461,6 +442,31 @@ async function renderProduct(productSlug) {
   // Actualizar meta descripción
   document.querySelector('meta[name="description"]').setAttribute('content',
     `Compra ${product.name} en MXZONE STORE. ${product.price}. Tallas: ${product.sizes}`);
+
+  // Actualizar SEO dinámico (OG + canonical)
+  const baseUrl = 'https://www.mxzonestore.com/';
+  const absImage = product.image?.startsWith('http')
+    ? product.image
+    : baseUrl + (product.image || '').replace(/^\/+/, '');
+
+  const setMeta = (prop, content) => {
+    let el = document.querySelector(`meta[property="${prop}"]`);
+    if (!el) {
+      el = document.createElement('meta');
+      el.setAttribute('property', prop);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('content', content || '');
+  };
+
+  setMeta('og:title', product.name);
+  setMeta('og:description', product.description || `Compra ${product.name} en MXZONE STORE`);
+  setMeta('og:image', absImage || `${baseUrl}assets/logo/logo.png`);
+
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) {
+    canonical.href = `${baseUrl}product.html?product=${productSlug}`;
+  }
 
   // Renderizar producto
   layout.innerHTML = createProductHTML(product);
