@@ -16,33 +16,11 @@ function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
-// Mapeo de marcas basado en nombres de producto
-function getBrand(productName) {
-  const name = productName.toLowerCase();
-  if (name.includes('fox')) return 'fox';
-  if (name.includes('fly')) return 'fly';
-  if (name.includes('alpinestars') || name.includes('alpine')) return 'alpinestars';
-  if (name.includes('leatt')) return 'leatt';
-  if (name.includes('troy lee')) return 'troy-lee';
-  if (name.includes('oneal')) return 'oneal';
-  if (name.includes('airoh')) return 'airoh';
-  if (name.includes('acerbis')) return 'acerbis';
-  if (name.includes('gaerne')) return 'gaerne';
-  if (name.includes('fxr')) return 'fxr';
-  if (name.includes('thor')) return 'thor';
-  if (name.includes('ktm')) return 'ktm';
-  return 'other';
-}
-
 // Función para descubrir y cargar TODOS los productos automáticamente
 async function loadProducts() {
   try {
     const cmsApiUrl = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.cmsApiUrl : '';
     const IMAGE_VERSION = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.imageVersion : 'v5-20260423';
-
-    function encodeImagePath(path) {
-      return path.replace(/ /g, '%20');
-    }
 
     // Primario: cargar desde CMS API (D1)
     if (cmsApiUrl) {
@@ -52,7 +30,7 @@ async function loadProducts() {
         if (projectKey) {
           apiUrl += '?project=' + encodeURIComponent(projectKey);
         }
-        console.log('[CMS] Cargando productos desde CMS API:', apiUrl);
+        mxLog('[CMS] Cargando productos desde CMS API:', apiUrl);
         const apiResponse = await fetch(apiUrl, {
           headers: { 'Accept': 'application/json' },
           cache: 'no-store'
@@ -69,19 +47,19 @@ async function loadProducts() {
               }
               return p;
             });
-            console.log('[OK] Productos cargados desde CMS API:', products.length);
+            mxLog('[OK] Productos cargados desde CMS API:', products.length);
             return products;
           }
         }
-        console.warn('[WARN] CMS API respondio con error o vacio. Intentando fallback a JSON locales...');
+        mxLog('[WARN] CMS API respondio con error o vacio. Intentando fallback a JSON locales...');
       } catch(e) {
-        console.warn('[WARN] Error en CMS API:', e.message);
+        mxLog('[WARN] Error en CMS API:', e.message);
       }
     }
 
     // Fallback: cargar desde archivos JSON estáticos (ESPEJO LIMPIO DEL CMS via GitHub Action)
     const cmsBaseUrl = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.cmsBaseUrl : 'cms/productos/';
-    console.log('[FILES] Fallback: cargando productos desde archivos estáticos');
+    mxLog('[FILES] Fallback: cargando productos desde archivos estáticos');
 
     const noCache = 'nocache=' + Date.now();
     let productFiles = [];
@@ -90,21 +68,21 @@ async function loadProducts() {
       if (indexResponse.ok) {
         const indexData = await indexResponse.json();
         productFiles = indexData.files || [];
-        console.log('[OK] index.json cargado:', productFiles.length, 'archivos');
+        mxLog('[OK] index.json cargado:', productFiles.length, 'archivos');
       } else {
-        console.warn('[WARN] index.json respondió con estado:', indexResponse.status);
+        mxLog('[WARN] index.json respondió con estado:', indexResponse.status);
       }
     } catch (e) {
-      console.error('[ERROR] Error cargando index.json:', e);
+      mxLog('[ERROR] Error cargando index.json:', e);
     }
 
     if (productFiles.length === 0) {
-      console.error('[ERROR] No se pudo cargar index.json');
+      mxLog('[ERROR] No se pudo cargar index.json');
       return [];
     }
 
     productFiles = productFiles.filter(f => f !== 'index.json');
-    console.log('[LOAD] Cargando', productFiles.length, 'productos estáticos...');
+    mxLog('[LOAD] Cargando', productFiles.length, 'productos estáticos...');
 
     const promises = productFiles.map(async (file) => {
       try {
@@ -119,131 +97,23 @@ async function loadProducts() {
           }
           return product;
         } else {
-          console.warn('[WARN] No se pudo cargar', file);
+          mxLog('[WARN] No se pudo cargar', file);
         }
       } catch (e) {
-        console.warn('[ERROR] Error cargando', file + ':', e.message);
+        mxLog('[ERROR] Error cargando', file + ':', e.message);
       }
       return null;
     });
 
     const results = await Promise.all(promises);
     const validProducts = results.filter(p => p !== null);
-    console.log('[OK] Productos estáticos cargados:', validProducts.length, 'de', productFiles.length);
+    mxLog('[OK] Productos estáticos cargados:', validProducts.length, 'de', productFiles.length);
     return validProducts;
 
   } catch (error) {
-    console.error('[ERROR] Error critico cargando productos:', error);
+    mxLog('[ERROR] Error critico cargando productos:', error);
     return [];
   }
-}
-
-// Función para crear el slug del producto (para la URL)
-function createProductSlug(productName) {
-  return productName
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-// Función para crear el HTML de una tarjeta de producto
-function createProductCard(product) {
-  const isAgotado = product.agotado === true || (product.stock_quantity !== undefined && product.stock_quantity <= 0);
-  const agotadoClass = isAgotado ? 'product-agotado' : '';
-  const agotadoStyle = isAgotado ? 'style="opacity:0.5;filter:grayscale(0.8);"' : '';
-
-  const whatsappMessage = encodeURIComponent(`Estoy interesado en ${product.name}`);
-  const whatsappUrl = `https://wa.me/${window.WHATSAPP_NUMBER}?text=${whatsappMessage}`;
-  const brand = getBrand(product.name);
-  const priceNum = parseInt((product.price || '0').toString().replace(/[^0-9]/g, '')) || 0;
-  const productSlug = createProductSlug(product.name || 'producto');
-
-  // Soporte para múltiples imágenes (array images)
-  const isCloudCannonUrl = (url) => url && url.includes('cloudvent.net');
-
-  let images = [];
-  // IMPORTANTE: Los JSON del CMS usan "image" (singular), no "images" (array)
-  // Primero intentar con images (array), luego fallback a image (singular)
-  if (product.images && Array.isArray(product.images)) {
-    images = product.images.filter(img => img != null && typeof img === 'string' && img.trim() !== '');
-  }
-  // Fallback: usar product.image (singular) si no hay array
-  if (!images.length && product.image) {
-    images = [product.image];
-  }
-
-  // Agregar cache buster solo a imágenes locales (no CloudCannon)
-  const imageVersion = Date.now();
-  images = images.map(img => {
-    // Corregir formato de URL rota de CloudCannon (/https:/ -> https://)
-    if (img && img.startsWith('/https:/')) {
-      img = img.replace('/https:/', 'https://');
-    }
-    if (isCloudCannonUrl(img)) {
-      // URLs de CloudCannon (cloudvent.net) se usan directamente
-      return img;
-    }
-    // Rutas locales: usar ruta absoluta directa sin modificar
-    return img + '?v=' + imageVersion;
-  });
-
-  const mainImage = images.length > 0 ? images[0] : '';
-  const badgeHTML = product.badge ?
-    `<span class="product-badge">${product.badge}</span>` : '';
-  const agotadoBadge = isAgotado ?
-    '<span class="product-badge" style="background:#dc2626;color:white;font-weight:bold;">AGOTADO</span>' : '';
-
-  // Parsear tallas
-  const sizesArray = product.sizes ? product.sizes.split('/').map(s => s.trim()) : ['Única'];
-  const sizeOptions = `<option value="" disabled selected>TALLA</option>` + sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
-
-  const cartBtn = isAgotado ?
-    `<button class="btn btn-cart-add" disabled style="opacity:0.5;cursor:not-allowed;background:#666;" onclick="showAgotadoAlert('${escapeHtml(product.name)}')">🚫 Agotado</button>` :
-    `<button class="btn btn-cart-add" onclick="addProductToCart('${productSlug}')">Agregar</button>`;
-
-  return `
-    <div class="product-card ${agotadoClass}"
-         data-category="${product.category || 'sin-categoria'}"
-         data-brand="${brand}"
-         data-price="${priceNum}"
-         data-image="${mainImage}"
-         data-images='${JSON.stringify(images).replace(/'/g, "&#39;")}'
-         data-slug="${productSlug}"
-         data-sizes="${product.sizes || 'Única'}"
-         data-agotado="${isAgotado ? 'true' : 'false'}"
-         ${agotadoStyle}>
-      <div class="product-image">
-        <img src="${mainImage}" alt="${product.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <span class="product-image-placeholder" style="display:none;">MX</span>
-        ${badgeHTML}
-        ${agotadoBadge}
-      </div>
-      <div class="product-info">
-        <span class="product-category">${getCategoryLabel(product.category)}</span>
-        <h3 class="product-name">${product.name}</h3>
-        <div class="product-price-wrapper">
-          <span class="product-price">${product.price}</span>
-        </div>
-        <div class="product-sizes-selector">
-          <select class="card-size-select" aria-label="Seleccionar talla" ${isAgotado ? 'disabled' : ''}>
-            ${sizeOptions}
-          </select>
-        </div>
-        <div class="product-actions">
-          <a href="product.html?product=${productSlug}" class="btn btn-secondary" target="_blank">
-            Ver
-          </a>
-          ${cartBtn}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function showAgotadoAlert(productName) {
-  alert('El producto "' + productName + '" está agotado. ¡Contáctanos por WhatsApp para consultar disponibilidad!');
 }
 
 // Función para obtener el label de la categoría
@@ -278,16 +148,16 @@ function getCategoryLabel(category) {
 
 // Función para renderizar productos en la página principal
 async function renderFeaturedProducts() {
-  console.log('renderFeaturedProducts: iniciando...');
+  mxLog('renderFeaturedProducts: iniciando...');
     const products = await loadProducts();
-    console.log('renderFeaturedProducts:', products.length, 'productos cargados');
+    mxLog('renderFeaturedProducts:', products.length, 'productos cargados');
 
     const categories = ['cascos', 'uniformes', 'botas', 'protecciones'];
 
     categories.forEach(category => {
       const categoryProducts = products.filter(p => p.category === category).slice(0, 4);
     const container = document.querySelector(`[data-products="${category}"]`);
-    console.log(`renderFeaturedProducts: ${category} tiene ${categoryProducts.length} productos, container:`, container);
+    mxLog(`renderFeaturedProducts: ${category} tiene ${categoryProducts.length} productos, container:`, container);
 
     if (container && categoryProducts.length > 0) {
       container.innerHTML = categoryProducts.map(createProductCard).join('');
@@ -359,10 +229,10 @@ function createCategoryDivider(category, icon) {
 
 // Función para renderizar productos en la tienda con separadores por categoría
 async function renderShopProducts() {
-  console.log('renderShopProducts: iniciando...');
+  mxLog('renderShopProducts: iniciando...');
 
   const container = document.getElementById('productsGrid');
-  console.log('renderShopProducts: container productsGrid:', container);
+  mxLog('renderShopProducts: container productsGrid:', container);
 
   // Mostrar loading state
   if (container) {
@@ -375,7 +245,7 @@ async function renderShopProducts() {
   }
 
   const products = await loadProducts();
-  console.log('renderShopProducts:', products.length, 'productos cargados');
+  mxLog('renderShopProducts:', products.length, 'productos cargados');
 
   if (container && products.length > 0) {
     // Ordenar productos por categoría para agruparlos
@@ -399,12 +269,12 @@ async function renderShopProducts() {
         }
         html += createProductCard(product);
       } catch (e) {
-        console.error('[RENDER] Producto malformado omitido:', product.name || 'sin-nombre', e.message);
+        mxLog('[RENDER] Producto malformado omitido:', product.name || 'sin-nombre', e.message);
       }
     });
 
     container.innerHTML = html;
-    console.log('renderShopProducts: productos renderizados en el grid con separadores');
+    mxLog('renderShopProducts: productos renderizados en el grid con separadores');
 
     // Re-inicializar filtros y modal después de cargar productos
     setTimeout(() => {
@@ -470,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function addProductToCart(slug) {
   const card = document.querySelector(`.product-card[data-slug="${slug}"]`);
   if (!card) {
-    console.warn('Producto no encontrado:', slug);
+    mxLog('Producto no encontrado:', slug);
     return;
   }
 
@@ -511,7 +381,7 @@ function addProductToCart(slug) {
 
   const product = { name, price, category, image, images, sizes };
 
-  console.log('Agregando al carrito:', product, 'Talla:', selectedSize);
+  mxLog('Agregando al carrito:', product, 'Talla:', selectedSize);
 
   // Agregar al carrito - usar directamente la funcion global
   if (typeof window.MXZONECart !== 'undefined' && typeof window.MXZONECart.addToCart === 'function') {
@@ -521,7 +391,7 @@ function addProductToCart(slug) {
     try {
       addToCart(product, selectedSize);
     } catch (e) {
-      console.error('Error al agregar al carrito:', e);
+      mxLog('Error al agregar al carrito:', e);
       if (typeof showNotification === 'function') {
         showNotification('Error al agregar el producto. Intenta de nuevo.', 'error');
       }

@@ -21,7 +21,7 @@ async function loadCategoriesFromCMS() {
   try {
     const response = await fetch(window.MXZONE_CONFIG.categoriesBaseUrl + 'index.json?v=' + window.MXZONE_CONFIG.imageVersion);
     if (!response.ok) {
-      console.warn('⚠️ No se pudo cargar index.json de categorías, usando configuración local');
+      mxLog('⚠️ No se pudo cargar index.json de categorías, usando configuración local');
       return false;
     }
     
@@ -29,7 +29,7 @@ async function loadCategoriesFromCMS() {
     const categoryFiles = indexData.files || [];
     
     if (categoryFiles.length === 0) {
-      console.warn('⚠️ No hay categorías en el CMS, usando configuración local');
+      mxLog('⚠️ No hay categorías en el CMS, usando configuración local');
       return false;
     }
     
@@ -41,7 +41,7 @@ async function loadCategoriesFromCMS() {
           return await catResponse.json();
         }
       } catch (e) {
-        console.warn('Error cargando categoría', file, e);
+        mxLog('Error cargando categoría', file, e);
       }
       return null;
     });
@@ -81,13 +81,13 @@ async function loadCategoriesFromCMS() {
       window.MXZONE_CONFIG.categories = newCategories;
       window.MXZONE_CONFIG.parentCategories = newParentCategories;
       
-      console.log('✅ Categorías cargadas desde CMS:', Object.keys(newCategories).length, 'categorías');
+      mxLog('✅ Categorías cargadas desde CMS:', Object.keys(newCategories).length, 'categorías');
       return true;
     }
     
     return false;
   } catch (error) {
-    console.error('❌ Error cargando categorías desde CMS:', error);
+    mxLog('❌ Error cargando categorías desde CMS:', error);
     return false;
   }
 }
@@ -95,6 +95,6 @@ async function loadCategoriesFromCMS() {
 // Cargar categorías al inicializar
 loadCategoriesFromCMS();
 
-console.log('✅ MXZONE_CONFIG cargado:', window.MXZONE_CONFIG.version);
+mxLog('✅ MXZONE_CONFIG cargado:', window.MXZONE_CONFIG.version);
 var catCount = window.MXZONE_CONFIG.categories ? Object.keys(window.MXZONE_CONFIG.categories).length : 0;
-console.log('📂 Categorías disponibles:', catCount);
+mxLog('📂 Categorías disponibles:', catCount);

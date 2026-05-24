@@ -38,3 +38,6 @@ npm-debug.log*
 
 # Canvas (local design files)
 CANVAS/
+
+# SDD / ATL local artifacts
+.atl/

@@ -6,24 +6,6 @@
 // Usar window.WHATSAPP_NUMBER para evitar redeclaración entre scripts
 window.WHATSAPP_NUMBER = window.WHATSAPP_NUMBER || '573176692997';
 
-// Mapeo de marcas
-function getBrand(productName) {
-  const name = productName.toLowerCase();
-  if (name.includes('fox')) return { name: 'Fox', icon: '🦊' };
-  if (name.includes('fly')) return { name: 'Fly', icon: '🪰' };
-  if (name.includes('alpinestars') || name.includes('alpine')) return { name: 'Alpinestars', icon: '⭐' };
-  if (name.includes('leatt')) return { name: 'Leatt', icon: '🛡️' };
-  if (name.includes('troy lee')) return { name: 'Troy Lee', icon: '🎨' };
-  if (name.includes('oneal')) return { name: 'Oneal', icon: '⚡' };
-  if (name.includes('airoh')) return { name: 'Airoh', icon: '🇮🇹' };
-  if (name.includes('acerbis')) return { name: 'Acerbis', icon: '🔧' };
-  if (name.includes('gaerne')) return { name: 'Gaerne', icon: '👢' };
-  if (name.includes('fxr')) return { name: 'FXR', icon: '❄️' };
-  if (name.includes('thor')) return { name: 'Thor', icon: '⚡' };
-  if (name.includes('ktm')) return { name: 'KTM', icon: '🧡' };
-  return { name: 'Otro', icon: '📦' };
-}
-
 // Obtener descripción por categoría
 function getCategoryDescription(category, productName) {
   const descriptions = {
@@ -85,11 +67,6 @@ function getCategoryFeatures(category) {
 
 // Versión de imágenes - actualizar cuando se cambien las fotos
 const IMAGE_VERSION = 'v4-20260418';
-
-// Función para codificar URLs de imágenes correctamente (maneja espacios)
-function encodeImagePath(path) {
-  return path.replace(/ /g, '%20');
-}
 
 // Verificar si es URL de CloudCannon
 function isCloudCannonUrl(url) {
@@ -302,16 +279,6 @@ function getCategoryLabel(category) {
   return labels[category] || category;
 }
 
-// Función para crear el slug del producto (para la URL)
-function createProductSlug(productName) {
-  return productName
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
 // Cargar producto desde CMS API (primario)
 async function loadProductFromCMS(productSlug) {
   const cmsApiUrl = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.cmsApiUrl : '';
@@ -337,16 +304,32 @@ async function loadProductFromCMS(productSlug) {
       }
     }
   } catch(e) {
-    console.warn('CMS API fallback for product detail:', e.message);
+    mxLog('CMS API fallback for product detail:', e.message);
   }
   return null;
 }
 
-// Cargar producto desde CMS API (unica fuente de datos)
+// Cargar producto desde CMS API (primario) + JSON fallback
 async function loadProduct(productSlug) {
   const cmsProduct = await loadProductFromCMS(productSlug);
   if (cmsProduct) return cmsProduct;
-  console.warn('[CRITICAL] loadProduct: no se pudo obtener', productSlug, 'desde la API. No hay fallback a archivos locales.');
+
+  // JSON fallback
+  const safeSlug = productSlug.replace(/[^a-z0-9_-]/g, '');
+  try {
+    const r = await fetch('cms/productos/' + safeSlug + '.json');
+    if (r.ok) {
+      const data = await r.json();
+      // Validate expected fields
+      if (data && data.name && data.price && data.image && data.description && data.category) {
+        return data;
+      }
+    }
+  } catch (e) {
+    mxLog('JSON fallback failed for', productSlug, e.message);
+  }
+
+  mxLog('[CRITICAL] loadProduct: no se pudo obtener', productSlug, 'desde API ni JSON fallback.');
   return null;
 }
 
@@ -367,26 +350,7 @@ async function loadRelatedProducts(currentProduct, currentSlug) {
     const categoryProducts = products.filter(p => p.category === currentProduct.category && createProductSlug(p.name) !== currentSlug).slice(0, 4);
     return categoryProducts;
   } catch (e) {
-    console.error('Error cargando relacionados:', e);
-    return [];
-  }
-}
-
-          // Filtrar productos de la misma categoría (excluyendo el actual)
-          if (product.category === currentProduct.category &&
-              file !== `cms/productos/${currentSlug}.json`) {
-            categoryProducts.push(product);
-          }
-        }
-      } catch (e) {
-        console.warn(`No se pudo cargar ${file}:`, e);
-      }
-    }
-
-    // Retornar máximo 4 productos relacionados de la misma categoría
-    return categoryProducts.slice(0, 4);
-  } catch (error) {
-    console.error('Error cargando productos relacionados:', error);
+    mxLog('Error cargando relacionados:', e);
     return [];
   }
 }
@@ -461,6 +425,31 @@ async function renderProduct(productSlug) {
   // Actualizar meta descripción
   document.querySelector('meta[name="description"]').setAttribute('content',
     `Compra ${product.name} en MXZONE STORE. ${product.price}. Tallas: ${product.sizes}`);
+
+  // Actualizar SEO dinámico (OG + canonical)
+  const baseUrl = 'https://www.mxzonestore.com/';
+  const absImage = product.image?.startsWith('http')
+    ? product.image
+    : baseUrl + (product.image || '').replace(/^\/+/, '');
+
+  const setMeta = (prop, content) => {
+    let el = document.querySelector(`meta[property="${prop}"]`);
+    if (!el) {
+      el = document.createElement('meta');
+      el.setAttribute('property', prop);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('content', content || '');
+  };
+
+  setMeta('og:title', product.name);
+  setMeta('og:description', product.description || `Compra ${product.name} en MXZONE STORE`);
+  setMeta('og:image', absImage || `${baseUrl}assets/logo/logo.png`);
+
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) {
+    canonical.href = `${baseUrl}product.html?product=${productSlug}`;
+  }
 
   // Renderizar producto
   layout.innerHTML = createProductHTML(product);

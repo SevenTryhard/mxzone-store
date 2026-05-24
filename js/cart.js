@@ -8,11 +8,6 @@ const CART_STORAGE_KEY = 'mxzone_cart';
 // Usar window.WHATSAPP_NUMBER para evitar redeclaración entre scripts
 window.WHATSAPP_NUMBER = window.WHATSAPP_NUMBER || '573176692997';
 
-// Funcion para codificar URLs de imagenes correctamente (maneja espacios)
-function encodeImagePath(path) {
-  return path.replace(/ /g, '%20');
-}
-
 // Verificar si es URL de CloudCannon
 function isCloudCannonUrl(url) {
   return url && url.includes('cloudvent.net');
@@ -432,15 +427,6 @@ function selectPaymentMethod(method) {
 
 // ==================== UTILIDADES ====================
 
-function createProductSlug(productName) {
-  return productName
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
 function getCategoryLabel(category) {
   const labels = {
     cascos: 'Cascos',
@@ -673,7 +659,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Actualizar WhatsApp flotante con productos del carrito
 function updateFloatingWhatsApp() {
-  const floatBtn = document.getElementById('whatsappFloat');
+  const floatBtn = document.querySelector('.whatsapp-float');
   if (!floatBtn) return;
 
   if (cart.length === 0) {

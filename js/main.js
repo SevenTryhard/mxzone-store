@@ -3,11 +3,6 @@
  * Premium interactions and animations
  */
 
-// Función para codificar URLs de imágenes correctamente (maneja espacios)
-function encodeImagePath(path) {
-  return path.replace(/ /g, '%20');
-}
-
 // Verificar si es URL de CloudCannon
 function isCloudCannonUrl(url) {
   return url && url.includes('cloudvent.net');
@@ -286,7 +281,7 @@ function initShopFilters() {
   // Si no hay productos aún, esperar a que se carguen
   const productCards = document.querySelectorAll('.product-card');
   if (!productCards.length) {
-    console.log('No hay productos aún, esperando carga del CMS...');
+    mxLog('No hay productos aún, esperando carga del CMS...');
     return;
   }
 
@@ -310,28 +305,10 @@ function initShopFiltersInternal() {
   const resultsCount = document.getElementById('resultsCount');
   const sortSelect = document.getElementById('sortSelect');
 
-  // Extract brand from product name
-  function getBrand(productName) {
-    const name = productName.toLowerCase();
-    if (name.includes('fox')) return 'fox';
-    if (name.includes('fly')) return 'fly';
-    if (name.includes('alpinestars') || name.includes('alpine')) return 'alpinestars';
-    if (name.includes('leatt')) return 'leatt';
-    if (name.includes('troy lee')) return 'troy-lee';
-    if (name.includes('oneal') || name.includes('oneal')) return 'oneal';
-    if (name.includes('airoh')) return 'airoh';
-    if (name.includes('acerbis')) return 'acerbis';
-    if (name.includes('gaerne')) return 'gaerne';
-    if (name.includes('fxr')) return 'fxr';
-    if (name.includes('thor')) return 'thor';
-    if (name.includes('ktm')) return 'ktm';
-    return 'other';
-  }
-
   // Add data-brand attribute to all products
   document.querySelectorAll('.product-card').forEach(card => {
     const name = card.querySelector('.product-name').textContent;
-    const brand = getBrand(name);
+    const brand = getBrand(name).name.toLowerCase();
     card.dataset.brand = brand;
 
     // Extract price number
@@ -345,7 +322,7 @@ function initShopFiltersInternal() {
     // FRESH selection — product cards may have been re-rendered
     const activeCards = document.querySelectorAll('.product-card');
     if (!activeCards.length) {
-      console.warn('[filterProducts] No product cards found in DOM');
+      mxLog('[filterProducts] No product cards found in DOM');
       return;
     }
 
@@ -417,7 +394,7 @@ function initShopFiltersInternal() {
           card.style.display = 'none';
         }
       } catch (e) {
-        console.warn('Error filtering product card:', e);
+        mxLog('Error filtering product card:', e);
       }
     });
 
@@ -447,7 +424,7 @@ function initShopFiltersInternal() {
       }
     });
 
-    console.log('[STATS] Productos por categoría:', categoryCount);
+    mxLog('[STATS] Productos por categoría:', categoryCount);
 
     // Hide category checkboxes without products
     categoryFilters.forEach(cb => {
@@ -459,7 +436,7 @@ function initShopFiltersInternal() {
         if (filterGroup) {
           filterGroup.style.display = hasProducts ? 'flex' : 'none';
           if (!hasProducts) {
-            console.log('[HIDE] Ocultando categoría sin productos:', category);
+            mxLog('[HIDE] Ocultando categoría sin productos:', category);
           }
         }
       }
@@ -473,7 +450,7 @@ function initShopFiltersInternal() {
     if (ninosParent) {
       ninosParent.style.display = hasNinosProducts ? 'block' : 'none';
       if (!hasNinosProducts) {
-        console.log('[HIDE] Ocultando categoría padre Niños (sin productos)');
+        mxLog('[HIDE] Ocultando categoría padre Niños (sin productos)');
       }
     }
   }
@@ -515,7 +492,7 @@ function initShopFiltersInternal() {
             return 0;
         }
       } catch (e) {
-        console.warn('Error sorting products:', e);
+        mxLog('Error sorting products:', e);
         return 0;
       }
     });
@@ -536,7 +513,7 @@ function initShopFiltersInternal() {
           }
           grid.appendChild(card);
         } catch (e) {
-          console.warn('Error appending sorted card:', e);
+          mxLog('Error appending sorted card:', e);
         }
       });
     } else {
@@ -545,7 +522,7 @@ function initShopFiltersInternal() {
         try {
           grid.appendChild(card);
         } catch (e) {
-          console.warn('Error appending sorted card:', e);
+          mxLog('Error appending sorted card:', e);
         }
       });
     }
@@ -577,7 +554,7 @@ function initShopFiltersInternal() {
       try {
         target.value = source.value;
       } catch (e) {
-        console.warn('Error syncing search inputs:', e);
+        mxLog('Error syncing search inputs:', e);
       }
     }
   }
@@ -618,10 +595,10 @@ function initShopFiltersInternal() {
   window.initQuickFilterChips = function initQuickFilterChips() {
     const quickFilterChips = document.querySelectorAll('.quick-filter-chip');
     if (!quickFilterChips.length) {
-      console.log('Quick filter chips not found in DOM');
+      mxLog('Quick filter chips not found in DOM');
       return;
     }
-    console.log('Initializing quick filter chips:', quickFilterChips.length);
+    mxLog('Initializing quick filter chips:', quickFilterChips.length);
 
     quickFilterChips.forEach(chip => {
       // Remove any existing listeners to prevent duplicates
@@ -634,7 +611,7 @@ function initShopFiltersInternal() {
       chip.addEventListener('click', () => {
         const filter = chip.dataset.filter;
         const filterType = chip.dataset.type;
-        console.log('Quick filter clicked:', filter, filterType);
+        mxLog('Quick filter clicked:', filter, filterType);
 
         if (filterType === 'parent') {
           // Parent category (solo Niños en móvil)
@@ -668,7 +645,7 @@ function initShopFiltersInternal() {
                 if (childCheckbox) childCheckbox.checked = true;
               });
 
-              console.log('Selected parent category: Niños - EXPANDIR');
+              mxLog('Selected parent category: Niños - EXPANDIR');
             } else {
               // Collapse
               chip.classList.remove('active');
@@ -680,7 +657,7 @@ function initShopFiltersInternal() {
               if (parentToggle) parentToggle.classList.add('collapsed');
               if (parentChildren) parentChildren.classList.add('collapsed');
               
-              console.log('Selected parent category: Niños - COLAPSAR');
+              mxLog('Selected parent category: Niños - COLAPSAR');
               return; // Don't filter, just toggle
             }
           }
@@ -701,7 +678,7 @@ function initShopFiltersInternal() {
               }
             });
 
-            console.log('Selected: Ver Todo (all products)');
+            mxLog('Selected: Ver Todo (all products)');
           } else {
             // Individual category
             document.querySelectorAll('.quick-filter-chip[data-type="parent"]').forEach(c => {
@@ -720,9 +697,9 @@ function initShopFiltersInternal() {
             const categoryCheckbox = document.querySelector(`.category-filter[data-category="${filter}"]`);
             if (categoryCheckbox) {
               categoryCheckbox.checked = true;
-              console.log('Selected category:', filter);
+              mxLog('Selected category:', filter);
             } else {
-              console.warn('Category checkbox not found:', filter);
+              mxLog('Category checkbox not found:', filter);
             }
           }
         }
@@ -731,7 +708,7 @@ function initShopFiltersInternal() {
         if (mobileSearchInput) mobileSearchInput.value = '';
         if (searchInput) searchInput.value = '';
 
-        console.log('Calling filterProducts...');
+        mxLog('Calling filterProducts...');
         filterProducts();
 
         // Scroll to products section on mobile
@@ -884,7 +861,7 @@ function initShopFiltersInternal() {
         });
         
         filterProducts();
-        console.log('Todo: ' + (allChecked ? 'Deseleccionar todo' : 'Seleccionar todo'));
+        mxLog('Todo: ' + (allChecked ? 'Deseleccionar todo' : 'Seleccionar todo'));
       }
     });
 
@@ -973,7 +950,7 @@ function initShopFiltersInternal() {
           });
         } else {
           // Uncheck all - user must select individual categories
-          console.log('Deseleccionar Todo - seleccionar categorías individuales');
+          mxLog('Deseleccionar Todo - seleccionar categorías individuales');
         }
         filterProducts();
       });
@@ -1667,7 +1644,7 @@ function initProductModal() {
   // Si no hay productos aún, esperar a que se carguen
   const productCards = document.querySelectorAll('.product-card');
   if (!productCards.length) {
-    console.log('No hay productos aún, esperando carga del CMS...');
+    mxLog('No hay productos aún, esperando carga del CMS...');
     return;
   }
 
