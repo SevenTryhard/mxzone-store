@@ -8795,6 +8795,7 @@ a {
   padding: var(--spacing-md);
   opacity: 0;
   visibility: hidden;
+  pointer-events: none; /* NO intercepta clicks cuando está cerrado */
   transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
@@ -8808,6 +8809,7 @@ a {
 .checkout-overlay.active {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto; /* SÍ intercepta clicks cuando está abierto */
 }
 
 .checkout-panel {
