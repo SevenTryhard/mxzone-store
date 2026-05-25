@@ -222,9 +222,26 @@ function resetCartSteps() {
   if (step2) step2.style.display = 'none';
 }
 
-// Abrir carrito de forma segura: resetea steps, abre modal, actualiza UI, limpia scroll
+// Abrir carrito de forma segura: cierra checkout fantasma, resetea steps, abre modal, actualiza UI
 function safelyOpenCart() {
+  // 1. Cerrar checkout centrado si está abierto (evita overlay fantasma debajo del carrito)
+  const overlay = document.getElementById('checkoutOverlay');
+  if (overlay && overlay.classList.contains('active')) {
+    overlay.classList.remove('active');
+  }
+
+  // 2. Limpiar errores del checkout
+  clearCheckoutErrors();
+
+  // 3. Resetear metodo de pago
+  selectedPaymentMethod = '';
+  document.querySelectorAll('.checkout-payment-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.payment-method-btn').forEach(btn => btn.classList.remove('active'));
+
+  // 4. Resetear steps legacy
   resetCartSteps();
+
+  // 5. Abrir carrito
   const cartModal = document.getElementById('cartModal');
   if (cartModal) {
     cartModal.classList.add('active');
