@@ -416,39 +416,27 @@ async function renderProduct(productSlug) {
     return;
   }
 
-  // Actualizar breadcrumb
-  document.getElementById('breadcrumbProduct').textContent = product.name;
+  // Actualizar SEO dinámico
+  document.title = product.name + ' - ' + getCategoryLabel(product.category) + ' | Motocross Colombia | MXZONE STORE';
 
-  // Actualizar título de la página
-  document.title = `${product.name} | MXZONE STORE`;
+  const dynamicDesc = document.getElementById('dynamic-desc');
+  if (dynamicDesc) {
+    dynamicDesc.setAttribute('content', product.name + ' — ' + product.price + ' | ' + getCategoryLabel(product.category) + ' para motocross y enduro en Colombia. Envío a todo el país desde Cali. MXZONE STORE.');
+  }
 
-  // Actualizar meta descripción
-  document.querySelector('meta[name="description"]').setAttribute('content',
-    `Compra ${product.name} en MXZONE STORE. ${product.price}. Tallas: ${product.sizes}`);
+  const dynamicCanonical = document.getElementById('dynamic-canonical');
+  if (dynamicCanonical) {
+    dynamicCanonical.setAttribute('href', 'https://www.mxzonestore.com/product.html?product=' + productSlug);
+  }
 
-  // Actualizar SEO dinámico (OG + canonical)
-  const baseUrl = 'https://www.mxzonestore.com/';
-  const absImage = product.image?.startsWith('http')
-    ? product.image
-    : baseUrl + (product.image || '').replace(/^\/+/, '');
+  const dynamicOgTitle = document.getElementById('dynamic-og-title');
+  if (dynamicOgTitle) {
+    dynamicOgTitle.setAttribute('content', product.name);
+  }
 
-  const setMeta = (prop, content) => {
-    let el = document.querySelector(`meta[property="${prop}"]`);
-    if (!el) {
-      el = document.createElement('meta');
-      el.setAttribute('property', prop);
-      document.head.appendChild(el);
-    }
-    el.setAttribute('content', content || '');
-  };
-
-  setMeta('og:title', product.name);
-  setMeta('og:description', product.description || `Compra ${product.name} en MXZONE STORE`);
-  setMeta('og:image', absImage || `${baseUrl}assets/logo/logo.png`);
-
-  const canonical = document.querySelector('link[rel="canonical"]');
-  if (canonical) {
-    canonical.href = `${baseUrl}product.html?product=${productSlug}`;
+  const dynamicOgDesc = document.getElementById('dynamic-og-desc');
+  if (dynamicOgDesc) {
+    dynamicOgDesc.setAttribute('content', product.name + ' — ' + product.price + ' | ' + getCategoryLabel(product.category) + ' para motocross y enduro en Colombia. Envío a todo el país desde Cali. MXZONE STORE.');
   }
 
   // Renderizar producto

@@ -1,0 +1,2 @@
+/producto/:slug    /product.html?product=:slug    301
+/product/:slug     /product.html?product=:slug    301
