@@ -116,6 +116,93 @@ async function loadProducts() {
   }
 }
 
+// Función para crear el HTML de una tarjeta de producto
+function createProductCard(product) {
+  // NO renderizar productos agotados en la tienda
+  if (product.agotado === true) return '';
+
+  const whatsappMessage = encodeURIComponent(`Estoy interesado en ${product.name}`);
+  const whatsappUrl = `https://wa.me/${window.WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+  const brandObj = getBrand(product.name);
+  const brand = brandObj.name.toLowerCase();
+  const priceNum = parseInt((product.price || '0').toString().replace(/[^0-9]/g, '')) || 0;
+  const productSlug = createProductSlug(product.name);
+
+  // Soporte para múltiples imágenes (array images)
+  const isCloudCannonUrl = (url) => url && url.includes('cloudvent.net');
+
+  let images = [];
+  // IMPORTANTE: Los JSON del CMS usan "image" (singular), no "images" (array)
+  // Primero intentar con images (array), luego fallback a image (singular)
+  if (product.images && Array.isArray(product.images)) {
+    images = product.images.filter(img => img != null && typeof img === 'string' && img.trim() !== '');
+  }
+  // Fallback: usar product.image (singular) si no hay array
+  if (!images.length && product.image) {
+    images = [product.image];
+  }
+
+  // Agregar cache buster solo a imágenes locales (no CloudCannon)
+  const imageVersion = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.imageVersion : 'v10';
+  images = images.map(img => {
+    // Corregir formato de URL rota de CloudCannon (/https:/ -> https://)
+    if (img && img.startsWith('/https:/')) {
+      img = img.replace('/https:/', 'https://');
+    }
+    if (isCloudCannonUrl(img)) {
+      // URLs de CloudCannon (cloudvent.net) se usan directamente
+      return img;
+    }
+    // Rutas locales: usar ruta absoluta directa sin modificar
+    return img + '?v=' + imageVersion;
+  });
+
+  const mainImage = images.length > 0 ? images[0] : '';
+  const badgeHTML = product.badge ?
+    `<span class="product-badge">${product.badge}</span>` : '';
+
+  // Parsear tallas
+  const sizesArray = product.sizes ? product.sizes.split('/').map(s => s.trim()) : ['Única'];
+  const sizeOptions = `<option value="" disabled selected>TALLA</option>` + sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
+
+  return `
+    <div class="product-card"
+         data-category="${product.category || 'sin-categoria'}"
+         data-brand="${brand}"
+         data-price="${priceNum}"
+         data-image="${mainImage}"
+         data-images='${JSON.stringify(images).replace(/'/g, "&#39;")}'
+         data-slug="${productSlug}"
+         data-sizes="${product.sizes || 'Única'}">
+      <div class="product-image">
+        <img src="${mainImage}" alt="${product.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <span class="product-image-placeholder" style="display:none;">MX</span>
+        ${badgeHTML}
+      </div>
+      <div class="product-info">
+        <span class="product-category">${getCategoryLabel(product.category)}</span>
+        <h3 class="product-name">${product.name}</h3>
+        <div class="product-price-wrapper">
+          <span class="product-price">${product.price || 'Consultar precio'}</span>
+        </div>
+        <div class="product-sizes-selector">
+          <select class="card-size-select" aria-label="Seleccionar talla">
+            ${sizeOptions}
+          </select>
+        </div>
+        <div class="product-actions">
+          <a href="product.html?product=${productSlug}" class="btn btn-secondary" target="_blank">
+            Ver
+          </a>
+          <button class="btn btn-cart-add" onclick="addProductToCart('${productSlug}')">
+            Agregar
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 // Función para obtener el label de la categoría
 function getCategoryLabel(category) {
   const labels = {
