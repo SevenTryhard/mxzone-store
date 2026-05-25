@@ -212,28 +212,52 @@ function updateCartModal() {
   }
 }
 
+// ==================== ESTADO DEL CARRITO ====================
+
+// Resetear steps del checkout legacy para evitar estado inconsistente
+function resetCartSteps() {
+  const step1 = document.getElementById('cartStep1');
+  const step2 = document.getElementById('cartStep2');
+  if (step1) step1.style.display = 'block';
+  if (step2) step2.style.display = 'none';
+}
+
+// Abrir carrito de forma segura: resetea steps, abre modal, actualiza UI, limpia scroll
+function safelyOpenCart() {
+  resetCartSteps();
+  const cartModal = document.getElementById('cartModal');
+  if (cartModal) {
+    cartModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    updateCartModal();
+  }
+}
+
 // ==================== CHECKOUT ====================
 
 function openCheckout() {
+  // VALIDACIONES PRIMERO — no tocar UI hasta saber que vamos a abrir checkout
   if (cart.length === 0) {
     showNotification('El carrito esta vacio', 'error');
     return;
   }
 
-  // BLOQUEO FINAL: verificar que no haya productos agotados en el carrito
-  var agotadosEnCarrito = cart.filter(function(item) { return item.agotado === true; });
+  // BLOQUEO: productos agotados
+  const agotadosEnCarrito = cart.filter(function(item) { return item.agotado === true; });
   if (agotadosEnCarrito.length > 0) {
     var nombres = agotadosEnCarrito.map(function(item) { return item.name; }).join(', ');
     showNotification('El carrito contiene productos agotados: ' + nombres + '. Por favor elimínalos para continuar.', 'error');
     return;
   }
 
+  // Solo ahora cerramos el carrito y abrimos checkout
+  closeCart();
+
   const overlay = document.getElementById('checkoutOverlay');
   const step1 = document.getElementById('cartStep1');
 
   if (overlay) {
     // Flow A: overlay centrado (nuevo diseño)
-    closeCart();
     setTimeout(function() {
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -543,8 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Boton VOLVER AL CARRITO
     if (e.target.id === 'backToCartBtn' || e.target.closest('#backToCartBtn')) {
       e.preventDefault();
-      closeCheckout();
-      window.openCart();
+      safelyOpenCart();
     }
 
     // Boton ENVIAR PEDIDO POR WHATSAPP (nuevo checkout centrado)
@@ -589,8 +612,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Boton VOLVER AL CARRITO (nuevo checkout centrado)
     if (e.target.id === 'checkoutBack' || e.target.closest('#checkoutBack')) {
       e.preventDefault();
-      closeCheckout();
-      window.openCart();
+      safelyOpenCart();
     }
 
     // Vaciar carrito
@@ -628,10 +650,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const step2 = document.getElementById('cartStep2');
 
       if (checkoutOverlay && checkoutOverlay.classList.contains('active')) {
-        closeCheckout();
+        safelyOpenCart();
       } else if (step2 && step2.style.display === 'block' && cartModal && cartModal.classList.contains('active')) {
         // Flow B: en paso 2 del modal, volver al paso 1
-        closeCheckout();
+        safelyOpenCart();
       } else if (cartModal && cartModal.classList.contains('active')) {
         closeCart();
       }
