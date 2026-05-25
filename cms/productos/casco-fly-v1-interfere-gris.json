@@ -1,5 +1,5 @@
 {
-  "name": "CASCO FLY V1 INTERFERE GRIS",
+  "name": "CASCO FOX V1 INTERFERE GRIS",
   "image": "/assets/images/nuevas_images/32044-037-2-2x.webp",
   "price": "$1.449.000",
   "sizes": "XL",
@@ -11,5 +11,8 @@
   ],
   "sku": "",
   "color": "",
-  "agotado": false
+  "agotado": false,
+  "stock_quantity": 0,
+  "stock_min": 5,
+  "stock_max": 100
 }
