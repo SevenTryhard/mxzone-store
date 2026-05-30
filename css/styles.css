@@ -9483,3 +9483,46 @@ a {
 .product-sku { font-family: var(--font-mono); font-size: 0.8rem; color: var(--gray-text); margin-bottom: var(--spacing-xs); }
 .product-color { font-size: 0.9rem; color: var(--gray-light-text); margin-bottom: var(--spacing-sm); }
 .product-badge-agotado { background: var(--red-accent); color: white; padding: 4px 12px; border-radius: var(--radius-sm); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
+
+/* ===== Dynamic Size Filter ===== */
+.size-age-toggle {
+  display: none;
+  gap: 4px;
+  margin-bottom: 12px;
+  background: rgba(255,102,0,0.1);
+  border-radius: var(--radius-md);
+  padding: 4px;
+}
+
+.size-age-toggle.visible {
+  display: flex;
+}
+
+.size-age-btn {
+  flex: 1;
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  color: var(--white);
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.size-age-btn.active {
+  background: var(--orange-primary);
+  color: var(--black);
+}
+
+.size-filter-chips--loading::before {
+  content: "Selecciona una categoría";
+  color: var(--gray-text);
+  font-size: 0.85rem;
+  width: 100%;
+  text-align: center;
+  padding: 12px 0;
+  display: block;
+}

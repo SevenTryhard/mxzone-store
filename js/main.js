@@ -305,6 +305,193 @@ function initShopFiltersInternal() {
   const resultsCount = document.getElementById('resultsCount');
   const sortSelect = document.getElementById('sortSelect');
 
+  // New dynamic size filter state
+  const sizeFilterContainer = document.getElementById('sizeFilterContainer');
+  const sizeAgeToggle = document.getElementById('sizeAgeToggle');
+  let currentSizeAge = 'adulto'; // 'adulto' | 'nino'
+
+  // Canonical size definitions by category and age group
+  const sizeMap = {
+    cascos: {
+      adulto: [
+        { value: 'XS', label: 'XS' },
+        { value: 'S', label: 'S' },
+        { value: 'M', label: 'M' },
+        { value: 'L', label: 'L' },
+        { value: 'XL', label: 'XL' },
+        { value: 'XXL', label: 'XXL' }
+      ],
+      nino: [
+        { value: 'XS', label: 'XS' },
+        { value: 'S', label: 'S' },
+        { value: 'M', label: 'M' },
+        { value: 'L', label: 'L' }
+      ]
+    },
+    uniformes: {
+      adulto: [
+        { value: 'S', label: 'S/30' },
+        { value: 'M', label: 'M/32' },
+        { value: 'L', label: 'L/34' },
+        { value: 'XL', label: 'XL/36' },
+        { value: 'XXL', label: 'XXL/38' }
+      ],
+      nino: [
+        { value: 'YS', label: 'YS/22' },
+        { value: 'YM', label: 'YM/24' },
+        { value: 'YL', label: 'YL/26' },
+        { value: 'YXL', label: 'YXL/28' }
+      ]
+    },
+    jersey: { adulto: 'uniformes', nino: 'uniformes' },
+    botas: {
+      adulto: [
+        { value: '38', label: '38' },
+        { value: '39', label: '39' },
+        { value: '40', label: '40' },
+        { value: '41', label: '41' },
+        { value: '42', label: '42' },
+        { value: '43', label: '43' },
+        { value: '44', label: '44' },
+        { value: '45', label: '45' },
+        { value: '46', label: '46' }
+      ],
+      nino: [
+        { value: '33', label: '33' },
+        { value: '34', label: '34' },
+        { value: '35', label: '35' },
+        { value: '36', label: '36' },
+        { value: '37', label: '37' }
+      ]
+    },
+    guantes: {
+      adulto: [
+        { value: 'S', label: 'S' },
+        { value: 'M', label: 'M' },
+        { value: 'L', label: 'L' },
+        { value: 'XL', label: 'XL' }
+      ],
+      nino: [
+        { value: 'S', label: 'S' },
+        { value: 'M', label: 'M' },
+        { value: 'L', label: 'L' },
+        { value: 'XL', label: 'XL' }
+      ]
+    },
+    protecciones: {
+      adulto: [
+        { value: 'S', label: 'S' },
+        { value: 'M', label: 'M' },
+        { value: 'L', label: 'L' },
+        { value: 'XL', label: 'XL' },
+        { value: 'Unica', label: 'Única' }
+      ],
+      nino: [
+        { value: 'KIDS', label: 'Kids' },
+        { value: 'Unica', label: 'Única' }
+      ]
+    },
+    gafas: { adulto: [{ value: 'Unica', label: 'Única' }], nino: [{ value: 'Unica', label: 'Única' }] },
+    gorras: { adulto: [{ value: 'Unica', label: 'Única' }], nino: [{ value: 'Unica', label: 'Única' }] },
+    maletas: { adulto: [{ value: 'Unica', label: 'Única' }], nino: [{ value: 'Unica', label: 'Única' }] },
+    accesorios: { adulto: [{ value: 'Unica', label: 'Única' }], nino: [{ value: 'Unica', label: 'Única' }] }
+  };
+
+  // Categories that support the Adulto/Niño toggle
+  const categoriesWithAgeToggle = ['cascos', 'uniformes', 'jersey', 'botas', 'guantes', 'protecciones'];
+
+  // CMS raw size → filterable normalized sizes (extends the raw string so .includes() works)
+  function getNormalizedFilterSizes(rawSizes) {
+    if (!rawSizes) return '';
+    let normalized = rawSizes.toUpperCase();
+
+    // Botas: US sizes appended as approximate EU sizes
+    const botasMapping = {
+      '6-US': ' 38 39',
+      '7-US': ' 39 40',
+      '8-US': ' 40 41',
+      '9-US': ' 41 42',
+      '10-US': ' 42 43',
+      '11-US': ' 44',
+      '12-US': ' 45',
+      '13-US': ' 46'
+    };
+    Object.entries(botasMapping).forEach(([us, eu]) => {
+      if (normalized.includes(us.toUpperCase())) normalized += eu;
+    });
+
+    // Protecciones dual abbreviations
+    if (normalized === 'SM') normalized += ' S M';
+    if (normalized === 'ML') normalized += ' M L';
+
+    return normalized;
+  }
+
+  function getActiveCategories() {
+    return Array.from(categoryFilters)
+      .filter(cb => cb.checked)
+      .map(cb => cb.dataset.category)
+      .filter(c => c !== 'all');
+  }
+
+  function hasSingleCategory(selectedCats) {
+    return selectedCats.length === 1;
+  }
+
+  function renderSizeChips() {
+    const selectedCats = getActiveCategories();
+
+    if (!sizeFilterContainer) return;
+
+    // Default: no category selected or multiple → show placeholder
+    if (selectedCats.length === 0 || selectedCats.length > 1) {
+      sizeFilterContainer.innerHTML = '';
+      sizeFilterContainer.classList.add('size-filter-chips--loading');
+      if (sizeAgeToggle) sizeAgeToggle.style.display = 'none';
+      return;
+    }
+
+    sizeFilterContainer.classList.remove('size-filter-chips--loading');
+    const cat = selectedCats[0];
+    const catMap = sizeMap[cat];
+
+    if (!catMap) {
+      sizeFilterContainer.innerHTML = '';
+      sizeFilterContainer.classList.add('size-filter-chips--loading');
+      if (sizeAgeToggle) sizeAgeToggle.style.display = 'none';
+      return;
+    }
+
+    // Show/hide age toggle
+    if (sizeAgeToggle) {
+      if (categoriesWithAgeToggle.includes(cat)) {
+        sizeAgeToggle.style.display = 'flex';
+        sizeAgeToggle.classList.add('visible');
+      } else {
+        sizeAgeToggle.style.display = 'none';
+        sizeAgeToggle.classList.remove('visible');
+      }
+    }
+
+    // Resolve alias (e.g., jersey → use uniformes map)
+    const sizes = (typeof catMap === 'string') ? sizeMap[catMap][currentSizeAge] : catMap[currentSizeAge];
+    if (!sizes || sizes.length === 0) {
+      sizeFilterContainer.innerHTML = '';
+      return;
+    }
+
+    // Build chips
+    sizeFilterContainer.innerHTML = sizes.map(s =>
+      `<button class="size-chip" data-size="${s.value}">${s.label}</button>`
+    ).join('');
+  }
+
+  function getSelectedSizes() {
+    if (!sizeFilterContainer) return [];
+    return Array.from(sizeFilterContainer.querySelectorAll('.size-chip.active'))
+      .map(c => c.dataset.size);
+  }
+
   // Add data-brand attribute to all products
   document.querySelectorAll('.product-card').forEach(card => {
     const name = card.querySelector('.product-name').textContent;
@@ -338,10 +525,8 @@ function initShopFiltersInternal() {
       .filter(cb => cb.checked)
       .map(cb => cb.dataset.brand);
 
-    // Get selected sizes
-    const selectedSizes = Array.from(sizeChips)
-      .filter(c => c.classList.contains('active'))
-      .map(c => c.dataset.size);
+    // Get selected sizes (dynamic chips)
+    const selectedSizes = getSelectedSizes();
 
     // Get price range
     const minPrice = parseInt(minPriceInput?.value) || 0;
@@ -374,8 +559,9 @@ function initShopFiltersInternal() {
         // Price filter
         const matchesPrice = price >= minPrice && price <= maxPrice;
 
-        // Size filter
-        const matchesSize = selectedSizes.length === 0 || (cardSizes && selectedSizes.some(s => cardSizes.includes(s)));
+        // Size filter — use normalized sizes for CMS compatibility
+        const normalizedCardSizes = getNormalizedFilterSizes(card.dataset.sizes);
+        const matchesSize = selectedSizes.length === 0 || (normalizedCardSizes && selectedSizes.some(s => normalizedCardSizes.includes(s)));
 
         const isVisible = matchesSearch && matchesCategory && matchesBrand && matchesPrice && matchesSize;
 
@@ -780,13 +966,17 @@ function initShopFiltersInternal() {
     });
   });
 
-  // Size chips event listeners
-  sizeChips.forEach(chip => {
-    chip.addEventListener('click', () => {
+  // Dynamic size chips — event delegation
+  if (sizeFilterContainer) {
+    sizeFilterContainer.addEventListener('click', (e) => {
+      const chip = e.target.closest('.size-chip');
+      if (!chip) return;
       chip.classList.toggle('active');
       filterProducts();
     });
-  });
+  }
+
+  // Static size chips fallback (if any still exist in DOM)
 
   if (applyPriceBtn) {
     applyPriceBtn.addEventListener('click', filterProducts);
@@ -812,6 +1002,19 @@ function initShopFiltersInternal() {
       sizeChips.forEach(chip => {
         chip.classList.remove('active');
       });
+
+      // Clear dynamic size chips
+      if (sizeFilterContainer) {
+        sizeFilterContainer.querySelectorAll('.size-chip').forEach(chip => chip.classList.remove('active'));
+      }
+      // Reset age toggle
+      currentSizeAge = 'adulto';
+      if (sizeAgeToggle) {
+        sizeAgeToggle.querySelectorAll('.size-age-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.age === 'adulto');
+        });
+      }
+      renderSizeChips();
 
       // Reset price
       if (minPriceInput) minPriceInput.value = 0;
@@ -1082,6 +1285,31 @@ function initShopFiltersInternal() {
     quickFiltersScroll.addEventListener('scroll', updateArrowStates);
     updateArrowStates(); // initial
   }
+
+  // Adulto / Niño toggle
+  if (sizeAgeToggle) {
+    sizeAgeToggle.addEventListener('click', (e) => {
+      const btn = e.target.closest('.size-age-btn');
+      if (!btn) return;
+      currentSizeAge = btn.dataset.age;
+      sizeAgeToggle.querySelectorAll('.size-age-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderSizeChips();
+      // Re-run filter because available sizes changed
+      filterProducts();
+    });
+  }
+
+  // Re-render size chips when categories change
+  categoryFilters.forEach(cb => {
+    cb.addEventListener('change', () => {
+      // Small delay to let the checkbox state settle
+      setTimeout(renderSizeChips, 0);
+    });
+  });
+
+  // Initial render
+  renderSizeChips();
 
   // ========================================
   // DUAL-HANDLE PRICE RANGE SLIDER
