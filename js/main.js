@@ -883,6 +883,7 @@ function initShopFiltersInternal() {
             const categoryCheckbox = document.querySelector(`.category-filter[data-category="${filter}"]`);
             if (categoryCheckbox) {
               categoryCheckbox.checked = true;
+              renderSizeChips();
               mxLog('Selected category:', filter);
             } else {
               mxLog('Category checkbox not found:', filter);
@@ -1039,6 +1040,7 @@ function initShopFiltersInternal() {
     if (targetCb) {
       document.querySelector('.category-filter[data-category="all"]').checked = false;
       targetCb.checked = true;
+      renderSizeChips();
       filterProducts();
     }
   }
