@@ -1,15 +1,15 @@
 {
   "name": "FOX FIXATED FLEXFIT HAT",
-  "image": "/assets/images/guantes/29906001_1.webp",
+  "sku": "",
+  "color": "",
+  "category": "gorras",
   "price": "$129.000",
   "sizes": "SM",
   "badge": "",
-  "category": "gorras",
   "description": "FOX FIXATED FLEXFIT HAT",
+  "image": "/assets/images/guantes/29906001_1.webp",
   "images": [
     "/assets/images/guantes/29906001_1.webp"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

@@ -1,15 +1,15 @@
 {
   "name": "GAFA 100% STRATA 2 PURPURA LENTE ROJO/AZUL ESPEJO",
-  "image": "/assets/images/gafas/s-l1200--3-.webp",
+  "sku": "",
+  "color": "",
+  "category": "gafas",
   "price": "$189.900",
   "sizes": "Unica",
   "badge": "",
-  "category": "gafas",
   "description": "GAFA 100% STRATA 2 PURPURA LENTE ROJO/AZUL ESPEJO",
+  "image": "/assets/images/gafas/s-l1200--3-.webp",
   "images": [
     "/assets/images/gafas/s-l1200--3-.webp"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

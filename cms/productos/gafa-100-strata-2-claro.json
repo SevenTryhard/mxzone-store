@@ -1,15 +1,15 @@
 {
   "name": "GAFA 100% STRATA 2 - CLARO",
-  "image": "/assets/images/gafas/583610-4931846.webp",
+  "sku": "",
+  "color": "",
+  "category": "gafas",
   "price": "$149.900",
   "sizes": "Unica",
   "badge": "",
-  "category": "gafas",
   "description": "Gafas para motocross: GAFA 100% STRATA 2 - CLARO",
+  "image": "/assets/images/gafas/583610-4931846.webp",
   "images": [
     "/assets/images/gafas/583610-4931846.webp"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }
