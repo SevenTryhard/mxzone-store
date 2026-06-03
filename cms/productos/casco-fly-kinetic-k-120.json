@@ -1,15 +1,15 @@
 {
   "name": "CASCO FLY KINETIC K 120",
-  "image": "/assets/images/nuevas_images/354355.webp",
+  "sku": "",
+  "color": "",
+  "category": "cascos-ninos",
   "price": "$650.000",
-  "sizes": "S",
+  "sizes": "YM",
   "badge": "Top Ventas",
-  "category": "cascos",
   "description": "Casco FLY KINETIC K 120 de entrada",
+  "image": "/assets/images/nuevas_images/354355.webp",
   "images": [
     "/assets/images/nuevas_images/354355.webp"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

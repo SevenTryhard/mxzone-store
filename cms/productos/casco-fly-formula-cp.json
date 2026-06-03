@@ -1,15 +1,15 @@
 {
   "name": "CASCO FLY FORMULA CP",
-  "image": "/assets/images/nuevas_images/casco-azul-fly-formula-cp-bicicleta-moto-73-0032-1-c0126a86-a19a-4296-9663-eee7877cf030.jpg",
+  "sku": "",
+  "color": "",
+  "category": "cascos",
   "price": "$1.450.000",
   "sizes": "S",
   "badge": "Premium",
-  "category": "cascos",
   "description": "Casco premium para motocross de alto rendimiento",
+  "image": "/assets/images/nuevas_images/casco-azul-fly-formula-cp-bicicleta-moto-73-0032-1-c0126a86-a19a-4296-9663-eee7877cf030.jpg",
   "images": [
     "/assets/images/nuevas_images/casco-azul-fly-formula-cp-bicicleta-moto-73-0032-1-c0126a86-a19a-4296-9663-eee7877cf030.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

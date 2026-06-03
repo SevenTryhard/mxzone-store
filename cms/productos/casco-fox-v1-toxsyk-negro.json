@@ -1,15 +1,15 @@
 {
   "name": "CASCO FOX V1 TOXSYK NEGRO ",
-  "image": "/assets/images/cascos/CASCO FOX V1 TOXSYK NEGRO.jpg",
+  "sku": "",
+  "color": "",
+  "category": "cascos",
   "price": "$1.429.900",
   "sizes": "S/M",
   "badge": "Top Ventas",
-  "category": "cascos",
   "description": "CASCO FOX V1 TOXSYK NEGRO ",
+  "image": "/assets/images/cascos/CASCO FOX V1 TOXSYK NEGRO.jpg",
   "images": [
     "/assets/images/cascos/CASCO FOX V1 TOXSYK NEGRO.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }
