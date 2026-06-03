@@ -1,0 +1,17 @@
+{
+  "name": "UNIFORME ALPINESTAR FLUID APEX",
+  "sku": "",
+  "color": "",
+  "category": "uniformes",
+  "price": "800.000",
+  "sizes": "32-M",
+  "description": "Uniforme competitivo ALPINESTAR FLUID APEX",
+  "image": "/assets/images/uniformes/3721226-7050_r4-Fluid-Apex-P_1db0e3f1-f413-430c-bb84-b55ba8db30a8.jpg",
+  "images": [
+    "/assets/images/uniformes/3721226-7050_r4-Fluid-Apex-P_1db0e3f1-f413-430c-bb84-b55ba8db30a8.jpg"
+  ],
+  "agotado": false,
+  "stock_quantity": 1,
+  "stock_min": 5,
+  "stock_max": 100
+}
