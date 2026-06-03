@@ -1,15 +1,15 @@
 {
   "name": "GRIPS TIPO ODI EMIG",
-  "image": "/assets/images/cascos/H36E2BW_1200x1200_e4ecce30-4709-4434-8afc-753cb97296fb.jpg",
+  "sku": "",
+  "color": "",
+  "category": "accesorios",
   "price": "$59.900",
   "sizes": "Unica",
   "badge": "",
-  "category": "accesorios",
   "description": "GRIPS TIPO ODI EMIG",
+  "image": "/assets/images/cascos/H36E2BW_1200x1200_e4ecce30-4709-4434-8afc-753cb97296fb.jpg",
   "images": [
     "/assets/images/cascos/H36E2BW_1200x1200_e4ecce30-4709-4434-8afc-753cb97296fb.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

@@ -1,15 +1,15 @@
 {
   "name": "GUANTE 100% SMART SHOCK FLUO ",
-  "image": "/assets/images/guantes/Guantes_100Percent_10027-001-600x600.jpg",
+  "sku": "",
+  "color": "",
+  "category": "guantes",
   "price": "$169.900",
   "sizes": "XL",
   "badge": "",
-  "category": "guantes",
   "description": "GUANTE 100% SMART SHOCK FLUO ",
+  "image": "/assets/images/guantes/Guantes_100Percent_10027-001-600x600.jpg",
   "images": [
     "/assets/images/guantes/Guantes_100Percent_10027-001-600x600.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

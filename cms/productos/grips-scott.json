@@ -1,15 +1,15 @@
 {
   "name": "GRIPS SCOTT",
-  "image": "/assets/images/cascos/2196260001_1841501_png_zoom_5.jpg",
+  "sku": "",
+  "color": "",
+  "category": "accesorios",
   "price": "$84.900",
   "sizes": "Unica",
   "badge": "",
-  "category": "accesorios",
   "description": "GRIPS SCOTT",
+  "image": "/assets/images/cascos/2196260001_1841501_png_zoom_5.jpg",
   "images": [
     "/assets/images/cascos/2196260001_1841501_png_zoom_5.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

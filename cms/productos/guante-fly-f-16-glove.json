@@ -1,15 +1,15 @@
 {
   "name": "GUANTE FLY F-16 GLOVE ",
-  "image": "/assets/images/guantes/guantes_negro_fly_f-16_bicicleta_moto_376-911-1_9023a81e-ee2b-4c35-87f5-82a59d45f70b.jpg",
+  "sku": "",
+  "color": "",
+  "category": "guantes",
   "price": "$129.000",
   "sizes": "M",
   "badge": "",
-  "category": "guantes",
   "description": "GUANTE FLY F-16 GLOVE ",
+  "image": "/assets/images/guantes/guantes_negro_fly_f-16_bicicleta_moto_376-911-1_9023a81e-ee2b-4c35-87f5-82a59d45f70b.jpg",
   "images": [
     "/assets/images/guantes/guantes_negro_fly_f-16_bicicleta_moto_376-911-1_9023a81e-ee2b-4c35-87f5-82a59d45f70b.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }
