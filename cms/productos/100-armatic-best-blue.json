@@ -1,15 +1,15 @@
 {
   "name": "100% ARMATIC BEST BLUE",
-  "image": "/assets/images/gafas/SP25_ARMATIC_50060-00009.webp",
+  "sku": "",
+  "color": "",
+  "category": "gafas",
   "price": "$449.000",
   "sizes": "Unica",
   "badge": "",
-  "category": "gafas",
   "description": "100% ARMATIC BEST BLUE",
+  "image": "/assets/images/gafas/SP25_ARMATIC_50060-00009.webp",
   "images": [
     "/assets/images/gafas/SP25_ARMATIC_50060-00009.webp"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

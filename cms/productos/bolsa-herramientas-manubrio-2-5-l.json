@@ -1,15 +1,15 @@
 {
   "name": "BOLSA HERRAMIENTAS MANUBRIO 2.5 L",
-  "image": "/assets/images/maletas/captura-de-pantalla-2026-05-07-132245-png-2026-05-21-19-28-24-yqta.jpg",
+  "sku": "",
+  "color": "",
+  "category": "maletas",
   "price": "179.000",
   "sizes": "2.5L",
   "badge": "",
-  "category": "maletas",
   "description": "BOLSA HERRAMIENTAS MANUBRIO 2.5 L",
+  "image": "/assets/images/maletas/captura-de-pantalla-2026-05-07-132245-png-2026-05-21-19-28-24-yqta.jpg",
   "images": [
     "/assets/images/maletas/captura-de-pantalla-2026-05-07-132245-png-2026-05-21-19-28-24-yqta.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

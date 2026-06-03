@@ -1,15 +1,15 @@
 {
   "name": "BANDERINES TRAILER",
-  "image": "/assets/images/accesorios/Banderin_Antena_Cuatrimoto_Trailer_verde.webp",
+  "sku": "",
+  "color": "",
+  "category": "accesorios",
   "price": "$35.000",
   "sizes": "Unica",
   "badge": "",
-  "category": "accesorios",
   "description": "BANDERINES TRAILER",
+  "image": "/assets/images/accesorios/Banderin_Antena_Cuatrimoto_Trailer_verde.webp",
   "images": [
     "/assets/images/accesorios/Banderin_Antena_Cuatrimoto_Trailer_verde.webp"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

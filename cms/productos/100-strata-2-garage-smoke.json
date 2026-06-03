@@ -1,15 +1,15 @@
 {
   "name": "100% STRATA 2 GARAGE SMOKE",
-  "image": "/assets/images/gafas/0001-fa23-strata-2-50028-00014.webp",
+  "sku": "",
+  "color": "",
+  "category": "gafas",
   "price": "$189.900",
   "sizes": "Unica",
   "badge": "",
-  "category": "gafas",
   "description": "Gafas para motocross: 100% STRATA 2 GARAGE SMOKE",
+  "image": "/assets/images/gafas/0001-fa23-strata-2-50028-00014.webp",
   "images": [
     "/assets/images/gafas/0001-fa23-strata-2-50028-00014.webp"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

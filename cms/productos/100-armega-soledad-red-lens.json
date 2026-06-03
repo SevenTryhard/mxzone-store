@@ -1,15 +1,15 @@
 {
   "name": "100% ARMEGA SOLEDAD (RED LENS)",
-  "image": "/assets/images/gafas/100percent-armega-mirror-soledad-mirror-red-01-1725950.jpg",
+  "sku": "",
+  "color": "",
+  "category": "gafas",
   "price": "$550.000",
   "sizes": "Unica",
   "badge": "Premium",
-  "category": "gafas",
   "description": "100% ARMEGA SOLEDAD (RED LENS)",
+  "image": "/assets/images/gafas/100percent-armega-mirror-soledad-mirror-red-01-1725950.jpg",
   "images": [
     "/assets/images/gafas/100percent-armega-mirror-soledad-mirror-red-01-1725950.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }
