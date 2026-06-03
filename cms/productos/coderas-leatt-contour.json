@@ -1,15 +1,15 @@
 {
   "name": "CODERAS LEATT CONTOUR",
-  "image": "/assets/images/protecciones/coderaleattcontourbicicletamotos-7b954286-4596-4c01-bdc3-c905ed279082.webp",
+  "sku": "",
+  "color": "",
+  "category": "protecciones",
   "price": "$389.900",
   "sizes": "L/XL",
   "badge": "",
-  "category": "protecciones",
   "description": "CODERAS LEATT CONTOUR",
+  "image": "/assets/images/protecciones/coderaleattcontourbicicletamotos-7b954286-4596-4c01-bdc3-c905ed279082.webp",
   "images": [
     "/assets/images/protecciones/coderaleattcontourbicicletamotos-7b954286-4596-4c01-bdc3-c905ed279082.webp"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

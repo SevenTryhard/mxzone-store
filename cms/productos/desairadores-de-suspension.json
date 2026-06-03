@@ -1,15 +1,15 @@
 {
   "name": "DESAIRADORES DE SUSPENSION",
-  "image": "/assets/images/cascos/Captura-de-pantalla-2026-05-15-121930.jpg",
+  "sku": "",
+  "color": "",
+  "category": "accesorios",
   "price": "$50.000",
   "sizes": "Unica",
   "badge": "",
-  "category": "accesorios",
   "description": "DESAIRADORES DE SUSPENSION",
+  "image": "/assets/images/cascos/Captura-de-pantalla-2026-05-15-121930.jpg",
   "images": [
     "/assets/images/cascos/Captura-de-pantalla-2026-05-15-121930.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

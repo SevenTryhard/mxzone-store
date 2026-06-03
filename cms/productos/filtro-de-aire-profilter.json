@@ -1,15 +1,15 @@
 {
   "name": "FILTRO DE AIRE PROFILTER",
-  "image": "/assets/images/accesorios/fd806c755dc3385d488aadf367adb1a6.jpg",
+  "sku": "",
+  "color": "",
+  "category": "accesorios",
   "price": "$129.000",
   "sizes": "Unica",
   "badge": "",
-  "category": "accesorios",
   "description": "FILTRO DE AIRE PROFILTER",
+  "image": "/assets/images/accesorios/fd806c755dc3385d488aadf367adb1a6.jpg",
   "images": [
     "/assets/images/accesorios/fd806c755dc3385d488aadf367adb1a6.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }
