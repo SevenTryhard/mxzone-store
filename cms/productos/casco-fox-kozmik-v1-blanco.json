@@ -1,0 +1,18 @@
+{
+  "name": "CASCO FOX KOZMIK V1 BLANCO",
+  "sku": "",
+  "color": "",
+  "category": "cascos",
+  "price": "$1.429.900",
+  "sizes": "XL",
+  "badge": "Premium",
+  "description": "CASCO FOX KOZMIK V1 BLANCO",
+  "image": "/assets/images/cascos/30439_018_7-webp-2026-06-03-20-40-07-6azv.jpg",
+  "images": [
+    "/assets/images/cascos/30439_018_7-webp-2026-06-03-20-40-07-6azv.jpg"
+  ],
+  "agotado": false,
+  "stock_quantity": 1,
+  "stock_min": 5,
+  "stock_max": 100
+}

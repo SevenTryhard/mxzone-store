@@ -51,6 +51,7 @@
     "casco-fly-kinetic-menace.json",
     "casco-fly-racing-kinetic-blk-red.json",
     "casco-fly-v1-interfere-gris.json",
+    "casco-fox-kozmik-v1-blanco.json",
     "casco-fox-v1-bnkr.json",
     "casco-fox-v1-dpth-verde-negro.json",
     "casco-fox-v1-emotion-naranja.json",
@@ -284,6 +285,6 @@
     "uniforme-tipo-fox-rojo.json",
     "uniforme-tipo-fox.json"
   ],
-  "total": 283,
+  "total": 284,
   "generated": "2026-05-22"
 }
