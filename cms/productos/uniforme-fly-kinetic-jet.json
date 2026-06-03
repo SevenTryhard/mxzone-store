@@ -1,0 +1,18 @@
+{
+  "name": "UNIFORME FLY KINETIC JET MINT",
+  "sku": "",
+  "color": "",
+  "category": "uniformes",
+  "price": "$949.000",
+  "sizes": "32-M",
+  "badge": "Top Ventas",
+  "description": "Uniforme FLY KINETIC JET de rendimiento",
+  "image": "/assets/images/uniformes/kinetic-jet-teal.png",
+  "images": [
+    "/assets/images/uniformes/kinetic-jet-teal.png"
+  ],
+  "agotado": false,
+  "stock_quantity": 1,
+  "stock_min": 5,
+  "stock_max": 100
+}
