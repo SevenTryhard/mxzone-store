@@ -1,15 +1,15 @@
 {
   "name": "BOTAS GAERNE SG12 ENDURO GRAVEL",
-  "image": "/assets/images/botas/sg12endurogravel-1.png",
+  "sku": "",
+  "color": "",
+  "category": "botas",
   "price": "$2.739.000",
   "sizes": "11-US",
   "badge": "Premium",
-  "category": "botas",
   "description": "BOTAS GAERNE SG12 ENDURO GRAVEL",
+  "image": "/assets/images/botas/sg12endurogravel-1.png",
   "images": [
     "/assets/images/botas/sg12endurogravel-1.png"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

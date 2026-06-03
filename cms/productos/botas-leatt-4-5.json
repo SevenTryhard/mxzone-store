@@ -1,0 +1,15 @@
+{
+  "name": "BOTAS LEATT 4.5 BLACK",
+  "sku": "",
+  "color": "",
+  "category": "botas",
+  "price": "$1.530.000",
+  "sizes": "7-US/8-US",
+  "badge": "Top Ventas",
+  "description": "BOTAS LEATT 4.5 BLACK",
+  "image": "/assets/images/botas/botas-de-motocross-leatt-45-negro-1080x.webp",
+  "images": [
+    "/assets/images/botas/botas-de-motocross-leatt-45-negro-1080x.webp"
+  ],
+  "agotado": false
+}

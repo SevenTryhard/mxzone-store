@@ -1,15 +1,15 @@
 {
   "name": "BOTON APAGADO UNIVERSAL",
-  "image": "/assets/images/cascos/D_NQ_NP_902455-CBT80767206960_112024-O.jpg",
+  "sku": "",
+  "color": "",
+  "category": "accesorios",
   "price": "$39.900",
   "sizes": "Unica",
   "badge": "",
-  "category": "accesorios",
   "description": "BOTON APAGADO UNIVERSAL",
+  "image": "/assets/images/cascos/D_NQ_NP_902455-CBT80767206960_112024-O.jpg",
   "images": [
     "/assets/images/cascos/D_NQ_NP_902455-CBT80767206960_112024-O.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

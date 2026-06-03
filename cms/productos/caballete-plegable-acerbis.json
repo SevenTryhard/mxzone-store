@@ -1,16 +1,16 @@
 {
   "name": "CABALLETE PLEGABLE ACERBIS",
-  "image": "/assets/images/cascos/0025403-377-P_A-LVR1N6NR.jpg",
+  "sku": "",
+  "color": "",
+  "category": "accesorios",
   "price": "$409.000",
   "sizes": "Unica",
   "badge": "",
-  "category": "accesorios",
   "description": "CABALLETE PLEGABLE ACERBIS",
+  "image": "/assets/images/cascos/0025403-377-P_A-LVR1N6NR.jpg",
   "images": [
     "/assets/images/cascos/0025403-377-P_A-LVR1N6NR.jpg",
     "/assets/images/cascos/caballete-plegable-paket-acerbis-color-gris.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }
