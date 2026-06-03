@@ -1,15 +1,15 @@
 {
   "name": "CASCO ALPINESTARS FORCE AZUL VERDE FLUO",
-  "image": "/assets/images/edited-1779204269443.png",
+  "sku": "",
+  "color": "",
+  "category": "cascos",
   "price": "$1.199.000",
   "sizes": "XL",
   "badge": "Premium",
-  "category": "cascos",
   "description": "CASCO ALPINESTARS FORCE AZUL VERDE FLUO",
+  "image": "/assets/images/edited-1779204269443.png",
   "images": [
     "/assets/images/edited-1779204269443.png"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }
