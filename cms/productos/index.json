@@ -285,6 +285,7 @@
     "uniforme-fox-180-leed-teal.json",
     "uniforme-fox-180-startk-kids.json",
     "uniforme-fox-180-startk-rojo-kids.json",
+    "uniforme-fox-180-stl-grey.json",
     "uniforme-fox-180-stl-gry.json",
     "uniforme-fox-ballast-180-red.json",
     "uniforme-fox-ballast.json",
@@ -296,5 +297,5 @@
     "uniforme-tipo-fox-rojo.json",
     "uniforme-tipo-fox.json"
   ],
-  "total": 294
+  "total": 295
 }

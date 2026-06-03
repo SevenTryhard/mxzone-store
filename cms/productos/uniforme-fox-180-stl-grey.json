@@ -11,5 +11,8 @@
   ],
   "sku": "",
   "color": "",
-  "agotado": false
+  "agotado": false,
+  "stock_quantity": 1,
+  "stock_min": 5,
+  "stock_max": 100
 }
