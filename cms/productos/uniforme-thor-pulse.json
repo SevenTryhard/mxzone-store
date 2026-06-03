@@ -5,11 +5,14 @@
   "sizes": "30-S",
   "badge": "",
   "category": "uniformes",
-  "description": "Uniforme completo THOR TARMAC para motocross",
+  "description": "UNIFORME THOR PULSE",
   "images": [
     "/assets/images/uniformes/captura-de-pantalla-2026-04-21-152331.png"
   ],
   "sku": "",
   "color": "",
-  "agotado": false
+  "agotado": false,
+  "stock_quantity": 1,
+  "stock_min": 5,
+  "stock_max": 100
 }
