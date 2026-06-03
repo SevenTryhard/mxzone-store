@@ -1,0 +1,15 @@
+{
+  "name": "GUANTE FLY LITE",
+  "sku": "",
+  "color": "",
+  "category": "guantes",
+  "price": "$129.000",
+  "sizes": "S/XXL",
+  "badge": "",
+  "description": "GUANTE FLY LITE",
+  "image": "/assets/images/guantes/LITE-5.jpg",
+  "images": [
+    "/assets/images/guantes/LITE-5.jpg"
+  ],
+  "agotado": false
+}
