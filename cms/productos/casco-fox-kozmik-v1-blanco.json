@@ -7,12 +7,12 @@
   "sizes": "XL",
   "badge": "Premium",
   "description": "CASCO FOX KOZMIK V1 BLANCO",
-  "image": "/assets/images/cascos/30439_018_7-webp-2026-06-03-20-40-07-6azv.jpg",
+  "image": "/assets/images/nuevas_images/30439-018-7-1200x1200.webp",
   "images": [
-    "/assets/images/cascos/30439_018_7-webp-2026-06-03-20-40-07-6azv.jpg"
+    "/assets/images/nuevas_images/30439-018-7-1200x1200.webp"
   ],
   "agotado": false,
-  "stock_quantity": 1,
+  "stock_quantity": 0,
   "stock_min": 5,
   "stock_max": 100
 }
