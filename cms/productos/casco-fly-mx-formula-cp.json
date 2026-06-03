@@ -1,0 +1,17 @@
+{
+  "name": "CASCO FLY MX FORMULA CP",
+  "sku": "",
+  "color": "",
+  "category": "cascos",
+  "price": "$1.450.000",
+  "sizes": "XL",
+  "description": "CASCO FLY MX FORMULA CP",
+  "image": "/assets/images/cascos/fly-racing-motocross-helm-mx-helmet-formula-cp-1-webp-2026-06-03-20-57-10-qyx8.jpg",
+  "images": [
+    "/assets/images/cascos/fly-racing-motocross-helm-mx-helmet-formula-cp-1-webp-2026-06-03-20-57-10-qyx8.jpg"
+  ],
+  "agotado": false,
+  "stock_quantity": 1,
+  "stock_min": 5,
+  "stock_max": 100
+}

@@ -50,6 +50,7 @@
     "casco-fly-kinetic-crest-mx.json",
     "casco-fly-kinetic-k-120.json",
     "casco-fly-kinetic-menace.json",
+    "casco-fly-mx-formula-cp.json",
     "casco-fly-racing-kinetic-blk-red.json",
     "casco-fly-v1-interfere-gris.json",
     "casco-fox-kozmik-v1-blanco.json",
@@ -294,5 +295,5 @@
     "uniforme-tipo-fox-rojo.json",
     "uniforme-tipo-fox.json"
   ],
-  "total": 292
+  "total": 293
 }
