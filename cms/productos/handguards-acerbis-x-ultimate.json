@@ -1,15 +1,15 @@
 {
   "name": "HANDGUARDS ACERBIS X-ULTIMATE",
-  "image": "/assets/images/accesorios/acerbis-0022115-313-372987-01_1_1800x1800.jpg",
+  "sku": "",
+  "color": "",
+  "category": "accesorios",
   "price": "$249.900",
   "sizes": "Unica",
   "badge": "",
-  "category": "accesorios",
   "description": "HANDGUARDS ACERBIS X-ULTIMATE",
+  "image": "/assets/images/accesorios/acerbis-0022115-313-372987-01_1_1800x1800.jpg",
   "images": [
     "/assets/images/accesorios/acerbis-0022115-313-372987-01_1_1800x1800.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

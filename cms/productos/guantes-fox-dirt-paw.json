@@ -1,15 +1,15 @@
 {
   "name": "GUANTES FOX DIRT PAW",
-  "image": "/assets/images/guantes/31325_018_1-2x.jpg",
+  "sku": "",
+  "color": "",
+  "category": "guantes",
   "price": "$199.900",
   "sizes": "S",
   "badge": "",
-  "category": "guantes",
   "description": "GUANTES FOX DIRT PAW",
+  "image": "/assets/images/guantes/31325_018_1-2x.jpg",
   "images": [
     "/assets/images/guantes/31325_018_1-2x.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

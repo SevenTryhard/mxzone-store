@@ -1,15 +1,15 @@
 {
   "name": "GUANTES FLY RACING LITE",
-  "image": "/assets/images/guantes/fly-lite-black-grey.webp",
+  "sku": "",
+  "color": "",
+  "category": "guantes",
   "price": "$149.900",
   "sizes": "XXL",
   "badge": "",
-  "category": "guantes",
   "description": "GUANTES FLY RACING LITE",
+  "image": "/assets/images/guantes/fly-lite-black-grey.webp",
   "images": [
     "/assets/images/guantes/fly-lite-black-grey.webp"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }
