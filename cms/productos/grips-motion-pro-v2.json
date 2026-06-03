@@ -1,15 +1,15 @@
 {
   "name": "GRIPS MOTION PRO V2",
-  "image": "/assets/images/cascos/y6imrh9zc9qxuue8auc3dwsstx68.jpg",
+  "sku": "",
+  "color": "",
+  "category": "accesorios",
   "price": "$149.900",
   "sizes": "Unica",
   "badge": "Premium",
-  "category": "accesorios",
   "description": "GRIPS MOTION PRO V2",
+  "image": "/assets/images/cascos/y6imrh9zc9qxuue8auc3dwsstx68.jpg",
   "images": [
     "/assets/images/cascos/y6imrh9zc9qxuue8auc3dwsstx68.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

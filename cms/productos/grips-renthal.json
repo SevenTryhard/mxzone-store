@@ -1,15 +1,15 @@
 {
   "name": "GRIPS RENTHAL",
-  "image": "/assets/images/accesorios/GRIPS-DUAL-SERIES-ENDURO-RENTHAL.jpg",
+  "sku": "",
+  "color": "",
+  "category": "accesorios",
   "price": "$84.900",
   "sizes": "Unica",
   "badge": "",
-  "category": "accesorios",
   "description": "GRIPS RENTHAL",
+  "image": "/assets/images/accesorios/GRIPS-DUAL-SERIES-ENDURO-RENTHAL.jpg",
   "images": [
     "/assets/images/accesorios/GRIPS-DUAL-SERIES-ENDURO-RENTHAL.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

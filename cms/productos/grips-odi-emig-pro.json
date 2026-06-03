@@ -1,15 +1,15 @@
 {
   "name": "GRIPS ODI EMIG PRO",
-  "image": "/assets/images/cascos/H36EPGO-GRIPS-EMIG-PRO-V2-LOCK-ON-ODI-GRIS-NARANJA.jpg",
+  "sku": "",
+  "color": "",
+  "category": "accesorios",
   "price": "$159.900",
   "sizes": "Unica",
   "badge": "Premium",
-  "category": "accesorios",
   "description": "GRIPS ODI EMIG PRO",
+  "image": "/assets/images/cascos/H36EPGO-GRIPS-EMIG-PRO-V2-LOCK-ON-ODI-GRIS-NARANJA.jpg",
   "images": [
     "/assets/images/cascos/H36EPGO-GRIPS-EMIG-PRO-V2-LOCK-ON-ODI-GRIS-NARANJA.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

@@ -1,15 +1,15 @@
 {
   "name": "GORRA FOX HEAD FLEXFIT [CAMUFLADO]",
-  "image": "/assets/images/gorras/31622-031-1-500x500.png",
+  "sku": "",
+  "color": "",
+  "category": "gorras",
   "price": "$165.000",
   "sizes": "SM",
   "badge": "",
-  "category": "gorras",
   "description": "GORRA FOX HEAD FLEXFIT [CAMUFLADO]",
+  "image": "/assets/images/gorras/31622-031-1-500x500.png",
   "images": [
     "/assets/images/gorras/31622-031-1-500x500.png"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

@@ -1,16 +1,16 @@
 {
   "name": "GORRA FOX ABSOLUTE MESH SNAPBACK",
-  "image": "/assets/images/gorras/31802-329-1-2x.webp",
+  "sku": "",
+  "color": "",
+  "category": "gorras",
   "price": "$165.000",
   "sizes": "Unica",
   "badge": "",
-  "category": "gorras",
   "description": "GORRA FOX ABSOLUTE MESH SNAPBACK",
+  "image": "/assets/images/gorras/31802-329-1-2x.webp",
   "images": [
     "/assets/images/gorras/31802-329-1-2x.webp",
     "/assets/images/gorras/D_NQ_NP_997415-MCO95281938846_102025-O.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

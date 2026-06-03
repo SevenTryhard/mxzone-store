@@ -1,15 +1,15 @@
 {
   "name": "GORRA FOX EFEKT FLEXFIT",
-  "image": "/assets/images/gorras/006-29901-046-1.webp",
+  "sku": "",
+  "color": "",
+  "category": "gorras",
   "price": "$165.000",
   "sizes": "SM",
   "badge": "",
-  "category": "gorras",
   "description": "GORRA FOX EFEKT FLEXFIT",
+  "image": "/assets/images/gorras/006-29901-046-1.webp",
   "images": [
     "/assets/images/gorras/006-29901-046-1.webp"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }

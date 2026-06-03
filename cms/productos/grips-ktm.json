@@ -1,15 +1,15 @@
 {
   "name": "GRIPS KTM",
-  "image": "/assets/images/accesorios/KTM-PP-78102924000-Lock-on-grip-set.jpg",
+  "sku": "",
+  "color": "",
+  "category": "accesorios",
   "price": "$39.900",
   "sizes": "Unica",
   "badge": "",
-  "category": "accesorios",
   "description": "GRIPS KTM",
+  "image": "/assets/images/accesorios/KTM-PP-78102924000-Lock-on-grip-set.jpg",
   "images": [
     "/assets/images/accesorios/KTM-PP-78102924000-Lock-on-grip-set.jpg"
   ],
-  "sku": "",
-  "color": "",
   "agotado": false
 }
