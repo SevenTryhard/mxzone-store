@@ -10,7 +10,7 @@
  */
 
 window.MXZONE_CONFIG = {
-  version: 'v10-20260604-4ULAB',
+  version: 'v11-20260604-4ULAB',
 
   // ═════════════════════════════════════════════
   // 4ULAB CMS (ACTIVO)
