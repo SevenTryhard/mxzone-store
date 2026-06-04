@@ -3,21 +3,21 @@
  * Actualizado: 2026-06-04
  * 
  * SISTEMA ACTIVO: 4ULAB CMS (PostgreSQL + Vercel)
- * https://4ulab.vercel.app
+ * https://4-ulab.vercel.app
  * 
  * SISTEMA ANTERIOR ARCHIVADO: OLD_CMS/
  * Ver OLD_CMS/TIPODEUSO.md para documentación del sistema viejo.
  */
 
 window.MXZONE_CONFIG = {
-  version: 'v12-20260604-4ULAB',
+  version: 'v13-20260604-4ULAB',
 
   // ═════════════════════════════════════════════
   // 4ULAB CMS (ACTIVO)
   // ═════════════════════════════════════════════
   // El frontend ahora carga productos desde el CMS de 4ULAB.
   // La API pública devuelve JSON con formato unificado.
-  cmsApiUrl: 'https://4ulab.vercel.app',
+  cmsApiUrl: 'https://4-ulab.vercel.app',
   projectKey: 'mxzonestore', // Project ID en base de datos
 
   // Endpoint público de productos (CORS abierto)

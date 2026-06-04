@@ -102,7 +102,7 @@ async function loadProductsFrom4ULAB() {
     const IMAGE_VERSION = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.imageVersion : 'v10';
     
     // Usar el nuevo endpoint de 4ULAB
-    var apiUrl = 'https://4ulab.vercel.app/api/public/products?project=1';
+    var apiUrl = 'https://4-ulab.vercel.app/api/public/products?project=1';
     
     mxLog('[4ULAB] Cargando productos desde 4ULAB CMS:', apiUrl);
     
