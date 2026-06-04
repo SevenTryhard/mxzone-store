@@ -1,0 +1,15 @@
+{
+  "name": "GUANTE FIST STOCKER CAMO",
+  "image": "/assets/images/guantes/camo-stocker-back.jpg",
+  "price": "$149.000",
+  "sizes": "S/L/XL",
+  "badge": "",
+  "category": "guantes",
+  "description": "GUANTE FIST STOCKER CAMO",
+  "images": [
+    "/assets/images/guantes/camo-stocker-back.jpg"
+  ],
+  "sku": "",
+  "color": "",
+  "agotado": false
+}

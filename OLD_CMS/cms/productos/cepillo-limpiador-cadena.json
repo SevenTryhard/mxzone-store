@@ -1,0 +1,15 @@
+{
+  "name": "CEPILLO LIMPIADOR CADENA",
+  "image": "/assets/images/accesorios/CepilloDeLimpiezaCadenaAzul_grande.jpg",
+  "price": "$20.000",
+  "sizes": "Unica",
+  "badge": "",
+  "category": "accesorios",
+  "description": "CEPILLO LIMPIADOR CADENA",
+  "images": [
+    "/assets/images/accesorios/CepilloDeLimpiezaCadenaAzul_grande.jpg"
+  ],
+  "sku": "",
+  "color": "",
+  "agotado": false
+}

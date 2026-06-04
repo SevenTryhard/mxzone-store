@@ -1,100 +1,121 @@
 /**
- * MXZONE STORE - Configuración Centralizada
- * Categorías, marcas y configuración global
+ * MXZONE STORE - Configuración CMS
+ * Actualizado: 2026-06-04
  * 
- * NOTA: Las categorías se cargan dinámicamente desde el CMS de Categorías
- * Este archivo es un fallback por si el CMS no está disponible
+ * SISTEMA ACTIVO: 4ULAB CMS (PostgreSQL + Vercel)
+ * https://4ulab.vercel.app
+ * 
+ * SISTEMA ANTERIOR ARCHIVADO: OLD_CMS/
+ * Ver OLD_CMS/TIPODEUSO.md para documentación del sistema viejo.
  */
 
 window.MXZONE_CONFIG = {
-  version: 'v9-20260510',
+  version: 'v10-20260604-4ULAB',
+
+  // ═════════════════════════════════════════════
+  // 4ULAB CMS (ACTIVO)
+  // ═════════════════════════════════════════════
+  // El frontend ahora carga productos desde el CMS de 4ULAB.
+  // La API pública devuelve JSON con formato unificado.
+  cmsApiUrl: 'https://4ulab.vercel.app',
+  projectKey: 'mxzonestore', // Project ID en base de datos
+
+  // Endpoint público de productos (CORS abierto)
+  publicProductsEndpoint: '/api/public/products',
+
+  // ═════════════════════════════════════════════
+  // OLD_CMS (ARCHIVADO — Solo como fallback de emergencia)
+  // ═════════════════════════════════════════════
+  // Para reactivar el CMS anterior, copiar desde OLD_CMS/
+  // Ver OLD_CMS/TIPODEUSO.md
   
-  projectKey: 'SevenTryhard/mxzone-store',
-  cmsBaseUrl: 'cms/productos/',
-  categoriesBaseUrl: 'cms/categorias/',
-  imageVersion: 'v9-20260510',
-  cmsApiUrl: 'https://growisoulsand.pages.dev'
+  oldCmsBaseUrl: 'cms/productos/',
+  oldCategoriesBaseUrl: 'cms/categorias/',
+  oldCmsApiUrl: 'https://growisoulsand.pages.dev',
+
+  imageVersion: 'v10-20260604',
 };
 
-// Función para cargar categorías desde el CMS
-async function loadCategoriesFromCMS() {
+// ═════════════════════════════════════════════
+// FUNCIONES DEL CMS ACTUAL
+// ═════════════════════════════════════════════
+
+/**
+ * Carga productos desde 4ULAB CMS (API pública).
+ * Fallback a OLD_CMS si el servidor responde con error.
+ */
+async function loadProductsFrom4ULAB() {
   try {
-    const response = await fetch(window.MXZONE_CONFIG.categoriesBaseUrl + 'index.json?v=' + window.MXZONE_CONFIG.imageVersion);
-    if (!response.ok) {
-      mxLog('⚠️ No se pudo cargar index.json de categorías, usando configuración local');
-      return false;
-    }
+    const apiUrl = window.MXZONE_CONFIG.cmsApiUrl + 
+                   window.MXZONE_CONFIG.publicProductsEndpoint + 
+                   '?project=1';
     
-    const indexData = await response.json();
-    const categoryFiles = indexData.files || [];
+    console.log('[4ULAB-CMS] Cargando productos desde:', apiUrl);
     
-    if (categoryFiles.length === 0) {
-      mxLog('⚠️ No hay categorías en el CMS, usando configuración local');
-      return false;
-    }
-    
-    // Cargar todas las categorías
-    const promises = categoryFiles.map(async (file) => {
-      try {
-        const catResponse = await fetch(window.MXZONE_CONFIG.categoriesBaseUrl + file + '?v=' + window.MXZONE_CONFIG.imageVersion);
-        if (catResponse.ok) {
-          return await catResponse.json();
-        }
-      } catch (e) {
-        mxLog('Error cargando categoría', file, e);
-      }
-      return null;
+    const response = await fetch(apiUrl, {
+      headers: { 'Accept': 'application/json' },
+      cache: 'no-store'
     });
-    
-    const categories = await Promise.all(promises);
-    const validCategories = categories.filter(c => c !== null && c.enabled !== false);
-    
-    if (validCategories.length > 0) {
-      // Reemplazar categorías del config con las del CMS
-      const newCategories = {};
-      const newParentCategories = {};
-      
-      validCategories.forEach(cat => {
-        const categoryConfig = {
-          label: cat.label,
-          icon: cat.icon,
-          order: cat.order || 999,
-          parent: cat.parent || ''
-        };
-        
-        if (cat.parent) {
-          newCategories[cat.name] = categoryConfig;
-        } else {
-          // Es categoría padre
-          newParentCategories[cat.name] = {
-            label: cat.label,
-            icon: cat.icon,
-            order: cat.order || 999
-          };
-          newCategories[cat.name] = categoryConfig;
-        }
-      });
-      
-      // Agregar "todos" como padre universal
-      newParentCategories['todos'] = { label: 'Todo', icon: '📦', order: 0 };
-      
-      window.MXZONE_CONFIG.categories = newCategories;
-      window.MXZONE_CONFIG.parentCategories = newParentCategories;
-      
-      mxLog('✅ Categorías cargadas desde CMS:', Object.keys(newCategories).length, 'categorías');
-      return true;
+
+    if (!response.ok) {
+      throw new Error('HTTP ' + response.status);
     }
+
+    const data = await response.json();
+    const products = data.products || [];
+
+    console.log('[4ULAB-CMS] Productos cargados:', products.length);
+    return products;
+
+  } catch (error) {
+    console.warn('[4ULAB-CMS] Error:', error.message);
+    console.log('[4ULAB-CMS] Fallback a OLD_CMS...');
+    return loadProductsFromOldCMS();
+  }
+}
+
+/**
+ * Fallback: Carga desde OLD_CMS (Cloudflare Pages anterior).
+ * Solo se ejecuta si 4ULAB CMS no responde.
+ */
+async function loadProductsFromOldCMS() {
+  try {
+    const apiUrl = window.MXZONE_CONFIG.oldCmsApiUrl + '/api/store/products';
+    const response = await fetch(apiUrl, { headers: { 'Accept': 'application/json' } });
     
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    
+    const data = await response.json();
+    console.log('[OLD_CMS] Fallback exitoso:', data.products ? data.products.length : 0, 'productos');
+    return data.products || [];
+
+  } catch (error) {
+    console.error('[OLD_CMS] Fallback fallido:', error.message);
+    return [];
+  }
+}
+
+// ═════════════════════════════════════════════
+// CATEGORÍAS (Carga desde API de 4ULAB)
+// ═════════════════════════════════════════════
+
+async function loadCategoriesFrom4ULAB() {
+  try {
+    // Por ahora las categorías están hardcodeadas como fallback
+    // En el futuro se puede crear /api/public/categories
     return false;
   } catch (error) {
-    mxLog('❌ Error cargando categorías desde CMS:', error);
+    console.warn('[4ULAB-CMS] Error cargando categorías:', error);
     return false;
   }
 }
 
-// Cargar categorías al inicializar
-loadCategoriesFromCMS();
+// ═════════════════════════════════════════════
+// INICIALIZACIÓN
+// ═════════════════════════════════════════════
 
-mxLog('✅ MXZONE_CONFIG cargado:', window.MXZONE_CONFIG.version);
-var catCount = window.MXZONE_CONFIG.categories ? Object.keys(window.MXZONE_CONFIG.categories).length : 0;
-mxLog('📂 Categorías disponibles:', catCount);
+console.log('[4ULAB-CMS] Configuración cargada:', window.MXZONE_CONFIG.version);
+console.log('[4ULAB-CMS] Endpoint activo:', window.MXZONE_CONFIG.cmsApiUrl + window.MXZONE_CONFIG.publicProductsEndpoint);
+
+// Para compatibilidad con js/products.js
+var loadProducts = loadProductsFrom4ULAB;

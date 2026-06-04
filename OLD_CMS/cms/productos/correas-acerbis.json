@@ -1,0 +1,15 @@
+{
+  "name": "CORREAS ACERBIS",
+  "image": "/assets/images/cascos/5-9.jpg",
+  "price": "$199.900",
+  "sizes": "Unica",
+  "badge": "Top Ventas",
+  "category": "accesorios",
+  "description": "CORREAS ACERBIS",
+  "images": [
+    "/assets/images/cascos/5-9.jpg"
+  ],
+  "sku": "",
+  "color": "",
+  "agotado": false
+}

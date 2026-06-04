@@ -1,0 +1,10 @@
+{
+  "name": "protecciones",
+  "label": "Protecciones",
+  "icon": "🛡️",
+  "parent": "",
+  "order": 7,
+  "enabled": true,
+  "showInQuickFilters": true,
+  "description": "Protecciones y rodilleras"
+}

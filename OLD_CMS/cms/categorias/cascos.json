@@ -1,0 +1,10 @@
+{
+  "name": "cascos",
+  "label": "Cascos",
+  "icon": "⛑️",
+  "parent": "",
+  "order": 1,
+  "enabled": true,
+  "showInQuickFilters": true,
+  "description": "Cascos para motocross y enduro de las mejores marcas"
+}

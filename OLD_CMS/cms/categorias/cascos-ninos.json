@@ -1,0 +1,10 @@
+{
+  "name": "cascos-ninos",
+  "label": "Cascos Niños",
+  "icon": "🧒",
+  "parent": "ninos",
+  "order": 2,
+  "enabled": true,
+  "showInQuickFilters": false,
+  "description": "Cascos para niños de motocross"
+}

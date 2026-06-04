@@ -1,0 +1,11 @@
+{
+  "name": "ninos",
+  "label": "Niños",
+  "icon": "🧒",
+  "parent": "",
+  "order": 100,
+  "enabled": true,
+  "showInQuickFilters": true,
+  "description": "Equipamiento para niños pilotos",
+  "hasChildren": true
+}
