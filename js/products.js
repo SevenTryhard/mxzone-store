@@ -83,7 +83,7 @@ function adaptProductFrom4ULAB(p) {
     badge: badge,
     image: image,
     images: p.images || (p.metaImageUrl ? [p.metaImageUrl] : []),
-    agotado: (p.stock !== undefined && p.stock <= 0) || p.status === 'discontinued',
+    agotado: false,
     // Campos adicionales de 4ULAB que pueden ser útiles
     _4ulabId: p.id,
     _4ulabSlug: p.slug,
