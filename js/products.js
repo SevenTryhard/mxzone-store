@@ -1,6 +1,6 @@
 /**
- * MXZONE STORE - Dynamic Product Loader v7
- * Actualizado: 2026-06-04 — Migrado a 4ULAB CMS
+ * MXZONE STORE - Dynamic Product Loader v7.1
+ * Actualizado: 2026-06-04 — Fix: eliminada función loadProducts() duplicada que causaba fetch a /api/store/products (CORS fail)
  * 
  * Carga productos desde 4ULAB CMS via API pública (/api/public/products)
  * Fallback a OLD_CMS si 4ULAB no responde.
@@ -189,119 +189,6 @@ async function loadProducts() {
     // ══════════════════════════════════════════════════════════
     // TERCERA OPCIÓN: archivos JSON estáticos locales
     // ══════════════════════════════════════════════════════════
-    const cmsBaseUrl = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.cmsBaseUrl : 'cms/productos/';
-    mxLog('[FILES] Fallback: cargando productos desde archivos estáticos');
-
-    const noCache = 'nocache=' + Date.now();
-    let productFiles = [];
-    try {
-      const indexResponse = await fetch(cmsBaseUrl + 'index.json?' + noCache);
-      if (indexResponse.ok) {
-        const indexData = await indexResponse.json();
-        productFiles = indexData.files || [];
-        mxLog('[OK] index.json cargado:', productFiles.length, 'archivos');
-      } else {
-        mxLog('[WARN] index.json respondió con estado:', indexResponse.status);
-      }
-    } catch (e) {
-      mxLog('[ERROR] Error cargando index.json:', e);
-    }
-
-    if (productFiles.length === 0) {
-      mxLog('[ERROR] No se pudo cargar index.json');
-      return [];
-    }
-
-    productFiles = productFiles.filter(f => f !== 'index.json');
-    mxLog('[LOAD] Cargando', productFiles.length, 'productos estáticos...');
-
-    const promises = productFiles.map(async (file) => {
-      try {
-        const response = await fetch(cmsBaseUrl + encodeURIComponent(file) + '?' + noCache);
-        if (response.ok) {
-          const product = await response.json();
-          if (product.images && product.images.length > 0) {
-            product.images = product.images.filter(img => img != null && typeof img === 'string' && img.trim() !== '').map(img => encodeImagePath(img) + '?' + IMAGE_VERSION);
-          }
-          if (product.image) {
-            product.image = encodeImagePath(product.image) + '?' + IMAGE_VERSION;
-          }
-          return product;
-        } else {
-          mxLog('[WARN] No se pudo cargar', file);
-        }
-      } catch (e) {
-        mxLog('[ERROR] Error cargando', file + ':', e.message);
-      }
-      return null;
-    });
-
-    const results = await Promise.all(promises);
-    const validProducts = results.filter(p => p !== null);
-    mxLog('[OK] Productos estáticos cargados:', validProducts.length, 'de', productFiles.length);
-    return validProducts;
-
-  } catch (error) {
-    mxLog('[ERROR] Error critico cargando productos:', error);
-    return [];
-  }
-}
-
-// Usar window.WHATSAPP_NUMBER para evitar redeclaración entre scripts
-window.WHATSAPP_NUMBER = window.WHATSAPP_NUMBER || '573176692997';
-
-function escapeHtml(str) {
-  if (!str || typeof str !== 'string') return str;
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
-// Función para descubrir y cargar TODOS los productos automáticamente
-async function loadProducts() {
-  try {
-    const cmsApiUrl = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.cmsApiUrl : '';
-    const IMAGE_VERSION = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.imageVersion : 'v5-20260423';
-
-    // Primario: cargar desde CMS API (D1)
-    if (cmsApiUrl) {
-      try {
-        var projectKey = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.projectKey : '';
-        var apiUrl = cmsApiUrl + '/api/store/products';
-        if (projectKey) {
-          apiUrl += '?project=' + encodeURIComponent(projectKey);
-        }
-        mxLog('[CMS] Cargando productos desde CMS API:', apiUrl);
-        const apiResponse = await fetch(apiUrl, {
-          headers: { 'Accept': 'application/json' },
-          cache: 'no-store'
-        });
-        if (apiResponse.ok) {
-          const apiData = await apiResponse.json();
-          if (apiData.products) {
-            const products = apiData.products.map(function(p) {
-              if (p.images && p.images.length > 0) {
-                p.images = p.images.filter(function(img) { return img != null && typeof img === 'string' && img.trim() !== ''; }).map(function(img) { return encodeImagePath(img) + '?' + IMAGE_VERSION; });
-              }
-              if (p.image) {
-                p.image = encodeImagePath(p.image) + '?' + IMAGE_VERSION;
-              }
-              return p;
-            });
-            mxLog('[OK] Productos cargados desde CMS API:', products.length);
-            return products;
-          }
-        }
-        mxLog('[WARN] CMS API respondio con error o vacio. Intentando fallback a JSON locales...');
-      } catch(e) {
-        mxLog('[WARN] Error en CMS API:', e.message);
-      }
-    }
-
-    // Fallback: cargar desde archivos JSON estáticos (ESPEJO LIMPIO DEL CMS via GitHub Action)
     const cmsBaseUrl = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.cmsBaseUrl : 'cms/productos/';
     mxLog('[FILES] Fallback: cargando productos desde archivos estáticos');
 
