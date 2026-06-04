@@ -95,37 +95,64 @@ function adaptProductFrom4ULAB(p) {
 
 /**
  * Adaptador de carga desde 4ULAB CMS.
- * Intenta cargar desde la API pública de 4ULAB y convierte el formato.
+ * Carga TODOS los productos con paginacion hasta que no haya mas.
  */
 async function loadProductsFrom4ULAB() {
   try {
     const IMAGE_VERSION = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.imageVersion : 'v10';
-    
-    // Usar el nuevo endpoint de 4ULAB
-    var apiUrl = 'https://4-ulab.vercel.app/api/public/products?project=1';
-    
-    mxLog('[4ULAB] Cargando productos desde 4ULAB CMS:', apiUrl);
-    
-    const response = await fetch(apiUrl, {
-      headers: { 'Accept': 'application/json' },
-      cache: 'no-store'
-    });
-    
-    if (!response.ok) {
-      throw new Error('HTTP ' + response.status);
+    const BASE_URL = 'https://4-ulab.vercel.app/api/public/products?project=1';
+    let allProducts = [];
+    let offset = 0;
+    const limit = 200;
+    let pageCount = 0;
+
+    while (true) {
+      var apiUrl = BASE_URL + '&limit=' + limit + '&offset=' + offset;
+      mxLog('[4ULAB] Cargando pagina', pageCount + 1, ':', apiUrl);
+
+      const response = await fetch(apiUrl, {
+        headers: { 'Accept': 'application/json' },
+        cache: 'no-store'
+      });
+
+      if (!response.ok) {
+        throw new Error('HTTP ' + response.status);
+      }
+
+      const data = await response.json();
+      if (!data.products || data.products.length === 0) {
+        mxLog('[4ULAB] No hay mas productos en pagina', pageCount + 1);
+        break;
+      }
+
+      allProducts = allProducts.concat(data.products);
+      mxLog('[4ULAB] Pagina', pageCount + 1, ':', data.products.length, 'productos. Total:', allProducts.length);
+
+      if (data.products.length < limit) {
+        mxLog('[4ULAB] Ultima pagina alcanzada');
+        break;
+      }
+
+      offset += limit;
+      pageCount += 1;
+
+      // Safety: no mas de 10 paginas (2000 productos)
+      if (pageCount > 10) {
+        mxLog('[4ULAB] Safety break: mas de 2000 productos');
+        break;
+      }
     }
-    
-    const data = await response.json();
-    if (!data.products || data.products.length === 0) {
+
+    if (allProducts.length === 0) {
       throw new Error('Sin productos');
     }
-    
-    // Adaptar cada producto al formato MXZONESTORE
-    const products = data.products.map(adaptProductFrom4ULAB);
-    
-    mxLog('[4ULAB] Productos cargados y adaptados:', products.length);
+
+    // Adaptar todos los productos al formato MXZONESTORE
+    const products = allProducts.map(adaptProductFrom4ULAB);
+
+    mxLog('[4ULAB] Total productos cargados:', products.length);
     return products;
-    
+
   } catch (error) {
     mxLog('[4ULAB] Error:', error.message);
     // Signal para fallback
