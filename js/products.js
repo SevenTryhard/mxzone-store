@@ -136,8 +136,6 @@ async function loadProductsFrom4ULAB() {
 // Función para descubrir y cargar TODOS los productos automáticamente
 async function loadProducts() {
   try {
-    const IMAGE_VERSION = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.imageVersion : 'v10';
-
     // ══════════════════════════════════════════════════════════
     // PRIMERA OPCIÓN: 4ULAB CMS (sistema nuevo)
     // ══════════════════════════════════════════════════════════
@@ -153,40 +151,39 @@ async function loadProducts() {
     // ══════════════════════════════════════════════════════════
     // SEGUNDA OPCIÓN: OLD_CMS (sistema anterior archivado)
     // ══════════════════════════════════════════════════════════
-    const cmsApiUrl = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.cmsApiUrl : '';
+    const cmsApiUrl = 'https://growisoulsand.pages.dev';
+    const IMAGE_VERSION = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.imageVersion : 'v10';
     
-    if (cmsApiUrl) {
-      try {
-        var projectKey = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.projectKey : '';
-        var apiUrl = cmsApiUrl + '/api/store/products';
-        if (projectKey) {
-          apiUrl += '?project=' + encodeURIComponent(projectKey);
-        }
-        mxLog('[OLD_CMS] Cargando productos desde CMS API:', apiUrl);
-        const apiResponse = await fetch(apiUrl, {
-          headers: { 'Accept': 'application/json' },
-          cache: 'no-store'
-        });
-        if (apiResponse.ok) {
-          const apiData = await apiResponse.json();
-          if (apiData.products) {
-            const products = apiData.products.map(function(p) {
-              if (p.images && p.images.length > 0) {
-                p.images = p.images.filter(function(img) { return img != null && typeof img === 'string' && img.trim() !== ''; }).map(function(img) { return encodeImagePath(img) + '?' + IMAGE_VERSION; });
-              }
-              if (p.image) {
-                p.image = encodeImagePath(p.image) + '?' + IMAGE_VERSION;
-              }
-              return p;
-            });
-            mxLog('[OLD_CMS] Productos cargados:', products.length);
-            return products;
-          }
-        }
-        mxLog('[WARN] OLD_CMS API respondio con error. Intentando fallback a JSON locales...');
-      } catch(e) {
-        mxLog('[WARN] Error en OLD_CMS API:', e.message);
+    try {
+      var projectKey = '';
+      var apiUrl = cmsApiUrl + '/api/store/products';
+      if (projectKey) {
+        apiUrl += '?project=' + encodeURIComponent(projectKey);
       }
+      mxLog('[OLD_CMS] Cargando productos desde CMS API:', apiUrl);
+      const apiResponse = await fetch(apiUrl, {
+        headers: { 'Accept': 'application/json' },
+        cache: 'no-store'
+      });
+      if (apiResponse.ok) {
+        const apiData = await apiResponse.json();
+        if (apiData.products) {
+          const products = apiData.products.map(function(p) {
+            if (p.images && p.images.length > 0) {
+              p.images = p.images.filter(function(img) { return img != null && typeof img === 'string' && img.trim() !== ''; }).map(function(img) { return encodeImagePath(img) + '?' + IMAGE_VERSION; });
+            }
+            if (p.image) {
+              p.image = encodeImagePath(p.image) + '?' + IMAGE_VERSION;
+            }
+            return p;
+          });
+          mxLog('[OLD_CMS] Productos cargados:', products.length);
+          return products;
+        }
+      }
+      mxLog('[WARN] OLD_CMS API respondio con error. Intentando fallback a JSON locales...');
+    } catch(e) {
+      mxLog('[WARN] Error en OLD_CMS API:', e.message);
     }
 
     // ══════════════════════════════════════════════════════════
