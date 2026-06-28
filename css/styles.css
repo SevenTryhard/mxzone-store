@@ -9526,3 +9526,71 @@ a {
   padding: 12px 0;
   display: block;
 }
+
+/* =========================================================
+   CATEGORY CHIPS — PC sidebar redesign (v18)
+   Botones pill para categorías, con estado activo iluminado.
+   ========================================================= */
+
+.category-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: var(--spacing-sm);
+}
+
+.category-chips--ninos {
+  padding-left: 0;
+  margin-top: var(--spacing-xs);
+}
+
+.category-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--gray-light-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-primary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  user-select: none;
+}
+
+.category-chip:hover {
+  border-color: var(--orange-primary);
+  color: var(--white);
+  background: rgba(255, 102, 0, 0.12);
+}
+
+.category-chip.active {
+  background: var(--orange-primary);
+  border-color: var(--orange-primary);
+  color: var(--black);
+  box-shadow: 0 0 16px rgba(255, 102, 0, 0.45);
+}
+
+.category-chip.active:hover {
+  background: var(--orange-primary);
+  color: var(--black);
+}
+
+/* Ocultar legacy checkboxes de categoría en PC si coexisten */
+@media (min-width: 769px) {
+  .category-children .checkbox-label[data-category],
+  .category-children .checkbox-label:has(.category-filter) {
+    display: none !important;
+  }
+}
+
+/* En mobile, los category-chips se ocultan y sigue el legacy */
+@media (max-width: 768px) {
+  .category-chips {
+    display: none;
+  }
+}
+

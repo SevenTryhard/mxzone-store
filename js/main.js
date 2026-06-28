@@ -295,6 +295,9 @@ function initShopFiltersInternal() {
   // Elements
   const searchInput = document.getElementById('productSearch');
   const mobileSearchInput = document.getElementById('mobileProductSearch');
+  // NUEVO: botones chip de categoría en sidebar de PC
+  const categoryChips = document.querySelectorAll('.category-chip');
+  // Legacy: checkboxes de categoría para compatibilidad móvil (si existen)
   const categoryFilters = document.querySelectorAll('.category-filter');
   const brandFilters = document.querySelectorAll('.brand-filter');
   const sizeChips = document.querySelectorAll('.size-chip');
@@ -428,10 +431,29 @@ function initShopFiltersInternal() {
   }
 
   function getActiveCategories() {
+    // Preferir nuevos category-chips (PC)
+    const chipsActive = Array.from(categoryChips)
+      .filter(btn => btn.classList.contains('active'))
+      .map(btn => btn.dataset.category)
+      .filter(c => c !== 'all');
+    if (chipsActive.length > 0) return chipsActive;
+
+    // Fallback a checkboxes legacy (mobile)
     return Array.from(categoryFilters)
       .filter(cb => cb.checked)
       .map(cb => cb.dataset.category)
       .filter(c => c !== 'all');
+  }
+
+  function setActiveCategories(categories) {
+    // Nuevos chips
+    categoryChips.forEach(btn => {
+      btn.classList.toggle('active', categories.includes(btn.dataset.category));
+    });
+    // Legacy checkboxes (mobile)
+    categoryFilters.forEach(cb => {
+      cb.checked = categories.includes(cb.dataset.category) || (categories.length === 0 && cb.dataset.category === 'all');
+    });
   }
 
   function hasSingleCategory(selectedCats) {
@@ -516,9 +538,7 @@ function initShopFiltersInternal() {
     const searchTerm = ((searchInput && searchInput.value) || '').toLowerCase();
 
     // Get selected categories
-    const selectedCategories = Array.from(categoryFilters)
-      .filter(cb => cb.checked)
-      .map(cb => cb.dataset.category);
+    const selectedCategories = getActiveCategories();
 
     // Get selected brands
     const selectedBrands = Array.from(brandFilters)
@@ -551,7 +571,7 @@ function initShopFiltersInternal() {
         const matchesSearch = name.includes(searchTerm);
 
         // Category filter (supports 'infantil' parent category)
-        const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes('all') || selectedCategories.includes(category) || (selectedCategories.includes('infantil') && category && category.endsWith('-ninos'));
+        const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(category) || (selectedCategories.includes('infantil') && category && category.endsWith('-ninos'));
 
         // Brand filter
         const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes('all') || selectedBrands.includes(brand);
@@ -586,9 +606,10 @@ function initShopFiltersInternal() {
 
     // Second pass: show/hide category dividers based on visibility
     const dividers = document.querySelectorAll('.category-divider');
+    const showingAll = selectedCategories.length === 0;
     dividers.forEach(divider => {
       const category = divider.dataset.category;
-      const hasVisibleProducts = categoryVisibility[category] || selectedCategories.includes('all');
+      const hasVisibleProducts = categoryVisibility[category] || showingAll;
       divider.style.display = hasVisibleProducts ? 'flex' : 'none';
     });
 
@@ -612,19 +633,24 @@ function initShopFiltersInternal() {
 
     mxLog('[STATS] Productos por categoría:', categoryCount);
 
-    // Hide category checkboxes without products
+    // Hide category checkboxes without products (legacy mobile)
     categoryFilters.forEach(cb => {
       const category = cb.dataset.category;
       if (category && category !== 'all') {
         const hasProducts = categoryCount[category] > 0;
         const filterGroup = cb.closest('.checkbox-label') || cb.parentElement;
-        
         if (filterGroup) {
           filterGroup.style.display = hasProducts ? 'flex' : 'none';
-          if (!hasProducts) {
-            mxLog('[HIDE] Ocultando categoría sin productos:', category);
-          }
         }
+      }
+    });
+
+    // Hide category chips without products (PC)
+    categoryChips.forEach(btn => {
+      const category = btn.dataset.category;
+      if (category && category !== 'all') {
+        const hasProducts = categoryCount[category] > 0;
+        btn.style.display = hasProducts ? 'inline-flex' : 'none';
       }
     });
 
@@ -760,21 +786,19 @@ function initShopFiltersInternal() {
     });
   }
 
-  // Sync mobile chips with desktop filters
-  function updateMobileChips(selectedCategory = null, selectedBrand = null) {
-    const mobileFilterChips = document.querySelectorAll('.mobile-filter-chip');
-    mobileFilterChips.forEach(chip => chip.classList.remove('active'));
+  // Sync mobile quick-filter chips with desktop category chips
+  function updateQuickFilterChips() {
+    const activeCategories = getActiveCategories();
+    const chips = document.querySelectorAll('.quick-filter-chip');
 
-    if (selectedCategory && selectedCategory !== 'all') {
-      const matchingChip = document.querySelector(`.mobile-filter-chip[data-filter="${selectedCategory}"]`);
-      if (matchingChip) matchingChip.classList.add('active');
-    } else if (selectedBrand && selectedBrand !== 'all') {
-      const matchingChip = document.querySelector(`.mobile-filter-chip[data-filter="${selectedBrand}"]`);
-      if (matchingChip) matchingChip.classList.add('active');
-    } else {
-      const allChip = document.querySelector('.mobile-filter-chip[data-filter="all"]');
-      if (allChip) allChip.classList.add('active');
-    }
+    chips.forEach(chip => {
+      const filter = chip.dataset.filter;
+      if (filter === 'all') {
+        chip.classList.toggle('active', activeCategories.length === 0);
+      } else {
+        chip.classList.toggle('active', activeCategories.includes(filter));
+      }
+    });
   }
 
   // Initialize new quick filter chips (horizontal scrollable bar)
@@ -921,25 +945,47 @@ function initShopFiltersInternal() {
     });
   };
 
-  categoryFilters.forEach(cb => {
-    cb.addEventListener('change', () => {
-      // Handle "all" checkbox
-      if (cb.dataset.category === 'all') {
-        if (cb.checked) {
-          categoryFilters.forEach(c => {
-            if (c.dataset.category !== 'all') c.checked = false;
-          });
+  // Category chips (PC sidebar): click normal = switch; Shift+click = multi-select
+  categoryChips.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const category = btn.dataset.category;
+      const isMulti = e.shiftKey;
+      const currentActive = getActiveCategories();
+
+      if (category === 'all') {
+        setActiveCategories([]);
+      } else if (isMulti) {
+        // Shift+click: toggle this category in the multi-selection
+        if (currentActive.includes(category)) {
+          const next = currentActive.filter(c => c !== category);
+          setActiveCategories(next.length ? next : []);
+        } else {
+          setActiveCategories([...currentActive, category]);
         }
       } else {
-        const allCheckbox = document.querySelector('.category-filter[data-category="all"]');
-        if (allCheckbox) allCheckbox.checked = false;
+        // Normal click: switch to single category
+        setActiveCategories([category]);
       }
 
-      // Update mobile chips
-      const selectedCategory = Array.from(categoryFilters).find(c => c.checked && c.dataset.category !== 'all')?.dataset.category;
-      const selectedBrand = Array.from(brandFilters).find(b => b.checked && b.dataset.brand !== 'all')?.dataset.brand;
-      updateMobileChips(selectedCategory, selectedBrand);
+      renderSizeChips();
+      updateQuickFilterChips();
+      filterProducts();
+    });
+  });
 
+  // Legacy category checkboxes (mobile fallback)
+  categoryFilters.forEach(cb => {
+    cb.addEventListener('change', () => {
+      if (cb.dataset.category === 'all') {
+        if (cb.checked) setActiveCategories([]);
+      } else {
+        const active = Array.from(categoryFilters)
+          .filter(c => c.checked && c.dataset.category !== 'all')
+          .map(c => c.dataset.category);
+        setActiveCategories(active);
+      }
+      renderSizeChips();
+      updateQuickFilterChips();
       filterProducts();
     });
   });
@@ -959,9 +1005,7 @@ function initShopFiltersInternal() {
       }
 
       // Update mobile chips
-      const selectedCategory = Array.from(categoryFilters).find(c => c.checked && c.dataset.category !== 'all')?.dataset.category;
-      const selectedBrand = Array.from(brandFilters).find(b => b.checked && b.dataset.brand !== 'all')?.dataset.brand;
-      updateMobileChips(selectedCategory, selectedBrand);
+      updateQuickFilterChips();
 
       filterProducts();
     });
@@ -989,10 +1033,8 @@ function initShopFiltersInternal() {
       if (searchInput) searchInput.value = '';
       if (mobileSearchInput) mobileSearchInput.value = '';
 
-      // Reset categories
-      categoryFilters.forEach(cb => {
-        cb.checked = cb.dataset.category === 'all';
-      });
+      // Reset categories to "all"
+      setActiveCategories([]);
 
       // Reset brands
       brandFilters.forEach(cb => {
@@ -1034,18 +1076,15 @@ function initShopFiltersInternal() {
 
   // Check URL params for category filter
   const urlParams = new URLSearchParams(window.location.search);
-  const category = urlParams.get('cat');
-  if (category) {
-    const targetCb = document.querySelector(`.category-filter[data-category="${category}"]`);
-    if (targetCb) {
-      document.querySelector('.category-filter[data-category="all"]').checked = false;
-      targetCb.checked = true;
-      renderSizeChips();
-      filterProducts();
-    }
+  const urlCategory = urlParams.get('cat');
+  if (urlCategory) {
+    setActiveCategories([urlCategory]);
+    renderSizeChips();
+    updateQuickFilterChips();
+    filterProducts();
   }
 
-  // Category Parent Toggle - "Todo" (sidebar PC)
+  // Category Parent Toggle - "Todo" (sidebar PC) — legacy, ignorar si no existe
   const allCategoriesToggle = document.getElementById('allCategoriesToggle');
   const allCategoriesChildren = document.getElementById('allCategoriesChildren');
 
@@ -1053,20 +1092,15 @@ function initShopFiltersInternal() {
     allCategoriesToggle.addEventListener('click', () => {
       const isCollapsed = allCategoriesToggle.classList.toggle('collapsed');
       allCategoriesChildren.classList.toggle('collapsed');
-      
+
       // When expanding "Todo", select all categories
       if (!isCollapsed) {
-        // Check all categories inside "Todo"
         const checkboxes = allCategoriesChildren.querySelectorAll('.category-filter');
         const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-        
-        // If all were checked, uncheck all. Otherwise, check all.
         checkboxes.forEach(cb => {
           cb.checked = !allChecked;
         });
-        
         filterProducts();
-        mxLog('Todo: ' + (allChecked ? 'Deseleccionar todo' : 'Seleccionar todo'));
       }
     });
 
@@ -1142,36 +1176,16 @@ function initShopFiltersInternal() {
     // Expand by default
     catalogosChildren.classList.remove('collapsed');
 
-    // Handle "Todo" checkbox inside Catálogos
-    const todoCheckbox = catalogosChildren.querySelector('.category-filter[data-category="all"]');
-    const categoryCheckboxes = catalogosChildren.querySelectorAll('.category-filter:not([data-category="all"])');
-
-    if (todoCheckbox) {
-      todoCheckbox.addEventListener('change', () => {
-        if (todoCheckbox.checked) {
-          // Check all categories
-          categoryCheckboxes.forEach(cb => {
-            cb.checked = false;
-          });
-        } else {
-          // Uncheck all - user must select individual categories
-          mxLog('Deseleccionar Todo - seleccionar categorías individuales');
-        }
+    // Nuevo: el chip "Todo" dentro de Catálogos resetea filtros
+    const todoChip = catalogosChildren.querySelector('.category-chip[data-category="all"]');
+    if (todoChip) {
+      todoChip.addEventListener('click', () => {
+        setActiveCategories([]);
+        renderSizeChips();
+        updateQuickFilterChips();
         filterProducts();
       });
     }
-
-    // Handle individual category checkboxes
-    categoryCheckboxes.forEach(cb => {
-      cb.addEventListener('change', () => {
-        // If any individual category is checked, uncheck "Todo"
-        const anyChecked = Array.from(categoryCheckboxes).some(c => c.checked);
-        if (anyChecked && todoCheckbox.checked) {
-          todoCheckbox.checked = false;
-        }
-        filterProducts();
-      });
-    });
   }
 
   // Category Parent Toggle - "Niños" (sidebar PC)
@@ -1302,10 +1316,9 @@ function initShopFiltersInternal() {
     });
   }
 
-  // Re-render size chips when categories change
+  // Re-render size chips when categories change (legacy fallback)
   categoryFilters.forEach(cb => {
     cb.addEventListener('change', () => {
-      // Small delay to let the checkbox state settle
       setTimeout(renderSizeChips, 0);
     });
   });
@@ -1516,49 +1529,21 @@ function initPriceRangeSlider() {
       chip.parentNode.replaceChild(newChip, chip);
 
       newChip.addEventListener('click', () => {
-        // Remove active class from all chips
-        document.querySelectorAll('.mobile-filter-chip').forEach(c => c.classList.remove('active'));
-        // Add active class to clicked chip
-        newChip.classList.add('active');
-
         const filterValue = newChip.dataset.filter;
 
-        // Reset desktop filters
-        categoryFilters.forEach(cb => cb.checked = false);
-        brandFilters.forEach(cb => cb.checked = false);
-
         if (filterValue === 'all') {
-          // Show all products
-          const allCategory = document.querySelector('.category-filter[data-category="all"]');
-          if (allCategory) allCategory.checked = true;
-          const allBrand = document.querySelector('.brand-filter[data-brand="all"]');
-          if (allBrand) allBrand.checked = true;
-        } else if (['cascos', 'uniformes', 'botas', 'protecciones'].includes(filterValue)) {
-          // Category filter
-          const targetCategory = document.querySelector(`.category-filter[data-category="${filterValue}"]`);
-          if (targetCategory) {
-            targetCategory.checked = true;
-            // Uncheck "all"
-            const allCategory = document.querySelector('.category-filter[data-category="all"]');
-            if (allCategory) allCategory.checked = false;
-          }
-          // Check "all brands"
-          const allBrand = document.querySelector('.brand-filter[data-brand="all"]');
-          if (allBrand) allBrand.checked = true;
+          setActiveCategories([]);
+        } else if (['cascos', 'uniformes', 'jersey', 'botas', 'protecciones', 'guantes', 'gafas', 'gorras', 'maletas', 'accesorios'].includes(filterValue)) {
+          setActiveCategories([filterValue]);
         } else {
           // Brand filter
+          brandFilters.forEach(cb => cb.checked = false);
           const targetBrand = document.querySelector(`.brand-filter[data-brand="${filterValue}"]`);
-          if (targetBrand) {
-            targetBrand.checked = true;
-            // Uncheck "all"
-            const allBrand = document.querySelector('.brand-filter[data-brand="all"]');
-            if (allBrand) allBrand.checked = false;
-          }
-          // Check "all categories"
-          const allCategory = document.querySelector('.category-filter[data-category="all"]');
-          if (allCategory) allCategory.checked = true;
+          if (targetBrand) targetBrand.checked = true;
         }
 
+        renderSizeChips();
+        updateQuickFilterChips();
         filterProducts();
         updateResultsCount();
 
