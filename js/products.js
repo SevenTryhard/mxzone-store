@@ -78,7 +78,7 @@ function adaptProductFrom4ULAB(p) {
   return {
     name: p.name || 'Producto sin nombre',
     category: category,
-    brand: p.brand || (p.attributes && p.attributes.marca) ? String(p.attributes.marca).trim() : '',
+    brand: p.brand || ((p.attributes && p.attributes.marca) ? String(p.attributes.marca).trim() : ''),
     price: priceStr,
     sizes: sizes,
     badge: badge,
