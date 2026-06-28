@@ -61,7 +61,7 @@ function saveCart() {
 // Agregar producto al carrito
 function addToCart(product, size, quantity = 1) {
   // Defensa: no agregar productos agotados
-  if (product.agotado === true) {
+  if (product.agotado === true || product._4ulabStock === 0 || product._4ulabStock === null || product._4ulabStock === undefined) {
     showNotification('El producto ' + product.name + ' está agotado', 'error');
     return;
   }
@@ -84,7 +84,8 @@ function addToCart(product, size, quantity = 1) {
       sizes: product.sizes || 'Unica',
       quantity: quantity,
       slug: createProductSlug(product.name),
-      agotado: product.agotado || false
+      agotado: product.agotado || false,
+      _4ulabStock: product._4ulabStock ?? null
     });
   }
 
@@ -260,7 +261,9 @@ function openCheckout() {
   }
 
   // BLOQUEO: productos agotados
-  const agotadosEnCarrito = cart.filter(function(item) { return item.agotado === true; });
+  const agotadosEnCarrito = cart.filter(function(item) {
+    return item.agotado === true || item._4ulabStock === 0 || item._4ulabStock === null || item._4ulabStock === undefined;
+  });
   if (agotadosEnCarrito.length > 0) {
     var nombres = agotadosEnCarrito.map(function(item) { return item.name; }).join(', ');
     showNotification('El carrito contiene productos agotados: ' + nombres + '. Por favor elimínalos para continuar.', 'error');

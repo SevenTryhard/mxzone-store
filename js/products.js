@@ -55,7 +55,7 @@ function adaptProductFrom4ULAB(p) {
   }
 
   // Determinar categoría
-  let category = (p.category || '').toLowerCase();
+  let category = (p.category || '').toLowerCase().trim();
   // Mapear algunas categorías específicas si es necesario
   const categoryMap = {
     'cascos': 'cascos',
@@ -63,7 +63,7 @@ function adaptProductFrom4ULAB(p) {
     'botas': 'botas',
     'protecciones': 'protecciones'
   };
-  category = categoryMap[category] || category || 'accesorios';
+  category = categoryMap[category] || category || 'sin-categoria';
 
   // Formatear precio (viene como string "449000.00" o number)
   let priceStr = p.price || 'Consultar';
@@ -83,7 +83,8 @@ function adaptProductFrom4ULAB(p) {
     badge: badge,
     image: image,
     images: p.images || (p.metaImageUrl ? [p.metaImageUrl] : []),
-    agotado: false,
+    // Usar stock real de 4ULAB: stock=0 o stock null => agotado
+    agotado: !(p.stock && Number(p.stock) > 0),
     // Campos adicionales de 4ULAB que pueden ser útiles
     _4ulabId: p.id,
     _4ulabSlug: p.slug,

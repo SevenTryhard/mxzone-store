@@ -226,6 +226,14 @@ function createProductHTML(product) {
           <p class="description-text">${description}</p>
         </div>
 
+        <!-- Reviews 4ULAB -->
+        <div id="ulab-reviews-target"></div>
+        <script>
+          window.ULAB_PROJECT_ID = 1;
+          window.ULAB_PRODUCT_ID = ${product._4ulabId || 'null'};
+        </script>
+        <script src="https://4-ulab.vercel.app/review-snippet.js"></script>
+
         <!-- Características -->
         <div class="product-features-section">
           <h4 class="features-title">Características</h4>
