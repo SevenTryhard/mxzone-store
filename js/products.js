@@ -283,8 +283,11 @@ function createProductCard(product) {
 
   const whatsappMessage = encodeURIComponent(`Estoy interesado en ${product.name}`);
   const whatsappUrl = `https://wa.me/${window.WHATSAPP_NUMBER}?text=${whatsappMessage}`;
-  const brandFrom4U = product.brand ? String(product.brand).trim().toLowerCase() : '';
-  const brandObj = brandFrom4U ? { name: brandFrom4U, slug: brandFrom4U.replace(/\s+/g, '-') } : getBrand(product.name);
+  const rawBrand = product.brand || (product.attributes && product.attributes.marca) || '';
+  const brandFrom4U = String(rawBrand).trim().toLowerCase();
+  const brandObj = (brandFrom4U && brandFrom4U !== 'otro')
+    ? getBrand(brandFrom4U)  // normaliza a { name, icon } para que slugs coincidan
+    : getBrand(product.name);
   const brand = brandObj.name.toLowerCase();
   const priceNum = parseInt((product.price || '0').toString().replace(/[^0-9]/g, '')) || 0;
   const productSlug = createProductSlug(product.name);
