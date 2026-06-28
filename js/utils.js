@@ -39,6 +39,17 @@ function createProductSlug(productName) {
     .replace(/^-+|-+$/g, '');
 }
 
+// Normalize any brand string to a consistent slug used in chips and cards
+function normalizeBrandSlug(brand) {
+  if (!brand || typeof brand !== 'string') return 'otro';
+  return brand
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 // Encode spaces in image paths to %20
 function encodeImagePath(path) {
   return path.replace(/ /g, '%20');

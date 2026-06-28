@@ -537,7 +537,7 @@ function initShopFiltersInternal() {
   document.querySelectorAll('.product-card').forEach(card => {
     if (!card.dataset.brand) {
       const name = card.querySelector('.product-name')?.textContent || '';
-      card.dataset.brand = getBrand(name).name.toLowerCase();
+      card.dataset.brand = normalizeBrandSlug(getBrand(name).name);
     }
 
     if (!card.dataset.price) {
@@ -562,7 +562,7 @@ function initShopFiltersInternal() {
     const selectedCategories = getActiveCategories();
 
     // Get selected brands (PC chips, fallback legacy checkboxes)
-    const selectedBrands = getActiveBrands();
+    const selectedBrands = getActiveBrands().map(normalizeBrandSlug);
 
     // Get selected sizes (dynamic chips)
     const selectedSizes = getSelectedSizes();
@@ -592,8 +592,9 @@ function initShopFiltersInternal() {
         // Category filter (supports 'infantil' parent category)
         const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(category) || (selectedCategories.includes('infantil') && category && category.endsWith('-ninos'));
 
-        // Brand filter
-        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes('all') || selectedBrands.includes(brand);
+        // Brand filter (compare normalized slugs)
+        const cardBrand = normalizeBrandSlug(brand);
+        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes('all') || selectedBrands.includes(cardBrand);
 
         // Price filter
         const matchesPrice = price >= minPrice && price <= maxPrice;
@@ -1012,8 +1013,8 @@ function initShopFiltersInternal() {
   // Brand chips (PC sidebar): always allow multi-select (no Shift requirement)
   brandChips.forEach(btn => {
     btn.addEventListener('click', () => {
-      const brand = btn.dataset.brand;
-      const currentActive = getActiveBrands();
+      const brand = normalizeBrandSlug(btn.dataset.brand);
+      const currentActive = getActiveBrands().map(normalizeBrandSlug);
 
       if (brand === 'all') {
         setActiveBrands([]);
@@ -1037,7 +1038,7 @@ function initShopFiltersInternal() {
       } else {
         const active = Array.from(brandFilters)
           .filter(c => c.checked && c.dataset.brand !== 'all')
-          .map(c => c.dataset.brand);
+          .map(c => normalizeBrandSlug(c.dataset.brand));
         setActiveBrands(active);
       }
 
@@ -1570,7 +1571,7 @@ function initPriceRangeSlider() {
           setActiveCategories([filterValue]);
         } else {
           // Brand filter
-          setActiveBrands([filterValue]);
+          setActiveBrands([normalizeBrandSlug(filterValue)]);
         }
 
         renderSizeChips();

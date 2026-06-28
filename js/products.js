@@ -284,11 +284,11 @@ function createProductCard(product) {
   const whatsappMessage = encodeURIComponent(`Estoy interesado en ${product.name}`);
   const whatsappUrl = `https://wa.me/${window.WHATSAPP_NUMBER}?text=${whatsappMessage}`;
   const rawBrand = product.brand || (product.attributes && product.attributes.marca) || '';
-  const brandFrom4U = String(rawBrand).trim().toLowerCase();
+  const brandFrom4U = String(rawBrand).trim();
   const brandObj = (brandFrom4U && brandFrom4U !== 'otro')
     ? getBrand(brandFrom4U)  // normaliza a { name, icon } para que slugs coincidan
     : getBrand(product.name);
-  const brand = brandObj.name.toLowerCase();
+  const brand = normalizeBrandSlug(brandObj.name);
   const priceNum = parseInt((product.price || '0').toString().replace(/[^0-9]/g, '')) || 0;
   const productSlug = createProductSlug(product.name);
 
