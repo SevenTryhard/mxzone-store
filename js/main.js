@@ -436,12 +436,25 @@ function initShopFiltersInternal() {
       .filter(btn => btn.classList.contains('active'))
       .map(btn => btn.dataset.category)
       .filter(c => c !== 'all');
-    if (chipsActive.length > 0) return chipsActive;
+    if (chipsActive.length > 0) return expandCategoryAliases(chipsActive);
 
-    return Array.from(categoryFilters)
+    return expandCategoryAliases(Array.from(categoryFilters)
       .filter(cb => cb.checked)
       .map(cb => cb.dataset.category)
-      .filter(c => c !== 'all');
+      .filter(c => c !== 'all'));
+  }
+
+  function expandCategoryAliases(categories) {
+    const expanded = new Set();
+    categories.forEach(c => {
+      expanded.add(c);
+      if (c === 'jersey') {
+        // 4ULAB agrupa jerseys bajo uniformes
+        expanded.add('uniformes');
+        expanded.add('uniformes-ninos');
+      }
+    });
+    return Array.from(expanded);
   }
 
   function setActiveCategories(categories) {
@@ -944,7 +957,8 @@ function initShopFiltersInternal() {
 
         // Scroll to products section on mobile
         if (window.innerWidth <= 768) {
-          setTimeout(() => {
+          clearTimeout(window._mxzoneCategoryScrollTimeout);
+          window._mxzoneCategoryScrollTimeout = setTimeout(() => {
             const productsGrid = document.getElementById('productsGrid');
             const productsTitle = document.querySelector('.shop-title, .section-title');
             const target = productsTitle || productsGrid;
@@ -952,12 +966,13 @@ function initShopFiltersInternal() {
             if (target) {
               const headerOffset = 140;
               const elementPosition = target.getBoundingClientRect().top;
-              const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-              window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-              });
+              const offsetPosition = elementPosition + window.scrollY - headerOffset;
+              if (offsetPosition > 0) {
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: 'smooth'
+                });
+              }
             }
           }, 300);
         }
