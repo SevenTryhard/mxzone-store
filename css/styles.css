@@ -9714,6 +9714,28 @@ a {
   animation-play-state: paused;
 }
 
+.brand-logo {
+  height: 36px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(47%) sepia(97%) saturate(3654%) hue-rotate(9deg) brightness(102%) contrast(101%);
+  opacity: 0.92;
+  flex-shrink: 0;
+}
+
+.brand-name-text {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--orange-primary);
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0.9;
+  flex-shrink: 0;
+}
+
 .brand-name {
   font-family: var(--font-display);
   font-size: 1.6rem;
@@ -9740,8 +9762,12 @@ a {
   .brands-marquee {
   padding: 1rem 0;
   }
-  .brand-name {
+  .brand-name,
+  .brand-name-text {
   font-size: 1.25rem;
+  }
+  .brand-logo {
+  height: 28px;
   }
 }
 

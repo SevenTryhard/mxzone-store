@@ -436,25 +436,12 @@ function initShopFiltersInternal() {
       .filter(btn => btn.classList.contains('active'))
       .map(btn => btn.dataset.category)
       .filter(c => c !== 'all');
-    if (chipsActive.length > 0) return expandCategoryAliases(chipsActive);
+    if (chipsActive.length > 0) return chipsActive;
 
-    return expandCategoryAliases(Array.from(categoryFilters)
+    return Array.from(categoryFilters)
       .filter(cb => cb.checked)
       .map(cb => cb.dataset.category)
-      .filter(c => c !== 'all'));
-  }
-
-  function expandCategoryAliases(categories) {
-    const expanded = new Set();
-    categories.forEach(c => {
-      expanded.add(c);
-      if (c === 'jersey') {
-        // 4ULAB agrupa jerseys bajo uniformes
-        expanded.add('uniformes');
-        expanded.add('uniformes-ninos');
-      }
-    });
-    return Array.from(expanded);
+      .filter(c => c !== 'all');
   }
 
   function setActiveCategories(categories) {
