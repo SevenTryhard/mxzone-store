@@ -299,6 +299,7 @@ function initShopFiltersInternal() {
   const categoryChips = document.querySelectorAll('.category-chip');
   // Legacy: checkboxes de categoría para compatibilidad móvil (si existen)
   const categoryFilters = document.querySelectorAll('.category-filter');
+  const brandChips = document.querySelectorAll('.brand-chip');
   const brandFilters = document.querySelectorAll('.brand-filter');
   const sizeChips = document.querySelectorAll('.size-chip');
   const minPriceInput = document.getElementById('minPrice');
@@ -431,14 +432,12 @@ function initShopFiltersInternal() {
   }
 
   function getActiveCategories() {
-    // Preferir nuevos category-chips (PC)
     const chipsActive = Array.from(categoryChips)
       .filter(btn => btn.classList.contains('active'))
       .map(btn => btn.dataset.category)
       .filter(c => c !== 'all');
     if (chipsActive.length > 0) return chipsActive;
 
-    // Fallback a checkboxes legacy (mobile)
     return Array.from(categoryFilters)
       .filter(cb => cb.checked)
       .map(cb => cb.dataset.category)
@@ -446,13 +445,33 @@ function initShopFiltersInternal() {
   }
 
   function setActiveCategories(categories) {
-    // Nuevos chips
     categoryChips.forEach(btn => {
       btn.classList.toggle('active', categories.includes(btn.dataset.category));
     });
-    // Legacy checkboxes (mobile)
     categoryFilters.forEach(cb => {
       cb.checked = categories.includes(cb.dataset.category) || (categories.length === 0 && cb.dataset.category === 'all');
+    });
+  }
+
+  function getActiveBrands() {
+    const chipsActive = Array.from(brandChips)
+      .filter(btn => btn.classList.contains('active'))
+      .map(btn => btn.dataset.brand)
+      .filter(b => b !== 'all');
+    if (chipsActive.length > 0) return chipsActive;
+
+    return Array.from(brandFilters)
+      .filter(cb => cb.checked)
+      .map(cb => cb.dataset.brand)
+      .filter(b => b !== 'all');
+  }
+
+  function setActiveBrands(brands) {
+    brandChips.forEach(btn => {
+      btn.classList.toggle('active', brands.includes(btn.dataset.brand));
+    });
+    brandFilters.forEach(cb => {
+      cb.checked = brands.includes(cb.dataset.brand) || (brands.length === 0 && cb.dataset.brand === 'all');
     });
   }
 
@@ -514,16 +533,18 @@ function initShopFiltersInternal() {
       .map(c => c.dataset.size);
   }
 
-  // Add data-brand attribute to all products
+  // Enforce data-brand/price on cards when needed (cards rendered from 4ULAB already include it)
   document.querySelectorAll('.product-card').forEach(card => {
-    const name = card.querySelector('.product-name').textContent;
-    const brand = getBrand(name).name.toLowerCase();
-    card.dataset.brand = brand;
+    if (!card.dataset.brand) {
+      const name = card.querySelector('.product-name')?.textContent || '';
+      card.dataset.brand = getBrand(name).name.toLowerCase();
+    }
 
-    // Extract price number
-    const priceText = card.querySelector('.product-price').textContent;
-    const priceNum = parseInt(priceText.replace(/[^0-9]/g, ''));
-    card.dataset.price = priceNum;
+    if (!card.dataset.price) {
+      const priceText = card.querySelector('.product-price')?.textContent || '';
+      const priceNum = parseInt(priceText.replace(/[^0-9]/g, ''));
+      card.dataset.price = priceNum || 0;
+    }
   });
 
   // Filter function
@@ -540,10 +561,8 @@ function initShopFiltersInternal() {
     // Get selected categories
     const selectedCategories = getActiveCategories();
 
-    // Get selected brands
-    const selectedBrands = Array.from(brandFilters)
-      .filter(cb => cb.checked)
-      .map(cb => cb.dataset.brand);
+    // Get selected brands (PC chips, fallback legacy checkboxes)
+    const selectedBrands = getActiveBrands();
 
     // Get selected sizes (dynamic chips)
     const selectedSizes = getSelectedSizes();
@@ -990,23 +1009,39 @@ function initShopFiltersInternal() {
     });
   });
 
-  brandFilters.forEach(cb => {
-    cb.addEventListener('change', () => {
-      // Handle "all" checkbox
-      if (cb.dataset.brand === 'all') {
-        if (cb.checked) {
-          brandFilters.forEach(b => {
-            if (b.dataset.brand !== 'all') b.checked = false;
-          });
-        }
+  // Brand chips (PC sidebar): always allow multi-select (no Shift requirement)
+  brandChips.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const brand = btn.dataset.brand;
+      const currentActive = getActiveBrands();
+
+      if (brand === 'all') {
+        setActiveBrands([]);
       } else {
-        const allCheckbox = document.querySelector('.brand-filter[data-brand="all"]');
-        if (allCheckbox) allCheckbox.checked = false;
+        const next = currentActive.includes(brand)
+          ? currentActive.filter(b => b !== brand)
+          : [...currentActive, brand];
+        setActiveBrands(next.length ? next : []);
       }
 
-      // Update mobile chips
       updateQuickFilterChips();
+      filterProducts();
+    });
+  });
 
+  // Legacy brand checkboxes (mobile fallback)
+  brandFilters.forEach(cb => {
+    cb.addEventListener('change', () => {
+      if (cb.dataset.brand === 'all') {
+        if (cb.checked) setActiveBrands([]);
+      } else {
+        const active = Array.from(brandFilters)
+          .filter(c => c.checked && c.dataset.brand !== 'all')
+          .map(c => c.dataset.brand);
+        setActiveBrands(active);
+      }
+
+      updateQuickFilterChips();
       filterProducts();
     });
   });
@@ -1037,9 +1072,7 @@ function initShopFiltersInternal() {
       setActiveCategories([]);
 
       // Reset brands
-      brandFilters.forEach(cb => {
-        cb.checked = cb.dataset.brand === 'all';
-      });
+      setActiveBrands([]);
 
       // Reset sizes
       sizeChips.forEach(chip => {
@@ -1537,9 +1570,7 @@ function initPriceRangeSlider() {
           setActiveCategories([filterValue]);
         } else {
           // Brand filter
-          brandFilters.forEach(cb => cb.checked = false);
-          const targetBrand = document.querySelector(`.brand-filter[data-brand="${filterValue}"]`);
-          if (targetBrand) targetBrand.checked = true;
+          setActiveBrands([filterValue]);
         }
 
         renderSizeChips();

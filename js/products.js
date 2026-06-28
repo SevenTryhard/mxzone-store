@@ -78,6 +78,7 @@ function adaptProductFrom4ULAB(p) {
   return {
     name: p.name || 'Producto sin nombre',
     category: category,
+    brand: p.brand || (p.attributes && p.attributes.marca) ? String(p.attributes.marca).trim() : '',
     price: priceStr,
     sizes: sizes,
     badge: badge,
@@ -282,7 +283,8 @@ function createProductCard(product) {
 
   const whatsappMessage = encodeURIComponent(`Estoy interesado en ${product.name}`);
   const whatsappUrl = `https://wa.me/${window.WHATSAPP_NUMBER}?text=${whatsappMessage}`;
-  const brandObj = getBrand(product.name);
+  const brandFrom4U = product.brand ? String(product.brand).trim().toLowerCase() : '';
+  const brandObj = brandFrom4U ? { name: brandFrom4U, slug: brandFrom4U.replace(/\s+/g, '-') } : getBrand(product.name);
   const brand = brandObj.name.toLowerCase();
   const priceNum = parseInt((product.price || '0').toString().replace(/[^0-9]/g, '')) || 0;
   const productSlug = createProductSlug(product.name);

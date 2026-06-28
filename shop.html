@@ -329,83 +329,28 @@
               </div>
             </div>
 
-            <!-- MARCAS Section -->
-            <div class="filter-group">
-              <div class="checkbox-group">
-                <div class="category-parent-wrapper">
-                  <button class="category-parent-toggle filter-section-toggle" id="marcasToggle" type="button">
-                    <span class="toggle-icon">▼</span>
-                    <span class="toggle-label">MARCAS</span>
-                  </button>
-                  <div class="category-children" id="marcasChildren">
-                    <!-- "Todas" dentro del desplegable (primera posición) -->
-                    <label class="checkbox-label checkbox-label-todo">
-                      <input type="checkbox" class="brand-filter" data-brand="all" checked>
-                      <span class="checkmark"></span>
-                      <span class="todo-label">Todas</span>
-                    </label>
-                    
-                    <label class="checkbox-label">
-                      <input type="checkbox" class="brand-filter" data-brand="fox">
-                      <span class="checkmark"></span>
-                      Fox
-                    </label>
-                    <label class="checkbox-label">
-                      <input type="checkbox" class="brand-filter" data-brand="fly">
-                      <span class="checkmark"></span>
-                      Fly
-                    </label>
-                    <label class="checkbox-label">
-                      <input type="checkbox" class="brand-filter" data-brand="alpinestars">
-                      <span class="checkmark"></span>
-                      Alpinestars
-                    </label>
-                    <label class="checkbox-label">
-                      <input type="checkbox" class="brand-filter" data-brand="leatt">
-                      <span class="checkmark"></span>
-                      Leatt
-                    </label>
-                    <label class="checkbox-label">
-                      <input type="checkbox" class="brand-filter" data-brand="troy-lee">
-                      <span class="checkmark"></span>
-                      Troy Lee
-                    </label>
-                    <label class="checkbox-label">
-                      <input type="checkbox" class="brand-filter" data-brand="oneal">
-                      <span class="checkmark"></span>
-                      Oneal
-                    </label>
-                    <label class="checkbox-label">
-                      <input type="checkbox" class="brand-filter" data-brand="airoh">
-                      <span class="checkmark"></span>
-                      Airoh
-                    </label>
-                    <label class="checkbox-label">
-                      <input type="checkbox" class="brand-filter" data-brand="acerbis">
-                      <span class="checkmark"></span>
-                      Acerbis
-                    </label>
-                    <label class="checkbox-label">
-                      <input type="checkbox" class="brand-filter" data-brand="gaerne">
-                      <span class="checkmark"></span>
-                      Gaerne
-                    </label>
-                    <label class="checkbox-label">
-                      <input type="checkbox" class="brand-filter" data-brand="fxr">
-                      <span class="checkmark"></span>
-                      FXR
-                    </label>
-                    <label class="checkbox-label">
-                      <input type="checkbox" class="brand-filter" data-brand="thor">
-                      <span class="checkmark"></span>
-                      Thor
-                    </label>
-                    <label class="checkbox-label">
-                      <input type="checkbox" class="brand-filter" data-brand="ktm">
-                      <span class="checkmark"></span>
-                      KTM
-                    </label>
-                  </div>
+            <!-- MARCAS Section — PC: botones pill; mobile: legacy checkboxes -->
+            <div class="filter-group" id="brandFilterGroup">
+              <button class="category-parent-toggle filter-section-toggle" id="marcasToggle" type="button">
+                <span class="toggle-icon">▼</span>
+                <span class="toggle-label">MARCAS</span>
+              </button>
+              <div class="category-children" id="marcasChildren">
+                <!-- Grid de chips de marcas (PC) -->
+                <div class="brand-chips" id="brandChips">
+                  <button class="brand-chip active" data-brand="all" type="button">Todas</button>
+                  <button class="brand-chip" data-brand="fox" type="button">Fox</button>
+                  <button class="brand-chip" data-brand="fly" type="button">Fly</button>
+                  <button class="brand-chip" data-brand="alpinestars" type="button">Alpinestars</button>
+                  <button class="brand-chip" data-brand="leatt" type="button">Leatt</button>
+                  <button class="brand-chip" data-brand="troy-lee" type="button">Troy Lee</button>
+                  <button class="brand-chip" data-brand="oneal" type="button">Oneal</button>
+                  <button class="brand-chip" data-brand="airoh" type="button">Airoh</button>
+                  <button class="brand-chip" data-brand="acerbis" type="button">Acerbis</button>
+                  <button class="brand-chip" data-brand="gaerne" type="button">Gaerne</button>
+                  <button class="brand-chip" data-brand="fxr" type="button">FXR</button>
+                  <button class="brand-chip" data-brand="thor" type="button">Thor</button>
+                  <button class="brand-chip" data-brand="ktm" type="button">KTM</button>
                 </div>
               </div>
             </div>
@@ -885,11 +830,11 @@
 
 
   <!-- Scripts -->
-    <script src="js/utils.js?v=18"></script>
-  <script src="js/cart.js?v=18"></script>
-  <script src="js/main.js?v=18"></script>
-  <script src="cms/config.js?v=18"></script>
-  <script src="js/products.js?v=18"></script>
+    <script src="js/utils.js?v=19"></script>
+  <script src="js/cart.js?v=19"></script>
+  <script src="js/main.js?v=19"></script>
+  <script src="cms/config.js?v=19"></script>
+  <script src="js/products.js?v=19"></script>
   <!-- 4ULAB Analytics + Campaigns Tracking -->
   <script>
     window.__4ULAB_PROJECT_ID__ = 1;

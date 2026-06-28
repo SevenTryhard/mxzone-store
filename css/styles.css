@@ -9594,3 +9594,64 @@ a {
   }
 }
 
+
+/* =========================================================
+   BRAND CHIPS — PC sidebar redesign (v19)
+   Botones pill para marcas, con estado activo iluminado.
+   ========================================================= */
+.brand-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: var(--spacing-sm);
+}
+
+.brand-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--gray-light-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-primary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  user-select: none;
+}
+
+.brand-chip:hover {
+  border-color: var(--orange-primary);
+  color: var(--white);
+  background: rgba(255, 102, 0, 0.12);
+}
+
+.brand-chip.active {
+  background: var(--orange-primary);
+  border-color: var(--orange-primary);
+  color: var(--black);
+  box-shadow: 0 0 16px rgba(255, 102, 0, 0.45);
+}
+
+.brand-chip.active:hover {
+  background: var(--orange-primary);
+  color: var(--black);
+}
+
+/* Ocultar legacy checkboxes de marcas en PC si coexisten */
+@media (min-width: 769px) {
+  .category-children .checkbox-label:has(.brand-filter) {
+    display: none !important;
+  }
+}
+
+/* En mobile, los brand-chips se ocultan y sigue el legacy */
+@media (max-width: 768px) {
+  .brand-chips {
+    display: none;
+  }
+}
+
