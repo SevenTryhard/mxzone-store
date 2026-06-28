@@ -9715,13 +9715,13 @@ a {
 }
 
 .brand-logo {
-  height: 36px;
+  height: 44px;
   width: auto;
-  max-width: 140px;
+  max-width: 200px;
   object-fit: contain;
-  filter: brightness(0) saturate(100%) invert(47%) sepia(97%) saturate(3654%) hue-rotate(9deg) brightness(102%) contrast(101%);
-  opacity: 0.92;
+  opacity: 0.95;
   flex-shrink: 0;
+  filter: drop-shadow(0 0 6px rgba(255, 102, 0, 0.35));
 }
 
 .brand-name-text {
