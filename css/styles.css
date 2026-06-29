@@ -9669,64 +9669,74 @@ a {
 
 
 /* =========================================================
-   BRANDS MARQUEE — Home page allied brands strip
+   HERO BRANDS MARQUEE — Home page allied brands strip
    ========================================================= */
-.brands-marquee {
+.hero-brands-marquee {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   width: 100%;
-  background: var(--gray-dark);
-  border-top: 1px solid rgba(255, 102, 0, 0.2);
-  border-bottom: 1px solid rgba(255, 102, 0, 0.2);
-  padding: 1.25rem 0;
+  background: rgba(26, 26, 26, 0.85);
+  border-top: 1px solid rgba(255, 102, 0, 0.25);
+  padding: 0.85rem 0;
   overflow: hidden;
-  position: relative;
+  z-index: 10;
+  backdrop-filter: blur(4px);
 }
 
-.brands-marquee::before,
-.brands-marquee::after {
+.hero-brands-marquee::before,
+.hero-brands-marquee::after {
   content: '';
   position: absolute;
   top: 0;
-  width: 80px;
+  width: 60px;
   height: 100%;
   z-index: 2;
   pointer-events: none;
 }
 
-.brands-marquee::before {
+.hero-brands-marquee::before {
   left: 0;
-  background: linear-gradient(to right, var(--gray-dark), transparent);
+  background: linear-gradient(to right, rgba(26,26,26,0.95), transparent);
 }
 
-.brands-marquee::after {
+.hero-brands-marquee::after {
   right: 0;
-  background: linear-gradient(to left, var(--gray-dark), transparent);
+  background: linear-gradient(to left, rgba(26,26,26,0.95), transparent);
 }
 
-.brands-marquee-track {
+.hero-brands-track {
+  display: flex;
+  width: max-content;
+  animation: hero-marquee-scroll 40s linear infinite;
+}
+
+.hero-brands-row {
   display: flex;
   align-items: center;
-  gap: 3rem;
-  width: max-content;
-  animation: marquee-scroll 30s linear infinite;
+  gap: 2.5rem;
+  padding: 0 1.25rem;
+  flex-shrink: 0;
 }
 
-.brands-marquee:hover .brands-marquee-track {
+.hero-brands-marquee:hover .hero-brands-track {
   animation-play-state: paused;
 }
 
 .brand-logo {
-  height: 44px;
+  height: 40px;
   width: auto;
-  max-width: 200px;
+  max-width: 180px;
   object-fit: contain;
   opacity: 0.95;
   flex-shrink: 0;
-  filter: drop-shadow(0 0 6px rgba(255, 102, 0, 0.35));
+  filter: drop-shadow(0 0 4px rgba(255, 102, 0, 0.4));
 }
 
 .brand-name-text {
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 2px;
   color: var(--orange-primary);
@@ -9736,15 +9746,24 @@ a {
   flex-shrink: 0;
 }
 
-.brand-name {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--orange-primary);
-  text-transform: uppercase;
-  white-space: nowrap;
-  opacity: 0.9;
+@keyframes hero-marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+  .hero-brands-marquee {
+    padding: 0.65rem 0;
+  }
+  .brand-logo {
+    height: 30px;
+  }
+  .brand-name-text {
+    font-size: 1.15rem;
+  }
+  .hero-brands-row {
+    gap: 1.75rem;
+  }
 }
 
 .brand-separator {
