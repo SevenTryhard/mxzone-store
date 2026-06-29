@@ -1,3 +1,5 @@
+> **AGENTES DE IA:** Antes de tocar cualquier archivo de este repo, leer `TEMP.md`. Ahí está el tracker de bugs activos (#001-#018 MX STOREID) y el próximo paso prioritario (sub-issue Jerseys de #004).
+
 # MXZONE STORE
 
 **Tienda online de equipamiento premium para motocross y enduro.**
