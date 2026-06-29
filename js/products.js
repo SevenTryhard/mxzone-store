@@ -56,6 +56,8 @@ function adaptProductFrom4ULAB(p) {
 
   // Determinar categoría
   let category = (p.category || '').toLowerCase().trim();
+  const nameLower = (p.name || '').toLowerCase();
+
   // Mapear algunas categorías específicas si es necesario
   const categoryMap = {
     'cascos': 'cascos',
@@ -65,6 +67,18 @@ function adaptProductFrom4ULAB(p) {
     'protecciones': 'protecciones'
   };
   category = categoryMap[category] || category || 'sin-categoria';
+
+  // FIX sub-issue Jerseys (#004): corrección híbrida por nombre + categoría
+  const looksLikeJersey = nameLower.includes('jersey') || nameLower.includes('jerseys');
+  const looksLikePantalon = nameLower.includes('pantalon') || nameLower.includes('pantalón') || nameLower.includes('pant');
+
+  if (category === 'jersey' && looksLikePantalon && !looksLikeJersey) {
+    // Producto mal categorizado como jersey pero es pantalón
+    category = 'pantalones';
+  } else if (category !== 'jersey' && category !== 'uniformes-ninos' && looksLikeJersey) {
+    // Producto con nombre de jersey pero no está en categoría jersey -> forzar a jersey
+    category = 'jersey';
+  }
 
   // Formatear precio (viene como string "449000.00" o number)
   let priceStr = p.price || 'Consultar';
@@ -405,7 +419,7 @@ async function renderFeaturedProducts() {
     const products = await loadProducts();
     mxLog('renderFeaturedProducts:', products.length, 'productos cargados');
 
-    const categories = ['cascos', 'uniformes', 'botas', 'protecciones'];
+    const categories = ['cascos', 'uniformes', 'jersey', 'botas', 'protecciones'];
 
     categories.forEach(category => {
       const categoryProducts = products.filter(p => p.category === category).slice(0, 4);
@@ -458,13 +472,20 @@ function createCategoryDivider(category, icon) {
     'cascos': { label: 'Cascos', icon: '' },
     'uniformes': { label: 'Uniformes', icon: '' },
     'jersey': { label: 'Jerseys', icon: '' },
+    'pantalones': { label: 'Pantalones', icon: '' },
     'guantes': { label: 'Guantes', icon: '' },
     'gorras': { label: 'Gorras', icon: '' },
     'protecciones': { label: 'Protecciones', icon: '' },
     'accesorios': { label: 'Accesorios', icon: '' },
     'maletas': { label: 'Maletas', icon: '' },
     'gafas': { label: 'Gafas', icon: '' },
-    'infantil': { label: 'Niños / Infantil', icon: '' }
+    'infantil': { label: 'Niños / Infantil', icon: '' },
+    'uniformes-ninos': { label: 'Uniformes Niños', icon: '' },
+    'cascos-ninos': { label: 'Cascos Niños', icon: '' },
+    'botas-ninos': { label: 'Botas Niños', icon: '' },
+    'guantes-ninos': { label: 'Guantes Niños', icon: '' },
+    'gafas-ninos': { label: 'Gafas Niños', icon: '' },
+    'protecciones-ninos': { label: 'Protecciones Niños', icon: '' }
   };
   const catData = labels[category] || { label: category, icon: '' };
 
