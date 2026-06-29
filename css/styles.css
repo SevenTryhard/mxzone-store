@@ -48,6 +48,15 @@
   --glow-orange-sm: 0 0 10px var(--orange-glow);
   --glow-red: 0 0 20px var(--red-glow);
 
+  /* Brands marquee semantic tokens */
+  --brands-bg: rgba(0, 0, 0, 0.55);
+  --brands-border: rgba(255, 102, 0, 0.3);
+  --brands-fade-from: rgba(0, 0, 0, 0.75);
+  --brands-fade-to: transparent;
+  --brands-text-color: var(--orange-primary);
+  --brands-text-shadow: 0 0 8px rgba(255, 102, 0, 0.35);
+  --brands-logo-shadow: 0 0 3px rgba(255, 102, 0, 0.45);
+
   /* Transiciones */
   --transition-fast: 0.2s ease;
   --transition-base: 0.3s ease-in-out;
@@ -110,6 +119,15 @@
   --glow-orange: 0 0 20px rgba(255, 102, 0, 0.2);
   --glow-orange-sm: 0 0 10px rgba(255, 102, 0, 0.12);
   --glow-red: 0 0 20px rgba(230, 57, 70, 0.2);
+
+  /* Brands marquee semantic tokens — light mode */
+  --brands-bg: rgba(255, 255, 255, 0.72);
+  --brands-border: rgba(0, 0, 0, 0.08);
+  --brands-fade-from: rgba(255, 255, 255, 0.9);
+  --brands-fade-to: transparent;
+  --brands-text-color: #2D2D2D;
+  --brands-text-shadow: none;
+  --brands-logo-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
 
   --hero-bg: #f0f0f0;
 }
@@ -9677,12 +9695,13 @@ a {
   left: 0;
   right: 0;
   width: 100%;
-  background: rgba(0, 0, 0, 0.55);
-  border-top: 1px solid rgba(255, 102, 0, 0.3);
+  background: var(--brands-bg);
+  border-top: 1px solid var(--brands-border);
   padding: 0.9rem 0;
   overflow: hidden;
   z-index: 20;
   backdrop-filter: blur(3px);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .hero-brands-marquee::before,
@@ -9694,16 +9713,17 @@ a {
   height: 100%;
   z-index: 2;
   pointer-events: none;
+  transition: background 0.3s ease;
 }
 
 .hero-brands-marquee::before {
   left: 0;
-  background: linear-gradient(to right, rgba(0,0,0,0.75), transparent);
+  background: linear-gradient(to right, var(--brands-fade-from), var(--brands-fade-to));
 }
 
 .hero-brands-marquee::after {
   right: 0;
-  background: linear-gradient(to left, rgba(0,0,0,0.75), transparent);
+  background: linear-gradient(to left, var(--brands-fade-from), var(--brands-fade-to));
 }
 
 .hero-brands-track {
@@ -9733,7 +9753,8 @@ a {
   object-fit: contain;
   opacity: 0.95;
   flex-shrink: 0;
-  filter: drop-shadow(0 0 3px rgba(255, 102, 0, 0.45));
+  filter: drop-shadow(var(--brands-logo-shadow));
+  transition: filter 0.3s ease;
 }
 
 .brand-name-text {
@@ -9741,12 +9762,13 @@ a {
   font-size: 2.35rem;
   font-weight: 700;
   letter-spacing: 2.5px;
-  color: var(--orange-primary);
+  color: var(--brands-text-color);
   text-transform: uppercase;
   white-space: nowrap;
   opacity: 0.95;
   flex-shrink: 0;
-  text-shadow: 0 0 8px rgba(255, 102, 0, 0.35);
+  text-shadow: var(--brands-text-shadow);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 @keyframes hero-marquee-scroll {
