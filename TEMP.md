@@ -7,11 +7,11 @@
 
 | ID | Error | Detalle | Estado |
 |---|---|---|---|
-| #001 | Salida del Carrito | Falta botón de cierre (Close/Back) en la interfaz móvil. | **EN PROGRESO** |
+| #001 | Salida del Carrito | Falta botón de cierre (Close/Back) en la interfaz móvil. | **SOLUCIONADO** |
 | #002 | Buscador (Redirección) | El query de búsqueda redirige al home/catálogo sin filtrar resultados. | Solucionado anteriormente |
 | #003 | Buscador/Menú (Funcionalidad) | Pérdida de estado (state) de los elementos al navegar a secciones internas. | Solucionado anteriormente |
-| #004 | Filtros (Diseño) | Errores en el CSS/Grid de los filtros, provocando superposición o desorden. En mobile los botones (TODO/CASCOS) no filtran. | **EN PROGRESO** |
-| #005 | Control de Cantidad | Falta la lógica de los botones + / - en el selector de producto. El carrito corta items en mobile/PC y no se ve el botón para sumar. | **EN PROGRESO** |
+| #004 | Filtros (Diseño) | Errores en el CSS/Grid de los filtros, provocando superposición o desorden. En mobile los botones (TODO/CASCOS) no filtran. | **SOLUCIONADO** |
+| #005 | Control de Cantidad | Falta la lógica de los botones + / - en el selector de producto. El carrito corta items en mobile/PC y no se ve el botón para sumar. | **SOLUCIONADO** |
 | #006 | Carga de Producto | Fallo en el fetch de datos (nombre/precio) desde la base de datos o API. | Pendiente |
 | #007 | Validación de Tallas | El validator requiere talla incluso en productos que no la usan (boolean check erróneo). | Pendiente |
 | #008 | Botón WhatsApp | Alineación incorrecta en el contenedor (posible error de flexbox o margin). | Pendiente |
