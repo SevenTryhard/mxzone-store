@@ -60,6 +60,7 @@ function adaptProductFrom4ULAB(p) {
   const categoryMap = {
     'cascos': 'cascos',
     'uniformes': 'uniformes',
+    'jersey': 'jersey',
     'botas': 'botas',
     'protecciones': 'protecciones'
   };
