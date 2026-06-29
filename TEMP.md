@@ -10,7 +10,7 @@
 | #001 | Salida del Carrito | Falta botón de cierre (Close/Back) en la interfaz móvil. | **SOLUCIONADO** |
 | #002 | Buscador (Redirección) | El query de búsqueda redirige al home/catálogo sin filtrar resultados. | Solucionado anteriormente |
 | #003 | Buscador/Menú (Funcionalidad) | Pérdida de estado (state) de los elementos al navegar a secciones internas. | Solucionado anteriormente |
-| #004 | Filtros (Diseño) | Errores en el CSS/Grid de los filtros, provocando superposición o desorden. En mobile los botones (TODO/CASCOS) no filtran. | **SOLUCIONADO** |
+| #004 | Filtros (Diseño) | Errores en el CSS/Grid de los filtros, provocando superposición o desorden. En mobile los botones (TODO/CASCOS) no filtran. **PENDIENTE: sub-issue Jerseys** — el chip Jerseys se activa pero muestra productos de Uniformes. | **PARCIAL** |
 | #005 | Control de Cantidad | Falta la lógica de los botones + / - en el selector de producto. El carrito corta items en mobile/PC y no se ve el botón para sumar. | **SOLUCIONADO** |
 | #006 | Carga de Producto | Fallo en el fetch de datos (nombre/precio) desde la base de datos o API. | Pendiente |
 | #007 | Validación de Tallas | El validator requiere talla incluso en productos que no la usan (boolean check erróneo). | Pendiente |
@@ -29,6 +29,7 @@
 ## Recomendaciones base
 
 - Prioridad alta: #001, #002, #006, #014, #017 afectan conversión/usabilidad base.
+- **Nueva prioridad alta**: sub-issue Jerseys dentro de #004 — filtro activo pero productos tienen categoría `uniformes` en vez de `jersey`.
 - Gestión de temas: revisar `themes.css` / estilos globales para #009, #011, #013, #014, #016.
 - Validaciones: revisar lógica de producto (#007) para hacer la talla condicional (`if product.hasSizes`).
 
@@ -36,4 +37,11 @@
 
 - Fecha: 2026-06-29
 - Scope: #001, #004, #005
-- Estado: en progreso
+- Estado: cerrada. Queda pendiente sub-issue Jerseys de #004.
+
+## Próxima sesión — inicio recomendado
+
+1. Abrir `https://4-ulab.vercel.app/api/public/products?project=1&limit=2000` y buscar productos con `name` que contenga "JERSEY" o "JERSEYS".
+2. Verificar su campo `category` real. Si dice `uniformes`, decidir si se corrige en CMS (recomendado) o se aplica filtro híbrido (categoría + nombre) en `js/main.js`/`js/products.js`.
+3. Si se corrige en CMS, forzar re-sync (`_sync-api.js` o deploy manual) y refrescar cache de `products.js`.
+4. Si se aplica parche en código, validar que no muestre uniformes completos en el filtro de Jerseys.
