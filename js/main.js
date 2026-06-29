@@ -832,7 +832,8 @@ function initShopFiltersInternal() {
 
     quickFilterChips.forEach(chip => {
       // Remove any existing listeners to prevent duplicates
-      chip.replaceWith(chip.cloneNode(true));
+      const newChip = chip.cloneNode(true);
+      chip.parentNode.replaceChild(newChip, chip);
     });
 
     // Re-select after cloning
@@ -843,95 +844,55 @@ function initShopFiltersInternal() {
         const filterType = chip.dataset.type;
         mxLog('Quick filter clicked:', filter, filterType);
 
-        if (filterType === 'parent') {
-          // Parent category (solo Niños en móvil)
-          if (filter === 'ninos') {
-            // "Niños" - toggle expand/collapse
-            const isExpanded = chip.classList.contains('active');
-            
-            if (!isExpanded) {
-              // Expand
-              document.querySelectorAll('.quick-filter-chip[data-type]').forEach(c => c.classList.remove('active'));
-              chip.classList.add('active');
-              chip.classList.remove('collapsed');
+        if (filterType === 'parent' && filter === 'ninos') {
+          // Parent category (solo Niños en móvil): toggle expand/collapse via drawer
+          const isExpanded = chip.classList.contains('active');
+          
+          if (!isExpanded) {
+            document.querySelectorAll('.quick-filter-chip[data-type]').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            chip.classList.remove('collapsed');
 
-              if (window.innerWidth <= 768) {
-                if (mobileFiltersTrigger) mobileFiltersTrigger.click();
-              }
-
-              const parentToggle = document.getElementById('ninosCategoryToggle');
-              const parentChildren = document.getElementById('ninosCategoryChildren');
-
-              if (parentToggle && parentChildren) {
-                parentToggle.classList.remove('collapsed');
-                parentChildren.classList.remove('collapsed');
-              }
-
-              // Select all children
-              categoryFilters.forEach(cb => cb.checked = false);
-              const childrenCategories = ['uniformes-ninos', 'cascos-ninos', 'botas-ninos', 'guantes-ninos', 'gafas-ninos', 'protecciones-ninos'];
-              childrenCategories.forEach(cat => {
-                const childCheckbox = document.querySelector(`.category-filter[data-category="${cat}"]`);
-                if (childCheckbox) childCheckbox.checked = true;
-              });
-
-              mxLog('Selected parent category: Niños - EXPANDIR');
-            } else {
-              // Collapse
-              chip.classList.remove('active');
-              chip.classList.add('collapsed');
-              
-              const parentToggle = document.getElementById('ninosCategoryToggle');
-              const parentChildren = document.getElementById('ninosCategoryChildren');
-              
-              if (parentToggle) parentToggle.classList.add('collapsed');
-              if (parentChildren) parentChildren.classList.add('collapsed');
-              
-              mxLog('Selected parent category: Niños - COLAPSAR');
-              return; // Don't filter, just toggle
+            if (window.innerWidth <= 768 && mobileFiltersTrigger) {
+              mobileFiltersTrigger.click();
             }
+
+            const parentToggle = document.getElementById('ninosCategoryToggle');
+            const parentChildren = document.getElementById('ninosCategoryChildren');
+            if (parentToggle && parentChildren) {
+              parentToggle.classList.remove('collapsed');
+              parentChildren.classList.remove('collapsed');
+            }
+
+            setActiveCategories(['uniformes-ninos', 'cascos-ninos', 'botas-ninos', 'guantes-ninos', 'gafas-ninos', 'protecciones-ninos']);
+            mxLog('Selected parent category: Niños - EXPANDIR');
+          } else {
+            chip.classList.remove('active');
+            chip.classList.add('collapsed');
+            
+            const parentToggle = document.getElementById('ninosCategoryToggle');
+            const parentChildren = document.getElementById('ninosCategoryChildren');
+            if (parentToggle) parentToggle.classList.add('collapsed');
+            if (parentChildren) parentChildren.classList.add('collapsed');
+            
+            setActiveCategories([]);
+            mxLog('Selected parent category: Niños - COLAPSAR');
           }
         } else if (filterType === 'category') {
           // Regular category (including "Ver Todo")
-          
+          document.querySelectorAll('.quick-filter-chip[data-type="parent"]').forEach(c => {
+            c.classList.remove('active');
+            c.classList.add('collapsed');
+          });
+          document.querySelectorAll('.quick-filter-chip[data-type="category"]').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+
           if (filter === 'all') {
-            // "Ver Todo" - select all
-            document.querySelectorAll('.quick-filter-chip[data-type]').forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-
-            // Check all categories and uncheck individual ones
-            categoryFilters.forEach(cb => {
-              if (cb.dataset.category === 'all') {
-                cb.checked = true;
-              } else {
-                cb.checked = false;
-              }
-            });
-
+            setActiveCategories([]);
             mxLog('Selected: Ver Todo (all products)');
           } else {
-            // Individual category
-            document.querySelectorAll('.quick-filter-chip[data-type="parent"]').forEach(c => {
-              c.classList.remove('active');
-              c.classList.add('collapsed');
-            });
-            document.querySelectorAll('.quick-filter-chip[data-type="category"]').forEach(c => c.classList.remove('active'));
-            
-            // Add active to clicked chip
-            chip.classList.add('active');
-
-            // Update category filters in sidebar
-            categoryFilters.forEach(cb => cb.checked = false);
-
-            // Check the selected category
-            const categoryCheckbox = document.querySelector(`.category-filter[data-category="${filter}"]`);
-            if (categoryCheckbox) {
-              categoryCheckbox.checked = true;
-              renderSizeChips();
-              mxLog('Selected category:', filter);
-            } else {
-              mxLog('Category checkbox not found:', filter);
-            }
+            setActiveCategories([filter]);
+            mxLog('Selected category:', filter);
           }
         }
 
@@ -939,8 +900,11 @@ function initShopFiltersInternal() {
         if (mobileSearchInput) mobileSearchInput.value = '';
         if (searchInput) searchInput.value = '';
 
+        renderSizeChips();
+        updateQuickFilterChips();
         mxLog('Calling filterProducts...');
         filterProducts();
+        if (typeof updateResultsCount === 'function') updateResultsCount();
 
         // Scroll to products section on mobile
         if (window.innerWidth <= 768) {
