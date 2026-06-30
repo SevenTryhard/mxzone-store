@@ -47,6 +47,15 @@ Algunos productos vienen con `category: null`. Antes se forzaban a "accesorios",
 
 Ahora se marcan como `sin-categoria` y se renderizan, pero el cliente debe revisar/categorizarlos en 4ULAB.
 
+### 5. Productos con nombre vacío o precio 0 en 4ULAB
+
+Ejemplos encontrados en producción (project 1): IDs 154, 1877, 1878. Se detectan tarjetas con:
+- Nombre: "Producto sin nombre"
+- Precio: `$0`
+- Categoría: `General` o vacía
+
+**Regla:** El frontend los filtra y no los renderiza. El cliente debe corregir/eliminar esos productos directamente en el dashboard de 4ULAB (`https://4-ulab.vercel.app/dashboard/mxzonestore/products`).
+
 ---
 
 ## ✅ VERIFICACIÓN POST-CAMBIO

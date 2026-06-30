@@ -165,7 +165,17 @@ async function loadProductsFrom4ULAB() {
     }
 
     // Adaptar todos los productos al formato MXZONESTORE
-    const products = allProducts.map(adaptProductFrom4ULAB);
+    const products = allProducts.map(adaptProductFrom4ULAB)
+      .filter(p => {
+        // FIX #006: no renderizar productos sin nombre o precio inválido
+        const hasName = p.name && String(p.name).trim() !== '' && p.name !== 'Producto sin nombre';
+        const priceNum = parseInt((p.price || '0').toString().replace(/[^0-9]/g, ''));
+        const hasPrice = priceNum > 0;
+        if (!hasName || !hasPrice) {
+          mxLog('[FILTER] Producto omitido por datos inválidos:', p.name || '(sin nombre)', 'price:', p.price, 'category:', p.category);
+        }
+        return hasName && hasPrice;
+      });
 
     mxLog('[4ULAB] Total productos cargados:', products.length);
     return products;
