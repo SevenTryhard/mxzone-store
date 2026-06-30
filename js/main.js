@@ -640,23 +640,16 @@ function initShopFiltersInternal() {
 
     // Second pass: show/hide category dividers based on ACTUAL visible cards per category
     const dividers = document.querySelectorAll('.category-divider');
-    const allGridItems = Array.from(document.querySelectorAll('.category-divider, .product-card'));
 
     dividers.forEach(divider => {
-      const idx = allGridItems.indexOf(divider);
-      let visibleCards = 0;
-      // Count visible product cards until next divider
-      for (let i = idx + 1; i < allGridItems.length; i++) {
-        const item = allGridItems[i];
-        if (item.classList.contains('category-divider')) break;
-        if (item.classList.contains('product-card')) {
-          const style = window.getComputedStyle(item);
-          if (style.display !== 'none') {
-            visibleCards++;
-          }
-        }
-      }
-      divider.style.display = visibleCards > 0 ? 'flex' : 'none';
+      const category = divider.dataset.category;
+      const cardsForCategory = document.querySelectorAll(`.product-card[data-category="${category}"]`);
+      const hasVisibleProducts = Array.from(cardsForCategory).some(card => {
+        const style = window.getComputedStyle(card);
+        return style.display !== 'none';
+      });
+      // Use class-based toggle to override any CSS specificity/flex issues
+      divider.classList.toggle('category-divider--hidden', !hasVisibleProducts);
     });
 
     // Update results count

@@ -2041,7 +2041,7 @@ a {
 }
 
 .category-divider-icon {
-  font-size: 1.2rem;
+  display: none;
 }
 
 .category-divider-title {
@@ -2051,6 +2051,12 @@ a {
   margin: 0;
   letter-spacing: 1px;
   text-transform: uppercase;
+  text-align: center;
+}
+
+/* State: hidden when the category has no visible products */
+.category-divider--hidden {
+  display: none !important;
 }
 
 .product-card {
