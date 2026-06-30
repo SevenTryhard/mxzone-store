@@ -638,12 +638,12 @@ function initShopFiltersInternal() {
       }
     });
 
-    // Second pass: show/hide category dividers based on visibility
+    // Second pass: show/hide category dividers based on ACTUAL visible cards per category
     const dividers = document.querySelectorAll('.category-divider');
     dividers.forEach(divider => {
       const category = divider.dataset.category;
-      // FIX #017: a divider is visible only if its category has visible products
-      const hasVisibleProducts = categoryVisibility[category] === true;
+      const visibleCardsForCategory = document.querySelectorAll(`.product-card[data-category="${category}"]:not([style*="display: none"])`).length;
+      const hasVisibleProducts = visibleCardsForCategory > 0;
       divider.style.display = hasVisibleProducts ? 'flex' : 'none';
     });
 
