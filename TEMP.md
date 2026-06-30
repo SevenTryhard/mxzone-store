@@ -35,10 +35,10 @@
 
 ## Sesión actual
 
-- Fecha: 2026-06-29/30
-- Scope: #007 (validación de tallas condicional), cache-busting automatizado (`bump-cache-timestamp.ps1`)
-- Estado: cerrada. #007 resuelto.
+- Fecha: 2026-06-30
+- Scope: #007 (validación de tallas condicional), cache-busting automatizado (`bump-cache-timestamp.ps1`), bug de navegación logo/Inicio, mejora de cierre de carrito móvil (#001).
+- Estado: cerrada. #007 resuelto; navegación corregida; carrito móvil con botón "Volver".
 
 ## Próxima sesión — inicio recomendado
 
-1. Revisar `TEMP.md` y elegir el siguiente fix prioritario. Recomendados según impacto: #008 (botón WhatsApp), #010 (menú desplegable se cierra accidentalmente), #009/#011/#013 (contraste light mode).
+1. Revisar `TEMP.md` y elegir el siguiente fix prioritario. Recomendados según impacto: #010 (menú desplegable se cierra accidentalmente), #009/#011/#013 (contraste light mode), #015 (redes sociales sin iconos/links), #018 (filtro de tallas).
