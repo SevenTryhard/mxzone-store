@@ -7,6 +7,18 @@
 /*.html
   Cache-Control: public, max-age=3600
 
+/js/utils.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/js/main.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/js/products.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/js/cart.js
+  Cache-Control: public, max-age=0, must-revalidate
+
 /js/*
   Cache-Control: public, max-age=31536000
 
