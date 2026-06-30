@@ -640,10 +640,10 @@ function initShopFiltersInternal() {
 
     // Second pass: show/hide category dividers based on visibility
     const dividers = document.querySelectorAll('.category-divider');
-    const showingAll = selectedCategories.length === 0;
     dividers.forEach(divider => {
       const category = divider.dataset.category;
-      const hasVisibleProducts = categoryVisibility[category] || showingAll;
+      // FIX #017: a divider is visible only if its category has visible products
+      const hasVisibleProducts = categoryVisibility[category] === true;
       divider.style.display = hasVisibleProducts ? 'flex' : 'none';
     });
 
