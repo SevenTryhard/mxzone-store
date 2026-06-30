@@ -6646,11 +6646,28 @@ a {
   justify-content: center;
   cursor: pointer;
   transition: var(--transition-base);
-  color: var(--gray-light-text);
+  color: var(--white);
   font-size: 1.3rem;
 }
 
+.cart-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+}
+
+[data-theme="light"] .cart-btn {
+  color: var(--black);
+  border-color: var(--gray-lighter);
+}
+
 .cart-btn:hover {
+  border-color: var(--orange-primary);
+  color: var(--orange-primary);
+}
+
+[data-theme="light"] .cart-btn:hover {
   border-color: var(--orange-primary);
   color: var(--orange-primary);
 }

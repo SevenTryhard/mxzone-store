@@ -20,19 +20,26 @@ agotado: !(p.stock && Number(p.stock) > 0)
 
 **Regla:** Nunca volver a hardcodear `agotado: false`. Si 4ULAB dice `stock=0`, el producto está agotado.
 
-### 2. Cache-busting de archivos JS
+### 2. Cache-busting de archivos JS y CSS
 
-Cloudflare Pages cachea assets agresivamente. Cada vez que se edita un archivo JS, **subir la versión en todas las páginas HTML que lo cargan**.
+Cloudflare Pages cachea assets agresivamente. Cada vez que se edita un archivo JS o CSS, **subir la versión en todas las páginas HTML que lo cargan**.
 
 Ejemplo:
 
 ```html
-<script src="js/products.js?v=17"></script>
+<link rel="stylesheet" href="css/styles.css?v=css202506290332">
+<script src="js/products.js?v=32"></script>
 ```
 
-**Regla:** Mantener la misma versión en TODOS los HTML. No mezclar `v=10` en index y `v=16` en shop.
+**Regla:** Mantener la misma versión en TODOS los HTML. No mezclar `v=27` en index y `v=29` en shop.
 
 > **Consecuencia real:** mezclar versiones entre `index.html` (`v=27`) y `shop.html` (`v=29`) provocó que `main.js` antiguo coexistiera con `products.js` nuevo. Eso ocultó un `TypeError: sizes.map is not a function` en `renderSizeChips` al seleccionar "Jerseys" (el mapa de tallas de `jersey` apuntaba al alias `'uniformes'`, no a un array).
+
+### 3. Consistencia del header entre páginas
+
+Todas las páginas deben compartir el **mismo header**: mismo logo, mismos nav links, mismo botón de carrito con SVG, mismo theme toggle. Si una página tiene el botón del carrito vacío o links absolutos diferentes, los indicadores de navegación activa y el icono del carrito fallan.
+
+> **Consecuencia real:** `promociones.html`, `about.html`, `contact.html` y otras 21 páginas tenían el carrito sin SVG, y usaban URLs absolutas (`https://www.mxzonestore.com/...`) en los nav links. El active state solo funcionaba en `index.html` y el icono no se veía en el resto.
 
 ### 3. URL de 4ULAB
 

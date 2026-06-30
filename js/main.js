@@ -48,14 +48,18 @@ document.addEventListener('DOMContentLoaded', () => {
  * Set active navigation link based on current page
  */
 function initActiveNavLink() {
-  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  // Normalize current page: remove leading/trailing slashes, default empty to index.html,
+  // and strip .html extension because Cloudflare Pages serves both /shop and /shop.html
+  const rawCurrent = window.location.pathname.split('/').pop() || 'index.html';
+  const currentPage = rawCurrent.replace(/\.html$/i, '') || 'index';
   const currentQuery = window.location.search;
   const navLinks = document.querySelectorAll('.nav-links a');
 
   navLinks.forEach(link => {
     const href = link.getAttribute('href');
     if (!href) return;
-    const linkPath = href.split('?')[0].split('/').pop() || 'index.html';
+    const linkPathRaw = href.split('?')[0].split('/').pop() || 'index.html';
+    const linkPath = linkPathRaw.replace(/\.html$/i, '') || 'index';
     const linkQuery = href.includes('?') ? href.split('?')[1] : '';
 
     // Exact page match OR same page with matching query params
@@ -76,14 +80,16 @@ function initActiveNavLink() {
  */
 function highlightActiveNavLink() {
   const currentPath = window.location.pathname;
-  const currentPage = currentPath.split('/').pop() || 'index.html';
+  const rawCurrent = currentPath.split('/').pop() || 'index.html';
+  const currentPage = rawCurrent.replace(/\.html$/i, '') || 'index';
   const currentQuery = window.location.search;
   const navLinks = document.querySelectorAll('.nav-links a');
 
   navLinks.forEach(link => {
     const href = link.getAttribute('href');
     if (!href) return;
-    const linkPath = href.split('?')[0].split('/').pop() || 'index.html';
+    const rawLink = href.split('?')[0].split('/').pop() || 'index.html';
+    const linkPath = rawLink.replace(/\.html$/i, '') || 'index';
     const linkQuery = href.includes('?') ? href.split('?')[1] : '';
 
     link.classList.remove('active');

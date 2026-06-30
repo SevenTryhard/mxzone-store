@@ -20,7 +20,7 @@
 | #011 | Promociones (Contraste) | Texto informativo sin legibilidad sobre el fondo en modo light. | Pendiente |
 | #012 | Imagen Promoción | Fallo en la carga de activos (assets); imagen rota o ruta inexistente. | Pendiente |
 | #013 | Info. Promociones | Falta de contraste severo en componentes de texto dinámico. | Pendiente |
-| #014 | Icono Carrito | Problema de color de SVG/icono que no cambia según el tema (light/dark). | Pendiente |
+| #014 | Icono Carrito | Problema de color de SVG/icono que no cambia según el tema (light/dark). Además, en 24 páginas el botón del carrito estaba vacío (sin SVG). | **SOLUCIONADO** |
 | #015 | Redes Sociales | Faltan iconos en los botones y los enlaces no tienen href configurado. | Pendiente |
 | #016 | Iconos Inicio | Fallo en la carga de fuentes de iconos (FontAwesome/Material Icons) o CDN. | Pendiente |
 | #017 | Filtro "Todo" | El renderizado de secciones vacías ocupa espacio en el DOM, empujando contenido hacia abajo. | Pendiente |
@@ -36,9 +36,9 @@
 ## Sesión actual
 
 - Fecha: 2026-06-29
-- Scope: #001, #004 (incluyendo sub-issue Jerseys), #005, #006
-- Estado: cerrada. #004 y #006 resueltos.
+- Scope: #001, #004 (incluyendo sub-issue Jerseys), #005, #006, #014 (incluye bonus: nav active state en todas las páginas)
+- Estado: cerrada. #004, #006 y #014 resueltos.
 
 ## Próxima sesión — inicio recomendado
 
-1. Revisar `TEMP.md` y elegir el siguiente fix prioritario. Recomendados según impacto: #014 (icono carrito), #017 (filtro "Todo" vacío), #007 (validación de tallas condicional).
+1. Revisar `TEMP.md` y elegir el siguiente fix prioritario. Recomendados según impacto: #017 (filtro "Todo" vacío), #007 (validación de tallas condicional), #008 (botón WhatsApp).
