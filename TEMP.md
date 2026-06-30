@@ -17,12 +17,12 @@
 | #008 | Botón WhatsApp | Alineación incorrecta en el contenedor (posible error de flexbox o margin). | Pendiente |
 | #009 | Contraste (Light Mode) | Color de fuente demasiado oscuro sobre fondo claro (violación WCAG). | Pendiente |
 | #010 | Menú Desplegable | Error de event listener: el menú se cierra al hacer blur o clic fuera accidental. | Pendiente |
-| #011 | Promociones (Contraste) | Texto informativo sin legibilidad sobre el fondo en modo light. | Pendiente |
+| #011 | Promociones (Contraste) | Texto informativo sin legibilidad sobre el fondo en modo light. | **SEMI-RESUELTO** (impacto mínimo; no tocar por riesgo de regresión) |
 | #012 | Imagen Promoción | Fallo en la carga de activos (assets); imagen rota o ruta inexistente. | Pendiente |
-| #013 | Info. Promociones | Falta de contraste severo en componentes de texto dinámico. | Pendiente |
+| #013 | Info. Promociones | Falta de contraste severo en componentes de texto dinámico. | **SEMI-RESUELTO** (impacto mínimo; no tocar por riesgo de regresión) |
 | #014 | Icono Carrito | Problema de color de SVG/icono que no cambia según el tema (light/dark). Además, en 24 páginas el botón del carrito estaba vacío (sin SVG). | **SOLUCIONADO** |
-| #015 | Redes Sociales | Faltan iconos en los botones y los enlaces no tienen href configurado. | Pendiente |
-| #016 | Iconos Inicio | Fallo en la carga de fuentes de iconos (FontAwesome/Material Icons) o CDN. | Pendiente |
+| #015 | Redes Sociales | Faltan iconos en los botones y los enlaces no tienen href configurado. | Pendiente (siguiente prioridad) |
+| #016 | Iconos Inicio | Fallo en la carga de fuentes de iconos (FontAwesome/Material Icons) o CDN. | Pendiente (siguiente prioridad) |
 | #017 | Filtro "Todo" | El renderizado de secciones vacías ocupa espacio en el DOM, empujando contenido hacia abajo. | **SOLUCIONADO** |
 | #018 | Filtro de Tallas | Filtro incompleto o datos no cargados totalmente en el array de tallas disponibles. | Pendiente |
 
@@ -35,10 +35,10 @@
 
 ## Sesión actual
 
-- Fecha: 2026-06-30
-- Scope: #007 (validación de tallas condicional), cache-busting automatizado (`bump-cache-timestamp.ps1`), bug de navegación logo/Inicio, mejora de cierre de carrito móvil (#001).
-- Estado: cerrada. #007 resuelto; navegación corregida; carrito móvil con botón "Volver".
+- Fecha: 2026-06-30 (noche)
+- Scope: menú mobile scrolleable y sin iconos feos en `index.html`; links "Inicio" definitivos con `href="index.html"` y texto "Inicio" en 17 páginas; cache-busting a `202606300128`; commit/push a `main`.
+- Estado: cerrada. Pendientes conscientes: #011/#013 semi-resueltos; próxima sesión recomendada #015/#015.
 
 ## Próxima sesión — inicio recomendado
 
-1. Revisar `TEMP.md` y elegir el siguiente fix prioritario. Recomendados según impacto: #010 (menú desplegable se cierra accidentalmente), #009/#011/#013 (contraste light mode), #015 (redes sociales sin iconos/links), #018 (filtro de tallas).
+1. Atacar #015 (redes sociales sin iconos/links) y #016 (iconos de inicio no cargan fuentes CDN).
