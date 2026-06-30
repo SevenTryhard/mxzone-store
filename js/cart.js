@@ -568,8 +568,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Cerrar carrito (boton X)
-    if (e.target.id === 'cartClose' || e.target.closest('#cartClose')) {
+    // Cerrar carrito (boton X o boton Volver mobile)
+    if (e.target.id === 'cartClose' || e.target.closest('#cartClose') ||
+        e.target.id === 'cartBack' || e.target.closest('#cartBack')) {
       closeCart();
     }
 

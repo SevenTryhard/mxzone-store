@@ -6784,6 +6784,27 @@ a {
   transform: rotate(90deg);
 }
 
+/* Botón volver en mobile (visible solo en pantallas pequeñas) */
+.cart-back {
+  display: none;
+  align-items: center;
+  gap: var(--spacing-xs);
+  background: transparent;
+  border: none;
+  color: var(--orange-primary);
+  font-family: var(--font-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-right: auto;
+}
+
+.cart-back-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
 .cart-empty-actions {
   margin-top: var(--spacing-lg);
 }
@@ -9546,6 +9567,10 @@ a {
 @media (max-width: 480px) {
   .cart-header {
     padding: var(--spacing-md) var(--spacing-lg);
+  }
+
+  .cart-back {
+    display: flex;
   }
 
   .cart-item {
