@@ -1312,7 +1312,8 @@ a {
   right: -100%;
   width: 100%;
   max-width: 400px;
-  height: 100vh;
+  height: 100vh; /* fallback */
+  height: 100dvh; /* altura dinámica real en móviles */
   background: var(--gray-dark);
   z-index: 10000;
   transition: right var(--transition-base);
@@ -1523,6 +1524,7 @@ a {
 .mobile-menu-links {
   list-style: none;
   padding: var(--spacing-md) 0;
+  padding-bottom: calc(var(--spacing-xl) + env(safe-area-inset-bottom));
 }
 
 .mobile-menu-links li {
