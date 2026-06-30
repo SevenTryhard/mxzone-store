@@ -22,18 +22,33 @@ agotado: !(p.stock && Number(p.stock) > 0)
 
 ### 2. Cache-busting de archivos JS y CSS
 
-Cloudflare Pages cachea assets agresivamente. Cada vez que se edita un archivo JS o CSS, **subir la versión en todas las páginas HTML que lo cargan**.
+Cloudflare Pages cachea assets agresivamente. El archivo `_headers` configura cache por 1 año (`max-age=31536000`) para `/js/*` y `/assets/*`. Esto significa que **cambiar el contenido de `main.js` no basta**: el navegador puede seguir sirviendo la version vieja si la ruta base ya fue cacheada.
 
-Ejemplo:
+**Reglas:**
 
-```html
-<link rel="stylesheet" href="css/styles.css?v=css202506290332">
-<script src="js/products.js?v=32"></script>
-```
+1. **Archivos JS criticos** (`utils.js`, `main.js`, `products.js`, `cart.js`) deben tener en `_headers`:
+   ```text
+   /js/main.js
+     Cache-Control: public, max-age=0, must-revalidate
+   ```
+   Esto fuerza a Cloudflare a revalidar en cada request.
 
-**Regla:** Mantener la misma versión en TODOS los HTML. No mezclar `v=27` en index y `v=29` en shop.
+2. **Cache-busting por timestamp:** usar `?t=YYYYMMDDHHMM` en vez de `?v=N`.
+   ```html
+   <script src="js/main.js?t=202606300011"></script>
+   <script src="js/products.js?t=202606300011"></script>
+   <script src="js/cart.js?t=202606300011"></script>
+   <script src="js/utils.js?t=202606300011"></script>
+   <link rel="stylesheet" href="css/styles.css?t=202606300011">
+   ```
 
-> **Consecuencia real:** mezclar versiones entre `index.html` (`v=27`) y `shop.html` (`v=29`) provocó que `main.js` antiguo coexistiera con `products.js` nuevo. Eso ocultó un `TypeError: sizes.map is not a function` en `renderSizeChips` al seleccionar "Jerseys" (el mapa de tallas de `jersey` apuntaba al alias `'uniformes'`, no a un array).
+3. **Mantener el mismo timestamp en TODOS los HTML.** No mezclar `t=202606300011` en index y `t=202606290303` en shop.
+
+4. **Script de cache-busting:** existe un script helper en el equipo (`bump-cache-timestamp.ps1`) que actualiza todos los HTML con el timestamp actual.
+
+> **Consecuencia real #1 (cache-busting insuficiente):** mezclar versiones entre `index.html` (`v=27`) y `shop.html` (`v=29`) provocó que `main.js` antiguo coexistiera con `products.js` nuevo. Eso ocultó un `TypeError: sizes.map is not a function` en `renderSizeChips` al seleccionar "Jerseys".
+
+> **Consecuencia real #2 (cache de 1 año):** aunque se subio `main.js` con fix para #017, el navegador seguia cargando `main.js?v=32` porque Cloudflare Pages cacheaba `/js/*` por `max-age=31536000`. El fix no llego a produccion hasta que se cambio `_headers` a `max-age=0, must-revalidate` y se uso `?t=TIMESTAMP`.
 
 ### 3. Consistencia del header entre páginas
 
@@ -67,15 +82,21 @@ Ejemplos encontrados en producción (project 1): IDs 154, 1877, 1878. Se detecta
 
 ## ✅ VERIFICACIÓN POST-CAMBIO
 
-Después de editar cualquier archivo JS o HTML:
+Después de editar cualquier archivo JS, CSS o HTML:
 
 1. `node --check js/products.js`
 2. `node --check js/cart.js`
 3. `node --check js/product-detail.js`
-4. Subir versión `?v=X` en todos los HTML.
-5. Un solo commit/push por sesión.
-6. Esperar deploy automático de Cloudflare Pages.
-7. Probar en incógnita: home, shop, producto, carrito, checkout.
+4. `node --check js/main.js`
+5. Actualizar timestamp `?t=YYYYMMDDHHMM` en todos los HTML con `bump-cache-timestamp.ps1`.
+6. Verificar que `_headers` tenga `max-age=0, must-revalidate` para `utils.js`, `main.js`, `products.js`, `cart.js`.
+7. Un solo commit/push por sesión.
+8. Esperar deploy automático de Cloudflare Pages.
+9. Probar en incógnita + hard refresh (Ctrl+Shift+R): home, shop, producto, carrito, checkout.
+10. En consola, verificar que se cargó el JS nuevo:
+   ```js
+   document.querySelector('script[src*="main.js"]')?.src
+   ```
 
 ---
 
