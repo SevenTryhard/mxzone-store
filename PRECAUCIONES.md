@@ -22,7 +22,7 @@ agotado: !(p.stock && Number(p.stock) > 0)
 
 ### 2. Cache-busting de archivos JS
 
-Cloudflare Pages cachea assets agresivamente. Cada vez que se edita un archivo JS, **subir la versión** en todas las páginas HTML que lo cargan.
+Cloudflare Pages cachea assets agresivamente. Cada vez que se edita un archivo JS, **subir la versión en todas las páginas HTML que lo cargan**.
 
 Ejemplo:
 
@@ -31,6 +31,8 @@ Ejemplo:
 ```
 
 **Regla:** Mantener la misma versión en TODOS los HTML. No mezclar `v=10` en index y `v=16` en shop.
+
+> **Consecuencia real:** mezclar versiones entre `index.html` (`v=27`) y `shop.html` (`v=29`) provocó que `main.js` antiguo coexistiera con `products.js` nuevo. Eso ocultó un `TypeError: sizes.map is not a function` en `renderSizeChips` al seleccionar "Jerseys" (el mapa de tallas de `jersey` apuntaba al alias `'uniformes'`, no a un array).
 
 ### 3. URL de 4ULAB
 

@@ -515,9 +515,17 @@ function initShopFiltersInternal() {
     }
 
     // Resolve alias (e.g., jersey → use uniformes map)
-    const sizes = (typeof catMap === 'string') ? sizeMap[catMap][currentSizeAge] : catMap[currentSizeAge];
-    if (!sizes || sizes.length === 0) {
+    // Defensa: si catMap es un objeto cuyos valores son strings (alias anidado),
+    // seguir resolviendo hasta obtener el mapa real de tallas.
+    let resolvedMap = catMap;
+    while (typeof resolvedMap === 'string') {
+      resolvedMap = sizeMap[resolvedMap];
+    }
+
+    const sizes = resolvedMap ? resolvedMap[currentSizeAge] : null;
+    if (!sizes || !Array.isArray(sizes) || sizes.length === 0) {
       sizeFilterContainer.innerHTML = '';
+      if (sizeAgeToggle) sizeAgeToggle.style.display = 'none';
       return;
     }
 
