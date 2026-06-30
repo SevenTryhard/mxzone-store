@@ -540,20 +540,25 @@ async function renderShopProducts() {
       return (indexA !== -1 ? indexA : 999) - (indexB !== -1 ? indexB : 999);
     });
 
-    // Renderizar productos con separadores
-    let html = '';
-    let lastCategory = null;
-
+    // FIX #017: no renderizar separadores de categorías vacías.
+    // Agrupar productos por categoría y omitir grupos sin productos visibles.
+    const productsByCategory = {};
     sortedProducts.forEach(product => {
-      try {
-        // Agregar separador si cambia la categoría
-        if (product.category !== lastCategory) {
-          html += createCategoryDivider(product.category);
-          lastCategory = product.category;
-        }
-        html += createProductCard(product);
-      } catch (e) {
-        mxLog('[RENDER] Producto malformado omitido:', product.name || 'sin-nombre', e.message);
+      const cat = product.category || 'sin-categoria';
+      if (!productsByCategory[cat]) {
+        productsByCategory[cat] = [];
+      }
+      productsByCategory[cat].push(product);
+    });
+
+    let html = '';
+    Object.keys(productsByCategory).forEach(category => {
+      const group = productsByCategory[category];
+      // Renderizar solo categorías con al menos un producto visible
+      const visibleCards = group.map(createProductCard).filter(card => card !== '');
+      if (visibleCards.length > 0) {
+        html += createCategoryDivider(category);
+        html += visibleCards.join('');
       }
     });
 

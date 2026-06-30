@@ -23,7 +23,7 @@
 | #014 | Icono Carrito | Problema de color de SVG/icono que no cambia según el tema (light/dark). Además, en 24 páginas el botón del carrito estaba vacío (sin SVG). | **SOLUCIONADO** |
 | #015 | Redes Sociales | Faltan iconos en los botones y los enlaces no tienen href configurado. | Pendiente |
 | #016 | Iconos Inicio | Fallo en la carga de fuentes de iconos (FontAwesome/Material Icons) o CDN. | Pendiente |
-| #017 | Filtro "Todo" | El renderizado de secciones vacías ocupa espacio en el DOM, empujando contenido hacia abajo. | Pendiente |
+| #017 | Filtro "Todo" | El renderizado de secciones vacías ocupa espacio en el DOM, empujando contenido hacia abajo. | **SOLUCIONADO** |
 | #018 | Filtro de Tallas | Filtro incompleto o datos no cargados totalmente en el array de tallas disponibles. | Pendiente |
 
 ## Recomendaciones base
@@ -36,9 +36,9 @@
 ## Sesión actual
 
 - Fecha: 2026-06-29
-- Scope: #001, #004 (incluyendo sub-issue Jerseys), #005, #006, #014 (incluye bonus: nav active state en todas las páginas)
-- Estado: cerrada. #004, #006 y #014 resueltos.
+- Scope: #001, #004 (incluyendo sub-issue Jerseys), #005, #006, #014 (incluye bonus: nav active state), #017
+- Estado: cerrada. #004, #006, #014 y #017 resueltos.
 
 ## Próxima sesión — inicio recomendado
 
-1. Revisar `TEMP.md` y elegir el siguiente fix prioritario. Recomendados según impacto: #017 (filtro "Todo" vacío), #007 (validación de tallas condicional), #008 (botón WhatsApp).
+1. Revisar `TEMP.md` y elegir el siguiente fix prioritario. Recomendados según impacto: #007 (validación de tallas condicional), #008 (botón WhatsApp), #010 (menú desplegable se cierra accidentalmente).
