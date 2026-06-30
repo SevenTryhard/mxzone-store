@@ -54,3 +54,24 @@ function normalizeBrandSlug(brand) {
 function encodeImagePath(path) {
   return path.replace(/ /g, '%20');
 }
+
+/**
+ * Determina si un producto requiere que el usuario seleccione una talla.
+ * Reglas:
+ *   - Sin tallas, vacío, null/undefined, "Consultar" o "Única" → NO requiere.
+ *   - Una sola talla real (ej: "M") → SÍ requiere, porque el usuario debe elegir.
+ *   - Múltiples tallas → SÍ requiere.
+ */
+function shouldRequireSize(sizes) {
+  if (!sizes || typeof sizes !== 'string') return false;
+  const normalized = sizes.trim().toUpperCase();
+  if (!normalized || normalized === 'CONSULTAR' || normalized === 'ÚNICA' || normalized === 'UNICA') return false;
+
+  // Si tras separar por / queda solo un token vacío o Única, no requiere
+  const parts = normalized
+    .split('/')
+    .map(s => s.trim())
+    .filter(s => s !== '' && s !== 'UNICA' && s !== 'ÚNICA');
+
+  return parts.length >= 1;
+}

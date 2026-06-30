@@ -115,7 +115,8 @@ function createProductHTML(product) {
   const whatsappUrl = `https://wa.me/${window.WHATSAPP_NUMBER}?text=${whatsappMessage}`;
   const description = product.description || getCategoryDescription(product.category, product.name);
   const features = getCategoryFeatures(product.category);
-  const sizes = product.sizes.split('/').map(s => s.trim());
+  const requiresSize = shouldRequireSize(product.sizes);
+  const sizes = product.sizes ? product.sizes.split('/').map(s => s.trim()).filter(s => s !== '') : ['Única'];
 
   const imageSrc = getProductImage(product);
   const badgeHTML = product.badge ?
@@ -210,14 +211,16 @@ function createProductHTML(product) {
         <!-- Tallas -->
         <div class="product-sizes-section">
           <div class="product-size-wrapper">
-            <select class="product-size-select" id="productSizeSelect" aria-label="Seleccionar talla">
-              <option value="" disabled selected>TALLA</option>
-              ${sizes.map(size => `<option value="${size.trim()}">${size.trim()}</option>`).join('')}
+            <select class="product-size-select" id="productSizeSelect" aria-label="Seleccionar talla" ${requiresSize ? '' : 'disabled'}>
+              ${requiresSize
+                ? `<option value="" disabled selected>TALLA</option>` + sizes.map(size => `<option value="${size.trim()}">${size.trim()}</option>`).join('')
+                : `<option value="Única" selected>ÚNICA</option>`}
             </select>
           </div>
+          ${requiresSize ? `
           <p class="size-guide-link">
             Dudas con tu talla? <a href="sizes.html" target="_blank">Ver guia de tallas</a>
-          </p>
+          </p>` : ''}
         </div>
 
         <!-- Descripción -->

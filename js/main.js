@@ -1976,27 +1976,28 @@ function initProductModalInternal() {
 
   // Setup size selector in modal
   function setupSizeSelector(sizes) {
-    if (!modalSizes || !modalSizeSelect) return;
+    if (!modalSizes || !modalSizeSelect || !modalSizesContainer) return;
 
-    const sizesArray = sizes.split('/').map(s => s.trim());
+    const requiresSize = shouldRequireSize(sizes);
+    const sizesArray = sizes.split('/').map(s => s.trim()).filter(s => s !== '');
 
-    // Show selector for multiple sizes, tags for single size
-    if (sizesArray.length > 1) {
-      modalSizes.style.display = 'none';
-      modalSizeSelect.style.display = 'block';
-      modalSizeSelect.innerHTML = sizesArray.map(size =>
-        `<option value="${size}">${size}</option>`
-      ).join('');
-    } else {
+    if (!requiresSize || sizesArray.length <= 1) {
+      // Producto sin tallas reales: ocultar selector y mostrar "ÚNICA" como tag informativo
+      modalSizesContainer.style.display = 'block';
       modalSizes.style.display = 'flex';
       modalSizeSelect.style.display = 'none';
       modalSizes.innerHTML = '';
-      sizesArray.forEach(size => {
-        const sizeTag = document.createElement('span');
-        sizeTag.className = 'modal-size-tag';
-        sizeTag.textContent = size;
-        modalSizes.appendChild(sizeTag);
-      });
+      const sizeTag = document.createElement('span');
+      sizeTag.className = 'modal-size-tag active';
+      sizeTag.textContent = 'Única';
+      modalSizes.appendChild(sizeTag);
+    } else {
+      // Producto con tallas reales: mostrar dropdown
+      modalSizesContainer.style.display = 'block';
+      modalSizes.style.display = 'none';
+      modalSizeSelect.style.display = 'block';
+      modalSizeSelect.innerHTML = `<option value="" disabled selected>TALLA</option>` +
+        sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
     }
   }
 
@@ -2112,7 +2113,12 @@ function initProductModalInternal() {
       }
 
       const selectedSize = getSelectedSize();
-      window.MXZONECart.addToCart(currentProduct, selectedSize);
+      const requiresSize = shouldRequireSize(currentProduct.sizes);
+      if (requiresSize && !selectedSize) {
+        showNotification('Selecciona una talla primero', 'error');
+        return;
+      }
+      window.MXZONECart.addToCart(currentProduct, selectedSize || 'Única');
 
       // Animation feedback
       modalAddToCart.innerHTML = 'AGREGADO';

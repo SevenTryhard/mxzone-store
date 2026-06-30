@@ -351,8 +351,11 @@ function createProductCard(product) {
     `<span class="product-badge">${product.badge}</span>` : '';
 
   // Parsear tallas
-  const sizesArray = product.sizes ? product.sizes.split('/').map(s => s.trim()) : ['Única'];
-  const sizeOptions = `<option value="" disabled selected>TALLA</option>` + sizesArray.map(size => `<option value="${size}">${size}</option>`).join('');
+  const requiresSize = shouldRequireSize(product.sizes);
+  const sizesArray = product.sizes ? product.sizes.split('/').map(s => s.trim()).filter(s => s !== '') : ['Única'];
+  const sizeOptions = requiresSize
+    ? `<option value="" disabled selected>TALLA</option>` + sizesArray.map(size => `<option value="${size}">${size}</option>`).join('')
+    : `<option value="Única" selected>ÚNICA</option>`;
 
   return `
     <div class="product-card"
@@ -640,9 +643,11 @@ function addProductToCart(slug) {
   }
 
   const sizeSelect = card.querySelector('.card-size-select');
+  const rawSizes = card.dataset.sizes || '';
   const selectedSize = sizeSelect ? sizeSelect.value : 'Unica';
 
-  if (!selectedSize || selectedSize === '') {
+  // FIX #007: solo exigir talla si el producto realmente tiene tallas configuradas
+  if (shouldRequireSize(rawSizes) && (!selectedSize || selectedSize === '')) {
     showNotification('Selecciona una talla primero', 'error');
     if (sizeSelect) {
       sizeSelect.style.border = '2px solid var(--red-accent)';
