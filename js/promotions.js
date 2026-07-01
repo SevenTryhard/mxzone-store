@@ -3,42 +3,69 @@
  * Carga y gestión de combos/promociones desde CMS
  */
 
-const PROMOS_CMS_URL = 'cms/promociones/';
+// Las promociones se administran desde el CMS de 4ULAB y se leen en tiempo real.
+const PROMOS_API_URL = 'https://4-ulab.vercel.app/api/public/promotions?project=1&limit=100';
+const PROMOS_PROJECT_ID = 1;
 let currentPromo = null;
 let allPromos = [];
 
+// Los tabs de filtro de la pagina usan tiers (principiante/intermedio/...).
+// El modelo de promociones del CMS no tiene un tier a nivel de promo, asi que
+// lo derivamos del slug para las promos de prueba conocidas. Las promos nuevas
+// caen a 'general' y solo aparecen bajo "Todos" (degradacion elegante).
+const PROMO_TIER_BY_SLUG = {
+  'combo-presupuesto-corto': 'principiante',
+  'combo-presupuesto-promedio': 'intermedio',
+  'combo-aficionado': 'profesional',
+  'combo-elite-profesional': 'premium',
+};
+
 // ==================== CARGAR PROMOCIONES ====================
+
+// Mapea la forma de la API publica de 4ULAB a la forma interna del storefront.
+function mapApiPromo(apiPromo) {
+  const products = (apiPromo.products || []).map((p) => ({
+    name: p.name,
+    category: p.category || 'general',
+    price: p.originalPrice || 0,
+    image: p.imageUrl || '',
+    // El storefront espera sizes como STRING separado por '/'.
+    sizes: Array.isArray(p.sizes) && p.sizes.length ? p.sizes.join('/') : 'Única',
+  }));
+
+  const image = apiPromo.imageUrl || products[0]?.image || '';
+
+  return {
+    name: apiPromo.title,
+    slug: apiPromo.slug,
+    description: apiPromo.description || '',
+    category: PROMO_TIER_BY_SLUG[apiPromo.slug] || 'general',
+    badge: null,
+    image,
+    images: apiPromo.imageUrl ? [apiPromo.imageUrl] : [],
+    regularTotal: apiPromo.originalTotal || 0,
+    promoPrice: apiPromo.discountedTotal || 0,
+    products,
+  };
+}
 
 async function loadPromotions() {
   try {
-    // Lista de archivos de promociones
-    const promoFiles = [
-      'combo-principiante.json',
-      'combo-intermedio.json',
-      'combo-profesional.json',
-      'combo-premium.json'
-    ];
-
-    const promos = [];
-
-    for (const file of promoFiles) {
-      try {
-        const response = await fetch(PROMOS_CMS_URL + file);
-        if (response.ok) {
-          const promo = await response.json();
-          promos.push(promo);
-        }
-      } catch (e) {
-        console.warn(`No se pudo cargar ${file}:`, e);
-      }
+    const response = await fetch(PROMOS_API_URL, { headers: { Accept: 'application/json' } });
+    if (!response.ok) {
+      throw new Error(`API respondio ${response.status}`);
     }
 
+    const data = await response.json();
+    const promos = (data.promotions || []).map(mapApiPromo);
+
     allPromos = promos;
-    console.log('Promociones cargadas:', promos.length);
+    console.log('Promociones cargadas desde 4ULAB:', promos.length);
     return promos;
 
   } catch (error) {
-    console.error('Error cargando promociones:', error);
+    console.error('Error cargando promociones desde 4ULAB:', error);
+    allPromos = [];
     return [];
   }
 }

@@ -39,6 +39,21 @@
 - Scope: menú mobile scrolleable y sin iconos feos en `index.html`; links "Inicio" definitivos con `href="index.html"` y texto "Inicio" en 17 páginas; cache-busting a `202606300128`; commit/push a `main`.
 - Estado: cerrada. Pendientes conscientes: #011/#013 semi-resueltos; próxima sesión recomendada #015/#015.
 
+## Sesión 2026-07-01 — Promociones en tiempo real desde 4ULAB
+
+- Scope: conectar la página de promociones al CMS de 4ULAB (Pilar 7 de NEXTUPDATE.md).
+- `js/promotions.js`: `loadPromotions()` ahora lee la API pública en tiempo real
+  (`https://4-ulab.vercel.app/api/public/promotions?project=1`) y mapea la forma
+  de la API a la forma interna del storefront (selector de tallas y checkout por
+  WhatsApp intactos). Antes leía 4 JSON estáticos que mostraban combos inexistentes.
+- **Borrado** (documentado aquí por falta de `BASURA.md` en este repo):
+  - `cms/promociones/combo-principiante.json`
+  - `cms/promociones/combo-intermedio.json`
+  - `cms/promociones/combo-profesional.json`
+  - `cms/promociones/combo-premium.json`
+  - Motivo: reemplazados por las promos reales administradas en el CMS.
+- Las 4 promos de prueba viven en 4ULAB (projectId 1), estrategia `fixed_total`.
+
 ## Próxima sesión — inicio recomendado
 
 1. **LEER PRIMERO `C:\Users\seven\4ULAB\APP\NEXTUPDATE.md`** — contiene la visión conceptual del próximo gran paso del proyecto.
