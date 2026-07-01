@@ -54,7 +54,26 @@
   - Motivo: reemplazados por las promos reales administradas en el CMS.
 - Las 4 promos de prueba viven en 4ULAB (projectId 1), estrategia `fixed_total`.
 
+## Sesión 2026-07-01 — WEB STATS: tracking site-wide + conversiones
+
+- Scope: cablear el nuevo sub-app WEB STATS del CMS de 4ULAB en la tienda MX.
+- **Snippet de tracking site-wide**: `https://4-ulab.vercel.app/tracking-snippet.js`
+  ahora se carga en las 27 páginas (antes solo index/product/shop, y encima el
+  endpoint devolvía 404 → el tracking NUNCA disparaba). Se inyectó
+  `window.__4ULAB_PROJECT_ID__ = 1;` + el `<script>` del snippet antes de `</body>`
+  en las 24 páginas que faltaban. Cache-buster de `cart.js` subido a `202607011500`.
+- **Conversión en checkout WhatsApp** (`js/cart.js`): nueva función
+  `trackCheckoutConversion()` (100% defensiva, try/catch) que dispara
+  `fourUTrackTraffic('conversion', {label:'whatsapp-checkout'})` + una conversión
+  por producto (`fourUTrack('conversion', item.id)`) al enviar el pedido. Se agregó
+  el campo `id: product.id || null` al `cart.push` para poder atribuir por producto.
+- Los product cards de `js/products.js` YA tenían `data-4u-track`/`data-4u-product-id`;
+  solo faltaba que el snippet cargara. Ahora vistas/clicks/addToCart se registran solos.
+- **Pendiente de verificación**: comprobar en vivo una vez que el origin de
+  mxzonestore.com (HTTP 522) se recupere. Commit MX `2b4bd3e`, pushed a `main`.
+
 ## Próxima sesión — inicio recomendado
 
 1. **LEER PRIMERO `C:\Users\seven\4ULAB\APP\NEXTUPDATE.md`** — contiene la visión conceptual del próximo gran paso del proyecto.
-2. Luego revisar `TEMP.md` y atacar #015 (redes sociales sin iconos/links) y #016 (iconos de inicio no cargan fuentes CDN).
+2. Verificar en vivo WEB STATS en MX (snippet cargando + eventos llegando) cuando el 522 se resuelva.
+3. Luego revisar `TEMP.md` y atacar #015 (redes sociales sin iconos/links) y #016 (iconos de inicio no cargan fuentes CDN).
