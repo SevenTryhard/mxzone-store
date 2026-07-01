@@ -74,6 +74,7 @@ function addToCart(product, size, quantity = 1) {
     cart[existingIndex].quantity += quantity;
   } else {
     cart.push({
+      id: product.id || null,
       name: product.name,
       price: product.price,
       priceNum: parseInt(product.price.replace(/[^0-9]/g, '')),
@@ -524,6 +525,21 @@ window.MXZONECart = {
   getCartItems: function() { return cart; }
 };
 
+// WEB STATS: registra una conversion cuando el cliente envia el pedido por WhatsApp.
+// Totalmente defensivo: si el snippet de 4ULAB no cargo, no hace nada.
+function trackCheckoutConversion() {
+  try {
+    if (typeof window.fourUTrackTraffic === 'function') {
+      window.fourUTrackTraffic('conversion', { label: 'whatsapp-checkout' });
+    }
+    if (typeof window.fourUTrack === 'function') {
+      (cart || []).forEach(function(item) {
+        if (item && item.id) window.fourUTrack('conversion', item.id);
+      });
+    }
+  } catch (e) {}
+}
+
 window.openCart = function() {
   const cartModal = document.getElementById('cartModal');
   if (cartModal) {
@@ -603,6 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const address = document.getElementById('checkoutAddress').value.trim();
 
       const message = buildWhatsAppMessage(name, phone, city, address);
+      trackCheckoutConversion();
       const url = 'https://wa.me/' + window.WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
       window.open(url, '_blank');
     }
@@ -626,6 +643,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const message = buildWhatsAppMessage(name, phone, city, address);
+      trackCheckoutConversion();
       const url = 'https://wa.me/' + window.WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
       window.open(url, '_blank');
     }
