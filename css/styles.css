@@ -8766,147 +8766,6 @@ a {
     border-left: none;
   }
 }
-  border-bottom: 1px solid rgba(255,102,0,0.2);
-  margin-bottom: 0.4rem;
-}
-/* CSS-only header for dropdown */
-.nav-dropdown-menu::before {
-  content: 'CATEGORÍAS';
-  grid-column: 1 / -1;
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--orange-primary);
-  padding: 0.2rem 0.9rem 0.5rem;
-  border-bottom: 1px solid rgba(255,102,0,0.25);
-  margin-bottom: 0.5rem;
-  opacity: 0.9;
-}
-.nav-dropdown > a::after {
-  content: '\25BC';
-  font-size: 0.6rem;
-  margin-left: 6px;
-  opacity: 0.7;
-  transition: transform 0.2s ease;
-}
-.nav-dropdown:hover > a::after {
-  transform: rotate(180deg);
-}
-@media (max-width: 768px) {
-  .nav-links.active .nav-dropdown-menu {
-    position: static;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    display: none;
-    background: transparent;
-    border: none;
-    padding: 0;
-    min-width: auto;
-    max-width: none;
-    grid-template-columns: 1fr;
-    box-shadow: none;
-  }
-  .nav-links.active .nav-dropdown-menu.open {
-    display: grid;
-  }
-  .nav-links.active .nav-dropdown-menu a {
-    padding: 0.5rem 1.5rem;
-    font-size: 0.85rem;
-  }
-}
-.nav-dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: var(--nav-bg, #1a1a1a);
-  border: 1px solid var(--border-color, #333);
-  border-radius: 8px;
-  padding: 0.5rem;
-  min-width: 220px;
-  max-width: 280px;
-  max-height: 320px;
-  overflow-y: auto;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.2s ease;
-  z-index: 1000;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-}
-.nav-dropdown:hover .nav-dropdown-menu,
-.nav-dropdown:focus-within .nav-dropdown-menu {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-.nav-dropdown-menu li {
-  list-style: none;
-}
-.nav-dropdown-menu a {
-  display: block;
-  padding: 0.4rem 0.8rem;
-  color: var(--text-primary, #fff);
-  text-decoration: none;
-  font-size: 0.85rem;
-  font-weight: 500;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-}
-.nav-dropdown-menu a:hover {
-  background: rgba(255, 102, 0, 0.15);
-  color: var(--orange-primary, #ff6600);
-  text-shadow: 0 0 8px rgba(255, 102, 0, 0.5);
-  box-shadow: 0 0 12px rgba(255, 102, 0, 0.2);
-}
-.nav-dropdown-menu a::before {
-  content: '';
-  display: inline-block;
-  width: 0;
-  height: 2px;
-  background: var(--orange-primary);
-  margin-right: 0;
-  transition: width 0.2s ease, margin-right 0.2s ease;
-  vertical-align: middle;
-}
-.nav-dropdown-menu a:hover::before {
-  width: 12px;
-  margin-right: 8px;
-}
-.nav-dropdown > a::after {
-  content: '\25BC';
-  font-size: 0.6rem;
-  margin-left: 6px;
-  opacity: 0.7;
-  transition: transform 0.2s ease;
-}
-.nav-dropdown:hover > a::after {
-  transform: rotate(180deg);
-}
-@media (max-width: 768px) {
-  .nav-links.active .nav-dropdown-menu {
-    position: static;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    display: none;
-    background: transparent;
-    border: none;
-    padding: 0;
-    min-width: auto;
-  }
-  .nav-links.active .nav-dropdown-menu.open {
-    display: block;
-  }
-  .nav-links.active .nav-dropdown-menu a {
-    padding: 0.5rem 1.5rem;
-    font-size: 0.85rem;
-  }
-}
 
 /* Mobile performance: content-visibility for product cards */
 .product-card {
@@ -10291,5 +10150,147 @@ a {
   .checkout-page-main {
     padding-top: calc(var(--spacing-lg, 1.5rem) + 64px);
     padding-bottom: calc(var(--spacing-xl, 2rem) + env(safe-area-inset-bottom));
+  }
+}
+
+/* ============================================================
+   MEGA-MENU TIENDA v2 (2026-07-02) — columnas con headers,
+   theming claro/oscuro. El contenido lo construye main.js
+   (rebuildCategoryDropdown) desde la lista unica de categorias.
+   ============================================================ */
+
+.nav-dropdown-menu {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: 0.5rem 2rem;
+  min-width: 720px;
+  max-width: 860px;
+  padding: 1.5rem 2rem 1.75rem;
+}
+
+.nav-dropdown-menu .dropdown-col {
+  list-style: none;
+  border-bottom: none;
+}
+
+.nav-dropdown-menu .dropdown-col-header {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--orange-primary);
+  padding: 0 0 0.6rem;
+  margin-bottom: 0.4rem;
+  border-bottom: 2px solid rgba(255, 102, 0, 0.35);
+}
+
+.nav-dropdown-menu .dropdown-col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-dropdown-menu .dropdown-col li {
+  border-bottom: none;
+}
+
+.nav-dropdown-menu .dropdown-col a {
+  padding: 0.5rem 0.4rem;
+  border-left: 3px solid transparent;
+}
+
+.nav-dropdown-menu .dropdown-col a:hover {
+  padding-left: 0.8rem;
+}
+
+/* Tema claro: antes el menu quedaba SIEMPRE oscuro porque --nav-bg no existe
+   y caia al fallback #1a1a1a. Overrides siguiendo el patron del sitio. */
+[data-theme="light"] .nav-dropdown-menu {
+  background: #f7f7f7 !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18) !important;
+}
+[data-theme="light"] .nav-dropdown-menu a {
+  color: #1a1a1a;
+}
+[data-theme="light"] .nav-dropdown-menu a:hover {
+  background: rgba(255, 102, 0, 0.1);
+  color: var(--orange-primary, #ff6600);
+  text-shadow: none;
+}
+[data-theme="light"] .nav-dropdown-menu li {
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+/* Mobile: columnas apiladas dentro del panel */
+@media (max-width: 768px) {
+  .nav-dropdown-menu {
+    grid-template-columns: 1fr;
+    min-width: auto;
+    max-width: none;
+    gap: 0.25rem;
+    padding: 0;
+  }
+  .nav-dropdown-menu .dropdown-col-header {
+    padding: 0.5rem 1.5rem 0.3rem;
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+  .nav-dropdown-menu .dropdown-col a {
+    padding: 0.5rem 1.5rem;
+    border-left: none;
+  }
+}
+
+/* ============================================================
+   CARDS DE PRODUCTO SIMETRICAS (2026-07-02) — feedback del jefe:
+   nombres de 1 linea acortaban la card y desalineaban precio/
+   talla/botones. Nombre SIEMPRE reserva 2 lineas y las acciones
+   se anclan abajo; el grid ya estira las cards a igual altura.
+   ============================================================ */
+
+.product-name {
+  min-height: calc(0.95rem * 1.3 * 2); /* 2 lineas reservadas */
+}
+
+.product-info .product-actions {
+  margin-top: auto; /* botones SIEMPRE al fondo de la card */
+}
+
+/* ============================================================
+   CATEGORY CARDS CON FOTO (2026-07-02) — home: todas las
+   categorias con imagen real de producto (fondo blanco) en vez
+   de clip-art. Renderizadas por products.js (renderCategoryCards).
+   ============================================================ */
+
+.category-card--photo .category-photo {
+  height: 170px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.category-card--photo .category-photo img {
+  max-width: 82%;
+  max-height: 86%;
+  object-fit: contain;
+  transition: transform 0.35s ease;
+}
+
+.category-card--photo:hover .category-photo img {
+  transform: scale(1.08);
+}
+
+.category-card--photo .category-content {
+  padding: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+  .category-card--photo .category-photo {
+    height: 130px;
   }
 }

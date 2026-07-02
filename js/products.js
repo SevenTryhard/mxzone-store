@@ -459,6 +459,69 @@ async function renderFeaturedProducts() {
   });
 }
 
+// ── CATEGORY CARDS DEL HOME (feedback del jefe 2026-07-02) ──────────────
+// Reemplaza las 4 cards estáticas con clip-art por TODAS las categorías con
+// una FOTO REAL de producto (fondo blanco) y el conteo real. El markup
+// hardcodeado de index.html queda como fallback no-JS.
+async function renderCategoryCards() {
+  const grid = document.querySelector('#categorias .categories-grid');
+  if (!grid) return; // no estamos en el home
+
+  const products = await loadProducts();
+  if (!products.length) return;
+
+  // Orden y agrupación curada. 'ninos' agrupa todas las subcategorías -ninos.
+  const CATEGORY_CARDS = [
+    { slug: 'cascos', label: 'Cascos' },
+    { slug: 'uniformes', label: 'Uniformes' },
+    { slug: 'jersey', label: 'Jerseys' },
+    { slug: 'botas', label: 'Botas' },
+    { slug: 'guantes', label: 'Guantes' },
+    { slug: 'protecciones', label: 'Protecciones' },
+    { slug: 'gafas', label: 'Gafas' },
+    { slug: 'gorras', label: 'Gorras' },
+    { slug: 'maletas', label: 'Maletas' },
+    { slug: 'accesorios', label: 'Accesorios' },
+    { slug: 'ninos', label: 'Niños', match: (c) => c === 'ninos' || (c || '').endsWith('-ninos') },
+  ];
+
+  // Imagen representativa: primero un destacado con foto, sino el primero con foto.
+  function pickImage(items) {
+    const withImage = items.filter((p) => {
+      const img = (Array.isArray(p.images) && p.images[0]) || p.image;
+      return img && String(img).trim() !== '' && p.agotado !== true;
+    });
+    if (!withImage.length) return '';
+    const featured = withImage.find((p) => p.badge || p.destacado || p.featured);
+    const chosen = featured || withImage[0];
+    return (Array.isArray(chosen.images) && chosen.images[0]) || chosen.image || '';
+  }
+
+  const cards = CATEGORY_CARDS.map((cat) => {
+    const matcher = cat.match || ((c) => c === cat.slug);
+    const items = products.filter((p) => matcher(p.category));
+    if (!items.length) return ''; // no mostrar categorías vacías
+    const img = pickImage(items);
+    const count = items.length;
+    const photo = img
+      ? `<div class="category-photo"><img src="${img}" alt="${cat.label}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`
+      : '';
+    return `
+      <a href="shop.html?cat=${cat.slug}" class="category-card category-card--photo" data-4u-track="click" data-4u-label="categoria-${cat.slug}">
+        ${photo}
+        <div class="category-content">
+          <h3 class="category-name">${cat.label}</h3>
+          <span class="category-count">${count} producto${count === 1 ? '' : 's'}</span>
+        </div>
+      </a>
+    `;
+  }).filter(Boolean);
+
+  if (cards.length) {
+    grid.innerHTML = cards.join('');
+  }
+}
+
 // Función para renderizar productos RECOMENDADOS (los más caros) en carrusel
 async function renderRecomendados() {
   const container = document.getElementById('recomendadosCarousel');
@@ -624,6 +687,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (isHomePage) {
     renderFeaturedProducts();
+    renderCategoryCards();
   }
 
   if (isRecomendadosPage) {

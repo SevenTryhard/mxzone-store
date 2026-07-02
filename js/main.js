@@ -139,6 +139,13 @@ function initMobileMenu() {
   // Lo generamos aca si falta, asi el menu funciona igual en toda la tienda.
   ensureMobileMenuMarkup();
 
+  // MEGA-MENU TIENDA: reconstruye el dropdown desde la lista unica de
+  // categorias (el HTML hardcodeado de las 27 paginas queda como fallback y
+  // se reemplaza aca). Asi: categorias COMPLETAS (incluye ninos), organizadas
+  // en columnas con headers, y un solo lugar para mantenerlas. Corrige el
+  // link viejo ?cat=infantil (categoria inexistente; la real es 'ninos').
+  rebuildCategoryDropdown();
+
   const mobileMenuPanel = document.getElementById('mobileMenuPanel');
   const mobileMenuClose = document.getElementById('mobileMenuClose');
   const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
@@ -236,6 +243,74 @@ function initMobileMenu() {
         navLinks.classList.remove('active');
       }
     }
+  });
+}
+
+/**
+ * Lista UNICA de categorias del mega-menu TIENDA, organizada en columnas.
+ * Solo categorias con productos reales (las *-ninos vacias no se listan).
+ * Cuando el proyecto "categorias 100% CMS" llegue, esta lista se reemplaza
+ * por el fetch a /api/public/categories?project=1.
+ */
+const MX_DROPDOWN_SECTIONS = [
+  {
+    header: 'Equipo',
+    items: [
+      { slug: 'cascos', label: 'Cascos' },
+      { slug: 'uniformes', label: 'Uniformes' },
+      { slug: 'jersey', label: 'Jerseys' },
+      { slug: 'botas', label: 'Botas' },
+    ],
+  },
+  {
+    header: 'Protección',
+    items: [
+      { slug: 'protecciones', label: 'Protecciones' },
+      { slug: 'guantes', label: 'Guantes' },
+      { slug: 'gafas', label: 'Gafas' },
+    ],
+  },
+  {
+    header: 'Accesorios',
+    items: [
+      { slug: 'accesorios', label: 'Accesorios' },
+      { slug: 'gorras', label: 'Gorras' },
+      { slug: 'maletas', label: 'Maletas' },
+    ],
+  },
+  {
+    header: 'Niños',
+    items: [
+      { slug: 'ninos', label: 'Todo Niños' },
+      { slug: 'uniformes-ninos', label: 'Uniformes Niños' },
+      { slug: 'protecciones-ninos', label: 'Protecciones Niños' },
+    ],
+  },
+];
+
+/**
+ * Reconstruye el contenido de .nav-dropdown-menu (desktop) en TODAS las
+ * paginas desde MX_DROPDOWN_SECTIONS. El markup viejo (11 items en columna,
+ * con ?cat=infantil roto) queda como fallback no-JS y se reemplaza aca.
+ * El toggle mobile sigue funcionando: usa clases sobre el mismo elemento.
+ */
+function rebuildCategoryDropdown() {
+  const menus = document.querySelectorAll('.nav-dropdown-menu');
+  if (!menus.length) return;
+
+  const html = MX_DROPDOWN_SECTIONS.map(section => `
+    <li class="dropdown-col">
+      <span class="dropdown-col-header">${section.header}</span>
+      <ul>
+        ${section.items.map(item =>
+          `<li><a href="shop.html?cat=${item.slug}">${item.label}</a></li>`
+        ).join('')}
+      </ul>
+    </li>
+  `).join('');
+
+  menus.forEach(menu => {
+    menu.innerHTML = html;
   });
 }
 
