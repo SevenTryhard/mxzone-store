@@ -587,9 +587,21 @@ function initShopFiltersInternal() {
     const catMap = sizeMap[cat];
 
     if (!catMap) {
-      sizeFilterContainer.innerHTML = '';
-      sizeFilterContainer.classList.add('size-filter-chips--loading');
-      if (sizeAgeToggle) sizeAgeToggle.style.display = 'none';
+      // FIX #018: categoria dinamica (administrada desde 4ULAB) sin mapa estatico.
+      // En vez de dejar el filtro vacio, derivamos las tallas REALES desde las
+      // product-card ya renderizadas de esa categoria. Robusto para cualquier
+      // categoria nueva sin tener que hardcodear su mapa.
+      const derived = deriveSizesFromDOM(cat);
+      if (sizeAgeToggle) { sizeAgeToggle.style.display = 'none'; sizeAgeToggle.classList.remove('visible'); }
+      if (derived.length > 0) {
+        sizeFilterContainer.classList.remove('size-filter-chips--loading');
+        sizeFilterContainer.innerHTML = derived.map(s =>
+          `<button class="size-chip" data-size="${s.value}">${s.label}</button>`
+        ).join('');
+      } else {
+        sizeFilterContainer.innerHTML = '';
+        sizeFilterContainer.classList.add('size-filter-chips--loading');
+      }
       return;
     }
 
@@ -629,6 +641,42 @@ function initShopFiltersInternal() {
     if (!sizeFilterContainer) return [];
     return Array.from(sizeFilterContainer.querySelectorAll('.size-chip.active'))
       .map(c => c.dataset.size);
+  }
+
+  // FIX #018: deriva las tallas disponibles de una categoria leyendo el data-sizes
+  // de sus product-card en el DOM. Consistente con el filtro (compara data-sizes
+  // en mayusculas con .includes()), asi que el value del chip es el token en upper.
+  function deriveSizesFromDOM(cat) {
+    let selector;
+    try {
+      selector = '.product-card[data-category="' + (window.CSS && CSS.escape ? CSS.escape(cat) : cat) + '"]';
+    } catch (e) {
+      selector = '.product-card[data-category="' + cat + '"]';
+    }
+    const cards = document.querySelectorAll(selector);
+    const seen = new Map(); // value(upper) -> label(original)
+    cards.forEach(card => {
+      const raw = card.getAttribute('data-sizes') || '';
+      raw.split('/').forEach(tok => {
+        const label = tok.trim();
+        if (!label) return;
+        const value = label.toUpperCase();
+        if (!seen.has(value)) seen.set(value, label);
+      });
+    });
+
+    const order = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'YS', 'YM', 'YL', 'YXL', 'KIDS'];
+    return Array.from(seen.entries())
+      .map(([value, label]) => ({ value, label }))
+      .sort((a, b) => {
+        const ia = order.indexOf(a.value), ib = order.indexOf(b.value);
+        if (ia !== -1 && ib !== -1) return ia - ib;
+        if (ia !== -1) return -1;
+        if (ib !== -1) return 1;
+        const na = parseInt(a.value, 10), nb = parseInt(b.value, 10);
+        if (!isNaN(na) && !isNaN(nb)) return na - nb;
+        return a.value.localeCompare(b.value);
+      });
   }
 
   // Enforce data-brand/price on cards when needed (cards rendered from 4ULAB already include it)

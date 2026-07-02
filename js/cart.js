@@ -586,6 +586,7 @@ function captureLeadTo4ULAB(name, phone, city, address) {
     };
     var cartLines = (cart || []).map(function(item) {
       return {
+        id: (item.id != null) ? item.id : null,
         name: item.name,
         selectedSize: item.selectedSize,
         quantity: item.quantity,
@@ -594,6 +595,11 @@ function captureLeadTo4ULAB(name, phone, city, address) {
           : item.priceNum
       };
     });
+    // Atribución de la ORDEN al visitante web: el snippet de 4ULAB expone el UUID
+    // persistente y el sessionId en window.__4ULAB. Si no cargó, van null (la orden
+    // igual se crea, solo sin vínculo al visitante).
+    var visitorUuid = (window.__4ULAB && window.__4ULAB.visitorId) || null;
+    var sessionId = (window.__4ULAB && window.__4ULAB.sessionId) || null;
     var payload = {
       name: name || '',
       phone: phone || '',
@@ -603,7 +609,9 @@ function captureLeadTo4ULAB(name, phone, city, address) {
       paymentMethod: paymentMethodNames[selectedPaymentMethod] || selectedPaymentMethod || '',
       total: (typeof getCartTotal === 'function') ? getCartTotal() : null,
       cart: cartLines,
-      source: 'whatsapp'
+      source: 'whatsapp',
+      visitorUuid: visitorUuid,
+      sessionId: sessionId
     };
     fetch('https://4-ulab.vercel.app/api/public/leads?project=' + encodeURIComponent(projectId), {
       method: 'POST',
