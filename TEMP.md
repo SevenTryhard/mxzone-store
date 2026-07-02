@@ -120,6 +120,40 @@
 - **⚠️ Limpieza pendiente**: quedó un contacto de prueba "TEST NIGHT Lead" (id 1) en el
   CRM de project 1. Borrarlo desde la UI del CRM cuando se revise.
 
+## Sesión 2026-07-01 — WEB STATS botones + carrito UX + product id fix + deploy
+
+- **Tracking de botones site-wide** (`js/main.js`, IIFE `init4ULabButtonTracking` al final):
+  listener delegado en fase de captura que deduce el label por data-attrs/href/texto y
+  dispara `fourUTrackTraffic('click', {label})`. Cubre PC + hamburguesa mobile + markup
+  inyectado dinámicamente, sin tocar los 27 HTML. Reglas del cliente respetadas:
+  categorías (todo/cascos/uniformes/...) suman al MISMO contador vengan de mobile o PC;
+  "ver-catalogo" y "nav-tienda" (misma URL shop.html) tienen contadores SEPARADOS;
+  todos los WhatsApp suman a UN solo `whatsapp`; excluye `[data-4u-track]` (los maneja el
+  snippet) y el interior de `#cartModal`/`#checkoutOverlay` (las ventas NO cuentan como click).
+- **Fix productos vacíos "más vistos"/"más agregados"** (`js/products.js`): `adaptProductFrom4ULAB`
+  devolvía `_4ulabId` pero NO `id`, así que las cards renderizaban `data-4u-product-id=""`
+  y `/api/public/track` descartaba (skip silencioso) todos los eventos por productId desconocido.
+  Se agregó `id: p.id` como primera prop del objeto. Cascada: card data-attr + view/addToCart
+  del snippet + `id` del item de carrito, todos arreglados de una.
+- **Carrito UX** (`js/cart.js` + `css/styles.css`): (a) auto-abre el carrito al agregar
+  (`safelyOpenCart`/`openCart`); (b) contador ya existía; (c) badge y botón titilan en ROJO
+  cuando hay productos (`.cart-badge--alert` / `.cart-btn--alert`, keyframes `cartAlertPulse`/
+  `cartBtnAlertGlow`, respeta `prefers-reduced-motion`). Lead capture del checkout INTACTO.
+- **Cache-busting**: bump global `202607020400` → `202607020500` (111 refs, 27 HTML).
+- **Deploy**: `node deploy.js` OK, version `be5caa6a-e60d-4d6c-9cf7-5f0489654ecd`.
+  El worker directo (`mxzonestore.motocross.workers.dev`) sirve el build nuevo verificado:
+  HTML con `?t=202607020500`, `main.js` con `init4ULabButtonTracking`, 2788 líneas.
+- **⚠️ DESCUBRIMIENTO IMPORTANTE (infra, no código) — www sirve STALE**: `www.mxzonestore.com`
+  está fronteado por una **Cache Rule de Cloudflare** que cachea los assets estáticos con
+  `Cache-Control: public, max-age=31536000` (1 año) **e ignora el query string**. Evidencia:
+  con `?t=202607020500` Y con `?fresh=RANDOM` www devuelve el `main.js` VIEJO (0 matches de
+  tracking, `cf-cache-status: HIT`), con etag `5f8a702d...` distinto al del worker
+  (`0d94b84b...`, `max-age=0`). CONSECUENCIA: la estrategia de cache-busting `?t=` NO alcanza
+  en www — hace falta **purgar la cache de Cloudflare** (dashboard → Caching → Purge Everything,
+  o purge por URL de `/js/*.js` y `/css/*.css`) para que los clientes vean los cambios.
+  Las "verificaciones en vivo" de sesiones previas solo comprobaron HTTP 200, no el contenido.
+  Mismo tipo de item que el apex 522: requiere dashboard, NO se toca autónomamente.
+
 ## Próxima sesión — inicio recomendado
 
 1. **LEER PRIMERO `C:\Users\seven\4ULAB\APP\NEXTUPDATE.md`** — contiene la visión conceptual del próximo gran paso del proyecto.

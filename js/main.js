@@ -2707,4 +2707,82 @@ navDropdowns.forEach(drop => {
   });
 });
 
+/* ==========================================================================
+   4ULAB - Tracking de "Botones mas presionados" (WEB STATS)
+   --------------------------------------------------------------------------
+   UN solo listener delegado en document. NO edita el HTML: deduce la etiqueta
+   del boton por data-attributes / href / texto. Ventajas:
+     - Cubre PC + mobile + menu inyectado dinamicamente (hamburguesa).
+     - Un mismo label por categoria => el contador suma clicks de PC y mobile.
+     - "Ver Catalogo" y "Tienda" van a la misma URL pero cuentan SEPARADO.
+     - Todos los enlaces wa.me suman a UN solo contador "whatsapp".
+       (El envio del pedido por WhatsApp desde el checkout NO cuenta: usa
+        window.open, no es enlace wa.me, y vive dentro del checkout.)
+   Dispara window.fourUTrackTraffic('click', {label}) -> POST /api/public/traffic
+   -> web_events.label -> panel getTopButtons(). El snippet ya trackea los
+   elementos con data-4u-track (cards de producto), por eso se excluyen.
+   ========================================================================== */
+(function init4ULabButtonTracking() {
+  if (window.__4uBtnTrackingInit) return;
+  window.__4uBtnTrackingInit = true;
+
+  function norm(str) {
+    return (str || '')
+      .toString()
+      .normalize('NFD').replace(new RegExp('[\u0300-\u036f]','g'), '')
+      .replace(/\s+/g, ' ')
+      .toLowerCase().trim();
+  }
+
+  function catFromHref(href) {
+    var m = /[?&]cat=([^&#]+)/.exec(href || '');
+    return m ? decodeURIComponent(m[1]).toLowerCase() : null;
+  }
+
+  function resolveLabel(el) {
+    var href = el.getAttribute('href') || '';
+
+    // 1) WhatsApp: cualquier enlace wa.me / whatsapp -> un solo contador.
+    if (/wa\.me|api\.whatsapp|whatsapp\.com/i.test(href)) return 'whatsapp';
+
+    // 2) Categorias (chips PC [data-category], mobile [data-filter], links del
+    //    menu [?cat=]) -> mismo contador por categoria en cualquier dispositivo.
+    var cat = el.getAttribute('data-category');
+    if (!cat && el.getAttribute('data-type') === 'category') cat = el.getAttribute('data-filter');
+    if (!cat) cat = catFromHref(href);
+    if (cat) return cat === 'all' ? 'categoria-todo' : 'categoria-' + cat;
+
+    var text = norm(el.textContent);
+
+    // 3) "Ver Catalogo" (hero) antes que "Tienda": comparten shop.html pero
+    //    son contadores distintos.
+    if (text.indexOf('ver catalogo') !== -1) return 'ver-catalogo';
+
+    // 4) Nav del header (PC) + menu hamburguesa (mobile) por destino/texto.
+    if (/shop\.html(\?|#|$)/.test(href) || text === 'tienda') return 'nav-tienda';
+    if (/promociones\.html/.test(href) || text === 'promociones') return 'nav-promociones';
+    if (/about\.html/.test(href) || text === 'nosotros') return 'nav-nosotros';
+    if (/contact\.html/.test(href) || text === 'contacto') return 'nav-contacto';
+    if (/testimonials\.html/.test(href) || text === 'testimonios') return 'nav-testimonios';
+    if (/index\.html(\?|#|$)/.test(href) || text === 'inicio') return 'nav-inicio';
+
+    return null;
+  }
+
+  document.addEventListener('click', function (e) {
+    var el = e.target && e.target.closest ? e.target.closest('a, button') : null;
+    if (!el) return;
+    // Ya trackeados por el snippet (cards de producto: Ver / Agregar).
+    if (el.closest('[data-4u-track]')) return;
+    // No trackear internals del carrito/checkout.
+    if (el.closest('#cartModal, #checkoutOverlay, .cart-modal-content')) return;
+
+    var label = resolveLabel(el);
+    if (!label) return;
+    if (typeof window.fourUTrackTraffic === 'function') {
+      try { window.fourUTrackTraffic('click', { label: label }); } catch (err) {}
+    }
+  }, true);
+})();
+
 

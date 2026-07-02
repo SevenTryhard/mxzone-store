@@ -95,6 +95,15 @@ function addToCart(product, size, quantity = 1) {
   saveCart();
   showNotification(product.name + ' agregado al carrito', 'success');
   updateCartModal();
+
+  // Auto-abrir el carrito al agregar (pedido del cliente): que el usuario vea
+  // de inmediato lo que sumo. safelyOpenCart cierra cualquier checkout abierto
+  // antes de abrir; si no existe, cae a openCart.
+  try {
+    if (typeof safelyOpenCart === 'function') safelyOpenCart();
+    else if (typeof openCart === 'function') openCart();
+    else if (typeof window.openCart === 'function') window.openCart();
+  } catch (e) {}
 }
 
 // Eliminar producto del carrito
@@ -148,6 +157,10 @@ function updateCartCount() {
   if (countEl) {
     countEl.textContent = totalItems;
     countEl.style.display = totalItems > 0 ? 'flex' : 'none';
+    // Titilar en rojo cuando hay productos para que el cliente NO se olvide.
+    countEl.classList.toggle('cart-badge--alert', totalItems > 0);
+    const cartBtnEl = document.getElementById('cartBtn');
+    if (cartBtnEl) cartBtnEl.classList.toggle('cart-btn--alert', totalItems > 0);
   }
 }
 

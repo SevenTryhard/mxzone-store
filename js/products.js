@@ -91,6 +91,12 @@ function adaptProductFrom4ULAB(p) {
   const image = p.metaImageUrl || (p.images && p.images[0]) || 'assets/placeholder.jpg';
 
   return {
+    // ID real de 4ULAB: sin esto, data-4u-product-id salia vacio y el endpoint
+    // /api/public/track descartaba TODOS los eventos view/addToCart (productId
+    // inexistente en la tabla products) -> paneles "mas vistos" / "mas agregados"
+    // quedaban vacios para siempre. Tambien alimenta el id del item del carrito
+    // para atribuir la conversion por producto.
+    id: p.id,
     name: p.name || 'Producto sin nombre',
     category: category,
     brand: p.brand || ((p.attributes && p.attributes.marca) ? String(p.attributes.marca).trim() : ''),
