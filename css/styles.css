@@ -9934,3 +9934,110 @@ a {
   }
 }
 
+/* =====================================================================
+   CART REDESIGN — sofisticado, responsive (override cohesivo, fin de archivo)
+   Gana la cascada por orden de fuente. Objetivos:
+   - PC: panel ajustado + footer SIEMPRE pinneado abajo (fix .cart-step flex)
+   - Mobile: pantalla completa, cierre siempre visible, nada se sale
+   ===================================================================== */
+
+/* --- Estructura: el wrapper del paso debe llenar la altura para pinnear footer --- */
+.cart-modal-content .cart-step {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.cart-modal-content .cart-step .cart-items#cartItemsContainer {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* El footer se empuja al fondo y no encoge */
+.cart-modal-content .cart-footer {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+/* --- PC: proporciones más elegantes + acabado glass --- */
+@media (min-width: 769px) {
+  .cart-modal-content {
+    width: 100%;
+    max-width: 430px;
+    box-shadow: -24px 0 60px rgba(0, 0, 0, 0.55);
+    border-left: 1px solid rgba(255, 102, 0, 0.25);
+  }
+
+  .cart-header,
+  .cart-footer {
+    background: rgba(26, 26, 26, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .cart-header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  /* Card de item más refinada */
+  .cart-item {
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+  .cart-item:hover {
+    border-color: rgba(255, 102, 0, 0.35);
+    transform: translateY(-1px);
+  }
+}
+
+/* --- MOBILE: carrito a pantalla completa, cierre visible, sin overflow --- */
+@media (max-width: 768px) {
+  .cart-modal-content {
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    border-radius: 0;
+    border-left: none;
+  }
+
+  /* Header fijo arriba: el botón de cerrar siempre queda a la vista */
+  .cart-header {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    padding: var(--spacing-md) var(--spacing-lg);
+    padding-top: max(var(--spacing-md), env(safe-area-inset-top));
+  }
+
+  .cart-close {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+  }
+
+  /* Zona scrollable: ocupa el resto, nunca desborda */
+  .cart-modal-content .cart-step .cart-items#cartItemsContainer {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Footer pinneado con respeto al notch/gesture bar */
+  .cart-footer {
+    padding: var(--spacing-md) var(--spacing-lg);
+    padding-bottom: max(var(--spacing-md), env(safe-area-inset-bottom));
+  }
+
+  /* Evitar que cualquier hijo empuje el ancho */
+  .cart-item,
+  .cart-item-info,
+  .cart-item-name {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+}
+

@@ -154,6 +154,24 @@
   Las "verificaciones en vivo" de sesiones previas solo comprobaron HTTP 200, no el contenido.
   Mismo tipo de item que el apex 522: requiere dashboard, NO se toca autónomamente.
 
+## Sesión 2026-07-02 — Rediseño carrito (PC + mobile) + deploy
+
+- **Bug PC identificado y corregido** (`css/styles.css`, bloque override al final del archivo):
+  `.cart-modal-content` es flex-column, pero el wrapper `#cartStep1` (`.cart-step`) NO tenía
+  propiedades flex → tomaba altura natural y el footer (Total/COMPRAR) quedaba flotando a mitad
+  de panel con un hueco vacío debajo. Fix: `.cart-step { flex:1; display:flex; flex-direction:column;
+  min-height:0 }` + `#cartItemsContainer { flex:1; min-height:0 }` + `.cart-footer { margin-top:auto }`.
+- **PC (≥769px)**: panel más ajustado (`max-width:430px`), header/footer glass (`backdrop-filter:blur`),
+  sombra lateral, header sticky, cards de item con hover sutil.
+- **Mobile (≤768px)**: carrito a **pantalla completa** (`height:100dvh`, `width:100%`, sin border-radius),
+  header sticky con `env(safe-area-inset-top)` → **el botón cerrar siempre visible**; footer pinneado con
+  `env(safe-area-inset-bottom)`; `overflow-wrap:anywhere` en item/nombre → **nada se sale de pantalla**.
+- **Cache-busting**: bump `202607020500` → `202607021200` (111 refs, 27 HTML, vía PowerShell).
+- **Deploy**: `node deploy.js` OK, version `43cb3316-57b8-4ecc-a821-e8f8aa294a2f`.
+- **⚠️ RECORDATORIO**: www.mxzonestore.com sigue detrás de la Cache Rule de Cloudflare (1 año, ignora
+  query string). Para que los clientes vean el rediseño hay que **PURGAR la cache de Cloudflare**
+  (dashboard → Caching → Purge Everything). El worker directo ya sirve el build nuevo.
+
 ## Próxima sesión — inicio recomendado
 
 1. **LEER PRIMERO `C:\Users\seven\4ULAB\APP\NEXTUPDATE.md`** — contiene la visión conceptual del próximo gran paso del proyecto.
