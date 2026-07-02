@@ -129,13 +129,21 @@ function initHeader() {
 function initMobileMenu() {
   const menuToggle = document.getElementById('menuToggle');
   const navLinks = document.getElementById('navLinks');
+
+  if (!menuToggle || !navLinks) return;
+
+  // BUGFIX: solo index.html traia el markup del panel mobile. En el resto de
+  // las paginas (shop, product, about, contact, promociones...) la hamburguesa
+  // existia pero el panel/overlay no => openMobileMenuPanel bloqueaba el scroll
+  // del body sin abrir nada ni dejar como cerrar => pantalla congelada.
+  // Lo generamos aca si falta, asi el menu funciona igual en toda la tienda.
+  ensureMobileMenuMarkup();
+
   const mobileMenuPanel = document.getElementById('mobileMenuPanel');
   const mobileMenuClose = document.getElementById('mobileMenuClose');
   const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
   const mobileMenuSearch = document.getElementById('mobileMenuSearch');
   const mobileMenuSearchBtn = document.getElementById('mobileMenuSearchBtn');
-
-  if (!menuToggle || !navLinks) return;
 
   // Desktop menu toggle (nav links)
   menuToggle.addEventListener('click', (e) => {
@@ -199,10 +207,12 @@ function initMobileMenu() {
 
   // Helper functions
   function openMobileMenuPanel() {
-    if (mobileMenuPanel) mobileMenuPanel.classList.add('active');
+    // Sin panel no bloqueamos el scroll: evita el freeze historico.
+    if (!mobileMenuPanel) return;
+    mobileMenuPanel.classList.add('active');
     if (mobileMenuOverlay) mobileMenuOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
-    
+
     // Focus search input
     setTimeout(() => {
       if (mobileMenuSearch) mobileMenuSearch.focus();
@@ -227,6 +237,80 @@ function initMobileMenu() {
       }
     }
   });
+}
+
+/**
+ * Inyecta el panel/overlay del menu mobile si la pagina no lo trae en el HTML.
+ * El CSS (.mobile-menu-panel / .mobile-menu-overlay) ya vive en styles.css y se
+ * carga en todas las paginas; solo faltaba el markup fuera de index.html.
+ * Es el MISMO contenido que index.html para mantener una UX consistente.
+ */
+function ensureMobileMenuMarkup() {
+  if (document.getElementById('mobileMenuPanel')) return;
+
+  const host = document.querySelector('header') || document.body;
+  const wrap = document.createElement('div');
+  wrap.innerHTML = `
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu-panel" id="mobileMenuPanel">
+      <div class="mobile-menu-header">
+        <h3 class="mobile-menu-title">Menú</h3>
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Cerrar menú">&times;</button>
+      </div>
+      <div class="mobile-search-panel">
+        <label class="mobile-search-label"> Buscar Productos</label>
+        <div class="mobile-search-box">
+          <input type="text" id="mobileMenuSearch" class="mobile-search-input" placeholder="Ej: Casco Fox, Botas Leatt...">
+          <button class="mobile-search-btn" id="mobileMenuSearchBtn"><span></span></button>
+        </div>
+        <p class="mobile-search-hint">Busca en toda la tienda</p>
+      </div>
+      <div class="mobile-menu-categories">
+        <h4 class="mobile-menu-section-title"> Categorías</h4>
+        <div class="mobile-menu-category-scroll">
+          <a href="shop.html?cat=cascos" class="category-chip">⛑️ Cascos</a>
+          <a href="shop.html?cat=uniformes" class="category-chip">👕 Uniformes</a>
+          <a href="shop.html?cat=botas" class="category-chip">👢 Botas</a>
+          <a href="shop.html?cat=jersey" class="category-chip">👕 Jerseys</a>
+          <a href="shop.html?cat=guantes" class="category-chip">🧤 Guantes</a>
+          <a href="shop.html?cat=gafas" class="category-chip">👓 Gafas</a>
+          <a href="shop.html?cat=protecciones" class="category-chip"> Protecciones</a>
+          <a href="shop.html?cat=gorras" class="category-chip">🧢 Gorras</a>
+          <a href="shop.html?cat=maletas" class="category-chip">🎒 Maletas</a>
+          <a href="shop.html?cat=accesorios" class="category-chip">🔧 Accesorios</a>
+          <div class="category-chip-divider"></div>
+          <a href="shop.html?cat=ninos" class="category-chip ninos-chip">🧒 Niños</a>
+        </div>
+      </div>
+      <ul class="mobile-menu-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li class="nav-dropdown">
+          <a href="shop.html">Tienda</a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="shop.html?cat=cascos">Cascos</a></li>
+            <li><a href="shop.html?cat=uniformes">Uniformes</a></li>
+            <li><a href="shop.html?cat=botas">Botas</a></li>
+            <li><a href="shop.html?cat=guantes">Guantes</a></li>
+            <li><a href="shop.html?cat=protecciones">Protecciones</a></li>
+            <li><a href="shop.html?cat=accesorios">Accesorios</a></li>
+            <li><a href="shop.html?cat=jersey">Jerseys</a></li>
+            <li><a href="shop.html?cat=gafas">Gafas</a></li>
+            <li><a href="shop.html?cat=gorras">Gorras</a></li>
+            <li><a href="shop.html?cat=maletas">Maletas</a></li>
+            <li><a href="shop.html?cat=infantil">Niños/Infantil</a></li>
+          </ul>
+        </li>
+        <li><a href="promociones.html">Promociones</a></li>
+        <li><a href="about.html">Nosotros</a></li>
+        <li><a href="testimonials.html">Testimonios</a></li>
+        <li><a href="contact.html">Contacto</a></li>
+      </ul>
+    </div>`;
+
+  // Insertar los dos nodos (overlay + panel) preservando el orden.
+  while (wrap.firstElementChild) {
+    host.appendChild(wrap.firstElementChild);
+  }
 }
 
 /**

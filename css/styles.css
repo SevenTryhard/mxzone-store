@@ -8929,6 +8929,7 @@ a {
   width: 100%;
   max-width: 540px;
   max-height: 90vh;
+  max-height: 90dvh;
   background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
   border-radius: var(--radius-xl);
   border: 1px solid rgba(255,102,0,0.2);
@@ -9014,6 +9015,8 @@ a {
 .checkout-body {
   flex: 1;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   padding: var(--spacing-lg);
   min-height: 0;
   scrollbar-width: thin;
@@ -9373,6 +9376,7 @@ a {
   }
   .checkout-panel {
     max-height: 95vh;
+    max-height: 95dvh;
     max-width: 100%;
   }
   .checkout-header {
@@ -9512,6 +9516,7 @@ a {
 @media (max-width: 640px) {
   .checkout-container {
     max-height: 95vh;
+    max-height: 95dvh;
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   }
 
@@ -9536,6 +9541,7 @@ a {
 
   .checkout-container {
     max-height: 92vh;
+    max-height: 92dvh;
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   }
 
