@@ -542,6 +542,47 @@ function trackCheckoutConversion() {
   } catch (e) {}
 }
 
+// CRM: registra al comprador como lead/contacto en el CRM de 4ULAB al enviar el
+// pedido por WhatsApp. Fire-and-forget, 100% defensivo (try/catch + keepalive)
+// para no bloquear ni romper el checkout si la API falla o no responde.
+function captureLeadTo4ULAB(name, phone, city, address) {
+  try {
+    var projectId = window.__4ULAB_PROJECT_ID__ || 1;
+    var email = (document.getElementById('checkoutEmail') || {}).value || '';
+    var paymentMethodNames = {
+      nequi: 'Nequi', daviplata: 'Daviplata', transferencia: 'Transferencia bancaria',
+      efectivo: 'Efectivo contra entrega', tarjeta: 'Tarjeta de credito/debito'
+    };
+    var cartLines = (cart || []).map(function(item) {
+      return {
+        name: item.name,
+        selectedSize: item.selectedSize,
+        quantity: item.quantity,
+        price: (typeof formatPrice === 'function' && item.priceNum != null)
+          ? formatPrice(item.priceNum * item.quantity)
+          : item.priceNum
+      };
+    });
+    var payload = {
+      name: name || '',
+      phone: phone || '',
+      email: (email || '').trim(),
+      city: city || '',
+      address: address || '',
+      paymentMethod: paymentMethodNames[selectedPaymentMethod] || selectedPaymentMethod || '',
+      total: (typeof getCartTotal === 'function') ? getCartTotal() : null,
+      cart: cartLines,
+      source: 'whatsapp'
+    };
+    fetch('https://4-ulab.vercel.app/api/public/leads?project=' + encodeURIComponent(projectId), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      keepalive: true
+    }).catch(function() {});
+  } catch (e) {}
+}
+
 window.openCart = function() {
   const cartModal = document.getElementById('cartModal');
   if (cartModal) {
@@ -622,6 +663,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const message = buildWhatsAppMessage(name, phone, city, address);
       trackCheckoutConversion();
+      captureLeadTo4ULAB(name, phone, city, address);
       const url = 'https://wa.me/' + window.WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
       window.open(url, '_blank');
     }
@@ -646,6 +688,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const message = buildWhatsAppMessage(name, phone, city, address);
       trackCheckoutConversion();
+      captureLeadTo4ULAB(name, phone, city, address);
       const url = 'https://wa.me/' + window.WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
       window.open(url, '_blank');
     }
