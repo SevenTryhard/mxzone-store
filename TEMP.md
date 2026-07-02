@@ -172,6 +172,29 @@
   query string). Para que los clientes vean el rediseño hay que **PURGAR la cache de Cloudflare**
   (dashboard → Caching → Purge Everything). El worker directo ya sirve el build nuevo.
 
+## Sesión 2026-07-02 (MODO NIGHT, madrugada) — Checkout como página dedicada
+
+- **checkout.html nueva** (noindex): resumen del pedido (desde localStorage) + formulario.
+  Usa los MISMOS IDs del flujo overlay (`checkoutName/Phone/Email/City/Address`,
+  `fieldPayment`, `checkoutSubmit`) → los handlers delegados de `cart.js` (validación,
+  WhatsApp, `trackCheckoutConversion`, `captureLeadTo4ULAB`) funcionan sin cambios.
+- **`cart.js`**: `openCheckout()` ahora navega a `checkout.html` tras las validaciones
+  (carrito vacío / agotados). Nueva `renderCheckoutPage()`: pinta el resumen, redirige a
+  shop.html si el carrito está vacío, deshabilita el submit si hay agotados. El overlay
+  `#checkoutOverlay` de shop/index queda como markup muerto (no se abre nunca).
+- **`main.js`**: `.checkout-page-main` agregado a las exclusiones del button tracking
+  (las ventas NO cuentan como click de interacción).
+- **`css/styles.css`**: bloque `.checkout-page` al final — panel estático (override del
+  modal), grid 2 columnas PC / 1 columna mobile, summary sticky, light mode.
+- **Cache-buster**: bump global → `202607020215` (28 HTML, incluye checkout.html).
+- **Deploy**: commit `cf95cdb` + `node deploy.js` (version `690ecc97`). Verificado en el
+  worker directo: `/checkout` → 200 con contenido nuevo, `/checkout.html` → 307 → `/checkout`,
+  `cart.js`/`styles.css` nuevos servidos. OJO: el primer curl post-deploy dio 404 por
+  consistencia eventual de los assets — reintentar antes de asumir rotura.
+- **⚠️ RECORDATORIO (manual)**: www.mxzonestore.com sigue detrás de la Cache Rule de 1 año
+  que ignora query strings → **purgar cache de Cloudflare** para que los clientes vean el
+  checkout nuevo en www.
+
 ## Próxima sesión — inicio recomendado
 
 1. **LEER PRIMERO `C:\Users\seven\4ULAB\APP\NEXTUPDATE.md`** — contiene la visión conceptual del próximo gran paso del proyecto.
