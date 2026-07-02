@@ -270,7 +270,7 @@ function safelyOpenCart() {
 // ==================== CHECKOUT ====================
 
 function openCheckout() {
-  // VALIDACIONES PRIMERO — no tocar UI hasta saber que vamos a abrir checkout
+  // VALIDACIONES PRIMERO — no navegar hasta saber que el pedido es viable
   if (cart.length === 0) {
     showNotification('El carrito esta vacio', 'error');
     return;
@@ -286,35 +286,53 @@ function openCheckout() {
     return;
   }
 
-  // Solo ahora cerramos el carrito y abrimos checkout
-  closeCart();
+  // Checkout como PAGINA DEDICADA: el carrito vive en localStorage, asi que
+  // la pagina lo lee al cargar. El overlay viejo queda como markup muerto.
+  window.location.href = 'checkout.html';
+}
 
-  const overlay = document.getElementById('checkoutOverlay');
-  const step1 = document.getElementById('cartStep1');
+// ==================== CHECKOUT PAGE (checkout.html) ====================
 
-  if (overlay) {
-    // Flow A: overlay centrado (nuevo diseño)
-    setTimeout(function() {
-      overlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      // Resetear metodo de pago
-      selectedPaymentMethod = '';
-      document.querySelectorAll('.checkout-payment-btn').forEach(btn => btn.classList.remove('active'));
-      // Limpiar errores
-      clearCheckoutErrors();
-      // Resetear scroll del body del checkout
-      const body = document.getElementById('checkoutBody');
-      if (body) body.scrollTop = 0;
-    }, 50);
-  } else if (step1) {
-    // Fallback: modal lateral viejo
-    const step2 = document.getElementById('cartStep2');
-    if (step2) {
-      step1.style.display = 'none';
-      step2.style.display = 'block';
-      selectedPaymentMethod = '';
-      document.querySelectorAll('.payment-method-btn').forEach(btn => btn.classList.remove('active'));
-    }
+// Renderiza el resumen del pedido en la pagina dedicada de checkout.
+// Solo corre si existe #checkoutPageItems (es decir, estamos en checkout.html).
+function renderCheckoutPage() {
+  const itemsEl = document.getElementById('checkoutPageItems');
+  if (!itemsEl) return;
+
+  // Carrito vacio: no hay nada que comprar -> volver a la tienda
+  if (cart.length === 0) {
+    window.location.replace('shop.html');
+    return;
+  }
+
+  itemsEl.innerHTML = cart.map(function(item) {
+    return (
+      '<div class="checkout-summary-item">' +
+        '<div class="checkout-summary-item-img">' +
+          '<img src="' + item.image + '" alt="' + item.name + '" onerror="this.style.display=\'none\'">' +
+        '</div>' +
+        '<div class="checkout-summary-item-info">' +
+          '<p class="checkout-summary-item-name">' + item.name + '</p>' +
+          '<p class="checkout-summary-item-meta">Talla: ' + item.selectedSize + ' · Cant: ' + item.quantity + '</p>' +
+        '</div>' +
+        '<span class="checkout-summary-item-price">' + formatPrice(item.priceNum * item.quantity) + '</span>' +
+      '</div>'
+    );
+  }).join('');
+
+  const totalEl = document.getElementById('checkoutPageTotal');
+  if (totalEl) totalEl.textContent = formatPrice(getCartTotal());
+
+  // Productos agotados (acceso directo por URL): avisar y bloquear el envio
+  const agotados = cart.filter(function(item) {
+    return item.agotado === true || item._4ulabStock === 0;
+  });
+  const submitBtn = document.getElementById('checkoutSubmit');
+  if (agotados.length > 0 && submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = '0.5';
+    submitBtn.style.cursor = 'not-allowed';
+    showNotification('El carrito contiene productos agotados. Vuelve al carrito para eliminarlos.', 'error');
   }
 }
 
@@ -624,6 +642,7 @@ window.closeCart = function() {
 
 document.addEventListener('DOMContentLoaded', () => {
   loadCart();
+  renderCheckoutPage();
 
   // Delegacion de eventos para clicks en el documento
   document.addEventListener('click', (e) => {

@@ -2774,8 +2774,9 @@ navDropdowns.forEach(drop => {
     if (!el) return;
     // Ya trackeados por el snippet (cards de producto: Ver / Agregar).
     if (el.closest('[data-4u-track]')) return;
-    // No trackear internals del carrito/checkout.
-    if (el.closest('#cartModal, #checkoutOverlay, .cart-modal-content')) return;
+    // No trackear internals del carrito/checkout (incluye la pagina dedicada
+    // checkout.html: las ventas NO cuentan como click de interaccion).
+    if (el.closest('#cartModal, #checkoutOverlay, .cart-modal-content, .checkout-page-main')) return;
 
     var label = resolveLabel(el);
     if (!label) return;

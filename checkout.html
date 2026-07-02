@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="description" content="Finaliza tu pedido de equipamiento motocross en MXZONE STORE.">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="canonical" href="checkout.html">
+  <!-- Checkout no se indexa -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="author" content="MXZONE STORE">
+  <meta name="language" content="es-CO">
+
+  <title>Finalizar Pedido | MXZONE STORE</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo/logo.png">
+  <link rel="apple-touch-icon" href="assets/logo/logo.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css?t=202607020215">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-54DRSXCKFV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-54DRSXCKFV');
+  </script>
+</head>
+<body class="checkout-page">
+
+  <!-- Header minimal: sin distracciones en el checkout -->
+  <header class="header checkout-page-header" id="header">
+    <nav class="nav">
+      <a href="index.html" class="logo">
+        <img src="assets/logo/logo.png" alt="MXZONE" class="logo-image">
+        <span>MX ZONE</span>
+      </a>
+      <a href="shop.html?opencart=1" class="checkout-page-backlink">← Volver al carrito</a>
+    </nav>
+  </header>
+
+  <main class="checkout-page-main">
+    <div class="checkout-page-grid">
+
+      <!-- Columna 1: Resumen del pedido -->
+      <section class="checkout-page-summary" aria-label="Resumen del pedido">
+        <div class="checkout-summary-card">
+          <div class="checkout-summary-header">
+            <h2 class="checkout-summary-title">TU PEDIDO</h2>
+            <a href="shop.html?opencart=1" class="checkout-summary-edit">Editar carrito</a>
+          </div>
+          <div class="checkout-summary-items" id="checkoutPageItems">
+            <!-- Renderizado por cart.js (renderCheckoutPage) -->
+          </div>
+          <div class="checkout-summary-total">
+            <span>Total del pedido</span>
+            <span class="checkout-summary-total-value" id="checkoutPageTotal">$0</span>
+          </div>
+          <div class="checkout-summary-badges">
+            <span>ENVÍOS A TODO COLOMBIA</span>
+            <span>PRODUCTO 100% ORIGINAL</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Columna 2: Formulario (mismos IDs que el flujo anterior — cart.js los maneja) -->
+      <section class="checkout-page-form" aria-label="Datos del comprador">
+        <div class="checkout-panel checkout-panel--page">
+          <div class="checkout-header">
+            <div class="checkout-header-icon">📦</div>
+            <div class="checkout-header-text">
+              <h3 class="checkout-title">Finalizar Pedido</h3>
+              <p class="checkout-subtitle">Completa tus datos para enviar el pedido por WhatsApp</p>
+            </div>
+          </div>
+
+          <div class="checkout-body" id="checkoutBody">
+            <div class="checkout-field" id="fieldName">
+              <label for="checkoutName">Nombre completo <span class="required">*</span></label>
+              <input type="text" id="checkoutName" placeholder="Tu nombre completo" required autocomplete="name">
+              <span class="field-error" id="errorName">⚠️ Ingresa tu nombre</span>
+            </div>
+
+            <div class="checkout-field" id="fieldPhone">
+              <label for="checkoutPhone">Teléfono <span class="required">*</span></label>
+              <input type="tel" id="checkoutPhone" placeholder="Ej: 317 669 2997" required autocomplete="tel">
+              <span class="field-error" id="errorPhone">⚠️ Ingresa tu número de teléfono</span>
+            </div>
+
+            <div class="checkout-field" id="fieldEmail">
+              <label for="checkoutEmail">Email <span class="optional">(opcional)</span></label>
+              <input type="email" id="checkoutEmail" placeholder="tu@email.com" autocomplete="email">
+            </div>
+
+            <div class="checkout-field" id="fieldCity">
+              <label for="checkoutCity">Ciudad <span class="required">*</span></label>
+              <input type="text" id="checkoutCity" placeholder="Ej: Bogotá, Medellín, Cali" required autocomplete="address-level2">
+              <span class="field-error" id="errorCity">⚠️ Ingresa tu ciudad</span>
+            </div>
+
+            <div class="checkout-field" id="fieldAddress">
+              <label for="checkoutAddress">Dirección de envío <span class="required">*</span></label>
+              <input type="text" id="checkoutAddress" placeholder="Calle, número, barrio, torre/apto" required autocomplete="street-address">
+              <span class="field-error" id="errorAddress">⚠️ Ingresa tu dirección</span>
+            </div>
+
+            <div class="checkout-payment" id="fieldPayment">
+              <p class="checkout-payment-title">💳 Método de pago</p>
+              <div class="checkout-payment-grid">
+                <button class="checkout-payment-btn" type="button" data-method="nequi" onclick="selectPaymentMethod('nequi')">
+                  <span class="cp-icon" style="--c:#FF0082">N</span>
+                  <span class="cp-name">Nequi</span>
+                </button>
+                <button class="checkout-payment-btn" type="button" data-method="daviplata" onclick="selectPaymentMethod('daviplata')">
+                  <span class="cp-icon" style="--c:#E31837">D</span>
+                  <span class="cp-name">Daviplata</span>
+                </button>
+                <button class="checkout-payment-btn" type="button" data-method="transferencia" onclick="selectPaymentMethod('transferencia')">
+                  <span class="cp-icon" style="--c:#FF6600">⟲</span>
+                  <span class="cp-name">Transferencia</span>
+                </button>
+                <button class="checkout-payment-btn" type="button" data-method="efectivo" onclick="selectPaymentMethod('efectivo')">
+                  <span class="cp-icon" style="--c:#25D366">$</span>
+                  <span class="cp-name">Efectivo</span>
+                </button>
+              </div>
+              <span class="field-error" id="errorPayment">⚠️ Selecciona un método de pago</span>
+            </div>
+          </div>
+
+          <div class="checkout-footer">
+            <button class="checkout-submit" id="checkoutSubmit">
+              <span class="submit-icon">📱</span>
+              <span class="submit-text">Enviar pedido por WhatsApp</span>
+            </button>
+            <a href="shop.html?opencart=1" class="checkout-back checkout-back--link">
+              <span>← Volver al carrito</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/utils.js?t=202607020215"></script>
+  <script src="js/cart.js?t=202607020215"></script>
+  <script src="js/main.js?t=202607020215"></script>
+  <!-- 4ULAB Analytics + Campaigns Tracking -->
+  <script>
+    window.__4ULAB_PROJECT_ID__ = 1;
+  </script>
+  <script src="https://4-ulab.vercel.app/tracking-snippet.js"></script>
+  <script src="https://4-ulab.vercel.app/campaign-snippet.js"></script>
+</body>
+</html>
