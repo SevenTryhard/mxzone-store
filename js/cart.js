@@ -60,8 +60,10 @@ function saveCart() {
 
 // Agregar producto al carrito
 function addToCart(product, size, quantity = 1) {
-  // Defensa: no agregar productos agotados
-  if (product.agotado === true || product._4ulabStock === 0 || product._4ulabStock === null || product._4ulabStock === undefined) {
+  // Defensa: bloquear SOLO cuando sabemos que esta agotado (flag explicito o stock 0).
+  // Un stock null/undefined significa "dato no disponible", NO agotado: antes esto
+  // bloqueaba TODO producto agregado desde la tarjeta del catalogo (que no propaga stock).
+  if (product.agotado === true || product._4ulabStock === 0) {
     showNotification('El producto ' + product.name + ' está agotado', 'error');
     return;
   }
@@ -261,9 +263,9 @@ function openCheckout() {
     return;
   }
 
-  // BLOQUEO: productos agotados
+  // BLOQUEO: productos agotados (solo flag explicito o stock 0; null/undefined = dato faltante, no agotado)
   const agotadosEnCarrito = cart.filter(function(item) {
-    return item.agotado === true || item._4ulabStock === 0 || item._4ulabStock === null || item._4ulabStock === undefined;
+    return item.agotado === true || item._4ulabStock === 0;
   });
   if (agotadosEnCarrito.length > 0) {
     var nombres = agotadosEnCarrito.map(function(item) { return item.name; }).join(', ');

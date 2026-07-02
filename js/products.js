@@ -360,6 +360,7 @@ function createProductCard(product) {
   return `
     <div class="product-card"
          data-4u-product-id="${product.id || ''}"
+         data-stock="${product._4ulabStock ?? ''}"
          data-category="${product.category || 'sin-categoria'}"
          data-brand="${brand}"
          data-price="${priceNum}"
@@ -673,7 +674,15 @@ function addProductToCart(slug) {
     images = image ? [image] : [];
   }
 
-  const product = { name, price, category, image, images, sizes };
+  // Recuperar id y stock desde los data-attributes de la tarjeta.
+  // El id es necesario para el tracking de conversion; el stock para no
+  // bloquear falsamente el add-to-cart (null/undefined != agotado).
+  const rawId = card.getAttribute('data-4u-product-id');
+  const id = rawId ? Number(rawId) : null;
+  const rawStock = card.getAttribute('data-stock');
+  const _4ulabStock = (rawStock !== null && rawStock !== '') ? Number(rawStock) : null;
+
+  const product = { id, name, price, category, image, images, sizes, _4ulabStock };
 
   mxLog('Agregando al carrito:', product, 'Talla:', selectedSize);
 
