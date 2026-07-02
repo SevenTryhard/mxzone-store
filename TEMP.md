@@ -14,17 +14,17 @@
 | #005 | Control de Cantidad | Falta la lógica de los botones + / - en el selector de producto. El carrito corta items en mobile/PC y no se ve el botón para sumar. | **SOLUCIONADO** |
 | #006 | Carga de Producto | Fallo en el fetch de datos (nombre/precio) desde la base de datos o API. | **SOLUCIONADO** (parche frontend; corregir IDs 154, 1877, 1878 en CMS) |
 | #007 | Validación de Tallas | El validator requiere talla incluso en productos que no la usan (boolean check erróneo). | **SOLUCIONADO** (función `shouldRequireSize` en `utils.js`; aplica en tarjeta, modal y product-detail) |
-| #008 | Botón WhatsApp | Alineación incorrecta en el contenedor (posible error de flexbox o margin). | Pendiente |
+| #008 | Botón WhatsApp | Alineación incorrecta en el contenedor (posible error de flexbox o margin). | **SOLUCIONADO** (sticky-bar mobile usa SVG WhatsApp; 2026-07-02 night) |
 | #009 | Contraste (Light Mode) | Color de fuente demasiado oscuro sobre fondo claro (violación WCAG). | Pendiente |
 | #010 | Menú Desplegable | Error de event listener: el menú se cierra al hacer blur o clic fuera accidental. | Pendiente |
 | #011 | Promociones (Contraste) | Texto informativo sin legibilidad sobre el fondo en modo light. | **SEMI-RESUELTO** (impacto mínimo; no tocar por riesgo de regresión) |
 | #012 | Imagen Promoción | Fallo en la carga de activos (assets); imagen rota o ruta inexistente. | Pendiente |
 | #013 | Info. Promociones | Falta de contraste severo en componentes de texto dinámico. | **SEMI-RESUELTO** (impacto mínimo; no tocar por riesgo de regresión) |
 | #014 | Icono Carrito | Problema de color de SVG/icono que no cambia según el tema (light/dark). Además, en 24 páginas el botón del carrito estaba vacío (sin SVG). | **SOLUCIONADO** |
-| #015 | Redes Sociales | Faltan iconos en los botones y los enlaces no tienen href configurado. | Pendiente (siguiente prioridad) |
+| #015 | Redes Sociales | Faltan iconos en los botones y los enlaces no tienen href configurado. | **SOLUCIONADO** (SVG de marca; href ya estaban OK; 2026-07-02 night) |
 | #016 | Iconos Inicio | Fallo en la carga de fuentes de iconos (FontAwesome/Material Icons) o CDN. | Pendiente (siguiente prioridad) |
 | #017 | Filtro "Todo" | El renderizado de secciones vacías ocupa espacio en el DOM, empujando contenido hacia abajo. | **SOLUCIONADO** |
-| #018 | Filtro de Tallas | Filtro incompleto o datos no cargados totalmente en el array de tallas disponibles. | Pendiente |
+| #018 | Filtro de Tallas | Filtro incompleto o datos no cargados totalmente en el array de tallas disponibles. | **SOLUCIONADO** (fallback deriveSizesFromDOM para categorías dinámicas; 2026-07-02 night) |
 
 ## Recomendaciones base
 
@@ -194,6 +194,30 @@
 - **⚠️ RECORDATORIO (manual)**: www.mxzonestore.com sigue detrás de la Cache Rule de 1 año
   que ignora query strings → **purgar cache de Cloudflare** para que los clientes vean el
   checkout nuevo en www.
+
+## Sesión 2026-07-02 (MODO NIGHT, parte 2) — Bugs #015/#008/#018 + cableo de ORDEN
+
+- **#015 + #008 SOLUCIONADOS**: social-links del footer y sticky-bar mobile ahora usan
+  SVG de marca (Facebook/Instagram/TikTok/WhatsApp con currentColor) en vez de texto
+  FB/IG/TK/WA. Los href ya estaban bien; el bug real era texto en vez de iconos. 82
+  reemplazos en 27 páginas.
+- **#018 SOLUCIONADO**: `renderSizeChips` (js/main.js) ahora tiene `deriveSizesFromDOM(cat)`
+  que, cuando la categoría es dinámica (administrada desde 4ULAB) y no tiene mapa estático
+  en `sizeMap`, deriva las tallas reales leyendo el `data-sizes` de las product-card del
+  DOM. El filtro ya no queda vacío para categorías nuevas. Consistente con el filtro
+  (compara data-sizes en upper con .includes()).
+- **#012**: ya estaba mitigado (onerror + placeholder en promotions.js). Sin cambio.
+- **#010 PENDIENTE**: menú desplegable "se cierra al blur/clic fuera accidental". La lógica
+  actual (cerrar al clic fuera en desktop) es estándar y ya se arregló el menú varias veces.
+  NO se tocó por falta de repro claro y riesgo de regresión. Requiere que el usuario
+  reproduzca el caso exacto.
+- **Cableo de ORDEN canónica**: `cart.js` `captureLeadTo4ULAB` ahora manda `id` de producto
+  por línea + `visitorUuid` + `sessionId` (de `window.__4ULAB`) → la nueva entidad ORDEN de
+  4ULAB (tabla `orders`, sub-app CMS "Ventas") queda vinculada al producto y al visitante web.
+- **Deploy**: commit MX `a27360c` + `node deploy.js` (version `06f3407c`). Verificado en el
+  worker: iconos SVG, deriveSizesFromDOM, cableo en cart.js. Cache-buster `202607020240`.
+- **⚠️ RECORDATORIO (manual)**: purgar cache de Cloudflare de www.mxzonestore.com para que
+  los clientes vean iconos redes + fix filtro tallas + checkout dedicado + rediseño carrito.
 
 ## Próxima sesión — inicio recomendado
 
