@@ -471,8 +471,9 @@ async function renderCategoryCards() {
   if (!products.length) return;
 
   // Orden y agrupación curada. 'ninos' agrupa todas las subcategorías -ninos.
+  // 'prefer': producto cuya foto representa la categoría (pedido del jefe).
   const CATEGORY_CARDS = [
-    { slug: 'cascos', label: 'Cascos' },
+    { slug: 'cascos', label: 'Cascos', prefer: 'kozmik' },
     { slug: 'uniformes', label: 'Uniformes' },
     { slug: 'jersey', label: 'Jerseys' },
     { slug: 'botas', label: 'Botas' },
@@ -485,15 +486,21 @@ async function renderCategoryCards() {
     { slug: 'ninos', label: 'Niños', match: (c) => c === 'ninos' || (c || '').endsWith('-ninos') },
   ];
 
-  // Imagen representativa: primero un destacado con foto, sino el primero con foto.
-  function pickImage(items) {
+  // Imagen representativa: 1) producto preferido (curado), 2) destacado con
+  // foto, 3) primero con foto.
+  function pickImage(items, prefer) {
     const withImage = items.filter((p) => {
       const img = (Array.isArray(p.images) && p.images[0]) || p.image;
       return img && String(img).trim() !== '' && p.agotado !== true;
     });
     if (!withImage.length) return '';
-    const featured = withImage.find((p) => p.badge || p.destacado || p.featured);
-    const chosen = featured || withImage[0];
+    let chosen = null;
+    if (prefer) {
+      chosen = withImage.find((p) => (p.name || '').toLowerCase().includes(prefer));
+    }
+    if (!chosen) {
+      chosen = withImage.find((p) => p.badge || p.destacado || p.featured) || withImage[0];
+    }
     return (Array.isArray(chosen.images) && chosen.images[0]) || chosen.image || '';
   }
 
@@ -501,7 +508,7 @@ async function renderCategoryCards() {
     const matcher = cat.match || ((c) => c === cat.slug);
     const items = products.filter((p) => matcher(p.category));
     if (!items.length) return ''; // no mostrar categorías vacías
-    const img = pickImage(items);
+    const img = pickImage(items, cat.prefer);
     const count = items.length;
     const photo = img
       ? `<div class="category-photo"><img src="${img}" alt="${cat.label}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`

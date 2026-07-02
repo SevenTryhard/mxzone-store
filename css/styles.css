@@ -10294,3 +10294,22 @@ a {
     height: 130px;
   }
 }
+
+/* ============================================================
+   HOME: grids de seccion SIEMPRE simetricos (2026-07-02)
+   auto-fill dejaba tracks vacios con solo 4 cards en pantallas
+   anchas -> cards corridas a la izquierda. Solo aplica al home
+   ([data-products] no existe en shop).
+   ============================================================ */
+.products-grid[data-products] {
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 1100px) {
+  .products-grid[data-products] { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 820px) {
+  .products-grid[data-products] { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 440px) {
+  .products-grid[data-products] { grid-template-columns: 1fr; }
+}

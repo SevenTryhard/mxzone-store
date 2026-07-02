@@ -59,7 +59,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css?t=202607021500">
+  <link rel="stylesheet" href="css/styles.css?t=202607021532">
 
   <!-- Netlify Identity Widget -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
@@ -672,6 +672,176 @@
   </a>
 
       <!-- Shopping Cart Modal (Sidebar) -->
+
+  <!-- Product Modal (quickview, igual que shop) -->
+  <div class="product-modal" id="productModal">
+    <div class="product-modal-content">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <div class="modal-image-container">
+        <img src="" alt="" class="modal-image" id="modalImage" style="display: none;">
+        <span class="modal-image-placeholder" id="modalPlaceholder">MX</span>
+        <div class="modal-thumbnails" id="modalThumbnails" style="display: none;"></div>
+      </div>
+      <div class="modal-product-info">
+        <span class="modal-product-category" id="modalCategory">Categoría</span>
+        <h2 class="modal-product-name" id="modalName">Nombre del Producto</h2>
+        <div class="modal-product-price" id="modalPrice">$0</div>
+        <p class="modal-product-description" id="modalDescription">
+          Producto premium de motocross. Calidad garantizada y envío a todo Colombia.
+        </p>
+        <div class="modal-product-sizes" id="modalSizesContainer">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm);">
+            <h4 style="margin: 0;">TALLA</h4>
+            <button type="button" class="size-guide-btn" id="openSizeGuide" style="background: none; border: 1px solid var(--orange-primary); color: var(--orange-primary); padding: 4px 12px; border-radius: var(--radius-md); font-size: 0.75rem; cursor: pointer; transition: var(--transition-fast);">
+              📏 Guía de Tallas
+            </button>
+          </div>
+          <div class="modal-sizes-list" id="modalSizes"></div>
+          <select class="modal-size-select" id="modalSizeSelect" style="display:none; margin-top: var(--spacing-sm);">
+            <!-- Opciones generadas dinámicamente -->
+          </select>
+        </div>
+        <div class="modal-product-actions">
+          <button class="btn btn-cart-add btn-large" id="modalAddToCart" style="flex:1;">
+             Agregar al Carrito
+          </button>
+          <a href="#" class="btn btn-whatsapp btn-large" id="modalWhatsapp" target="_blank">
+            WhatsApp
+          </a>
+        </div>
+        <button class="btn btn-secondary" id="modalCloseBtn" style="width:100%; margin-top: var(--spacing-sm);">
+          Seguir Viendo
+        </button>
+        <div class="modal-badges">
+          <span class="modal-badge">ENVÍOS A TODO COLOMBIA</span>
+          <span class="modal-badge">PRODUCTO 100% ORIGINAL</span>
+          <span class="modal-badge">GARANTÍA OFICIAL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Size Guide Modal -->
+  <div class="product-modal size-guide-modal" id="sizeGuideModal">
+    <div class="product-modal-content">
+      <button class="modal-close" id="closeSizeGuide">&times;</button>
+      <div class="modal-product-info" style="max-width: 600px; margin: 0 auto;">
+        <h2 class="modal-product-name" style="font-size: 1.8rem; margin-bottom: var(--spacing-md);">
+          📏 Guía de Tallas
+        </h2>
+
+        <!-- Cascos -->
+        <div style="margin-bottom: var(--spacing-lg);">
+          <h4 style="color: var(--orange-primary); margin-bottom: var(--spacing-sm);">Cascos</h4>
+          <div class="table-responsive">
+          <table class="size-guide-table">
+            <thead>
+              <tr>
+                <th>Talla</th>
+                <th>Perímetro (cm)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>XS</td><td>53-54</td></tr>
+              <tr><td>S</td><td>55-56</td></tr>
+              <tr><td>M</td><td>57-58</td></tr>
+              <tr><td>L</td><td>59-60</td></tr>
+              <tr><td>XL</td><td>61-62</td></tr>
+              <tr><td>XXL</td><td>63-64</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--gray-text); margin-top: var(--spacing-xs);">
+            Mide la circunferencia de tu cabeza pasando la cinta métrica por encima de las cejas.
+          </p>
+        </div>
+
+        <!-- Uniformes -->
+        <div style="margin-bottom: var(--spacing-lg);">
+          <h4 style="color: var(--orange-primary); margin-bottom: var(--spacing-sm);">Uniformes (Jersey y Pantalón)</h4>
+          <div class="table-responsive">
+          <table class="size-guide-table">
+            <thead>
+              <tr>
+                <th>Talla</th>
+                <th>Altura (cm)</th>
+                <th>Peso (kg)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>S</td><td>160-170</td><td>55-65</td></tr>
+              <tr><td>M</td><td>165-175</td><td>65-75</td></tr>
+              <tr><td>L</td><td>170-180</td><td>75-85</td></tr>
+              <tr><td>XL</td><td>175-185</td><td>85-95</td></tr>
+              <tr><td>XXL</td><td>180-190</td><td>95-105</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--gray-text); margin-top: var(--spacing-xs);">
+            Los uniformes MX tienen corte atlético. Si estás entre tallas, elige la mayor.
+          </p>
+        </div>
+
+        <!-- Botas -->
+        <div style="margin-bottom: var(--spacing-lg);">
+          <h4 style="color: var(--orange-primary); margin-bottom: var(--spacing-sm);">Botas</h4>
+          <div class="table-responsive">
+          <table class="size-guide-table">
+            <thead>
+              <tr>
+                <th>Talla EU</th>
+                <th>Talla US</th>
+                <th>CM (pie)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>39</td><td>6</td><td>24.5</td></tr>
+              <tr><td>40</td><td>7</td><td>25</td></tr>
+              <tr><td>41</td><td>8</td><td>26</td></tr>
+              <tr><td>42</td><td>9</td><td>26.5</td></tr>
+              <tr><td>43</td><td>10</td><td>27.5</td></tr>
+              <tr><td>44</td><td>11</td><td>28</td></tr>
+              <tr><td>45</td><td>12</td><td>29</td></tr>
+              <tr><td>46</td><td>13</td><td>29.5</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--gray-text); margin-top: var(--spacing-xs);">
+            Mide tu pie desde el talón hasta el dedo más largo. Las botas de motocross deben quedar ajustadas pero cómodas.
+          </p>
+        </div>
+
+        <!-- Protecciones -->
+        <div>
+          <h4 style="color: var(--orange-primary); margin-bottom: var(--spacing-sm);">Protecciones</h4>
+          <p style="font-size: 0.9rem; color: var(--gray-text); margin-bottom: var(--spacing-sm);">
+            Las protecciones deben quedar ajustadas al cuerpo sin limitar el movimiento. Para rodilleras y coderas, mide el contorno de la articulación.
+          </p>
+          <div class="table-responsive">
+          <table class="size-guide-table">
+            <thead>
+              <tr>
+                <th>Talla</th>
+                <th>Contorno (cm)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>S</td><td>30-35</td></tr>
+              <tr><td>M</td><td>35-40</td></tr>
+              <tr><td>L</td><td>40-45</td></tr>
+              <tr><td>XL</td><td>45-50</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        <button class="btn btn-secondary" id="confirmSizeGuide" style="width: 100%; margin-top: var(--spacing-lg);">
+          Entendido
+        </button>
+      </div>
+    </div>
+  </div>
+
       <div class="cart-modal" id="cartModal">
         <div class="cart-modal-overlay" id="cartOverlay"></div>
         <div class="cart-modal-content">
@@ -680,17 +850,16 @@
               <span class="cart-back-icon">←</span>
               <span class="cart-back-text">Volver</span>
             </button>
-            <h3 class="cart-title" id="cartTitle">Tu Carrito</h3>
-            <button class="cart-close" id="cartClose">&times;</button>
+            <h3 class="cart-title" id="cartTitle">TU CARRITO</h3>
+            <button class="cart-close" id="cartClose">×</button>
           </div>
 
+          <!-- STEP 1: Carrito simple (productos + botones) -->
           <div class="cart-step" id="cartStep1">
             <div class="cart-items" id="cartItemsContainer">
               <div class="cart-empty" id="cartEmpty">
-                <div class="cart-empty-icon">
-                  <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-                </div>
-                <p>Tu carrito esta vacio</p>
+                <div class="cart-empty-icon"></div>
+                <p>Tu carrito está vacío</p>
                 <p style="font-size:0.9rem;color:var(--gray-text)">Agrega productos para continuar</p>
                 <div class="cart-empty-actions">
                   <a href="shop.html" class="btn btn-secondary" id="cartContinueShopping">Seguir comprando</a>
@@ -707,82 +876,115 @@
                 <span class="cart-total-value" id="cartTotalValue">$0</span>
               </div>
               <div class="cart-actions-simple">
-                <button class="cart-checkout-btn" id="buyBtn">COMPRAR</button>
-                <button class="cart-clear-btn" id="clearCartBtn">Vaciar Carrito</button>
+                <button class="cart-checkout-btn" id="buyBtn">
+                  <span></span><span>Comprar</span>
+                </button>
+                <button class="cart-clear-btn" id="clearCartBtn">VACIAR CARRITO</button>
               </div>
             </div>
+          </div>
+
+          <!-- STEP 2: Formulario de checkout (legacy, hidden — replaced by checkout overlay below) -->
+          <div class="cart-step" id="cartStep2" style="display:none">
+            <!-- Legacy checkout — now handled by checkoutOverlay -->
           </div>
         </div>
       </div>
 
       <!-- Checkout Modal (Fullscreen Centered) -->
       <div class="checkout-overlay" id="checkoutOverlay">
-        <div class="checkout-container">
+        <div class="checkout-overlay-bg" id="checkoutOverlayBg"></div>
+        <div class="checkout-panel" id="checkoutPanel">
+          <!-- Header -->
           <div class="checkout-header">
-            <h3 class="checkout-title">Finalizar Compra</h3>
-            <button class="checkout-close" id="checkoutClose">&times;</button>
+            <div class="checkout-header-icon">📦</div>
+            <div class="checkout-header-text">
+              <h3 class="checkout-title">Finalizar Pedido</h3>
+              <p class="checkout-subtitle">Completa tus datos para enviar el pedido por WhatsApp</p>
+            </div>
+            <button class="checkout-close" id="checkoutClose" aria-label="Cerrar">×</button>
           </div>
 
-          <div class="checkout-form-wrapper">
-            <form class="checkout-form" id="checkoutForm" onsubmit="return false;">
-              <div class="checkout-form-group">
-                <label for="checkoutName">Nombre completo *</label>
-                <input type="text" id="checkoutName" placeholder="Tu nombre completo" required autocomplete="name">
-              </div>
-              <div class="checkout-form-group">
-                <label for="checkoutPhone">Telefono *</label>
-                <input type="tel" id="checkoutPhone" placeholder="Ej: 317 669 2997" required autocomplete="tel">
-              </div>
-              <div class="checkout-form-group">
-                <label for="checkoutEmail">Email</label>
-                <input type="email" id="checkoutEmail" placeholder="tu@email.com" autocomplete="email">
-              </div>
-              <div class="checkout-form-group">
-                <label for="checkoutCity">Ciudad *</label>
-                <input type="text" id="checkoutCity" placeholder="Ej: Bogota" required autocomplete="address-level2">
-              </div>
-              <div class="checkout-form-group">
-                <label for="checkoutAddress">Direccion de envio *</label>
-                <input type="text" id="checkoutAddress" placeholder="Calle, numero, barrio" required autocomplete="street-address">
-              </div>
+          <!-- Body (scrollable) -->
+          <div class="checkout-body" id="checkoutBody">
+            <!-- Nombre -->
+            <div class="checkout-field" id="fieldName">
+              <label for="checkoutName">Nombre completo <span class="required">*</span></label>
+              <input type="text" id="checkoutName" placeholder="Tu nombre completo" required>
+              <span class="field-error" id="errorName">⚠️ Ingresa tu nombre</span>
+            </div>
 
-              <div class="checkout-payment-section">
-                <p class="checkout-payment-label">Metodo de pago:</p>
-                <div class="payment-methods-grid">
-                  <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('nequi')" data-method="nequi">
-                    <span class="pm-icon"></span>Nequi
-                  </button>
-                  <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('daviplata')" data-method="daviplata">
-                    <span class="pm-icon"></span>Daviplata
-                  </button>
-                  <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('transferencia')" data-method="transferencia">
-                    <span class="pm-icon"></span>Transferencia bancaria
-                  </button>
-                  <button type="button" class="payment-method-btn" onclick="selectPaymentMethod('efectivo')" data-method="efectivo">
-                    <span class="pm-icon"></span>Efectivo contra entrega
-                  </button>
-                  <button type="button" class="payment-method-btn disabled" onclick="selectPaymentMethod('tarjeta')" data-method="tarjeta" disabled>
-                    <span class="pm-icon"></span>Tarjeta de credito/debito
-                    <span class="pm-badge">Proximamente</span>
-                  </button>
-                </div>
-              </div>
+            <!-- Teléfono -->
+            <div class="checkout-field" id="fieldPhone">
+              <label for="checkoutPhone">Teléfono <span class="required">*</span></label>
+              <input type="tel" id="checkoutPhone" placeholder="Ej: 317 669 2997" required>
+              <span class="field-error" id="errorPhone">⚠️ Ingresa tu número de teléfono</span>
+            </div>
 
-              <div class="checkout-actions">
-                <button type="button" class="cart-checkout-btn" id="checkoutBtn">ENVIAR PEDIDO POR WHATSAPP</button>
-                <button type="button" class="cart-clear-btn" id="backToCartBtn">Volver al Carrito</button>
+            <!-- Email -->
+            <div class="checkout-field" id="fieldEmail">
+              <label for="checkoutEmail">Email <span class="optional">(opcional)</span></label>
+              <input type="email" id="checkoutEmail" placeholder="tu@email.com">
+            </div>
+
+            <!-- Ciudad -->
+            <div class="checkout-field" id="fieldCity">
+              <label for="checkoutCity">Ciudad <span class="required">*</span></label>
+              <input type="text" id="checkoutCity" placeholder="Ej: Bogotá, Medellín, Cali" required>
+              <span class="field-error" id="errorCity">⚠️ Ingresa tu ciudad</span>
+            </div>
+
+            <!-- Dirección -->
+            <div class="checkout-field" id="fieldAddress">
+              <label for="checkoutAddress">Dirección de envío <span class="required">*</span></label>
+              <input type="text" id="checkoutAddress" placeholder="Calle, número, barrio, torre/apto" required>
+              <span class="field-error" id="errorAddress">⚠️ Ingresa tu dirección</span>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="checkout-payment" id="fieldPayment">
+              <p class="checkout-payment-title">💳 Método de pago</p>
+              <div class="checkout-payment-grid">
+                <button class="checkout-payment-btn" type="button" data-method="nequi" onclick="selectPaymentMethod('nequi')">
+                  <span class="cp-icon" style="--c:#FF0082">N</span>
+                  <span class="cp-name">Nequi</span>
+                </button>
+                <button class="checkout-payment-btn" type="button" data-method="daviplata" onclick="selectPaymentMethod('daviplata')">
+                  <span class="cp-icon" style="--c:#E31837">D</span>
+                  <span class="cp-name">Daviplata</span>
+                </button>
+                <button class="checkout-payment-btn" type="button" data-method="transferencia" onclick="selectPaymentMethod('transferencia')">
+                  <span class="cp-icon" style="--c:#FF6600">⟲</span>
+                  <span class="cp-name">Transferencia</span>
+                </button>
+                <button class="checkout-payment-btn" type="button" data-method="efectivo" onclick="selectPaymentMethod('efectivo')">
+                  <span class="cp-icon" style="--c:#25D366">$</span>
+                  <span class="cp-name">Efectivo</span>
+                </button>
               </div>
-            </form>
+              <span class="field-error" id="errorPayment">⚠️ Selecciona un método de pago</span>
+            </div>
+          </div>
+
+          <!-- Footer (fixed) -->
+          <div class="checkout-footer">
+            <button class="checkout-submit" id="checkoutSubmit">
+              <span class="submit-icon">📱</span>
+              <span class="submit-text">Enviar pedido por WhatsApp</span>
+            </button>
+            <button class="checkout-back" id="checkoutBack">
+              <span>← Volver al carrito</span>
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
   <!-- Scripts -->
-    <script src="js/utils.js?t=202607021500"></script>
-  <script src="js/cart.js?t=202607021500"></script>
-  <script src="js/main.js?t=202607021500"></script>
+    <script src="js/utils.js?t=202607021532"></script>
+  <script src="js/cart.js?t=202607021532"></script>
+  <script src="js/main.js?t=202607021532"></script>
   <script src="cms/config.js?v=27"></script>
-  <script src="js/products.js?t=202607021500"></script>
+  <script src="js/products.js?t=202607021532"></script>
   <script>
     // 4ULAB Analytics + Campaigns Tracking
     window.__4ULAB_PROJECT_ID__ = 1;
