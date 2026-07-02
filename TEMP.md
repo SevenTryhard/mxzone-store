@@ -72,6 +72,34 @@
 - **Pendiente de verificación**: comprobar en vivo una vez que el origin de
   mxzonestore.com (HTTP 522) se recupere. Commit MX `2b4bd3e`, pushed a `main`.
 
+## Sesión 2026-07-02 (MODO NIGHT) — carrito, quickview, product.html deshabilitada + deploy
+
+- **Carrito (boton cerrar inaccesible en mobile)**: root cause identico al checkout —
+  `.cart-modal-content { height: 95vh }` con `.cart-modal { align-items: flex-end }`
+  empujaba el header (donde vive el boton X) por detras del chrome del navegador iOS.
+  Fix: fallback `height: 95dvh` en las DOS media queries `@media (max-width:768px)`
+  de `.cart-modal-content` (`css/styles.css`). Ahora el header y el boton cerrar
+  siempre quedan dentro del viewport visible.
+- **Boton "Ver" -> solo quickview**: en `js/products.js` el "Ver" era un
+  `<a href="product.html">`. Ahora es `<button class="btn btn-secondary btn-ver">`
+  sin navegacion. En `js/main.js` se quito `.btn-secondary` de la lista de exclusiones
+  del click de la card, asi el click en "Ver" burbujea y abre el quickview (#productModal).
+- **product.html deshabilitada**: agregado `<script>window.location.replace('shop.html')</script>`
+  al inicio del `<head>` + `robots: noindex,nofollow`. Cualquier acceso directo redirige
+  a la tienda. Verificado en vivo: `/product.html` -> 308 -> `/product` -> 200 sirviendo
+  el redirect a shop.html. (Cloudflare static assets sirve las paginas sin `.html`.)
+- **Cache-busting**: bump global de TODOS los `?t=\d{12}` a `202607020300` (111 refs, 27 HTML).
+- **Deploy**: commit `7011faa` pushed a `main` + `node deploy.js` (486 assets, version
+  `3fad60d5`). Verificado en vivo en **www.mxzonestore.com** (HTTP 200, 0.4s) sirviendo el
+  nuevo build.
+- **⚠️ PENDIENTE INFRA (no es codigo)**: el apex `mxzonestore.com` (sin www) sigue en
+  **HTTP 522** ~39s. `www.mxzonestore.com` esta perfecto (200) y es el dominio canonico
+  (canonical/og:url ya apuntan a www). El apex esta proxeado por Cloudflare pero rutea a
+  un origin muerto. Fix (dashboard Cloudflare, 1 paso): agregar `mxzonestore.com` como
+  **Custom Domain** del worker `mxzonestore` (igual que www) O crear una Redirect Rule
+  `mxzonestore.com/* -> https://www.mxzonestore.com/$1` (301). NO se toco DNS de forma
+  autonoma por falta de visibilidad del dashboard.
+
 ## Próxima sesión — inicio recomendado
 
 1. **LEER PRIMERO `C:\Users\seven\4ULAB\APP\NEXTUPDATE.md`** — contiene la visión conceptual del próximo gran paso del proyecto.
