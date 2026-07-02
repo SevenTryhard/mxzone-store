@@ -100,6 +100,26 @@
   `mxzonestore.com/* -> https://www.mxzonestore.com/$1` (301). NO se toco DNS de forma
   autonoma por falta de visibilidad del dashboard.
 
+## Sesión 2026-07-02 (MODO NIGHT) — CRM lead capture desde checkout WhatsApp
+
+- **Objetivo**: que cada comprador que envía el pedido por WhatsApp quede
+  registrado como contacto (lead) en el CRM de 4ULAB (pedido explícito del usuario).
+- **4ULAB (backend)**: nuevo endpoint público `POST /api/public/leads?project=1`
+  (`src/app/api/public/leads/route.ts`). Upsert por teléfono (solo dígitos) o email,
+  rate limit anti-spam (máx 20 leads/día por teléfono-email), dedupe de doble-submit
+  (no repite interacción idéntica en 60s), crea contacto `status: lead` + interacción
+  `type: whatsapp` con el detalle del pedido. Commit 4ULAB `5c35459`, deployed a Vercel.
+- **MX (frontend)**: `js/cart.js` nueva función `captureLeadTo4ULAB()` (fire-and-forget,
+  try/catch + `keepalive:true`, no bloquea el checkout). Se llama en los DOS handlers de
+  envío (`#checkoutSubmit` centrado y `#checkoutBtn` lateral) junto a `trackCheckoutConversion()`.
+  Manda name, phone, email, city, address, paymentMethod, total, cart[], source. Usa
+  `window.__4ULAB_PROJECT_ID__` (=1). Cache-buster global → `202607020400`.
+- **Deploy**: MX commit `617c26c` + `node deploy.js` (version `3e726be5`). 4ULAB pushed a main.
+- **Verificado en vivo** (curl a Vercel): OPTIONS→200, POST válido→201 `{success,contactId,created:true}`,
+  upsert mismo teléfono→200 `created:false`, sin name→400, project inválido→404.
+- **⚠️ Limpieza pendiente**: quedó un contacto de prueba "TEST NIGHT Lead" (id 1) en el
+  CRM de project 1. Borrarlo desde la UI del CRM cuando se revise.
+
 ## Próxima sesión — inicio recomendado
 
 1. **LEER PRIMERO `C:\Users\seven\4ULAB\APP\NEXTUPDATE.md`** — contiene la visión conceptual del próximo gran paso del proyecto.
