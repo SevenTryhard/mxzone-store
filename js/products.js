@@ -385,9 +385,9 @@ function createProductCard(product) {
           </select>
         </div>
         <div class="product-actions">
-          <a href="product.html?product=${productSlug}" class="btn btn-secondary" target="_blank" data-4u-track="click" data-4u-product-id="${product.id || ''}">
+          <button type="button" class="btn btn-secondary btn-ver" data-4u-track="click" data-4u-product-id="${product.id || ''}">
             Ver
-          </a>
+          </button>
           <button class="btn btn-cart-add" onclick="addProductToCart('${productSlug}')" data-4u-track="addToCart" data-4u-product-id="${product.id || ''}">
             Agregar
           </button>

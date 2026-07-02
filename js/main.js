@@ -2101,10 +2101,11 @@ function initProductModalInternal() {
   // Open modal on product card click (anywhere on the card)
   document.querySelectorAll('.product-card').forEach(card => {
     card.addEventListener('click', (e) => {
-      // Don't open modal if clicking on WhatsApp, Add to Cart, Ver button, or size select
+      // Don't open modal if clicking on WhatsApp, Add to Cart, or size select.
+      // El boton "Ver" (.btn-ver) SI abre el quickview: dejamos que el click
+      // burbujee hasta la card. Las paginas product.html estan deshabilitadas.
       if (e.target.closest('.btn-whatsapp') ||
           e.target.closest('.btn-cart-add') ||
-          e.target.closest('.btn-secondary') ||
           e.target.closest('.card-size-select') ||
           e.target.closest('.product-sizes-selector')) {
         return;

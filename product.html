@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Paginas de detalle de producto DESHABILITADAS temporalmente: el quickview
+       (modal) es la unica vista de producto. Redirigimos a la tienda antes de
+       renderizar nada para que product.html sea inaccesible para los usuarios. -->
+  <script>window.location.replace('shop.html');</script>
+  <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="Detalle de producto de equipamiento motocross.">
   <!-- Cache control para imágenes -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -11,8 +16,7 @@
   <!-- SEO: Canonical URL -->
   <link rel="canonical" href="product.html">
   
-  <!-- SEO: Robots -->
-  <meta name="robots" content="index, follow">
+  <!-- SEO: Robots (pagina deshabilitada, redirige a shop.html) -->
   
   <!-- SEO: Author & Publisher -->
   <meta name="author" content="MXZONE STORE">
@@ -56,7 +60,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/styles.css?t=202607011400">
+  <link rel="stylesheet" href="css/styles.css?t=202607020300">
   <!-- Schema.org JSON-LD: Product + Organization -->
   <script type="application/ld+json">
   {
@@ -299,11 +303,11 @@
 
 
   <!-- Scripts -->
-    <script src="js/utils.js?t=202606300200"></script>
+    <script src="js/utils.js?t=202607020300"></script>
   <script src="cms/config.js?v=27"></script>
-  <script src="js/cart.js?t=202607012000"></script>
-  <script src="js/main.js?t=202607011400"></script>
-  <script src="js/product-detail.js?t=202607011200"></script>
+  <script src="js/cart.js?t=202607020300"></script>
+  <script src="js/main.js?t=202607020300"></script>
+  <script src="js/product-detail.js?t=202607020300"></script>
   <!-- Floating WhatsApp Button (Desktop) / Sticky Bar (Mobile) -->
   <a href="https://wa.me/573176692997" class="whatsapp-float" target="_blank" aria-label="Chat WhatsApp">
     <img src="assets/whatsapp-logo.webp" alt="WhatsApp" class="whatsapp-icon">
