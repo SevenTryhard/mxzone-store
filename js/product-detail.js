@@ -453,11 +453,34 @@ async function renderProduct(productSlug) {
   // Renderizar producto
   layout.innerHTML = createProductHTML(product);
 
+  // Montar widget de resenas de 4ULAB (usa el id numerico de producto en 4ULAB)
+  mountUlabReviews(product);
+
   // Inicializar selector de tallas
   initSizeSelector();
 
   // Cargar productos relacionados
   loadRelatedProductsForLayout(product, productSlug);
+}
+
+// Monta el widget de resenas 4ULAB de forma 100% defensiva.
+// La pagina recarga por completo al cambiar de producto (?product=slug),
+// asi que el snippet corre una sola vez leyendo las window.* vars.
+function mountUlabReviews(product) {
+  try {
+    if (!product || !product.id) return;
+    window.ULAB_PROJECT_ID = 1;
+    window.ULAB_PRODUCT_ID = product.id;
+    window.ULAB_ACCENT = '#FF6B00';
+    if (document.getElementById('ulab-reviews-script')) return;
+    var s = document.createElement('script');
+    s.id = 'ulab-reviews-script';
+    s.src = 'https://4-ulab.vercel.app/review-snippet.js?t=202607011200';
+    s.async = true;
+    document.body.appendChild(s);
+  } catch (e) {
+    if (typeof mxLog === 'function') mxLog('mountUlabReviews error:', e && e.message);
+  }
 }
 
 // Cargar productos relacionados para el layout
