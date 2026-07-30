@@ -264,6 +264,37 @@
   `/dashboard/admin/projects/1` (URL de arriba + origen permitido
   `https://mxzonestore.motocross.workers.dev` + skin `mxzonestore`).
 
+## Sesión 2026-07-30 (parte 2) — Edición in-situ y lápices dentro de la card
+
+- **La card ES el editor**: `.product-name` y `.product-price` son `contenteditable`
+  y viajan por `preview:field-input`. Guard obligatorio: mientras un campo tiene foco
+  NO se reconstruye el HTML (mataría el cursor); el producto entrante queda en
+  `pendingProduct` y se aplica en el `blur`, que es cuando el precio se reformatea.
+- **Los lápices se dibujan ACÁ**, no en 4ULAB. Antes 4ULAB los pintaba con rects que
+  viajaban por `postMessage` y en móvil siempre llegaban tarde al scroll. Viviendo en
+  este documento no pueden desfasarse: son el contenido. Al tocarlos se manda
+  `preview:field-request { field, rect }`.
+- **`preview:size`** con el alto REAL del contenido para que 4ULAB dimensione el iframe
+  y la card no scrollee por dentro. Se mide `.preview-stage`, **NO**
+  `documentElement.scrollHeight`: ese nunca baja del alto del viewport y devolvía el
+  alto del propio iframe, así que el iframe no encogía jamás.
+- Commits `4cb7b80` y `1c13cf2`; worker version final `c1faf85d`.
+
+### PRUEBA DE FUEGO — verificada
+
+Se modificó ESTE repo (`createProductCard()` en `js/products.js` y `.product-card` en
+`css/styles.css`) **sin tocar la página de preview**, y el cambio apareció en el editor
+de 4ULAB. Confirmado: la tienda le presta su card al CMS de verdad. Dos condiciones:
+
+1. **Respetar el cache-buster `?t=`.** El preview carga los assets con la misma firma
+   que el resto del sitio; `bump-cache-timestamp.ps1` ya recorre subcarpetas y cubre
+   las tres rutas del preview. Si se deploya sin bumpear, el navegador sirve lo viejo.
+2. **NO renombrar clases.** Los selectores del mapa de campos (`.product-name`,
+   `.product-price`, `.product-image`, `.product-category`, `.product-badge`,
+   `.product-sizes-selector`) están escritos en `_4ulab/preview/card.html`. Cambiar el
+   contenido o el estilo propaga solo; **renombrar una clase deja ese campo sin lápiz
+   en silencio** — la card se sigue viendo perfecta y nadie se entera.
+
 ## Próxima sesión — inicio recomendado
 
 1. **LEER PRIMERO `C:\Users\seven\4ULAB\APP\NEXTUPDATE.md`** — contiene la visión conceptual del próximo gran paso del proyecto.
