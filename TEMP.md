@@ -219,6 +219,40 @@
 - **⚠️ RECORDATORIO (manual)**: purgar cache de Cloudflare de www.mxzonestore.com para que
   los clientes vean iconos redes + fix filtro tallas + checkout dedicado + rediseño carrito.
 
+## Sesión 2026-07-30 — Ruta de preview para el editor didáctico de 4ULAB (Plan 2)
+
+- **Qué es**: 4ULAB agregó un editor de productos donde la card REAL de la tienda ES el
+  editor (lápices flotantes sobre nombre/precio/imagen, edición inline en vivo). MX tiene
+  que "prestar" su card por iframe. Spec: `4ULAB/APP/docs/superpowers/specs/2026-07-29-product-card-editor-design.md`.
+- **Nuevo**: `_4ulab/preview/card.html`. Carga `/css/styles.css`, `/js/utils.js` y
+  `/js/products.js` y renderiza con el `createProductCard()` REAL — pasando antes por
+  `adaptProductFrom4ULAB()`, así hereda gratis el fix de jerseys (#004), el formato de
+  precio y la regla de agotado. **No reimplementa nada**: si cambia la card de la tienda,
+  cambia sola la del editor.
+- **`deploy.js`**: se agregó `_4ulab` a `foldersToCopy`. Sin eso la carpeta NO viaja al
+  deploy (deploy.js solo copia los `.html` de la raíz + `admin` + css/js/assets/cms).
+- **Protocolo**: escucha `preview:render`, contesta `preview:ready` y `preview:elements`
+  (rects en coordenadas del viewport del iframe). Solo acepta mensajes de
+  `4-ulab.vercel.app`, `*.vercel.app` y localhost:3000.
+- **Producto agotado**: la tienda no lo renderiza (`createProductCard` devuelve ''), pero
+  el editor SÍ lo muestra con un aviso — si no, el usuario se queda sin card justo cuando
+  necesita subir el stock.
+- **Campos que la card no muestra** (stock, precio anterior, colores) van a una tira de
+  chips debajo, marcada "No visible en la card", para que sigan siendo editables.
+- **Verificado local** (python http.server + iframe real con postMessage): llegan
+  `preview:ready` + `preview:elements` con los 9 campos; la card renderiza con las clases
+  y data-attrs correctos; medidas IDÉNTICAS a las de `shop.html` real en el mismo entorno
+  (`.product-image` 56px, `.product-card` 322px en ambos) → fidelidad confirmada.
+- **⚠️ DESCUBRIMIENTO (infra, no código) — `_headers` NO se deploya**: `deploy.js` nunca
+  copió `_headers` ni `_redirects`, así que ese archivo es config muerta hoy. Prueba:
+  `mxzonestore.motocross.workers.dev` NO manda `x-frame-options`, pero
+  `www.mxzonestore.com` SÍ manda `x-frame-options: DENY` → **ese header lo pone la ZONA de
+  Cloudflare, no el worker**. Consecuencia: el iframe del CMS funciona contra el worker
+  directo pero NO contra www. Para habilitar www hace falta una Response Header Transform
+  Rule que quite `X-Frame-Options` en `/_4ulab/preview/*` (dashboard, no código). Se dejó
+  la regla equivalente escrita en `_headers` por si algún día se cablea al deploy.
+- **Estado**: codeado y verificado local. **Falta `node deploy.js`.**
+
 ## Próxima sesión — inicio recomendado
 
 1. **LEER PRIMERO `C:\Users\seven\4ULAB\APP\NEXTUPDATE.md`** — contiene la visión conceptual del próximo gran paso del proyecto.

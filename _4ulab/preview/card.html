@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>MXZONE STORE — Vista previa de card (4ULAB)</title>
+
+  <!-- Google Fonts: mismas familias que la tienda real -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- CSS REAL de la tienda: la card debe verse EXACTAMENTE igual que en shop.html.
+       El ?t= sigue la convencion del repo: bump-cache-timestamp.ps1 lo mantiene solo. -->
+  <link rel="stylesheet" href="/css/styles.css?t=202607301700">
+
+  <style>
+    /* ==========================================================
+       Chrome exclusivo del preview. NO toca ninguna clase de la
+       tienda: solo envuelve la card y agrega la fila de campos
+       que no son visibles en la card real.
+       ========================================================== */
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--hero-bg);
+      color: var(--white);
+      font-family: var(--font-primary);
+      overflow-x: hidden;
+    }
+
+    .preview-stage {
+      max-width: 320px;
+      margin: 0 auto;
+      padding: var(--spacing-md) var(--spacing-sm);
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+
+    /* Una sola columna: la card toma el ancho real que tiene en la tienda. */
+    .preview-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .preview-empty {
+      border: 1px dashed var(--gray-light);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-lg) var(--spacing-sm);
+      text-align: center;
+      color: var(--gray-text);
+      font-size: 0.8rem;
+    }
+
+    .preview-notice {
+      border: 1px solid rgba(230, 57, 70, 0.45);
+      background: rgba(230, 57, 70, 0.12);
+      color: var(--red-hover);
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.75rem;
+      font-size: 0.7rem;
+      line-height: 1.35;
+      letter-spacing: 0.02em;
+    }
+
+    .preview-extras {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .preview-extras:empty {
+      display: none;
+    }
+
+    .preview-extras-title {
+      width: 100%;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gray-text);
+      margin: 0.25rem 0 0;
+    }
+
+    .preview-chip {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      border: 1px dashed var(--gray-light);
+      border-radius: var(--radius-sm);
+      padding: 0.35rem 0.6rem;
+      background: rgba(127, 127, 127, 0.08);
+      min-width: 74px;
+    }
+
+    .preview-chip-label {
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray-text);
+    }
+
+    .preview-chip-value {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--white);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 150px;
+    }
+
+    /* La card es para MIRAR y EDITAR, no para comprar: nada dispara acciones. */
+    .preview-stage .product-actions,
+    .preview-stage .card-size-select {
+      pointer-events: none;
+    }
+
+    .preview-stage .product-card {
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-stage">
+    <div class="products-grid preview-grid" id="cardMount">
+      <div class="preview-empty" id="previewPlaceholder">Esperando producto de 4ULAB…</div>
+    </div>
+    <div class="preview-notice" id="previewNotice" hidden></div>
+    <div class="preview-extras" id="previewExtras"></div>
+  </div>
+
+  <!-- Helpers + renderer REALES de la tienda. Nada se reimplementa acá. -->
+  <script src="/js/utils.js?t=202607301700"></script>
+  <script src="/js/products.js?t=202607301700"></script>
+
+  <script>
+  (function () {
+    'use strict';
+
+    // ==========================================================
+    // Contrato con 4ULAB — ver src/lib/preview-protocol.ts
+    //   4ULAB  -> tienda : preview:render, preview:scroll
+    //   tienda -> 4ULAB  : preview:ready, preview:elements, preview:error
+    // ==========================================================
+
+    var ALLOWED_PARENTS = [
+      'https://4-ulab.vercel.app',
+      'http://localhost:3000',
+      'http://127.0.0.1:3000'
+    ];
+
+    // Deploys de preview de Vercel: https://4ulab-<hash>-<scope>.vercel.app
+    var VERCEL_PREVIEW = /^https:\/\/[a-z0-9][a-z0-9-]*\.vercel\.app$/i;
+
+    function isAllowedParent(origin) {
+      return ALLOWED_PARENTS.indexOf(origin) !== -1 || VERCEL_PREVIEW.test(origin);
+    }
+
+    // Campos que 4ULAB sabe editar (PREVIEW_FIELDS en preview-protocol.ts).
+    var FIELD_LABELS = {
+      name: 'Nombre',
+      price: 'Precio',
+      pricePrevious: 'Precio anterior',
+      stock: 'Stock',
+      category: 'Categoría',
+      brand: 'Marca',
+      image: 'Imagen',
+      sizes: 'Tallas',
+      colors: 'Colores'
+    };
+
+    // Anclas reales dentro de la card de MXZONESTORE.
+    var CARD_ANCHORS = [
+      { field: 'image', selector: '.product-image' },
+      { field: 'category', selector: '.product-category' },
+      { field: 'name', selector: '.product-name' },
+      { field: 'price', selector: '.product-price' },
+      { field: 'brand', selector: '.product-badge' },
+      { field: 'sizes', selector: '.product-sizes-selector' }
+    ];
+
+    var mount = document.getElementById('cardMount');
+    var placeholder = document.getElementById('previewPlaceholder');
+    var notice = document.getElementById('previewNotice');
+    var extras = document.getElementById('previewExtras');
+
+    var parentOrigin = null;
+    var lastProduct = null;
+    var measureQueued = false;
+
+    function send(msg) {
+      if (window.parent === window) return;
+      window.parent.postMessage(msg, parentOrigin || '*');
+    }
+
+    function fail(message) {
+      send({ type: 'preview:error', message: message });
+    }
+
+    // ----------------------------------------------------------
+    // CardProductPayload (4ULAB) -> forma que espera el adaptador
+    // real de la tienda. Reusamos adaptProductFrom4ULAB para que
+    // el preview herede TODAS sus reglas (fix jerseys, formato de
+    // precio, agotado por stock) sin duplicar lógica.
+    // ----------------------------------------------------------
+    function toApiShape(payload) {
+      var images = (payload.images || [])
+        .slice()
+        .sort(function (a, b) { return (b && b.isPrimary ? 1 : 0) - (a && a.isPrimary ? 1 : 0); })
+        .map(function (img) { return img && img.url; })
+        .filter(function (url) { return typeof url === 'string' && url.trim() !== ''; });
+
+      var attributes = {};
+      var source = payload.attributes || {};
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) attributes[key] = source[key];
+      }
+      if (payload.sizes && payload.sizes.length) attributes.tallas = payload.sizes;
+      if (payload.brand) attributes.marca = payload.brand;
+
+      return {
+        id: payload.id,
+        name: payload.name || 'Producto sin nombre',
+        slug: payload.slug,
+        price: payload.priceVisible === false ? null : payload.price,
+        stock: payload.stock,
+        featured: !!payload.featured,
+        brand: payload.brand || '',
+        category: payload.category || '',
+        metaImageUrl: images[0] || '',
+        images: images,
+        attributes: attributes
+      };
+    }
+
+    function renderExtras(payload, adapted, missingFields) {
+      var chips = [];
+
+      if (missingFields.length) {
+        chips.push('<p class="preview-extras-title">No visible en la card</p>');
+      }
+
+      missingFields.forEach(function (field) {
+        chips.push(
+          '<div class="preview-chip" data-preview-field="' + field + '">' +
+            '<span class="preview-chip-label">' + FIELD_LABELS[field] + '</span>' +
+            '<span class="preview-chip-value">' + extraValue(field, payload, adapted) + '</span>' +
+          '</div>'
+        );
+      });
+
+      extras.innerHTML = chips.join('');
+    }
+
+    function extraValue(field, payload, adapted) {
+      var raw;
+      switch (field) {
+        case 'stock': raw = payload.stock; break;
+        case 'pricePrevious': raw = payload.pricePrevious; break;
+        case 'colors': raw = (payload.colors || []).join(', '); break;
+        case 'sizes': raw = (payload.sizes || []).join(' / '); break;
+        case 'brand': raw = payload.brand; break;
+        case 'category': raw = payload.category; break;
+        case 'image': raw = adapted.image; break;
+        default: raw = payload[field];
+      }
+      if (raw === null || raw === undefined || raw === '') return '—';
+      return String(raw)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function render(payload) {
+      if (typeof adaptProductFrom4ULAB !== 'function' || typeof createProductCard !== 'function') {
+        fail('No se pudieron cargar los scripts de la tienda (products.js).');
+        return;
+      }
+
+      lastProduct = payload;
+
+      var adapted = adaptProductFrom4ULAB(toApiShape(payload));
+      var agotado = adapted.agotado === true;
+
+      // En la tienda un producto agotado NO se renderiza. En el editor sí:
+      // si no, el usuario se queda sin card justo cuando necesita subir el stock.
+      adapted.agotado = false;
+
+      var html = createProductCard(adapted);
+      if (!html) {
+        fail('La tienda no devolvió HTML para este producto.');
+        return;
+      }
+
+      mount.innerHTML = html;
+      if (placeholder && placeholder.parentNode) placeholder.parentNode.removeChild(placeholder);
+
+      if (agotado) {
+        notice.textContent = 'AGOTADO — con stock 0 este producto no aparece en la tienda. Se muestra acá solo para editarlo.';
+        notice.hidden = false;
+      } else {
+        notice.hidden = true;
+      }
+
+      var card = mount.querySelector('.product-card');
+      var missing = [];
+      Object.keys(FIELD_LABELS).forEach(function (field) {
+        var anchor = null;
+        for (var i = 0; i < CARD_ANCHORS.length; i++) {
+          if (CARD_ANCHORS[i].field === field) { anchor = CARD_ANCHORS[i]; break; }
+        }
+        if (!anchor || !card || !card.querySelector(anchor.selector)) missing.push(field);
+      });
+
+      renderExtras(payload, adapted, missing);
+      scheduleMeasure();
+
+      // Las imágenes cambian la altura de la card al cargar: re-medir.
+      var img = card && card.querySelector('.product-image img');
+      if (img && !img.complete) {
+        img.addEventListener('load', scheduleMeasure, { once: true });
+        img.addEventListener('error', scheduleMeasure, { once: true });
+      }
+    }
+
+    // ----------------------------------------------------------
+    // Medición: los rects van en coordenadas del viewport DEL
+    // IFRAME, que es exactamente el sistema que usa
+    // FieldOverlayLayer para dibujar los lápices (scale = 1).
+    // ----------------------------------------------------------
+    function rectOf(node) {
+      var r = node.getBoundingClientRect();
+      return {
+        x: Math.round(r.left),
+        y: Math.round(r.top),
+        width: Math.round(r.width),
+        height: Math.round(r.height)
+      };
+    }
+
+    function measure() {
+      measureQueued = false;
+      var elements = [];
+      var card = mount.querySelector('.product-card');
+
+      if (card) {
+        CARD_ANCHORS.forEach(function (anchor) {
+          var node = card.querySelector(anchor.selector);
+          if (!node) return;
+          var rect = rectOf(node);
+          if (!rect.width && !rect.height) return;
+          elements.push({
+            id: 'card-' + anchor.field,
+            field: anchor.field,
+            rect: rect,
+            editable: true,
+            label: FIELD_LABELS[anchor.field]
+          });
+        });
+      }
+
+      Array.prototype.forEach.call(extras.querySelectorAll('[data-preview-field]'), function (node) {
+        var field = node.getAttribute('data-preview-field');
+        elements.push({
+          id: 'extra-' + field,
+          field: field,
+          rect: rectOf(node),
+          editable: true,
+          label: FIELD_LABELS[field]
+        });
+      });
+
+      send({ type: 'preview:elements', elements: elements });
+    }
+
+    function scheduleMeasure() {
+      if (measureQueued) return;
+      measureQueued = true;
+
+      var done = false;
+      function run() {
+        if (done) return;
+        done = true;
+        measure();
+      }
+
+      // rAF nos da el frame ya pintado, que es la medida buena. Pero si la
+      // pestaña del CMS esta en segundo plano el navegador SUSPENDE rAF y
+      // los lapices no se dibujarian nunca: el timeout es el salvavidas.
+      requestAnimationFrame(function () { requestAnimationFrame(run); });
+      setTimeout(run, 120);
+    }
+
+    // ----------------------------------------------------------
+    // Entrada de mensajes
+    // ----------------------------------------------------------
+    window.addEventListener('message', function (event) {
+      if (!isAllowedParent(event.origin)) return;
+      var data = event.data;
+      if (!data || typeof data !== 'object' || typeof data.type !== 'string') return;
+      if (data.type.indexOf('preview:') !== 0) return;
+
+      parentOrigin = event.origin;
+
+      try {
+        if (data.type === 'preview:render') {
+          render(data.product || {});
+        } else if (data.type === 'preview:scroll') {
+          var anchor = null;
+          for (var i = 0; i < CARD_ANCHORS.length; i++) {
+            if ('card-' + CARD_ANCHORS[i].field === data.elementId) { anchor = CARD_ANCHORS[i]; break; }
+          }
+          var node = anchor && mount.querySelector(anchor.selector);
+          if (node && node.scrollIntoView) node.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }
+      } catch (err) {
+        fail(err && err.message ? err.message : 'Error renderizando la card.');
+      }
+    });
+
+    // Cualquier cosa que mueva la card obliga a recalcular los lápices.
+    window.addEventListener('resize', scheduleMeasure);
+    window.addEventListener('scroll', scheduleMeasure, { passive: true });
+
+    if (typeof ResizeObserver === 'function') {
+      new ResizeObserver(scheduleMeasure).observe(document.body);
+    }
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(scheduleMeasure).catch(function () {});
+    }
+
+    // Tema: la tienda arranca en dark; 4ULAB puede pedir light con ?theme=light
+    try {
+      var theme = new URLSearchParams(window.location.search).get('theme');
+      if (theme === 'light' || theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+    } catch (e) {}
+
+    send({ type: 'preview:ready' });
+  })();
+  </script>
+</body>
+</html>

@@ -34,7 +34,10 @@ const foldersToCopy = [
   'css',
   'js',
   'assets',
-  'cms'
+  'cms',
+  // Ruta de vista previa consumida por el editor didactico de 4ULAB.
+  // Sin esto la card no viaja al deploy y el iframe del CMS queda vacio.
+  '_4ulab'
 ];
 
 console.log('📦 Copiando archivos al directorio temporal...');

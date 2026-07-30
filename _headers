@@ -4,6 +4,13 @@
   X-XSS-Protection: 1; mode=block
   Referrer-Policy: strict-origin-when-cross-origin
 
+# El editor didactico de 4ULAB embebe esta ruta en un iframe: el DENY
+# de arriba la mataria. Se quita X-Frame-Options y se acota con
+# frame-ancestors, que es mas preciso.
+/_4ulab/preview/*
+  ! X-Frame-Options
+  Content-Security-Policy: frame-ancestors https://4-ulab.vercel.app https://*.vercel.app
+
 /*.html
   Cache-Control: public, max-age=3600
 
