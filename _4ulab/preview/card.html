@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es" data-theme="dark">
 <head>
   <meta charset="UTF-8">
@@ -13,7 +13,7 @@
 
   <!-- CSS REAL de la tienda: la card debe verse EXACTAMENTE igual que en shop.html.
        El ?t= sigue la convencion del repo: bump-cache-timestamp.ps1 lo mantiene solo. -->
-  <link rel="stylesheet" href="/css/styles.css?t=202607301700">
+  <link rel="stylesheet" href="/css/styles.css?t=202607301733">
 
   <style>
     /* ==========================================================
@@ -87,8 +87,12 @@
       height: 13px;
     }
 
-    /* Una sola columna: la card toma el ancho real que tiene en la tienda. */
-    .preview-grid {
+    /* Una sola columna: la card toma el ancho real que tiene en la tienda.
+       Va con la especificidad de .preview-stage a proposito: styles.css tiene
+       una media query que pone .products-grid en 2 columnas en pantallas
+       chicas, y como carga ANTES ganaria por orden. En el editor siempre se
+       muestra UNA card, nunca la grilla de la tienda. */
+    .preview-stage .preview-grid {
       grid-template-columns: 1fr;
     }
 
@@ -225,8 +229,8 @@
   </div>
 
   <!-- Helpers + renderer REALES de la tienda. Nada se reimplementa acá. -->
-  <script src="/js/utils.js?t=202607301700"></script>
-  <script src="/js/products.js?t=202607301700"></script>
+  <script src="/js/utils.js?t=202607301733"></script>
+  <script src="/js/products.js?t=202607301733"></script>
 
   <script>
   (function () {

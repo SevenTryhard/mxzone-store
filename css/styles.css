@@ -10313,3 +10313,55 @@ a {
 @media (max-width: 440px) {
   .products-grid[data-products] { grid-template-columns: 1fr; }
 }
+
+/* ============================================
+   GRID DE PRODUCTOS EN MOVIL — 2026-07-30
+   Antes entraba UNA sola card por fila en telefono: el grid de la
+   tienda usa minmax(240px, 1fr) (con ~343px utiles entra una), y el
+   del home baja explicitamente a 1fr por debajo de 440px.
+   Ahora ambos van a 2 columnas. El interior de la card estaba
+   dimensionado para ~280px de ancho, asi que tambien se ajusta.
+   Todo scopeado a .products-grid: no toca el quickview ni el carrito.
+   ============================================ */
+@media (max-width: 640px) {
+  .products-grid,
+  .products-grid[data-products] {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xs);
+  }
+
+  .products-grid .product-image {
+    height: 130px;
+    padding: var(--spacing-xs);
+  }
+
+  .products-grid .product-info {
+    padding: var(--spacing-sm);
+    gap: 0.35rem;
+  }
+
+  .products-grid .product-category { font-size: 0.58rem; }
+  .products-grid .product-name { font-size: 0.8rem; }
+  .products-grid .product-price { font-size: 1.05rem; }
+
+  .products-grid .card-size-select {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.4rem;
+  }
+
+  .products-grid .product-badge {
+    font-size: 0.55rem;
+    padding: 2px 6px;
+  }
+
+  /* Dos botones lado a lado no entran en ~160px de ancho: se apilan. */
+  .products-grid .product-actions {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .products-grid .product-actions .btn {
+    padding: 0.5rem 0.4rem;
+    font-size: 0.72rem;
+  }
+}
