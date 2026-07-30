@@ -37,6 +37,54 @@
       display: flex;
       flex-direction: column;
       gap: var(--spacing-sm);
+      /* Ancla de posicionamiento de los lapices. */
+      position: relative;
+    }
+
+    /* ==========================================================
+       Lapices: viven ACA ADENTRO, en el mismo documento que la
+       card. Antes los dibujaba 4ULAB con rects que viajaban por
+       postMessage y siempre llegaban tarde al scroll. Estando en
+       el mismo documento no pueden desfasarse: se mueven con el
+       contenido porque SON el contenido.
+       ========================================================== */
+    .preview-pencils {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .preview-pencil {
+      position: absolute;
+      pointer-events: auto;
+      width: 26px;
+      height: 26px;
+      margin: -13px 0 0 -13px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--orange-primary);
+      background: var(--gray-dark);
+      color: var(--orange-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition-fast), background-color var(--transition-fast);
+    }
+
+    .preview-pencil:hover,
+    .preview-pencil:focus-visible {
+      background: var(--orange-primary);
+      color: var(--white-off);
+      transform: scale(1.1);
+      outline: none;
+    }
+
+    .preview-pencil svg {
+      width: 13px;
+      height: 13px;
     }
 
     /* Una sola columna: la card toma el ancho real que tiene en la tienda. */
@@ -83,15 +131,28 @@
       margin: 0.25rem 0 0;
     }
 
+    /* Los chips de campos no visibles son botones: tocarlos abre su editor. */
     .preview-chip {
       display: inline-flex;
       flex-direction: column;
+      align-items: flex-start;
       gap: 0.15rem;
       border: 1px dashed var(--gray-light);
       border-radius: var(--radius-sm);
       padding: 0.35rem 0.6rem;
       background: rgba(127, 127, 127, 0.08);
       min-width: 74px;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: border-color var(--transition-fast), background-color var(--transition-fast);
+    }
+
+    .preview-chip:hover,
+    .preview-chip:focus-visible {
+      border-color: var(--orange-primary);
+      background: rgba(255, 102, 0, 0.1);
+      outline: none;
     }
 
     .preview-chip-label {
@@ -160,6 +221,7 @@
     </div>
     <div class="preview-notice" id="previewNotice" hidden></div>
     <div class="preview-extras" id="previewExtras"></div>
+    <div class="preview-pencils" id="previewPencils"></div>
   </div>
 
   <!-- Helpers + renderer REALES de la tienda. Nada se reimplementa acá. -->
@@ -301,14 +363,79 @@
 
       missingFields.forEach(function (field) {
         chips.push(
-          '<div class="preview-chip" data-preview-field="' + field + '">' +
+          '<button type="button" class="preview-chip" data-preview-field="' + field + '">' +
             '<span class="preview-chip-label">' + FIELD_LABELS[field] + '</span>' +
             '<span class="preview-chip-value">' + extraValue(field, payload, adapted) + '</span>' +
-          '</div>'
+          '</button>'
         );
       });
 
       extras.innerHTML = chips.join('');
+
+      Array.prototype.forEach.call(extras.querySelectorAll('[data-preview-field]'), function (node) {
+        node.addEventListener('click', function () {
+          requestField(node.getAttribute('data-preview-field'), node);
+        });
+      });
+    }
+
+    /** Pide a 4ULAB que abra el editor de un campo, con el rect ya resuelto. */
+    function requestField(field, node) {
+      var r = node.getBoundingClientRect();
+      send({
+        type: 'preview:field-request',
+        field: field,
+        rect: {
+          x: Math.round(r.left),
+          y: Math.round(r.top),
+          width: Math.round(r.width),
+          height: Math.round(r.height)
+        }
+      });
+    }
+
+    var PENCIL_SVG =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+
+    /**
+     * Dibuja un lapiz por cada campo de la card que NO se edita in-situ.
+     * Se reposicionan en cada measure(); como viven en este documento, el
+     * scroll los mueve junto al contenido sin intervencion de nadie.
+     */
+    function renderPencils(card) {
+      var layer = document.getElementById('previewPencils');
+      var stage = document.querySelector('.preview-stage');
+      if (!layer || !stage) return;
+
+      layer.innerHTML = '';
+      if (!card) return;
+
+      var stageRect = stage.getBoundingClientRect();
+
+      CARD_ANCHORS.forEach(function (anchor) {
+        var node = card.querySelector(anchor.selector);
+        if (!node) return;
+        // Los campos in-situ no llevan lapiz: el texto ya es la afordancia.
+        if (node.getAttribute('data-4u-editable')) return;
+
+        var r = node.getBoundingClientRect();
+        if (!r.width && !r.height) return;
+
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'preview-pencil';
+        btn.title = 'Editar ' + FIELD_LABELS[anchor.field];
+        btn.setAttribute('aria-label', 'Editar ' + FIELD_LABELS[anchor.field]);
+        btn.innerHTML = PENCIL_SVG;
+        btn.style.left = (r.right - stageRect.left) + 'px';
+        btn.style.top = (r.top - stageRect.top + r.height / 2) + 'px';
+        btn.addEventListener('click', function () {
+          requestField(anchor.field, node);
+        });
+        layer.appendChild(btn);
+      });
     }
 
     function extraValue(field, payload, adapted) {
@@ -501,6 +628,7 @@
         });
       });
 
+      renderPencils(card);
       send({ type: 'preview:elements', elements: elements });
       reportSize();
     }
