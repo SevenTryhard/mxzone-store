@@ -295,6 +295,35 @@ de 4ULAB. Confirmado: la tienda le presta su card al CMS de verdad. Dos condicio
    contenido o el estilo propaga solo; **renombrar una clase deja ese campo sin lápiz
    en silencio** — la card se sigue viendo perfecta y nadie se entera.
 
+## Sesión 2026-07-30 (parte 3) — Grid de producto: 2 columnas en móvil
+
+- **Qué pasaba:** en teléfono entraba UNA sola card por fila. Dos causas distintas:
+  el grid de la tienda usa `minmax(240px, 1fr)` (con ~343px útiles entra una sola) y
+  el del home (`.products-grid[data-products]`) baja **explícitamente** a `1fr` por
+  debajo de 440px. Ambos pasan a 2 columnas hasta 640px.
+- **No alcanzaba con cambiar el grid:** el interior de la card estaba dimensionado
+  para ~280px de ancho. Se ajustaron alto de imagen (130px), padding de `.product-info`,
+  tipografías, el `select` de talla y el badge. **Los dos botones lado a lado no entran
+  en ~152px: ahora se apilan.** Todo scopeado a `.products-grid`, no toca el quickview
+  ni el carrito.
+- **Medido a 375px** (no a ojo): 2 columnas de 151.5px, botones de 118px sin desbordes,
+  nombre con `line-clamp` intacto y **sin scroll horizontal de página**. A 1280px no
+  cambia nada: 4 columnas de 287.5px con padding y botones originales.
+- **⚠️ Efecto colateral atrapado a tiempo:** `_4ulab/preview/card.html` monta la card en
+  un `.products-grid`, así que la media query nueva lo hubiera puesto en 2 columnas
+  DENTRO del iframe del CMS, encogiendo la card del editor. La regla de 1 columna del
+  preview subió a `.preview-stage .preview-grid`. Verificado en un iframe de 360px:
+  sigue en 1 columna a ancho completo. **Lección: cualquier regla nueva sobre
+  `.products-grid` puede filtrarse al editor didáctico — revisar siempre.**
+- Cache-buster global bumpeado a `202607301733`. Commit `8c689b1`, worker version
+  `299d286c`. Verificado en vivo: la regla está en el CSS servido y el blindaje del
+  preview también.
+- **Interpretación del pedido:** el usuario dijo "de a 4"; se implementaron **2 por
+  fila** (= 4 visibles en pantalla), que es lo que muestra su propia referencia de
+  alpinestars.com. Con 4 por fila cada card quedaría en ~80px. Si quiere 4 reales por
+  fila, es cambiar el `repeat(2, 1fr)` por `repeat(4, 1fr)` y volver a ajustar el
+  interior.
+
 ## Próxima sesión — inicio recomendado
 
 1. **LEER PRIMERO `C:\Users\seven\4ULAB\APP\NEXTUPDATE.md`** — contiene la visión conceptual del próximo gran paso del proyecto.
