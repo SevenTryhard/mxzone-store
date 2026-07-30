@@ -251,7 +251,18 @@
   directo pero NO contra www. Para habilitar www hace falta una Response Header Transform
   Rule que quite `X-Frame-Options` en `/_4ulab/preview/*` (dashboard, no código). Se dejó
   la regla equivalente escrita en `_headers` por si algún día se cablea al deploy.
-- **Estado**: codeado y verificado local. **Falta `node deploy.js`.**
+- **DEPLOYADO**: commit `7f59340` pushed a `main` + `node deploy.js` (version `ff01a123`).
+  Verificado en vivo contra el worker: `HTTP 200`, 15167 bytes, **sin `x-frame-options`**,
+  e iframe cross-origin real desde `localhost:3000` recibiendo `preview:ready` y
+  `preview:elements` con los 9 campos. El circuito funciona punta a punta.
+- **URL canónica**: `https://mxzonestore.motocross.workers.dev/_4ulab/preview/card`
+  (SIN `.html` — Workers Assets sirve la extensionless y devuelve 404 a `card.html`).
+- **Ojo con la consistencia eventual**: el primer curl post-deploy dio `200` con 0 bytes y
+  el segundo `404`. Recién al tercer intento (~1 min) sirvió el archivo completo. NO asumir
+  rotura antes de reintentar un par de minutos.
+- **Falta del lado de 4ULAB**: cargar `preview_config` del project 1 en
+  `/dashboard/admin/projects/1` (URL de arriba + origen permitido
+  `https://mxzonestore.motocross.workers.dev` + skin `mxzonestore`).
 
 ## Próxima sesión — inicio recomendado
 
