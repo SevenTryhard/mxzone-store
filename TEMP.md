@@ -324,6 +324,57 @@ de 4ULAB. Confirmado: la tienda le presta su card al CMS de verdad. Dos condicio
   fila, es cambiar el `repeat(2, 1fr)` por `repeat(4, 1fr)` y volver a ajustar el
   interior.
 
+## Sesion 2026-07-30 (parte 4) — Carrito: el boton COMPRAR se iba abajo del fold
+
+- **Sintoma:** con 2 o mas productos el footer del carrito (Total + COMPRAR) quedaba FUERA
+  del viewport, en PC y en movil. Con 1 producto entraba justo, por eso parecia intermitente.
+- **Root cause: NO era CSS ni cache.** Se descarto cache comparando el md5 del `styles.css`
+  de www, del worker y del local: identicos. El culpable era `js/cart.js`, que escribia
+  `step1.style.display = "block"` INLINE en `resetCartSteps`, `openCart` y `closeCheckout`.
+  Un estilo inline le gana a todo el stylesheet, asi que `.cart-step { display:flex;
+  flex-direction:column }` — escrito en la sesion del 2026-07-02 justo para pinnear el
+  footer — **nunca llego a aplicarse**. Sin flex column `#cartItemsContainer` no puede
+  hacer `flex:1` ni scrollear: crece con el contenido y empuja el footer abajo.
+- **Medido en vivo** (www, viewport 1280x720): footer bottom 1076px. Quitando SOLO el
+  inline: 720px exactos y la lista scrollea (319 visibles / 674 totales).
+- **Fix:** helpers `showEl`/`hideEl` en cart.js. **Mostrar = `removeProperty("display")`,
+  NUNCA `"block"`.** Esta documentado arriba de las funciones; no volver a tocarlo.
+- **Ademas:** una sola zona de scroll (`#cartContent` y `#cartItems` heredaban `overflow-y`
+  y padding de `.cart-items`: dos scrolls anidados con padding doble); footer compacto
+  292px -> 242px (50px mas de catalogo visible); contador de unidades en el titulo y junto
+  al total; precio unitario por linea cuando la cantidad es mayor a 1; nota de que el pago
+  se coordina por WhatsApp; "vaciar carrito" degradado a link.
+- **WhatsApp nuevo: +57 318 6467646.** 350 reemplazos en 41 archivos (3 formatos). Unico
+  residual: `OLD_CMS/products.js.backup`, que no se deploya. Tambien cambiado en
+  `4ULAB/APP/scripts/mxzone-cms.js`.
+- **Verificado en produccion** (www.mxzonestore.com, PC y movil 375x812): step1 computed
+  `flex`, footer pegado al borde inferior, COMPRAR siempre dentro de pantalla, lista
+  scrolleando, estados vacio / 1 item / N items OK, y el checkout arma el `wa.me` con el
+  numero nuevo. Cache-buster `202607302030`, commit `a2a836e`, worker `b5e646c2`.
+- **OJO al medir en el navegador:** cuando el panel no compone frames las transiciones CSS
+  quedan congeladas y `getBoundingClientRect` devuelve la posicion INICIAL — parece que el
+  carrito esta fuera de pantalla en X. Anular la transicion antes de medir.
+
+## Sesion 2026-07-30 (parte 5) — Embudo real: hay trafico, no hay ventas
+
+Datos de WEB STATS de 4ULAB (project 1), ultimos 30 dias:
+
+| Etapa | Sesiones | % del anterior |
+|---|---|---|
+| Visitaron | 432 | — |
+| Agregaron al carrito | 17 | 3,9% |
+| Llegaron a /checkout | 6 | 35% |
+| **Ordenes reales** | **0** | **0%** |
+
+- 194 de 432 sesiones rebotan en UNA sola pagina (45%).
+- 33 clicks a WhatsApp: la gente quiere hablar antes de comprar.
+- 369 de 432 visitantes son de Colombia (el publico es el correcto).
+- Ticket promedio del catalogo: 450.939 COP, maximo 2.739.000.
+- **No existen fichas de producto**: `product.html` se deshabilito el 2026-07-02 y redirige
+  a `shop.html`. No hay URL propia por producto -> nada para compartir por WhatsApp o
+  Instagram, nada a donde mandar trafico pago, y cero superficie SEO de cola larga.
+- Bug residual del catalogo: producto id 154 sin nombre y precio 0, id 124 sin foto.
+
 ## Próxima sesión — inicio recomendado
 
 1. **LEER PRIMERO `C:\Users\seven\4ULAB\APP\NEXTUPDATE.md`** — contiene la visión conceptual del próximo gran paso del proyecto.
