@@ -124,7 +124,7 @@ Si encontrás un bug o querés proponer una mejora:
 
 ## Contacto
 
-- **WhatsApp:** +57 317 669 2997
+- **WhatsApp:** +57 318 646 7646
 - **Instagram:** [@mxzoneoficial](https://www.instagram.com/mxzoneoficial/)
 - **TikTok:** [@mx_zonestore](https://www.tiktok.com/@mx_zonestore)
 - **Email:** MXZONEOFICIAL

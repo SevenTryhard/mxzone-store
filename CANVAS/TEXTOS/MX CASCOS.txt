@@ -1,10 +1,10 @@
 ccaassccooss
 
-3176692997     calle 36N # 3N-56
+3186467646     calle 36N # 3N-56
 MXZONEOFICIAL
    TALLA S
 
-3176692997
+3186467646
 MXZONEOFICIAL
 CASCO FLY FORMULA CP
 
@@ -12,7 +12,7 @@ MXZONEOFICIAL
 
        Precio: $ 1.450.000
 
-3176692997     TALLA: S
+3186467646     TALLA: S
 MXZONEOFICIAL
 CASCO FLY KINETIC K 120
 
@@ -20,7 +20,7 @@ MXZONEOFICIAL
 
         Precio: $ 650.000
 
-3176692997     TALLA: S
+3186467646     TALLA: S
 MXZONEOFICIAL
 CASCO FOX V1 TOXSYK NEGRO
 
@@ -28,7 +28,7 @@ MXZONEOFICIAL
 
               Precio: $ 1.429.900
 
-3176692997     TALLA: S
+3186467646     TALLA: S
 MXZONEOFICIAL
 CASCO FOX V1 BNKR
 
@@ -36,14 +36,14 @@ MXZONEOFICIAL
 
       Precio: $ 1.429.900
 
-3176692997     TALLA: S
+3186467646     TALLA: S
 MXZONEOFICIAL
 ALPINESTARS S-M5 ROVER
 
 Disponible en talla:S
      Precio: $ 1.069.000
 
-3176692997     TALLA: S
+3186467646     TALLA: S
 MXZONEOFICIAL
 CASCO ALPINESTARS S-M5 SOLID
 
@@ -51,7 +51,7 @@ MXZONEOFICIAL
 
         Precio: $ 1'299.900
 
-3176692997     TALLA: S
+3186467646     TALLA: S
 MXZONEOFICIAL
 CASCO AIROH WRAAP FEEL AZUL/ROJO
 
@@ -59,7 +59,7 @@ MXZONEOFICIAL
 
                   Precio: $ 869.900
 
-3176692997     TALLA: S
+3186467646     TALLA: S
 MXZONEOFICIAL
 CASCO AIROH WRAAP FEEL
 
@@ -67,7 +67,7 @@ MXZONEOFICIAL
 
          Precio: $ 869.900
 
-3176692997     TALLA: S
+3186467646     TALLA: S
 MXZONEOFICIAL
         CASCO FLY KINETIC VERDICT
 
@@ -75,7 +75,7 @@ MXZONEOFICIAL
 
                      Precio: $ 799.000
 
-3176692997
+3186467646
 MXZONEOFICIAL
 CASCO AIROH TWIST
 
@@ -83,11 +83,11 @@ Disponible en talla:S
 
    Precio: $ 1.099.900
 
-3176692997     TALLA:S
+3186467646     TALLA:S
 MXZONEOFICIAL
    TALLA M
 
-3176692997
+3186467646
 MXZONEOFICIAL
                CASCO FLY KINETIC MENACE
 
@@ -95,7 +95,7 @@ MXZONEOFICIAL
 
                           Precio: $ 749.900
 
-3176692997     TALLA: M
+3186467646     TALLA: M
 MXZONEOFICIAL
 CASCO AIROH WRAAP FEEL
 
@@ -103,7 +103,7 @@ MXZONEOFICIAL
 
          Precio: $ 869.900
 
-3176692997     TALLA: M
+3186467646     TALLA: M
 MXZONEOFICIAL
 CASCO AIROH TWIST 3 DYNASTY ROSSO
 
@@ -111,7 +111,7 @@ MXZONEOFICIAL
 
                   Precio: $ 1.150.000
 
-3176692997     TALLA: M
+3186467646     TALLA: M
 MXZONEOFICIAL
 CASCO AIROH TWIST 3 DYNASTY ROSSO
 
@@ -119,20 +119,20 @@ MXZONEOFICIAL
 
                   Precio: $ 1.150.000
 
-3176692997     TALLA: M
+3186467646     TALLA: M
 MXZONEOFICIAL
-3176692997     TALLA: M
+3186467646     TALLA: M
 MXZONEOFICIAL
-                                                         Células de energía de impacto
+                                                         Cï¿½lulas de energï¿½a de impacto
                                                          hechas de RHEON
 
-La tecnología de
+La tecnologï¿½a de
 poliestireno expandido
 (EPS) de densidad
-múltiple proporciona un
-EPS más suave
+mï¿½ltiple proporciona un
+EPS mï¿½s suave
 
-  Ventilación funcional
+  Ventilaciï¿½n funcional
   verdadera (TFV)
 
              CASCO RACING FORMULA
@@ -141,9 +141,9 @@ EPS más suave
 
                       Precio: $ 1.449.000
 
- 3176692997
+ 3186467646
 MXZONEOFICIAL
-3176692997     TALLA: M
+3186467646     TALLA: M
 MXZONEOFICIAL
                                      Visera regulable con tornillos que se
                                      desplazan en caso de impacto
@@ -154,7 +154,7 @@ para un ajuste perfecto
                                                                   las mejillas desmontables
                                                                   y lavables
 
-Cubierta extraíble para la ventilación de la
+Cubierta extraï¿½ble para la ventilaciï¿½n de la
 boca y mentonera acolchada de EVA
 
     CASCO FOX V1 TOXSYK
@@ -163,11 +163,11 @@ boca y mentonera acolchada de EVA
 
           Precio: $1'429.000
 
-3176692997     TALLA: M
+3186467646     TALLA: M
 MXZONEOFICIAL
-3176692997     TALLA: M
+3186467646     TALLA: M
 MXZONEOFICIAL
-El sistema de liberación Magnetic Visor
+El sistema de liberaciï¿½n Magnetic Visor
 Release System (MVRS)
 
                                                           Forro y almohadillas de las
@@ -176,7 +176,7 @@ Release System (MVRS)
 
 La calota ligera de ABS y policarbonato, 9 conductos de entrada y 4 de salida
 
-moldeada por inyección  que garantizan un flujo de aire óptimo
+moldeada por inyecciï¿½n  que garantizan un flujo de aire ï¿½ptimo
 
 CASCO FOX V1 KARRERA
 
@@ -184,7 +184,7 @@ CASCO FOX V1 KARRERA
 
        Precio: $1'099.900
 
-3176692997
+3186467646
 MXZONEOFICIAL
 CASCO V1 DPTH VERDE/NEGRO
 
@@ -192,7 +192,7 @@ MXZONEOFICIAL
 
           Precio: $1.429.900
 
-3176692997     TALLA: M
+3186467646     TALLA: M
 MXZONEOFICIAL
 CASCO FOX V1 KOZMIK [BLK/WHT]
 
@@ -200,7 +200,7 @@ MXZONEOFICIAL
 
              Precio: $1.429.000
 
-3176692997     TALLA:M
+3186467646     TALLA:M
 MXZONEOFICIAL
 CASCO FOX V1 LEED FLUO RED
 
@@ -208,7 +208,7 @@ MXZONEOFICIAL
 
             Precio: $1.429.000
 
-3176692997     TALLA:M
+3186467646     TALLA:M
 MXZONEOFICIAL
 TROY LEE 2024 SE5 GASGAS FUMES RED/BLACK
 
@@ -216,7 +216,7 @@ MXZONEOFICIAL
 
                    Precio: $1.899.00
 
-3176692997     TALLA:M
+3186467646     TALLA:M
 MXZONEOFICIAL
 CASCO ALPINESTARS S-M5 BOND NEGRO ROJO AZUL
 
@@ -224,28 +224,28 @@ MXZONEOFICIAL
 
                     Precio: $ 1'069.900
 
-3176692997     TALLA: M
+3186467646     TALLA: M
 MXZONEOFICIAL
-3176692997     TALLA: M
+3186467646     TALLA: M
 MXZONEOFICIAL
-La carcasa exterior liviana está
+La carcasa exterior liviana estï¿½
 
-construida con un termoplástico
+construida con un termoplï¿½stico
 
 resistente a los impactos               La espuma contorneada
 
-tecnológicamente avanzado               3D garantiza la
+tecnolï¿½gicamente avanzado               3D garantiza la
 
                                         comodidad
 
 La visera ha sido
-diseñada para dirigir el
+diseï¿½ada para dirigir el
 aire hacia los puertos
 para mejorar el flujo de
 aire.
 
 El casco SM5 cumple tanto con la        Anillos en D de acero inoxidable
-certificación DOT como con la ECE para
+certificaciï¿½n DOT como con la ECE para
 su uso en todo el mundo.                para garantizar un ajuste firme
 
                                         y seguro.
@@ -260,7 +260,7 @@ CASCO ALPINESTAR S-M5 RAYON [NIGHTLIFE BLUE/
 
                    Precio: $ 1.059.900
 
-3176692997
+3186467646
 
 MXZONEOFICIAL
 CASCO ONEAL 5 SRS ATTACK
@@ -269,7 +269,7 @@ MXZONEOFICIAL
 
           Precio: $ 819.000
 
-3176692997     TALLA: M
+3186467646     TALLA: M
 MXZONEOFICIAL
   CASCO TIPO FOX
 
@@ -277,11 +277,11 @@ Disponible en talla:m
 
     Precio: $ 295.000
 
-3176692997     TALLA: M
+3186467646     TALLA: M
 MXZONEOFICIAL
    TALLA L
 
-3176692997
+3186467646
 MXZONEOFICIAL
 CASCO CROSS AIROH TWIST 3
 
@@ -289,7 +289,7 @@ MXZONEOFICIAL
 
           Precio: $ 1.150.000
 
-3176692997     TALLA:L
+3186467646     TALLA:L
 MXZONEOFICIAL
 CASCO FLY KINETIC VERDICT
 
@@ -297,7 +297,7 @@ MXZONEOFICIAL
 
           Precio: $ 799.900
 
-3176692997     TALLA:L
+3186467646     TALLA:L
 MXZONEOFICIAL
 CASCO FLY KINETIC CREST MX
 
@@ -305,7 +305,7 @@ MXZONEOFICIAL
 
             Precio: $ 799.900
 
-3176692997     TALLA:L
+3186467646     TALLA:L
 MXZONEOFICIAL
 CASCO FLY RACING KINETIC BLK/RED
 
@@ -313,9 +313,9 @@ MXZONEOFICIAL
 
                 Precio: $ 799.900
 
-3176692997     TALLA:L
+3186467646     TALLA:L
 MXZONEOFICIAL
-               EL TEXTO DEL PÁRRAFO
+               EL TEXTO DEL Pï¿½RRAFO
 
 CASCO V1 DPTH VERDE/NEGRO
 
@@ -323,7 +323,7 @@ CASCO V1 DPTH VERDE/NEGRO
 
           Precio: $1.429.900
 
-3176692997     TALLA:L
+3186467646     TALLA:L
 MXZONEOFICIAL
 CASCO FOX RACING V1 FLORA DARK INDIGO
 
@@ -331,7 +331,7 @@ MXZONEOFICIAL
 
                     Precio: $1.429.900
 
-3176692997     TALLA:L
+3186467646     TALLA:L
 MXZONEOFICIAL
 CASCO FOX V1 SOLID MATTE BLACK
 
@@ -339,7 +339,7 @@ MXZONEOFICIAL
 
               Precio: $1.429.000
 
-3176692997     TALLA:L
+3186467646     TALLA:L
 MXZONEOFICIAL
 CASCO FOX V1 LEED [BLK/WHT]
 
@@ -347,7 +347,7 @@ MXZONEOFICIAL
 
          Precio: $1.429.000
 
-3176692997     TALLA:L
+3186467646     TALLA:L
 MXZONEOFICIAL
 CASCO ALPINESTAR SM5 ACTION 2
 
@@ -355,7 +355,7 @@ MXZONEOFICIAL
 
               Precio: $1.510.000
 
-3176692997     TALLA:L
+3186467646     TALLA:L
 MXZONEOFICIAL
 CASCO ALPINESTARS FORCE NEGRO MORADO
 
@@ -363,7 +363,7 @@ MXZONEOFICIAL
 
                 Precio: $ 1'199.000
 
-3176692997     TALLA:L
+3186467646     TALLA:L
 MXZONEOFICIAL
 CASCO LEATT MOTO 2.5 V24
 
@@ -371,12 +371,12 @@ MXZONEOFICIAL
 
             Precio: $ 850.000
 
-3176692997     TALLA: L
+3186467646     TALLA: L
 MXZONEOFICIAL
      TALLA
         Xl
 
-3176692997
+3186467646
 MXZONEOFICIAL
 CASCO ALPINESTAR SM5 ACTION 2
 
@@ -384,7 +384,7 @@ MXZONEOFICIAL
 
               Precio: $1.510.000
 
-3176692997     TALLA:XL
+3186467646     TALLA:XL
 MXZONEOFICIAL
 CASCO ALPINESTARS FORCE AZUL, VERDE FLUO
 
@@ -392,7 +392,7 @@ MXZONEOFICIAL
 
                  Precio: $ 1'199.000
 
-3176692997     TALLA: XL
+3186467646     TALLA: XL
 MXZONEOFICIAL
 CASCO ALPINESTARS RADIUM NEGRO ROJO
 
@@ -400,7 +400,7 @@ MXZONEOFICIAL
 
               Precio: $ 1'199.000
 
-3176692997     TALLA: XL
+3186467646     TALLA: XL
 MXZONEOFICIAL
 CASCO ALPINESTARS RADIUM NEGRO BLANCO
 
@@ -408,9 +408,9 @@ MXZONEOFICIAL
 
                 Precio: $ 1'199.000
 
-3176692997     TALLA: XL
+3186467646     TALLA: XL
 MXZONEOFICIAL
-3176692997     TALLA:XL
+3186467646     TALLA:XL
 MXZONEOFICIAL
                                  Visera regulable con tornillos que se
                                  desplazan en caso de impacto
@@ -421,7 +421,7 @@ para un ajuste perfecto
                                                                    las mejillas
                                                                    desmontables y lavables
 
-                                         Cubierta extraíble para la ventilación de
+                                         Cubierta extraï¿½ble para la ventilaciï¿½n de
                                          la boca y mentonera acolchada de EVA
 
             CASCO FOX V1 TOXSYK
@@ -430,7 +430,7 @@ para un ajuste perfecto
 
                     Precio: $1'429.000
 
-3176692997
+3186467646
 MXZONEOFICIAL
 CASCO FOX V1 KOZMIK [BLK/WHT]
 
@@ -438,7 +438,7 @@ MXZONEOFICIAL
 
              Precio: $1.429.000
 
-3176692997     TALLA:XL
+3186467646     TALLA:XL
 MXZONEOFICIAL
 CASCO FOX V1 EMOTION NARANJA
 
@@ -446,7 +446,7 @@ MXZONEOFICIAL
 
              Precio: $1.429.000
 
-3176692997     TALLA:XL
+3186467646     TALLA:XL
 MXZONEOFICIAL
 CASCO V1 NUKR VERDE/NEGRO
 
@@ -454,7 +454,7 @@ MXZONEOFICIAL
 
           Precio: $1.429.900
 
-3176692997     TALLA:XL
+3186467646     TALLA:XL
 MXZONEOFICIAL
 CASCO FOX V1 RACE SPEC F74
 
@@ -462,7 +462,7 @@ MXZONEOFICIAL
 
           Precio: $1.429.900
 
-3176692997     TALLA:XL
+3186467646     TALLA:XL
 MXZONEOFICIAL
 CASCO FOX V1 NITRO CAMUFLAJE
 
@@ -470,20 +470,20 @@ MXZONEOFICIAL
 
             Precio: $1.429.900
 
-3176692997     TALLA:XL
+3186467646     TALLA:XL
 MXZONEOFICIAL
-3176692997     TALLA:XL
+3186467646     TALLA:XL
 MXZONEOFICIAL
-                                                         Células de energía de
+                                                         Cï¿½lulas de energï¿½a de
                                                          impacto hechas de RHEON
 
-La tecnología de
+La tecnologï¿½a de
 poliestireno expandido
 (EPS) de densidad
-múltiple proporciona un
-EPS más suave
+mï¿½ltiple proporciona un
+EPS mï¿½s suave
 
-Ventilación funcional
+Ventilaciï¿½n funcional
 verdadera (TFV)
 
           CASCO FLY RACING FORMULA
@@ -492,9 +492,9 @@ verdadera (TFV)
 
                     Precio: $1.449.000
 
-3176692997
+3186467646
 MXZONEOFICIAL
-               EL TEXTO DEL PÁRRAFO
+               EL TEXTO DEL Pï¿½RRAFO
 
 CASCO FLY V1 NTERFERE GRIS
 
@@ -502,10 +502,10 @@ CASCO FLY V1 NTERFERE GRIS
 
             Precio: $1.449.000
 
-3176692997     TALLA:XL
+3186467646     TALLA:XL
 MXZONEOFICIAL
-      NIÑO
+      NIï¿½O
 
-3176692997
+3186467646
 MXZONEOFICIAL
 

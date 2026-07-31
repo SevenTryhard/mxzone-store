@@ -9811,12 +9811,110 @@ a {
 .cart-modal-content .cart-step .cart-items#cartItemsContainer {
   flex: 1 1 auto;
   min-height: 0;
+  overflow-y: auto;
+}
+
+/* UNA sola zona de scroll. #cartItems tambien lleva la clase .cart-items, asi
+   que heredaba overflow-y:auto y padding: quedaban dos contenedores scrolleables
+   anidados y padding doble. Los de adentro son wrappers, nada mas. */
+.cart-modal-content #cartContent,
+.cart-modal-content #cartItems {
+  overflow: visible;
+  flex: none;
+  padding: 0;
+  min-height: 0;
 }
 
 /* El footer se empuja al fondo y no encoge */
 .cart-modal-content .cart-footer {
   margin-top: auto;
   flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------
+   FOOTER COMPACTO — el footer medía 292px en un viewport de 720px: con el
+   header (109px) le dejaba 319px a la lista, o sea UN producto. Cada píxel
+   que se le saca es un píxel de catálogo visible. Objetivo: ~170px.
+   --------------------------------------------------------------------- */
+.cart-modal-content .cart-footer {
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.cart-modal-content .cart-total {
+  margin-bottom: var(--spacing-sm);
+  align-items: baseline;
+}
+
+.cart-total-label-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cart-total-count {
+  font-size: 0.75rem;
+  color: var(--gray-text);
+  letter-spacing: 0.5px;
+}
+
+/* Sin margen gigante ni cinta "PASO FINAL": ese separador comía 40px y no
+   aportaba nada que el botón naranja no dijera ya. */
+.cart-modal-content .cart-actions-simple {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+  gap: var(--spacing-xs);
+}
+
+.cart-modal-content .cart-actions-simple::before {
+  content: none;
+}
+
+.cart-modal-content .cart-checkout-btn {
+  padding: 0.9rem var(--spacing-md);
+  font-size: 1.05rem;
+}
+
+/* "Vaciar carrito" es una acción destructiva y secundaria: que parezca un
+   link, no un segundo botón compitiendo con COMPRAR. */
+.cart-modal-content .cart-clear-btn {
+  border: none;
+  background: transparent;
+  padding: 2px;
+  font-size: 0.78rem;
+  text-transform: none;
+  letter-spacing: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 0.7;
+}
+
+.cart-modal-content .cart-clear-btn:hover {
+  opacity: 1;
+  background: transparent;
+}
+
+/* Microcopy de confianza: el cliente que nunca compró acá necesita saber qué
+   pasa DESPUÉS de tocar COMPRAR. Es la duda que frena el clic. */
+.cart-footer-note {
+  margin: var(--spacing-xs) 0 0;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--gray-text);
+  text-align: center;
+}
+
+/* --- Item: subtotal de línea + precio unitario cuando hay más de uno --- */
+.cart-item-pricing {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+}
+
+.cart-item-unit {
+  font-size: 0.72rem;
+  color: var(--gray-text);
 }
 
 /* --- PC: proporciones más elegantes + acabado glass --- */

@@ -6,7 +6,7 @@
 
 const CART_STORAGE_KEY = 'mxzone_cart';
 // Usar window.WHATSAPP_NUMBER para evitar redeclaración entre scripts
-window.WHATSAPP_NUMBER = window.WHATSAPP_NUMBER || '573176692997';
+window.WHATSAPP_NUMBER = window.WHATSAPP_NUMBER || '573186467646';
 
 // Verificar si es URL de CloudCannon
 function isCloudCannonUrl(url) {
@@ -176,16 +176,23 @@ function updateCartModal() {
     return;
   }
 
+  // Contador en el titulo: el cliente ve de una cuantos productos lleva.
+  const cartTitleEl = document.getElementById('cartTitle');
+  const totalUnidades = cart.reduce(function(sum, item) { return sum + item.quantity; }, 0);
+  if (cartTitleEl) {
+    cartTitleEl.textContent = totalUnidades > 0 ? 'TU CARRITO (' + totalUnidades + ')' : 'TU CARRITO';
+  }
+
   if (cart.length === 0) {
-    if (cartEmptyEl) cartEmptyEl.style.display = 'block';
-    if (cartContentEl) cartContentEl.style.display = 'none';
-    if (cartTotalSection) cartTotalSection.style.display = 'none';
+    showEl(cartEmptyEl);
+    hideEl(cartContentEl);
+    hideEl(cartTotalSection);
     return;
   }
 
-  if (cartEmptyEl) cartEmptyEl.style.display = 'none';
-  if (cartContentEl) cartContentEl.style.display = 'block';
-  if (cartTotalSection) cartTotalSection.style.display = 'block';
+  hideEl(cartEmptyEl);
+  showEl(cartContentEl);
+  showEl(cartTotalSection);
 
   // Renderizar items
   cartItemsEl.innerHTML = cart.map((item, index) => {
@@ -194,10 +201,15 @@ function updateCartModal() {
       '\u003coption value="' + size.trim() + '" ' + (item.selectedSize === size.trim() ? 'selected' : '') + '\u003e' + size.trim() + '\u003c/option\u003e'
     ).join('');
     
+    // Precio unitario solo cuando hay mas de uno: si no, es ruido.
+    const unitPrice = item.quantity > 1
+      ? '<span class="cart-item-unit">' + formatPrice(item.priceNum) + ' c/u</span>'
+      : '';
+
     return (
       '\u003cdiv class="cart-item" data-index="' + index + '"\u003e' +
         '\u003cdiv class="cart-item-image"\u003e' +
-          '\u003cimg src="' + item.image + '" alt="' + item.name + '" onerror="this.style.display=\'none\'"\u003e' +
+          '\u003cimg src="' + item.image + '" alt="' + item.name + '" loading="lazy" onerror="this.style.display=\'none\'"\u003e' +
         '\u003c/div\u003e' +
         '\u003cdiv class="cart-item-info"\u003e' +
           '\u003ch4 class="cart-item-name"\u003e' + item.name + '\u003c/h4\u003e' +
@@ -215,7 +227,10 @@ function updateCartModal() {
               '\u003cbutton class="qty-btn plus" onclick="updateQuantity(' + index + ', ' + (item.quantity + 1) + ')"\u003e+\u003c/button\u003e' +
             '\u003c/div\u003e' +
           '\u003c/div\u003e' +
-          '\u003cp class="cart-item-price"\u003e' + formatPrice(item.priceNum * item.quantity) + '\u003c/p\u003e' +
+          '<div class="cart-item-pricing">' +
+            '<p class="cart-item-price">' + formatPrice(item.priceNum * item.quantity) + '</p>' +
+            unitPrice +
+          '</div>' +
         '\u003c/div\u003e' +
         '\u003cbutton class="cart-item-remove" onclick="removeFromCart(' + index + ')" title="Eliminar"\u003e' +
           '\u003cspan\u003e\u00d7\u003c/span\u003e' +
@@ -227,16 +242,40 @@ function updateCartModal() {
   if (cartTotalValueEl) {
     cartTotalValueEl.textContent = formatPrice(getCartTotal());
   }
+
+  // Unidades al lado del total, como en la referencia de alpinestars.
+  const cartTotalCountEl = document.getElementById('cartTotalCount');
+  if (cartTotalCountEl) {
+    cartTotalCountEl.textContent = totalUnidades === 1 ? '1 producto' : totalUnidades + ' productos';
+  }
 }
 
 // ==================== ESTADO DEL CARRITO ====================
 
+// ==================== VISIBILIDAD (leer antes de tocar) ====================
+//
+// REGLA: para MOSTRAR un elemento del carrito hay que BORRAR la propiedad
+// inline, nunca escribir 'block'. El layout del carrito es un flex column
+// (.cart-modal-content > .cart-step > #cartItemsContainer + .cart-footer) y es
+// lo que mantiene el footer (Total + COMPRAR) pegado abajo mientras la lista
+// scrollea. Un `style.display = 'block'` inline le gana a TODO el stylesheet:
+// mata el flex, la lista deja de scrollear, crece con el contenido y empuja el
+// botón COMPRAR fuera de la pantalla apenas hay 2 productos.
+//
+// Ese fue el bug real del carrito. Se intentó arreglar dos veces desde el CSS
+// y volvió las dos veces, porque el CSS nunca llegaba a aplicarse.
+function showEl(el) {
+  if (el) el.style.removeProperty('display');
+}
+
+function hideEl(el) {
+  if (el) el.style.display = 'none';
+}
+
 // Resetear steps del checkout legacy para evitar estado inconsistente
 function resetCartSteps() {
-  const step1 = document.getElementById('cartStep1');
-  const step2 = document.getElementById('cartStep2');
-  if (step1) step1.style.display = 'block';
-  if (step2) step2.style.display = 'none';
+  showEl(document.getElementById('cartStep1'));
+  hideEl(document.getElementById('cartStep2'));
 }
 
 // Abrir carrito de forma segura: cierra checkout fantasma, resetea steps, abre modal, actualiza UI
@@ -349,8 +388,8 @@ function closeCheckout() {
   }
 
   if (step1 && step2) {
-    step2.style.display = 'none';
-    step1.style.display = 'block';
+    hideEl(step2);
+    showEl(step1);
     const itemsEl = step1.querySelector('.cart-items');
     if (itemsEl) itemsEl.scrollTop = 0;
   }
@@ -629,12 +668,7 @@ window.openCart = function() {
     document.body.style.overflow = 'hidden';
     updateCartModal();
     // Asegurar que siempre empiece en paso 1 (Flow B)
-    const step1 = document.getElementById('cartStep1');
-    const step2 = document.getElementById('cartStep2');
-    if (step1 && step2) {
-      step1.style.display = 'block';
-      step2.style.display = 'none';
-    }
+    resetCartSteps();
   }
 };
 

@@ -114,7 +114,7 @@ Entra a `https://tudominio.com/admin/`
 
 1. Click en **"Configuracion"** → **"Datos Generales"**
 2. Edita los datos de contacto:
-   - WhatsApp (solo números, ej: `573176692997`)
+   - WhatsApp (solo números, ej: `573186467646`)
    - Dirección física
    - Email
    - Redes sociales (URLs completas)

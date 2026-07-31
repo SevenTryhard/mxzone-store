@@ -147,7 +147,7 @@ collections:
             name: "whatsapp"
             widget: "string"
             required: true
-            hint: "Solo numeros con codigo de pais. Ej: 573176692997"
+            hint: "Solo numeros con codigo de pais. Ej: 573186467646"
 
           - label: "Direccion Fisica"
             name: "address"

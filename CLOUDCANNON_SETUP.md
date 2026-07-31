@@ -97,7 +97,7 @@ Entra a [**app.cloudcannon.com**](https://app.cloudcannon.com) y verás tu sitio
 
 1. Click en **"Collections"** → **"Configuración"**
 2. Edita los datos de contacto:
-   - WhatsApp (solo números, ej: `573176692997`)
+   - WhatsApp (solo números, ej: `573186467646`)
    - Dirección física
    - Email
    - Redes sociales (URLs completas)

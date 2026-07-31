@@ -1882,7 +1882,7 @@ function initContactForm() {
 
     // Redirect to WhatsApp with pre-filled message
     const whatsappMessage = `Hola MXZONE, mi nombre es ${name}. ${message}`;
-    const whatsappUrl = `https://wa.me/573176692997?text=${encodeURIComponent(whatsappMessage)}`;
+    const whatsappUrl = `https://wa.me/573186467646?text=${encodeURIComponent(whatsappMessage)}`;
 
     window.open(whatsappUrl, '_blank');
 
@@ -2298,7 +2298,7 @@ function initProductModalInternal() {
 
       // Set WhatsApp link
       const whatsappMessage = `Estoy%20interesado%20en%20${encodeURIComponent(name)}`;
-      modalWhatsapp.href = `https://wa.me/573176692997?text=${whatsappMessage}`;
+      modalWhatsapp.href = `https://wa.me/573186467646?text=${whatsappMessage}`;
 
       // Show modal
       modal.classList.add('active');
