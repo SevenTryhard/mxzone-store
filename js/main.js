@@ -2455,6 +2455,19 @@ function initProductModalInternal() {
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
       pushProductUrl(name);
+
+      // INTERES REAL. Distinto del `view` que dispara el IntersectionObserver
+      // del snippet: ese cuenta que la card paso por pantalla al scrollear la
+      // grilla (impresion), y con ~280 productos casi todas lo cumplen. Abrir
+      // el producto es una decision, no un accidente del scroll.
+      try {
+        var pid = card.getAttribute('data-4u-product-id');
+        if (pid && typeof window.fourUTrack === 'function') {
+          window.fourUTrack('detailView', pid);
+        }
+      } catch (e) {
+        mxLog('detailView:', e.message);
+      }
     });
 
     // Add cursor pointer to indicate clickability

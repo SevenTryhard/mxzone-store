@@ -526,6 +526,16 @@ async function renderProduct(productSlug) {
     dynamicOgDesc.setAttribute('content', product.name + ' — ' + product.price + ' | ' + getCategoryLabel(product.category) + ' para motocross y enduro en Colombia. Envío a todo el país desde Cali. MXZONE STORE.');
   }
 
+  // INTERES REAL: llegar a la ficha es una decision explicita. Mismo evento
+  // que dispara el quickview, asi las dos superficies suman al mismo contador.
+  try {
+    if (product.id && typeof window.fourUTrack === 'function') {
+      window.fourUTrack('detailView', product.id);
+    }
+  } catch (e) {
+    mxLog('detailView:', e.message);
+  }
+
   // Renderizar producto
   layout.innerHTML = createProductHTML(product);
 
