@@ -10463,3 +10463,230 @@ a {
     font-size: 0.72rem;
   }
 }
+
+/* ================================================================
+   QUICKVIEW DE PRODUCTO v2 — 2026-08-02
+   A1 cerrar siempre accesible en movil | A2 imagen protagonista |
+   A3 zoom (lupa en PC, tap-to-zoom en movil)
+
+   Va al FINAL a proposito (misma convencion que el rediseno del
+   carrito): asi le gana por orden de fuente a `.modal-close` de la
+   linea ~8284, que es del modal de promociones pero NO esta scopeado
+   y venia pisando al del producto.
+
+   ⚠️ TODO SCOPEADO A #productModal A PROPOSITO. Las clases
+   `.product-modal`, `.product-modal-content` y `.modal-close` NO son
+   exclusivas del quickview: tambien las usan #sizeGuideModal,
+   #imagePreviewModal y el modal de promociones. Sin el id, estas
+   reglas les cambiarian el layout a los cuatro. Es la misma fuga que
+   `.products-grid` tuvo hacia el editor didactico (TEMP.md, sesion
+   2026-07-30 parte 3). Los dos storefronts (index.html y shop.html)
+   usan el mismo id="productModal", asi que el scope cubre a ambos.
+
+   El `.modal-image-viewport` lo crea `initProductModalInternal()` en
+   js/main.js envolviendo a #modalImage. Es quien recorta la imagen
+   escalada para que el zoom no invada el panel de info.
+   ================================================================ */
+
+/* ── A2: la foto manda ──────────────────────────────────────────
+   El contenedor deja de tener min-height fijo y reparte el alto:
+   el viewport de la imagen crece, los thumbnails no. Antes la foto
+   estaba clavada a max-height:400px (300px en movil) dentro de un
+   grid de 1100px, o sea usaba una fraccion del espacio disponible. */
+#productModal .modal-image-container {
+  min-height: 0;
+  justify-content: flex-start;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+}
+
+#productModal .modal-image-viewport {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  touch-action: pan-y;
+}
+
+/* object-fit:contain centra la foto dentro de su caja por si solo,
+   asi el centrado ya no depende de si hay thumbnails o no. */
+#productModal .modal-image {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+#productModal .modal-thumbnails {
+  flex: 0 0 auto;
+}
+
+/* ── A3: zoom ───────────────────────────────────────────────────
+   Sin transicion en transform mientras se sigue al cursor (una lupa
+   con lag se siente rota). La transicion se activa solo cuando el
+   movil hace toggle, via .is-zoom-animated. */
+#productModal .modal-image-viewport.is-zoomable {
+  cursor: zoom-in;
+}
+
+#productModal .modal-image-viewport.is-zoomed {
+  cursor: zoom-out;
+}
+
+#productModal .modal-image-viewport.is-zoomed .modal-image {
+  transform: scale(var(--mx-zoom, 2.2));
+}
+
+#productModal .modal-image-viewport.is-zoom-animated .modal-image {
+  transition: transform 0.2s ease-out, opacity var(--transition-fast);
+}
+
+/* Pista visual de que la foto se puede agrandar. */
+#productModal .modal-zoom-hint {
+  position: absolute;
+  right: var(--spacing-sm);
+  bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: var(--radius-full);
+  background: rgba(10, 10, 10, 0.72);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: var(--white);
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+/* El texto del hint lo decide la media query, NO el JS: asi un equipo
+   que gana o pierde el mouse (iPad, 2-en-1) siempre lee lo correcto. */
+#productModal .mx-hint-hover { display: none; }
+#productModal .mx-hint-touch { display: inline; }
+
+@media (hover: hover) and (pointer: fine) {
+  #productModal .mx-hint-hover { display: inline; }
+  #productModal .mx-hint-touch { display: none; }
+}
+
+#productModal .modal-image-viewport.is-zoomed .modal-zoom-hint {
+  opacity: 0;
+}
+
+/* Sin foto no hay nada que ampliar. */
+#productModal .modal-image-viewport:not(.is-zoomable) .modal-zoom-hint {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #productModal .modal-image-viewport.is-zoom-animated .modal-image {
+    transition: none;
+  }
+}
+
+/* ── PC: la imagen ocupa el alto real del modal ─────────────────── */
+@media (min-width: 901px) {
+  #productModal .product-modal-content {
+    grid-template-columns: 1.35fr 1fr;
+    height: min(88vh, 780px);
+    max-height: 88vh;
+    overflow: hidden; /* el scroll pasa al panel de info, no al modal entero */
+  }
+
+  #productModal .modal-image-container {
+    height: 100%;
+    padding: var(--spacing-lg);
+  }
+
+  #productModal .modal-product-info {
+    overflow-y: auto;
+  }
+}
+
+/* ── A1: movil = ficha a pantalla completa ───────────────────────
+   Mismo patron que ya funciona en el carrito (sesion 2026-07-02):
+   dvh + header con env(safe-area-inset-top). En iOS Safari `100%` es
+   el layout viewport, que se extiende POR DEBAJO de la barra de URL,
+   y por eso el boton cerrar quedaba tapado e inalcanzable. */
+@media (max-width: 768px) {
+  #productModal.product-modal {
+    padding: 0;
+    align-items: stretch;
+    justify-content: stretch;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  #productModal .product-modal-content {
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+    border: none;
+    border-radius: 0;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr; /* foto fija arriba, info scrollea debajo */
+    overflow: hidden;
+    /* Sin scale: un ancestro transformado convierte el position:fixed
+       del boton cerrar en position:absolute contra ESTE elemento. */
+    transform: none;
+  }
+
+  #productModal.product-modal.active .product-modal-content {
+    transform: none;
+  }
+
+  /* El boton cerrar FLOTA sobre la foto en vez de reservarle una franja
+     arriba: con 58px de padding la imagen perdia ~1/4 del alto util, que
+     es justo lo que veniamos a recuperar. Se lee igual porque el boton
+     tiene fondo oscuro translucido + blur. */
+  #productModal .modal-image-container {
+    height: 56dvh;
+    padding: calc(env(safe-area-inset-top) + 8px) var(--spacing-sm) var(--spacing-sm);
+  }
+
+  #productModal .modal-product-info {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+    padding: var(--spacing-lg) var(--spacing-md)
+             calc(env(safe-area-inset-bottom) + var(--spacing-xl));
+  }
+
+  #productModal .modal-close {
+    position: fixed;
+    top: calc(env(safe-area-inset-top) + 10px);
+    right: 12px;
+    width: 44px;
+    height: 44px;
+    background: rgba(10, 10, 10, 0.72);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: var(--white);
+    font-size: 1.6rem;
+    line-height: 1;
+    z-index: 30;
+  }
+
+  /* rotate(90deg) en un boton fixed lo saca de lugar en algunos
+     navegadores moviles al hacer tap. */
+  #productModal .modal-close:hover,
+  #productModal .modal-close:active {
+    transform: none;
+    background: var(--red-accent);
+  }
+}

@@ -2126,8 +2126,122 @@ function initProductModalInternal() {
   let currentImages = [];
   let currentImageIndex = 0;
 
+  // ── A3: zoom de la foto (lupa en PC, tap-to-zoom en movil) ────────
+  // El `.modal-image-viewport` se crea ACA y no en el HTML porque el
+  // markup del modal esta duplicado en index.html y shop.html: escrito
+  // a mano habria dos copias que mantener sincronizadas. El viewport es
+  // quien recorta la imagen escalada para que el zoom no se derrame
+  // sobre el panel de info.
+  const ZOOM_LEVEL = 2.4;
+  let zoomViewport = null;
+
+  function supportsHover() {
+    return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  }
+
+  function hasImage() {
+    return !!(modalImage && modalImage.getAttribute('src') && modalImage.style.display !== 'none');
+  }
+
+  function buildZoomViewport() {
+    if (!modalImage || !modalImage.parentNode) return null;
+
+    const existing = modalImage.parentNode.classList &&
+      modalImage.parentNode.classList.contains('modal-image-viewport');
+    if (existing) return modalImage.parentNode;
+
+    const viewport = document.createElement('div');
+    viewport.className = 'modal-image-viewport';
+    modalImage.parentNode.insertBefore(viewport, modalImage);
+    viewport.appendChild(modalImage);
+    if (modalPlaceholder) viewport.appendChild(modalPlaceholder);
+
+    // Los dos textos se pintan siempre y los alterna una media query.
+    // Decidirlo aca con supportsHover() lo congelaba al primer render: un
+    // iPad al que le enchufan o desenchufan un mouse quedaba con el texto
+    // equivocado, y el modal se construye una sola vez por pagina.
+    const hint = document.createElement('span');
+    hint.className = 'modal-zoom-hint';
+    hint.innerHTML =
+      '<span class="mx-hint-hover">Pasa el cursor para ampliar</span>' +
+      '<span class="mx-hint-touch">Toca para ampliar</span>';
+    viewport.appendChild(hint);
+
+    return viewport;
+  }
+
+  function resetZoom() {
+    if (!zoomViewport) return;
+    zoomViewport.classList.remove('is-zoomed', 'is-zoom-animated');
+    modalImage.style.transformOrigin = 'center center';
+  }
+
+  // Traduce la posicion del puntero a un transform-origin en %, que es
+  // lo que hace que la foto se agrande JUSTO donde esta mirando el ojo.
+  function setZoomOrigin(e) {
+    const rect = zoomViewport.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    const src = (e.touches && e.touches[0]) ? e.touches[0] : e;
+    const x = Math.max(0, Math.min(100, ((src.clientX - rect.left) / rect.width) * 100));
+    const y = Math.max(0, Math.min(100, ((src.clientY - rect.top) / rect.height) * 100));
+    modalImage.style.transformOrigin = x + '% ' + y + '%';
+  }
+
+  function initZoom() {
+    zoomViewport = buildZoomViewport();
+    if (!zoomViewport) return;
+    zoomViewport.style.setProperty('--mx-zoom', ZOOM_LEVEL);
+
+    // PC: lupa al hover. Sin transicion en transform mientras sigue al
+    // cursor — una lupa con lag se siente rota.
+    zoomViewport.addEventListener('mouseenter', (e) => {
+      if (!supportsHover() || !hasImage()) return;
+      zoomViewport.classList.remove('is-zoom-animated');
+      setZoomOrigin(e);
+      zoomViewport.classList.add('is-zoomed');
+    });
+
+    zoomViewport.addEventListener('mousemove', (e) => {
+      if (!zoomViewport.classList.contains('is-zoomed')) return;
+      setZoomOrigin(e);
+    });
+
+    zoomViewport.addEventListener('mouseleave', () => {
+      if (!supportsHover()) return;
+      resetZoom();
+    });
+
+    // Movil: tap para ampliar, arrastrar para recorrer la foto.
+    zoomViewport.addEventListener('click', (e) => {
+      if (supportsHover() || !hasImage()) return;
+      if (zoomViewport.classList.contains('is-zoomed')) {
+        zoomViewport.classList.add('is-zoom-animated');
+        zoomViewport.classList.remove('is-zoomed');
+        modalImage.style.transformOrigin = 'center center';
+        return;
+      }
+      zoomViewport.classList.add('is-zoom-animated');
+      setZoomOrigin(e);
+      zoomViewport.classList.add('is-zoomed');
+    });
+
+    zoomViewport.addEventListener('touchmove', (e) => {
+      if (!zoomViewport.classList.contains('is-zoomed')) return;
+      // Sin esto el gesto scrollea la ficha en vez de recorrer la foto.
+      e.preventDefault();
+      zoomViewport.classList.remove('is-zoom-animated');
+      setZoomOrigin(e);
+    }, { passive: false });
+  }
+
+  initZoom();
+
   // Function to update modal image
   function setModalImage(imageSrc) {
+    // Cambiar de foto con el zoom puesto deja la nueva imagen recortada
+    // en una esquina al azar: siempre se vuelve a 1x primero.
+    resetZoom();
+
     if (imageSrc) {
       modalImage.style.opacity = '0';
       setTimeout(() => {
@@ -2135,10 +2249,12 @@ function initProductModalInternal() {
         modalImage.style.display = 'block';
         modalPlaceholder.style.display = 'none';
         modalImage.style.opacity = '1';
+        if (zoomViewport) zoomViewport.classList.add('is-zoomable');
       }, 150);
     } else {
       modalImage.style.display = 'none';
       modalPlaceholder.style.display = 'block';
+      if (zoomViewport) zoomViewport.classList.remove('is-zoomable');
     }
   }
 
@@ -2348,6 +2464,7 @@ function initProductModalInternal() {
 
   // Close modal functions
   function closeModal() {
+    resetZoom();
     modal.classList.remove('active');
     document.body.style.overflow = '';
     currentProduct = null;
