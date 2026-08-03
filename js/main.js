@@ -2126,6 +2126,41 @@ function initProductModalInternal() {
   let currentImages = [];
   let currentImageIndex = 0;
 
+  // ── A4: URL propia por producto ─────────────────────────────────
+  // Abrir el quickview empuja la URL de la ficha real. Con eso el producto
+  // se puede pasar por WhatsApp, sirve de destino de pauta, y el boton
+  // Atras del telefono cierra el modal en vez de sacar al usuario de la
+  // tienda. Si alguien recarga con esa URL cae en product.html, que
+  // renderiza el MISMO producto desde la MISMA fuente.
+  let urlPushedByModal = false;
+  let titleBeforeModal = document.title;
+
+  function pushProductUrl(name) {
+    if (typeof createProductSlug !== 'function') return;
+    if (!window.history || typeof history.pushState !== 'function') return;
+    try {
+      const slug = createProductSlug(name);
+      if (!slug) return;
+      titleBeforeModal = document.title;
+      history.pushState({ mxQuickview: slug }, '', '/product?product=' + encodeURIComponent(slug));
+      document.title = name + ' | MXZONE STORE';
+      urlPushedByModal = true;
+    } catch (e) {
+      mxLog('pushProductUrl:', e.message);
+    }
+  }
+
+  function restoreUrlFromModal() {
+    if (!urlPushedByModal) return;
+    urlPushedByModal = false;
+    document.title = titleBeforeModal;
+    try {
+      history.back();
+    } catch (e) {
+      mxLog('restoreUrlFromModal:', e.message);
+    }
+  }
+
   // ── A3: zoom de la foto (lupa en PC, tap-to-zoom en movil) ────────
   // El `.modal-image-viewport` se crea ACA y no en el HTML porque el
   // markup del modal esta duplicado en index.html y shop.html: escrito
@@ -2419,6 +2454,7 @@ function initProductModalInternal() {
       // Show modal
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
+      pushProductUrl(name);
     });
 
     // Add cursor pointer to indicate clickability
@@ -2470,7 +2506,19 @@ function initProductModalInternal() {
     currentProduct = null;
     currentImages = [];
     currentImageIndex = 0;
+    restoreUrlFromModal();
   }
+
+  // Boton Atras del navegador/telefono: cierra el quickview y devuelve al
+  // usuario a la tienda, no fuera del sitio. Se apaga urlPushedByModal ANTES
+  // de cerrar porque el historial YA volvio: si no, closeModal dispararia un
+  // segundo history.back() y sacaria al usuario de la pagina.
+  window.addEventListener('popstate', () => {
+    if (!modal.classList.contains('active')) return;
+    urlPushedByModal = false;
+    document.title = titleBeforeModal;
+    closeModal();
+  });
 
   if (modalClose) modalClose.addEventListener('click', closeModal);
   if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);

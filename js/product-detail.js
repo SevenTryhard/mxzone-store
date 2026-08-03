@@ -391,6 +391,68 @@ function createRelatedProductCard(product) {
   `;
 }
 
+/** Crea o actualiza un <meta> del head sin depender de que exista en el HTML. */
+function setMeta(attr, key, value) {
+  if (!value) return;
+  let el = document.head.querySelector('meta[' + attr + '="' + key + '"]');
+  if (!el) {
+    el = document.createElement('meta');
+    el.setAttribute(attr, key);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('content', value);
+}
+
+/**
+ * Reemplaza el JSON-LD generico del head por uno con los datos REALES del
+ * producto. Es lo que le permite a Google mostrar precio y disponibilidad en
+ * el resultado de busqueda.
+ *
+ * LIMITE IMPORTANTE, que no es un bug de este codigo: los crawlers de
+ * WhatsApp, Facebook y Twitter NO ejecutan JavaScript. Leen el HTML crudo, y
+ * en el HTML crudo estos tags todavia dicen "Cargando...". O sea que un link
+ * pegado en WhatsApp NO va a mostrar foto ni precio. Googlebot si renderiza
+ * JS, asi que para busqueda esto si sirve. Arreglar el preview social exige
+ * inyectar los meta del lado del servidor (Worker + HTMLRewriter); hoy
+ * wrangler.jsonc es assets-only, sin script de worker.
+ */
+function mountProductSchema(product, canonicalUrl, imageUrl) {
+  try {
+    const priceRaw = product._4ulabPriceRaw != null
+      ? String(product._4ulabPriceRaw).replace(/[^0-9.]/g, '')
+      : String(product.price || '').replace(/[^0-9]/g, '');
+
+    const schema = {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: product.name,
+      image: imageUrl ? [imageUrl] : undefined,
+      description: product.description || getCategoryDescription(product.category, product.name),
+      category: getCategoryLabel(product.category),
+      brand: { '@type': 'Brand', name: product.brand || getBrand(product.name).name || 'MXZONE' },
+      offers: {
+        '@type': 'Offer',
+        url: canonicalUrl,
+        priceCurrency: 'COP',
+        price: priceRaw || undefined,
+        availability: product.agotado === true
+          ? 'https://schema.org/OutOfStock'
+          : 'https://schema.org/InStock',
+        seller: { '@type': 'Organization', name: 'MXZONE STORE' }
+      }
+    };
+
+    document.querySelectorAll('script[data-mx-product-schema]').forEach((n) => n.remove());
+    const tag = document.createElement('script');
+    tag.type = 'application/ld+json';
+    tag.setAttribute('data-mx-product-schema', '');
+    tag.textContent = JSON.stringify(schema);
+    document.head.appendChild(tag);
+  } catch (e) {
+    mxLog('mountProductSchema:', e.message);
+  }
+}
+
 // Renderizar producto principal
 async function renderProduct(productSlug) {
   const layout = document.getElementById('productDetailLayout');
@@ -427,10 +489,32 @@ async function renderProduct(productSlug) {
     dynamicDesc.setAttribute('content', product.name + ' — ' + product.price + ' | ' + getCategoryLabel(product.category) + ' para motocross y enduro en Colombia. Envío a todo el país desde Cali. MXZONE STORE.');
   }
 
+  // Canonical SIN .html: Workers Assets sirve la extensionless y /product.html
+  // responde 307 hacia /product. Apuntar al .html mandaba a Google por un
+  // redirect innecesario en cada ficha.
+  const canonicalUrl = 'https://www.mxzonestore.com/product?product=' + encodeURIComponent(productSlug);
+
   const dynamicCanonical = document.getElementById('dynamic-canonical');
   if (dynamicCanonical) {
-    dynamicCanonical.setAttribute('href', 'https://www.mxzonestore.com/product.html?product=' + productSlug);
+    dynamicCanonical.setAttribute('href', canonicalUrl);
   }
+
+  // og:image es lo que decide si el link se ve como una tarjeta con foto o
+  // como texto pelado cuando alguien lo pega. Ver la nota de mountProductSchema
+  // sobre el limite real de esto.
+  const shareImage = getProductImage(product);
+  const absoluteImage = /^https?:/.test(shareImage)
+    ? shareImage
+    : 'https://www.mxzonestore.com/' + String(shareImage).replace(/^\//, '');
+
+  setMeta('property', 'og:url', canonicalUrl);
+  setMeta('property', 'og:type', 'product');
+  setMeta('property', 'og:image', absoluteImage);
+  setMeta('name', 'twitter:url', canonicalUrl);
+  setMeta('name', 'twitter:image', absoluteImage);
+  setMeta('name', 'twitter:title', product.name);
+
+  mountProductSchema(product, canonicalUrl, absoluteImage);
 
   const dynamicOgTitle = document.getElementById('dynamic-og-title');
   if (dynamicOgTitle) {
