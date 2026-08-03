@@ -10765,3 +10765,396 @@ a {
     display: none;
   }
 }
+
+/* =============================================================================
+   CHECKOUT — REDISEÑO DE CONFIANZA (2026-08-03)
+   =============================================================================
+   Por que existe este bloque: 6 personas llegaron a /checkout en 30 dias y
+   compraron CERO. Para soltar $1.530.000 por internet hace falta confianza, y
+   el checkout la estaba rompiendo: glows, un boton que late, emojis, y ni una
+   sola garantia a la vista.
+
+   Va al final del archivo y pisa lo anterior a proposito. Editar las ~120
+   lineas originales repartidas en tres zonas del stylesheet era mas riesgoso
+   que sobreescribirlas juntas y explicadas en un solo lugar.
+
+   REGLA DE ORO DE ESTE BLOQUE: nada se mueve solo. Ningun glow. Ningun degrade
+   decorativo. En la pantalla de pago, "aburrido" ES la caracteristica.
+============================================================================= */
+
+/* --- BUG DE MODO CLARO ------------------------------------------------------
+   Los tokens estan INVERTIDOS: en :root --white es #FFFFFF, pero en
+   [data-theme="light"] --white pasa a #1A1A1A (casi negro) porque significa
+   "color de texto", no "el color blanco".
+
+   La regla original hacia:
+     [data-theme="light"] .checkout-page { background: var(--white, #f7f7f7); }
+   ...que en modo claro pintaba el fondo de CASI NEGRO. De ahi las tarjetas
+   blancas flotando sobre fondo oscuro. Aca se usan colores literales: en esta
+   pantalla la ambiguedad de los tokens no se paga.
+--------------------------------------------------------------------------- */
+.checkout-page {
+  background: #0B0B0C;
+}
+
+[data-theme="light"] .checkout-page {
+  background: #F4F5F7;
+}
+
+/* --- Header ---------------------------------------------------------------- */
+.checkout-page-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.checkout-page-backlink {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+}
+
+/* --- Panel de garantias ----------------------------------------------------
+   Debajo del resumen del pedido: es el punto exacto donde la persona ve el
+   total y calcula el riesgo. Antes ahi no habia absolutamente nada.
+--------------------------------------------------------------------------- */
+.trust-panel {
+  margin-top: 16px;
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+}
+
+.trust-panel-title {
+  margin: 0 0 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: rgba(255,255,255,0.55);
+}
+
+.trust-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.trust-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-left: 14px;
+  border-left: 2px solid var(--orange-primary, #FF6600);
+}
+
+.trust-item-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.trust-item-text {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.62);
+}
+
+.trust-item-text a {
+  color: var(--orange-primary, #FF6600);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.trust-item-text a:hover {
+  text-decoration: underline;
+}
+
+[data-theme="light"] .trust-panel {
+  background: #ffffff;
+  border-color: rgba(0,0,0,0.09);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+[data-theme="light"] .trust-panel-title { color: #6B7280; }
+[data-theme="light"] .trust-item-title  { color: #111827; }
+[data-theme="light"] .trust-item-text   { color: #4B5563; }
+
+/* --- Encabezado del formulario --------------------------------------------- */
+.checkout-title {
+  font-size: 1.25rem;
+  letter-spacing: 0.3px;
+}
+
+.checkout-subtitle {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.62);
+}
+
+.checkout-subtitle strong {
+  display: block;
+  color: #ffffff;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+[data-theme="light"] .checkout-subtitle        { color: #4B5563; }
+[data-theme="light"] .checkout-subtitle strong { color: #111827; }
+
+/* --- Aviso de cobertura por ciudad ------------------------------------------
+   Aparece recien cuando la persona escribio algo. Verde = llegamos con contra
+   entrega; neutro = no llegamos, pero te decimos que SI tenes.
+   Neutro y no rojo a proposito: "no hay contra entrega en tu ciudad" no es un
+   error del usuario, y pintarlo de rojo lo trata como si lo fuera.
+--------------------------------------------------------------------------- */
+.coverage-note {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  border: 1px solid transparent;
+}
+
+.coverage-note strong { font-weight: 700; }
+
+.coverage-note--ok {
+  background: rgba(37, 211, 102, 0.10);
+  border-color: rgba(37, 211, 102, 0.35);
+  color: #7FE3A6;
+}
+
+.coverage-note--ok strong { color: #25D366; }
+
+.coverage-note--info {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.68);
+}
+
+.coverage-note--info strong { color: #ffffff; }
+
+[data-theme="light"] .coverage-note--ok {
+  background: #E7F8EE;
+  border-color: #A7E0BF;
+  color: #1B6B3A;
+}
+
+[data-theme="light"] .coverage-note--ok strong { color: #12703A; }
+
+[data-theme="light"] .coverage-note--info {
+  background: #F3F4F6;
+  border-color: #D8DBE0;
+  color: #4B5563;
+}
+
+[data-theme="light"] .coverage-note--info strong { color: #111827; }
+
+/* --- Metodos de pago --------------------------------------------------------
+   El contra entrega ocupa las DOS columnas y va primero. No es jerarquia
+   caprichosa: es el unico metodo donde el comprador no arriesga plata, y por
+   eso es el que destraba la venta. Antes se llamaba "Efectivo" y era un
+   cuadradito identico a los otros tres.
+--------------------------------------------------------------------------- */
+.checkout-payment-title {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.78rem;
+  letter-spacing: 1.2px;
+}
+
+[data-theme="light"] .checkout-payment-title { color: #6B7280; }
+
+.checkout-payment-grid { gap: 10px; }
+
+.checkout-payment-btn {
+  position: relative;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 14px;
+  /* Sin cubic-bezier con rebote: en el checkout nada tiene que "saltar". */
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  box-shadow: none;
+}
+
+/* La barrita de color lateral y el hover que levantaba el boton: fuera. */
+.checkout-payment-btn::before { display: none; }
+
+.checkout-payment-btn:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: rgba(255,255,255,0.28);
+  background: rgba(255,255,255,0.05);
+}
+
+.checkout-payment-btn.active {
+  background: rgba(255,102,0,0.08);
+  border-color: var(--orange-primary, #FF6600);
+  box-shadow: none;
+}
+
+.checkout-payment-btn .cp-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Los iconos con glow propio ya no estan en el markup. Si algun cache viejo
+   los trae, que al menos no brillen. */
+.cp-icon { box-shadow: none; }
+
+.checkout-payment-btn--featured {
+  grid-column: 1 / -1;
+  padding: 16px;
+  background: rgba(37, 211, 102, 0.07);
+  border-color: rgba(37, 211, 102, 0.30);
+}
+
+.checkout-payment-btn--featured:hover {
+  background: rgba(37, 211, 102, 0.10);
+  border-color: rgba(37, 211, 102, 0.50);
+}
+
+.checkout-payment-btn--featured.active {
+  background: rgba(37, 211, 102, 0.14);
+  border-color: #25D366;
+}
+
+.cp-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cp-tag {
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(37, 211, 102, 0.16);
+  color: #7FE3A6;
+  border: 1px solid rgba(37, 211, 102, 0.30);
+}
+
+.cp-desc {
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: rgba(255,255,255,0.66);
+  text-align: left;
+}
+
+.checkout-payment-foot {
+  margin: 10px 0 0;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: rgba(255,255,255,0.45);
+}
+
+[data-theme="light"] .checkout-payment-btn {
+  background: #ffffff;
+  border-color: #D8DBE0;
+}
+
+[data-theme="light"] .checkout-payment-btn:hover {
+  background: #ffffff;
+  border-color: #9CA3AF;
+}
+
+[data-theme="light"] .checkout-payment-btn.active {
+  background: #FFF4EC;
+  border-color: var(--orange-primary, #FF6600);
+}
+
+[data-theme="light"] .checkout-payment-btn .cp-name { color: #111827; }
+
+[data-theme="light"] .checkout-payment-btn--featured {
+  background: #F1FBF5;
+  border-color: #A7E0BF;
+}
+
+[data-theme="light"] .checkout-payment-btn--featured:hover { border-color: #6FCB96; }
+
+[data-theme="light"] .checkout-payment-btn--featured.active {
+  background: #E7F8EE;
+  border-color: #25A75A;
+}
+
+[data-theme="light"] .cp-tag {
+  background: #DFF5E8;
+  color: #12703A;
+  border-color: #A7E0BF;
+}
+
+[data-theme="light"] .cp-desc               { color: #4B5563; }
+[data-theme="light"] .checkout-payment-foot { color: #6B7280; }
+
+/* --- Boton principal --------------------------------------------------------
+   Se le saca la animacion `gradientShift` infinita, el glow naranja y el scale
+   del hover. Un boton que late solo en la pantalla de pago se lee como
+   publicidad agresiva, justo cuando la persona esta decidiendo si confiar.
+   Naranja plano, sin degrade. El texto ya no dice "Enviar pedido" sino
+   "Continuar", y debajo se aclara que todavia no se paga nada.
+--------------------------------------------------------------------------- */
+.checkout-submit {
+  background: var(--orange-primary, #FF6600);
+  background-size: auto;
+  animation: none;
+  box-shadow: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: none;
+  transition: background-color 0.15s ease;
+}
+
+.checkout-submit:hover {
+  transform: none;
+  box-shadow: none;
+  background: #E65C00;
+}
+
+.checkout-submit:active { transform: none; }
+
+.checkout-submit-note {
+  margin: 0;
+  text-align: center;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: rgba(255,255,255,0.45);
+}
+
+[data-theme="light"] .checkout-submit-note { color: #6B7280; }
+
+.checkout-footer { border-top-color: rgba(255,255,255,0.08); }
+[data-theme="light"] .checkout-footer { border-top-color: rgba(0,0,0,0.08); }
+
+.checkout-back--link { font-size: 0.82rem; }
+
+/* Sin el emoji de advertencia: el texto ya dice que falta. */
+.field-error { font-size: 0.76rem; }
+
+/* --- Movil ------------------------------------------------------------------ */
+@media (max-width: 900px) {
+  .checkout-payment-grid { grid-template-columns: repeat(2, 1fr); }
+  .checkout-payment-btn--featured { grid-column: 1 / -1; }
+  .trust-panel { margin-top: 14px; padding: 16px; }
+  /* 16px o iOS hace zoom al enfocar un input. Regla ya aprendida en la card. */
+  .checkout-field input { font-size: 16px; }
+}

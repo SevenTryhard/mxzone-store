@@ -25,7 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css?t=202608031432">
+  <link rel="stylesheet" href="css/styles.css?t=202608031518">
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-54DRSXCKFV"></script>
@@ -45,7 +45,12 @@
         <img src="assets/logo/logo.png" alt="MXZONE" class="logo-image">
         <span>MX ZONE</span>
       </a>
-      <a href="shop.html?opencart=1" class="checkout-page-backlink">← Volver al carrito</a>
+      <div class="checkout-page-header-actions">
+        <!-- El toggle faltaba: quien entraba al checkout quedaba encerrado en
+             el tema que traia y no podia cambiarlo. main.js lo engancha por id. -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema"></button>
+        <a href="shop.html?opencart=1" class="checkout-page-backlink">Volver al carrito</a>
+      </div>
     </nav>
   </header>
 
@@ -71,16 +76,51 @@
             <span>PRODUCTO 100% ORIGINAL</span>
           </div>
         </div>
+
+        <!-- GARANTÍAS. Van pegadas al resumen a proposito: este es el momento
+             exacto en el que la persona se frena y calcula el riesgo. Antes no
+             habia NADA aca, y el checkout pedia direccion y telefono sin
+             ofrecer una sola razon para confiar. -->
+        <div class="trust-panel">
+          <h3 class="trust-panel-title">Por qué podés comprar tranquilo</h3>
+          <ul class="trust-list">
+            <li class="trust-item">
+              <span class="trust-item-title">No pagás nada en esta página</span>
+              <span class="trust-item-text">Acá solo dejás tus datos. El pago se coordina después con un asesor.</span>
+            </li>
+            <li class="trust-item">
+              <span class="trust-item-title">Te atiende una persona, no un bot</span>
+              <span class="trust-item-text">Confirmás talla, disponibilidad, envío y precio final por WhatsApp antes de pagar.</span>
+            </li>
+            <li class="trust-item">
+              <span class="trust-item-title">Producto 100% original</span>
+              <span class="trust-item-text">Importado y con garantía de fábrica. Nada de réplicas.</span>
+            </li>
+            <li class="trust-item">
+              <span class="trust-item-title">Nos podés escribir ahora mismo</span>
+              <span class="trust-item-text">
+                WhatsApp
+                <a href="https://wa.me/573186467646" target="_blank" rel="noopener">+57 318 646 7646</a>.
+                Preguntá lo que quieras antes de dejar tus datos.
+              </span>
+            </li>
+          </ul>
+        </div>
       </section>
 
       <!-- Columna 2: Formulario (mismos IDs que el flujo anterior — cart.js los maneja) -->
       <section class="checkout-page-form" aria-label="Datos del comprador">
         <div class="checkout-panel checkout-panel--page">
           <div class="checkout-header">
-            <div class="checkout-header-icon">📦</div>
             <div class="checkout-header-text">
-              <h3 class="checkout-title">Finalizar Pedido</h3>
-              <p class="checkout-subtitle">Completa tus datos para enviar el pedido por WhatsApp</p>
+              <h3 class="checkout-title">Finalizar pedido</h3>
+              <!-- Lo primero que lee la persona ya no es "enviar por WhatsApp"
+                   (que suena a salto al vacio) sino que NO esta pagando todavia.
+                   Es la ventaja real sobre cualquier checkout con tarjeta. -->
+              <p class="checkout-subtitle">
+                <strong>No se te cobra nada en esta pantalla.</strong>
+                Dejás tus datos y un asesor te escribe para confirmar todo antes de pagar.
+              </p>
             </div>
           </div>
 
@@ -88,13 +128,13 @@
             <div class="checkout-field" id="fieldName">
               <label for="checkoutName">Nombre completo <span class="required">*</span></label>
               <input type="text" id="checkoutName" placeholder="Tu nombre completo" required autocomplete="name">
-              <span class="field-error" id="errorName">⚠️ Ingresa tu nombre</span>
+              <span class="field-error" id="errorName">Ingresa tu nombre</span>
             </div>
 
             <div class="checkout-field" id="fieldPhone">
               <label for="checkoutPhone">Teléfono <span class="required">*</span></label>
               <input type="tel" id="checkoutPhone" placeholder="Ej: 318 646 7646" required autocomplete="tel">
-              <span class="field-error" id="errorPhone">⚠️ Ingresa tu número de teléfono</span>
+              <span class="field-error" id="errorPhone">Ingresa tu número de teléfono</span>
             </div>
 
             <div class="checkout-field" id="fieldEmail">
@@ -105,46 +145,63 @@
             <div class="checkout-field" id="fieldCity">
               <label for="checkoutCity">Ciudad <span class="required">*</span></label>
               <input type="text" id="checkoutCity" placeholder="Ej: Bogotá, Medellín, Cali" required autocomplete="address-level2">
-              <span class="field-error" id="errorCity">⚠️ Ingresa tu ciudad</span>
+              <span class="field-error" id="errorCity">Ingresá tu ciudad</span>
+              <!-- Aviso de cobertura, condicional por ciudad. Se llena desde el
+                   script del final. Prometer contra entrega a alguien de Bogota
+                   y desdecirse despues por WhatsApp es peor que no ofrecerlo. -->
+              <div class="coverage-note" id="coverageNote" hidden></div>
             </div>
 
             <div class="checkout-field" id="fieldAddress">
               <label for="checkoutAddress">Dirección de envío <span class="required">*</span></label>
               <input type="text" id="checkoutAddress" placeholder="Calle, número, barrio, torre/apto" required autocomplete="street-address">
-              <span class="field-error" id="errorAddress">⚠️ Ingresa tu dirección</span>
+              <span class="field-error" id="errorAddress">Ingresa tu dirección</span>
             </div>
 
+            <!-- METODO DE PAGO.
+                 El cambio que mas importa de toda la pantalla: "Efectivo" ahora
+                 se llama CONTRA ENTREGA y explica que significa. Es el mismo
+                 data-method="efectivo" de siempre (cart.js lo mapea a "Efectivo
+                 contra entrega" en el mensaje de WhatsApp desde hace rato): la
+                 funcionalidad ya existia, lo que faltaba era que el comprador
+                 pudiera entenderla. "Efectivo" a secas se lee como "pagar por
+                 adelantado en efectivo", que asusta MAS, no menos.
+                 Va primero y ocupa el ancho completo porque es la razon numero
+                 uno por la que alguien se anima a comprar online en Colombia. -->
             <div class="checkout-payment" id="fieldPayment">
-              <p class="checkout-payment-title">💳 Método de pago</p>
+              <p class="checkout-payment-title">Método de pago</p>
               <div class="checkout-payment-grid">
+                <button class="checkout-payment-btn checkout-payment-btn--featured" type="button" data-method="efectivo" onclick="selectPaymentMethod('efectivo')">
+                  <span class="cp-main">
+                    <span class="cp-name">Contra entrega</span>
+                    <span class="cp-tag" id="cpCoverageTag">Cali y alrededores</span>
+                  </span>
+                  <span class="cp-desc">Pagás cuando el producto está en tus manos. No antes.</span>
+                </button>
                 <button class="checkout-payment-btn" type="button" data-method="nequi" onclick="selectPaymentMethod('nequi')">
-                  <span class="cp-icon" style="--c:#FF0082">N</span>
                   <span class="cp-name">Nequi</span>
                 </button>
                 <button class="checkout-payment-btn" type="button" data-method="daviplata" onclick="selectPaymentMethod('daviplata')">
-                  <span class="cp-icon" style="--c:#E31837">D</span>
                   <span class="cp-name">Daviplata</span>
                 </button>
                 <button class="checkout-payment-btn" type="button" data-method="transferencia" onclick="selectPaymentMethod('transferencia')">
-                  <span class="cp-icon" style="--c:#FF6600">⟲</span>
                   <span class="cp-name">Transferencia</span>
                 </button>
-                <button class="checkout-payment-btn" type="button" data-method="efectivo" onclick="selectPaymentMethod('efectivo')">
-                  <span class="cp-icon" style="--c:#25D366">$</span>
-                  <span class="cp-name">Efectivo</span>
-                </button>
               </div>
-              <span class="field-error" id="errorPayment">⚠️ Selecciona un método de pago</span>
+              <span class="field-error" id="errorPayment">Elegí un método de pago</span>
+              <p class="checkout-payment-foot">Elegís cómo querés pagar. El cobro se hace después, con el asesor.</p>
             </div>
           </div>
 
           <div class="checkout-footer">
             <button class="checkout-submit" id="checkoutSubmit">
-              <span class="submit-icon">📱</span>
-              <span class="submit-text">Enviar pedido por WhatsApp</span>
+              <span class="submit-text">Continuar por WhatsApp</span>
             </button>
+            <!-- Decir que pasa DESPUES de apretar. Antes el boton era un salto
+                 al vacio: no se sabia si cobraba, si mandaba algo, ni a quien. -->
+            <p class="checkout-submit-note">Se abre WhatsApp con tu pedido escrito. Todavía no pagás nada.</p>
             <a href="shop.html?opencart=1" class="checkout-back checkout-back--link">
-              <span>← Volver al carrito</span>
+              <span>Volver al carrito</span>
             </a>
           </div>
         </div>
@@ -154,14 +211,100 @@
   </main>
 
   <!-- Scripts -->
-  <script src="js/utils.js?t=202608031432"></script>
-  <script src="js/cart.js?t=202608031432"></script>
-  <script src="js/main.js?t=202608031432"></script>
+  <script src="js/utils.js?t=202608031518"></script>
+  <script src="js/cart.js?t=202608031518"></script>
+  <script src="js/main.js?t=202608031518"></script>
   <!-- 4ULAB Analytics + Campaigns Tracking -->
   <script>
     window.__4ULAB_PROJECT_ID__ = 1;
   </script>
   <script src="https://4-ulab.vercel.app/tracking-snippet.js"></script>
   <script src="https://4-ulab.vercel.app/campaign-snippet.js"></script>
+
+  <!-- ===================================================================
+       COBERTURA DE CONTRA ENTREGA, CONDICIONAL POR CIUDAD
+       ===================================================================
+       MXZONESTORE hace contra entrega con repartidores PROPIOS, y eso solo
+       llega a Cali y alrededores cercanos. Fuera de ahi no se puede.
+
+       Por que condicional y no un cartel fijo: prometerle contra entrega a
+       alguien de Bogota para desdecirse despues por WhatsApp destruye mas
+       confianza de la que gana el cartel. Y dejar el hueco vacio tampoco
+       sirve, porque el de Bogota se queda sin ninguna garantia que lo cubra.
+       Entonces: al de Cali se le promete contra entrega; al de afuera se le
+       ofrece lo que SI es cierto (asesor humano, producto original, nada se
+       paga en el sitio).
+
+       La lista es editable a mano a proposito. Si maniana suman una ciudad,
+       se agrega aca y listo — no hace falta tocar nada mas.
+  -->
+  <script>
+  (function initCoverage() {
+    var CIUDADES_CONTRA_ENTREGA = [
+      'cali', 'jamundi', 'yumbo', 'palmira', 'candelaria',
+      'florida', 'pradera', 'dagua', 'vijes', 'la cumbre'
+    ];
+
+    var input = document.getElementById('checkoutCity');
+    var note = document.getElementById('coverageNote');
+    var tag = document.getElementById('cpCoverageTag');
+    if (!input || !note) return;
+
+    // Mismo criterio de normalizacion que usa el slug de productos: minusculas,
+    // sin tildes. "Jamundí", "JAMUNDI" y "jamundi" tienen que dar lo mismo.
+    function normalizar(txt) {
+      return String(txt || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(new RegExp('[\\u0300-\\u036f]', 'g'), '')
+        .replace(/[^a-z\s]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function tieneContraEntrega(ciudad) {
+      var n = normalizar(ciudad);
+      if (!n) return null; // todavia no escribio nada
+      for (var i = 0; i < CIUDADES_CONTRA_ENTREGA.length; i++) {
+        var c = CIUDADES_CONTRA_ENTREGA[i];
+        // Coincidencia por palabra completa: "cali" no debe matchear "mexicali".
+        if (n === c || n.indexOf(c + ' ') === 0 || n.indexOf(' ' + c) > -1) return true;
+      }
+      return false;
+    }
+
+    function render() {
+      var estado = tieneContraEntrega(input.value);
+
+      if (estado === null) {
+        note.hidden = true;
+        note.className = 'coverage-note';
+        if (tag) tag.textContent = 'Cali y alrededores';
+        return;
+      }
+
+      note.hidden = false;
+
+      if (estado === true) {
+        note.className = 'coverage-note coverage-note--ok';
+        note.innerHTML =
+          '<strong>Llegamos con contra entrega.</strong> ' +
+          'Un repartidor nuestro te lo lleva y le pagás ahí mismo, cuando ya lo tenés.';
+        if (tag) tag.textContent = 'Disponible en tu ciudad';
+      } else {
+        note.className = 'coverage-note coverage-note--info';
+        note.innerHTML =
+          '<strong>Fuera de Cali enviamos por transportadora.</strong> ' +
+          'El contra entrega con repartidor propio es solo para Cali y alrededores, ' +
+          'pero igual coordinás todo con un asesor por WhatsApp antes de pagar.';
+        if (tag) tag.textContent = 'Solo Cali y alrededores';
+      }
+    }
+
+    input.addEventListener('input', render);
+    input.addEventListener('blur', render);
+    render();
+  })();
+  </script>
 </body>
 </html>
