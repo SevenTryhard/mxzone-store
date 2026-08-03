@@ -2,22 +2,22 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Paginas de detalle de producto DESHABILITADAS temporalmente: el quickview
-       (modal) es la unica vista de producto. Redirigimos a la tienda antes de
-       renderizar nada para que product.html sea inaccesible para los usuarios. -->
-  <script>window.location.replace('shop.html');</script>
-  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <!-- REHABILITADA el 2026-08-03. Estuvo redirigiendo a shop.html desde el
+       2026-07-02 porque se desincronizaba con las cards. La causa real: leia
+       `/api/store/products`, un endpoint que NO EXISTE en 4ULAB, y caia
+       siempre a 326 JSON estaticos que nadie regeneraba. Ahora es un cascaron
+       que se hidrata de la MISMA fuente que las cards. Ver js/product-detail.js. -->
+  <meta name="robots" content="index, follow">
   <meta name="description" content="Detalle de producto de equipamiento motocross.">
   <!-- Cache control para imágenes -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <!-- SEO: Canonical URL -->
-  <link rel="canonical" href="product.html">
-  
-  <!-- SEO: Robots (pagina deshabilitada, redirige a shop.html) -->
-  
+  <!-- SEO: Canonical URL — renderProduct() la reescribe con la URL real del
+       producto una vez que sabe cual es. Sin producto queda apuntando al listado. -->
+  <link rel="canonical" href="https://www.mxzonestore.com/shop">
+
   <!-- SEO: Author & Publisher -->
   <meta name="author" content="MXZONE STORE">
   <meta name="publisher" content="MXZONE STORE">
@@ -60,7 +60,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/styles.css?t=202608022138">
+  <link rel="stylesheet" href="css/styles.css?t=202608030018">
   <!-- Schema.org JSON-LD: Product + Organization -->
   <script type="application/ld+json">
   {
@@ -303,11 +303,19 @@
 
 
   <!-- Scripts -->
-    <script src="js/utils.js?t=202608022138"></script>
+    <script src="js/utils.js?t=202608030018"></script>
   <script src="cms/config.js?v=27"></script>
-  <script src="js/cart.js?t=202608022138"></script>
-  <script src="js/main.js?t=202608022138"></script>
-  <script src="js/product-detail.js?t=202607302030"></script>
+  <script src="js/cart.js?t=202608030018"></script>
+  <script src="js/main.js?t=202608030018"></script>
+  <!-- products.js ANTES que product-detail.js: la ficha se hidrata con
+       window.MXZONE_Products.loadProducts(), la misma lista (y el mismo
+       adaptador) que pinta las cards. Sin este script la ficha no tiene de
+       donde sacar los datos y los relacionados quedaban vacios en silencio.
+       En esta pagina es inerte: products.js solo autoarranca si encuentra
+       #productsGrid, [data-products] o #recomendadosCarousel, y aca no hay
+       ninguno (el grid de relacionados es #relatedProducts). -->
+  <script src="js/products.js?t=202608030018"></script>
+  <script src="js/product-detail.js?t=202608022138"></script>
   <!-- Floating WhatsApp Button (Desktop) / Sticky Bar (Mobile) -->
   <a href="https://wa.me/573186467646" class="whatsapp-float" target="_blank" aria-label="Chat WhatsApp">
     <img src="assets/whatsapp-logo.webp" alt="WhatsApp" class="whatsapp-icon">

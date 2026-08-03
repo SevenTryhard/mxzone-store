@@ -290,73 +290,65 @@ function getCategoryLabel(category) {
   return labels[category] || category;
 }
 
-// Cargar producto desde CMS API (primario)
-async function loadProductFromCMS(productSlug) {
-  const cmsApiUrl = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.cmsApiUrl : '';
-  const projectKey = window.MXZONE_CONFIG ? window.MXZONE_CONFIG.projectKey : '';
-  if (!cmsApiUrl) return null;
-  try {
-    let url = cmsApiUrl + '/api/store/products';
-    if (projectKey) url += '?project=' + encodeURIComponent(projectKey);
-    const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
-    if (response.ok) {
-      const data = await response.json();
-      if (data.products) {
-        const found = data.products.find(p => {
-          const slug = createProductSlug(p.name);
-          return slug === productSlug;
-        });
-        if (found) {
-          if (found.image && found.images && found.images.length > 0) {
-            found.images = found.images.filter(img => img != null && typeof img === 'string');
-          }
-          return found;
-        }
+/**
+ * UNA SOLA FUENTE DE VERDAD.
+ *
+ * La ficha lee EXACTAMENTE la misma lista que pintan las cards de la tienda:
+ * `window.MXZONE_Products.loadProducts()` (js/products.js), ya pasada por
+ * `adaptProductFrom4ULAB`. Misma API, mismo adaptador, misma normalizacion.
+ *
+ * POR QUE ESTO IMPORTA (el bug historico):
+ * antes esta ficha pegaba a `${cmsApiUrl}/api/store/products`, un endpoint que
+ * NO EXISTE en 4ULAB — los publicos son `/api/public/*`. O sea que la llamada
+ * fallaba SIEMPRE y caia al fallback: 326 JSON estaticos en `cms/productos/`
+ * que nadie regeneraba. Por eso al editar un producto la card se actualizaba
+ * al instante y la ficha seguia mostrando lo viejo. La divergencia estaba
+ * garantizada por construccion; no era un bug intermitente.
+ *
+ * OJO CON LA PAGINACION: la API devuelve de a 200 y el catalogo ronda los 282
+ * productos. `loadProducts()` ya recorre las paginas. Un `fetch` suelto se
+ * comeria ~82 productos y esas fichas dirian "no encontrado" sin explicacion.
+ *
+ * Se memoiza: la ficha necesita el catalogo dos veces (el producto y los
+ * relacionados) y no tiene sentido traerlo dos veces por pagina.
+ */
+let _catalogPromise = null;
+
+async function getCatalog() {
+  if (_catalogPromise) return _catalogPromise;
+
+  _catalogPromise = (async () => {
+    // products.js se carga antes que este archivo, pero si alguien reordena
+    // los <script> preferimos esperar a que aparezca antes que romper.
+    for (let i = 0; i < 20; i++) {
+      if (window.MXZONE_Products && typeof window.MXZONE_Products.loadProducts === 'function') {
+        return await window.MXZONE_Products.loadProducts();
       }
+      await new Promise((r) => setTimeout(r, 100));
     }
-  } catch(e) {
-    mxLog('CMS API fallback for product detail:', e.message);
-  }
-  return null;
+    mxLog('[CRITICAL] getCatalog: js/products.js nunca cargo. La ficha no puede hidratarse.');
+    return [];
+  })();
+
+  return _catalogPromise;
 }
 
-// Cargar producto desde CMS API (primario) + JSON fallback
 async function loadProduct(productSlug) {
-  const cmsProduct = await loadProductFromCMS(productSlug);
-  if (cmsProduct) return cmsProduct;
-
-  // JSON fallback
-  const safeSlug = productSlug.replace(/[^a-z0-9_-]/g, '');
-  try {
-    const r = await fetch('cms/productos/' + safeSlug + '.json');
-    if (r.ok) {
-      const data = await r.json();
-      // Validate expected fields
-      if (data && data.name && data.price && data.image && data.description && data.category) {
-        return data;
-      }
-    }
-  } catch (e) {
-    mxLog('JSON fallback failed for', productSlug, e.message);
+  const products = await getCatalog();
+  if (!products || products.length === 0) {
+    mxLog('[CRITICAL] loadProduct: catalogo vacio para', productSlug);
+    return null;
   }
-
-  mxLog('[CRITICAL] loadProduct: no se pudo obtener', productSlug, 'desde API ni JSON fallback.');
-  return null;
+  const found = products.find((p) => createProductSlug(p.name) === productSlug);
+  if (!found) mxLog('loadProduct: no hay producto con slug', productSlug);
+  return found || null;
 }
 
 // Cargar productos relacionados desde CMS API
 async function loadRelatedProducts(currentProduct, currentSlug) {
   try {
-    let products = [];
-    if (typeof window.MXZONE_Products !== 'undefined' && typeof window.MXZONE_Products.loadProducts === 'function') {
-      products = await window.MXZONE_Products.loadProducts();
-    } else {
-      // esperar a que products.js cargue
-      await new Promise(resolve => setTimeout(resolve, 300));
-      if (typeof window.MXZONE_Products !== 'undefined' && typeof window.MXZONE_Products.loadProducts === 'function') {
-        products = await window.MXZONE_Products.loadProducts();
-      }
-    }
+    // Mismo catalogo memoizado que usa loadProduct: una sola traida por pagina.
+    const products = await getCatalog();
     if (!products || products.length === 0) return [];
     const categoryProducts = products.filter(p => p.category === currentProduct.category && createProductSlug(p.name) !== currentSlug).slice(0, 4);
     return categoryProducts;
