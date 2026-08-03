@@ -380,3 +380,53 @@ Datos de WEB STATS de 4ULAB (project 1), ultimos 30 dias:
 1. **LEER PRIMERO `C:\Users\seven\4ULAB\APP\NEXTUPDATE.md`** — contiene la visión conceptual del próximo gran paso del proyecto.
 2. Verificar en vivo WEB STATS en MX (snippet cargando + eventos llegando) cuando el 522 se resuelva.
 3. Luego revisar `TEMP.md` y atacar #015 (redes sociales sin iconos/links) y #016 (iconos de inicio no cargan fuentes CDN).
+
+## Sesion 2026-08-02 — Quickview v2: imagen protagonista, zoom y ficha full-screen en movil
+
+Bloque A1-A3 del plan de MX. Commit `01ae9fb`, worker version `82371d5d`,
+cache-buster `202608022109`. **Verificado en produccion en www Y en el worker.**
+
+- **A2 la foto manda**: `.modal-image` estaba clavada a `max-height:400px` (300px en
+  movil) dentro de un grid de 1100px, o sea usaba una fraccion del espacio. Ahora llena
+  un `.modal-image-viewport` (`flex:1; min-height:0`). En PC el modal toma
+  `min(88vh,780px)` con columnas `1.35fr 1fr`; en movil la foto se lleva `56dvh`.
+  El centrado ya no depende de si hay thumbnails: lo resuelve `object-fit:contain`.
+- **A1 movil como ficha**: `#productModal` a `100dvh`, sin border-radius,
+  `grid-template-rows: auto 1fr`. El cerrar pasa a `position:fixed` con
+  `env(safe-area-inset-top)` y FLOTA sobre la foto (reservarle una franja de 58px le
+  comia ~1/4 del alto util). Root cause del boton inaccesible en iPhone: `.product-modal`
+  usaba `height:100%`, y en iOS Safari `100%` es el layout viewport, que se extiende POR
+  DEBAJO de la barra de URL. Mismo patron que ya se aplico al carrito el 2026-07-02.
+- **A3 zoom**: lupa siguiendo al cursor en PC (sin transicion en transform: con lag se
+  siente rota) y tap-to-zoom + arrastre en movil, a 2.4x (`--mx-zoom`).
+
+### Dos trampas (NO repetir)
+
+1. **`.product-modal`, `.product-modal-content` y `.modal-close` NO son exclusivas del
+   quickview.** Las comparten `#sizeGuideModal`, `#imagePreviewModal` y el modal de
+   promociones (`#promoModalClose`). La primera version del bloque, sin scopear, les
+   mandaba el boton cerrar a la esquina del viewport y le imponia un grid de 2 columnas
+   a la guia de tallas. **Todo el bloque va scopeado a `#productModal`** — los dos
+   storefronts (index.html y shop.html) usan el mismo id. Misma clase de fuga que
+   `.products-grid` hacia el editor didactico (sesion 2026-07-30 parte 3).
+2. **`.modal-close` ya venia pisada**: hay una regla sin scope en la linea ~8284 (modal
+   de promociones) que le gana a la de la 4659. Por eso el bloque nuevo va al final.
+3. Un ancestro con `transform` convierte el `position:fixed` de un hijo en `absolute`
+   contra ese ancestro: por eso `.product-modal-content` va con `transform:none` en movil,
+   si no el boton cerrar volvia a quedar mal ubicado.
+4. El `.modal-image-viewport` lo crea `main.js` (idempotente, verificado) porque el markup
+   del modal esta duplicado en `index.html` y `shop.html`.
+
+### Descubrimiento de infra — la Cache Rule de 1 ano YA NO ESTA
+
+`www.mxzonestore.com` ahora responde `cf-cache-status: REVALIDATED` con
+`Cache-Control: public, max-age=14400, must-revalidate` y sirve los assets nuevos apenas
+se deploya. **Ya no hace falta purgar el cache de Cloudflare** (era el recordatorio
+repetido en las sesiones del 2026-07-01 y 2026-07-02). El md5 de www NO coincide con el
+del worker porque el edge aplica Auto Minify (~10KB menos): **comparar por contenido
+(`rg -c`), no por md5** — comparar md5 hace pensar que www esta stale cuando no lo esta.
+
+### Pendiente
+
+- Validacion visual en iPhone real (el usuario). El resto se verifico por contenido servido.
+- A4/A5 del plan: URL por producto (`history.pushState` + ficha crawleable).
