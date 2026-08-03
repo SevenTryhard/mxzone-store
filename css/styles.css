@@ -10690,3 +10690,78 @@ a {
     background: var(--red-accent);
   }
 }
+
+/* ================================================================
+   SHOP: ATERRIZAR EN EL CATALOGO — 2026-08-02
+   Al entrar a /shop el usuario tiene que ver PRODUCTOS, no un hero.
+   En movil habia ~425px de nada antes de la primera card:
+   .page-header (padding calc(80px + 5rem) arriba + 5rem abajo + titulo
+   + subtitulo ≈ 280px) MAS los 145px de padding-top que el .section
+   necesita para no quedar tapado por la barra de busqueda y los chips,
+   que son `position: fixed`.
+   ================================================================ */
+
+/* ── El hero de /shop ────────────────────────────────────────────
+   En movil se oculta VISUALMENTE pero el <h1> sigue en el DOM: es el
+   encabezado principal de la pagina y lo necesitamos para SEO, que es
+   justo lo que estamos tratando de levantar. `display:none` lo sacaria
+   del arbol de accesibilidad; el patron de clip lo deja legible para
+   lectores de pantalla y crawlers. */
+@media (max-width: 768px) {
+  body.shop-page .page-header {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+/* En PC el hero se queda (orienta y aporta el h1 visible) pero deja de
+   comerse 160px arriba y 80px abajo. Scopeado a .shop-page: el resto de
+   las paginas (about, faq, blogs) conservan su hero completo. */
+@media (min-width: 769px) {
+  body.shop-page .page-header {
+    padding: calc(80px + var(--spacing-md)) 0 var(--spacing-md);
+  }
+}
+
+/* ── Aire entre el divisor de categoria y las cards ──────────────
+   Antes en movil: 48px arriba y 48px abajo (padding 24 + margin 24 de
+   cada lado). El hueco de abajo era el que sobraba. Ahora respira
+   arriba (separa de la categoria anterior) y se pega mas a SUS
+   productos, que es a lo que el titulo se refiere. */
+@media (max-width: 768px) {
+  .category-divider {
+    padding: var(--spacing-md) 0 var(--spacing-sm);
+    margin: var(--spacing-sm) 0 0;
+  }
+}
+
+/* ── Modo claro: la barra de busqueda movil se quedaba negra ─────
+   Existia [data-theme="light"] .mobile-quick-filters (linea ~150) y
+   .mobile-search-bar .search-input (~215), pero NUNCA la barra en si,
+   que tiene rgba(26,26,26,.98) hardcodeado. Resultado: la banda de
+   chips se aclaraba y la de busqueda quedaba negra justo arriba.
+   Los iconos son naranja (--orange-primary), que contrasta en ambos. */
+[data-theme="light"] .mobile-search-bar {
+  background: rgba(232, 232, 232, 0.98) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ── /shop movil: fuera la barra fija de WhatsApp ────────────────
+   Tapaba ~48px de catalogo en la pagina donde el usuario esta
+   navegando producto. El canal NO se pierde: cada card y el quickview
+   tienen su propio boton de WhatsApp. En el resto de las paginas la
+   barra sigue igual. */
+@media (max-width: 768px) {
+  body.shop-page .whatsapp-sticky-bar {
+    display: none;
+  }
+}
