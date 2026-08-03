@@ -1,0 +1,21 @@
+# Que NO se publica como asset estatico.
+#
+# OJO: Workers Assets lee ESTE archivo, no .wranglerignore (ese es de Pages).
+# Como `assets.directory` es "." (la raiz del repo), sin esto se publicaria el
+# repo entero — incluido el codigo del worker en /worker/index.js y el .git.
+.git/**
+node_modules/**
+.wrangler/**
+.claude/**
+.github/**
+CANVAS/**
+OLD_CMS/**
+worker/**
+wrangler.jsonc
+.assetsignore
+.wranglerignore
+package.json
+deploy.js
+*.md
+*.log
+*.ps1

@@ -2,11 +2,24 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "mxzonestore",
   "compatibility_date": "2026-04-13",
+  "main": "worker/index.js",
   "observability": {
     "enabled": true
   },
   "assets": {
-    "directory": "."
+    "directory": ".",
+    // Sin binding el worker no puede pedirle el HTML a los assets y no hay
+    // nada que reescribir.
+    "binding": "ASSETS",
+    // El sitio sigue siendo assets-only para TODO menos la ficha de producto.
+    // Poner `true` mandaria css, js e imagenes por el worker sin ninguna razon:
+    // mas latencia y mas superficie de falla. Ver worker/index.js.
+    // `/product` es la extensionless que sirve Workers Assets; `/product.html`
+    // existe porque responde 307 hacia ella y algun crawler puede seguirla.
+    "run_worker_first": [
+      "/product",
+      "/product.html"
+    ]
   },
   "compatibility_flags": [
     "nodejs_compat"

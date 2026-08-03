@@ -37,7 +37,11 @@ const foldersToCopy = [
   'cms',
   // Ruta de vista previa consumida por el editor didactico de 4ULAB.
   // Sin esto la card no viaja al deploy y el iframe del CMS queda vacio.
-  '_4ulab'
+  '_4ulab',
+  // Codigo del Worker de preview social (og: del lado del servidor para
+  // WhatsApp/Facebook). Sin esto wrangler no encuentra el `main` y el deploy
+  // falla entero. NO se sirve como asset: lo excluye el .assetsignore de abajo.
+  'worker'
 ];
 
 console.log('📦 Copiando archivos al directorio temporal...');
@@ -63,31 +67,39 @@ foldersToCopy.forEach(folder => {
 });
 
 // Crear wrangler.jsonc en el directorio temporal
-const wranglerConfig = {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "mxzonestore",
-  "compatibility_date": "2026-04-13",
-  "observability": {
-    "enabled": true
-  },
-  "assets": {
-    "directory": "."
-  },
-  "compatibility_flags": [
-    "nodejs_compat"
-  ]
-};
+// La config se COPIA del wrangler.jsonc real del repo, no se reescribe aca.
+//
+// Antes este script generaba su propio objeto de config, duplicando el
+// contenido de wrangler.jsonc. Como el deploy corre desde el directorio
+// temporal, la que mandaba era ESTA copia: cualquier cambio hecho en el
+// wrangler.jsonc del repo (un binding, una ruta, un flag) se deployaba... a
+// ningun lado. Silenciosamente. Una sola fuente de verdad.
+const wranglerSrc = path.join(process.cwd(), 'wrangler.jsonc');
+if (!fs.existsSync(wranglerSrc)) {
+  console.error('❌ No existe wrangler.jsonc en la raiz del repo. Abortando.');
+  process.exit(1);
+}
+fs.copyFileSync(wranglerSrc, path.join(tempDir, 'wrangler.jsonc'));
+console.log('  ✓ wrangler.jsonc (copiado del repo, no regenerado)');
 
+// El directorio de assets es "." (la raiz), asi que sin esto el codigo fuente
+// del worker quedaria publicado y servible en https://.../worker/index.js.
 fs.writeFileSync(
-  path.join(tempDir, 'wrangler.jsonc'),
-  JSON.stringify(wranglerConfig, null, 2)
+  path.join(tempDir, '.assetsignore'),
+  ['worker/**', 'wrangler.jsonc', '.assetsignore', ''].join('\n')
 );
+console.log('  ✓ .assetsignore (worker/ fuera de los assets publicos)');
 
-console.log('✨ Archivos copiados. Ejecutando wrangler deploy...');
+// Todo lo que se le pase a este script viaja tal cual a wrangler. Sirve para
+// probar en un worker aparte antes de tocar la tienda en vivo:
+//   node deploy.js --name mxzonestore-og-staging
+const extraArgs = process.argv.slice(2).join(' ');
+
+console.log('✨ Archivos copiados. Ejecutando wrangler deploy ' + (extraArgs || '(produccion)'));
 
 // Ejecutar wrangler deploy desde el directorio temporal
 try {
-  execSync(`npx wrangler deploy`, {
+  execSync(`npx wrangler deploy ${extraArgs}`.trim(), {
     stdio: 'inherit',
     cwd: tempDir,
     env: { ...process.env, CLOUDFLARE_ACCOUNT_ID: process.env.CLOUDFLARE_ACCOUNT_ID }

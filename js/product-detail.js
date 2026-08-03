@@ -391,6 +391,26 @@ function createRelatedProductCard(product) {
   `;
 }
 
+/**
+ * El texto que se muestra debajo del titulo cuando el link se comparte.
+ *
+ * ESPEJO EXACTO de shareDescription() en worker/index.js. El worker lo escribe
+ * en el HTML crudo para los crawlers (que no ejecutan JS) y esta funcion lo
+ * escribe para Googlebot, que si renderiza. Si los dos textos no coinciden, el
+ * mismo producto se describe distinto segun quien lo lea. SI TOCAS UNO,
+ * TOCA EL OTRO.
+ *
+ * Arranca con el PRECIO a proposito: es el dato que decide si alguien abre el
+ * link o lo pasa de largo.
+ */
+function shareDescription(product) {
+  const head = product.agotado === true
+    ? 'AGOTADO'
+    : (product.price || 'Consultar precio');
+  return head + ' — ' + getCategoryLabel(product.category) +
+    ' para motocross y enduro en Colombia. Envío a todo el país desde Cali. MXZONE STORE.';
+}
+
 /** Crea o actualiza un <meta> del head sin depender de que exista en el HTML. */
 function setMeta(attr, key, value) {
   if (!value) return;
@@ -408,13 +428,11 @@ function setMeta(attr, key, value) {
  * producto. Es lo que le permite a Google mostrar precio y disponibilidad en
  * el resultado de busqueda.
  *
- * LIMITE IMPORTANTE, que no es un bug de este codigo: los crawlers de
- * WhatsApp, Facebook y Twitter NO ejecutan JavaScript. Leen el HTML crudo, y
- * en el HTML crudo estos tags todavia dicen "Cargando...". O sea que un link
- * pegado en WhatsApp NO va a mostrar foto ni precio. Googlebot si renderiza
- * JS, asi que para busqueda esto si sirve. Arreglar el preview social exige
- * inyectar los meta del lado del servidor (Worker + HTMLRewriter); hoy
- * wrangler.jsonc es assets-only, sin script de worker.
+ * ESTO SOLO SIRVE PARA QUIEN EJECUTA JS (Googlebot si; WhatsApp, Facebook y
+ * Twitter NO). El preview social se resuelve del lado del SERVIDOR en
+ * `worker/index.js`, que reescribe el head con HTMLRewriter antes de que el
+ * HTML salga. Los dos caminos tienen que decir lo mismo: ver shareDescription()
+ * aca arriba y su espejo en el worker.
  */
 function mountProductSchema(product, canonicalUrl, imageUrl) {
   try {
@@ -484,9 +502,11 @@ async function renderProduct(productSlug) {
   // Actualizar SEO dinámico
   document.title = product.name + ' - ' + getCategoryLabel(product.category) + ' | Motocross Colombia | MXZONE STORE';
 
+  const sharedDesc = shareDescription(product);
+
   const dynamicDesc = document.getElementById('dynamic-desc');
   if (dynamicDesc) {
-    dynamicDesc.setAttribute('content', product.name + ' — ' + product.price + ' | ' + getCategoryLabel(product.category) + ' para motocross y enduro en Colombia. Envío a todo el país desde Cali. MXZONE STORE.');
+    dynamicDesc.setAttribute('content', sharedDesc);
   }
 
   // Canonical SIN .html: Workers Assets sirve la extensionless y /product.html
@@ -523,7 +543,7 @@ async function renderProduct(productSlug) {
 
   const dynamicOgDesc = document.getElementById('dynamic-og-desc');
   if (dynamicOgDesc) {
-    dynamicOgDesc.setAttribute('content', product.name + ' — ' + product.price + ' | ' + getCategoryLabel(product.category) + ' para motocross y enduro en Colombia. Envío a todo el país desde Cali. MXZONE STORE.');
+    dynamicOgDesc.setAttribute('content', sharedDesc);
   }
 
   // INTERES REAL: llegar a la ficha es una decision explicita. Mismo evento
