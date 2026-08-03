@@ -7,10 +7,16 @@ $ErrorActionPreference = 'Stop'
 
 $timestamp = Get-Date -Format 'yyyyMMddHHmm'
 $extensions = @('*.html')
+# OJO: si un .js editable NO esta en esta lista, su ?t= nunca se actualiza y
+# los navegadores siguen sirviendo la version cacheada aunque el deploy haya
+# salido bien. Le paso a product-detail.js y a promotions.js hasta el
+# 2026-08-03. Al agregar un archivo nuevo a js/, agregalo aca tambien.
 $assets = @(
   'js/utils.js',
   'js/main.js',
   'js/products.js',
+  'js/product-detail.js',
+  'js/promotions.js',
   'js/cart.js',
   'css/styles.css'
 )
