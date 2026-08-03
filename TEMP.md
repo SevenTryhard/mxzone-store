@@ -430,3 +430,102 @@ del worker porque el edge aplica Auto Minify (~10KB menos): **comparar por conte
 
 - Validacion visual en iPhone real (el usuario). El resto se verifico por contenido servido.
 - A4/A5 del plan: URL por producto (`history.pushState` + ficha crawleable).
+
+## Sesion 2026-08-03 — Ficha de producto revivida, /shop al catalogo y detailView
+
+Continuacion de la sesion anterior. Todo verificado en produccion (www + worker).
+Commits: `e3eeaf6`, `f1869e9`, `1246006`, `c76b99d`, `28bd89d`. Worker final `55d728ea`.
+
+### /shop aterriza en el catalogo (`e3eeaf6`)
+
+Habia ~425px de nada antes de la primera card en movil. Eran DOS cosas sumadas:
+el hero `.page-header` (padding `calc(80px + 5rem)` arriba + `5rem` abajo + titulo
++ subtitulo, ~280px) MAS los 145px que `body.shop-page .section` reserva para no
+quedar tapada por `.mobile-search-bar` y `.mobile-quick-filters`, que son `fixed`.
+
+- Hero oculto en movil con **patron de clip, NO `display:none`**: el `<h1>` tiene
+  que seguir en el DOM por SEO. En PC baja de 160/80px de padding a 104/24px.
+- Divisor de categoria: antes 48px arriba y 48px abajo; el hueco sobrante era el
+  de abajo.
+- **Modo claro:** `.mobile-search-bar` se quedaba negra. Existia la regla light
+  para `.mobile-quick-filters` (linea ~150) y para el `.search-input` (~215),
+  pero NUNCA para la barra en si.
+- Sticky de WhatsApp fuera de `/shop` en movil.
+- Todo scopeado a `body.shop-page`, que **solo existe en shop.html** (verificado:
+  index y promociones tienen `<body>` sin clase).
+
+### product.html revive como cascaron (`f1869e9`) — LEER ESTO ANTES DE TOCARLA
+
+Estuvo redirigiendo a shop.html desde el 2026-07-02 porque "se desincronizaba".
+**La causa real:** leia `${cmsApiUrl}/api/store/products`, **un endpoint que NO
+EXISTE en 4ULAB** (los publicos son `/api/public/*`). La llamada fallaba SIEMPRE
+y caia al fallback: **326 JSON estaticos** en `cms/productos/` que nadie
+regenera. La card leia la base, la pagina leia un archivo muerto. La divergencia
+estaba garantizada por construccion, no era intermitente.
+
+**Ahora** `loadProduct()` usa `window.MXZONE_Products.loadProducts()` — la MISMA
+lista y el MISMO adaptador que pintan las cards. Una sola fuente de verdad.
+
+Tres cosas que casi se pasan:
+1. **La API pagina de a 200** y hay 281 productos. Un `fetch` suelto se comia ~81
+   y esas fichas hubieran dicho "no encontrado" sin explicacion.
+2. **`js/products.js` no estaba cargado en product.html.** Agregarlo arreglo
+   ademas los **productos relacionados**, que ya pedian `window.MXZONE_Products`
+   y quedaban vacios en silencio. Va ANTES de `product-detail.js`. En esta pagina
+   es inerte: products.js solo autoarranca con `#productsGrid`, `[data-products]`
+   o `#recomendadosCarousel`, y aca el grid es `#relatedProducts`.
+3. **Los 326 JSON NO SE BORRAN.** `js/products.js:252` los usa como ULTIMO
+   RECURSO si la API de 4ULAB se cae. Son la red de seguridad de toda la tienda.
+
+**Verificado contra la API de produccion:** 281 productos, 280 renderizables,
+**280 slugs unicos, 0 colisiones** (ninguna URL de producto es ambigua).
+
+### pushState + SEO (`1246006`)
+
+- Abrir el quickview empuja `/product?product=<slug>`. Recargar cae en la ficha
+  real. El boton Atras del telefono cierra el modal en vez de sacar al usuario.
+- **Guard de popstate:** se apaga `urlPushedByModal` ANTES de cerrar; sin eso
+  `closeModal()` disparaba un segundo `history.back()` y sacaba al usuario.
+- Canonical **sin `.html`**: Workers Assets sirve la extensionless y
+  `/product.html` responde 307 a `/product`.
+- `og:image`, `twitter:image` y schema.org Product con precio desde
+  `_4ulabPriceRaw`.
+
+**LIMITE CONOCIDO:** WhatsApp, Facebook y Twitter **NO ejecutan JavaScript**.
+Leen el HTML crudo, donde estos meta dicen "Cargando...", asi que un link pegado
+en WhatsApp **no muestra foto ni precio**. Googlebot si renderiza JS, o sea que
+para busqueda si sirve. Arreglarlo exige inyectar los meta del lado del servidor
+(Worker + HTMLRewriter); hoy `wrangler.jsonc` es assets-only. **Es el pendiente
+#1 del plan** porque WhatsApp es el canal #1 de ventas.
+
+### detailView (`28bd89d`)
+
+Nuevo evento que mide **interes real** (abrir el producto), separado del `view`
+del IntersectionObserver, que mide **impresion**. El snippet ya usaba umbral de
+50% y 1 segundo — no contaba cada card renderizada — pero con ~280 productos en
+grilla casi toda card que pasa por pantalla lo cumple: 43 eventos por sesion.
+
+Se dispara en las DOS superficies para que sumen al mismo contador:
+`js/main.js` al abrir el quickview (con `data-4u-product-id` de la card) y
+`js/product-detail.js` al renderizar la ficha (con `product.id`). Ambos en
+try/catch: el tracking nunca puede romper la tienda.
+
+### bump-cache-timestamp.ps1 tenia un agujero (`c76b99d`)
+
+Su lista `$assets` solo tenia utils, main, products, cart y styles. **Faltaban
+`product-detail.js` y `promotions.js`**, asi que su `?t=` nunca se actualizaba y
+el navegador servia la version cacheada aunque el deploy saliera bien. Venia de
+antes. **Archivo nuevo en `js/` va tambien a esa lista.**
+
+### Infra: la Cache Rule de 1 ano YA NO ESTA
+
+`www.mxzonestore.com` responde `cf-cache-status: REVALIDATED` con
+`Cache-Control: public, max-age=14400, must-revalidate`. **Ya no hace falta
+purgar el cache de Cloudflare** tras cada deploy — era el recordatorio repetido
+de las sesiones del 2026-07-01 y 2026-07-02.
+
+**PERO:** el md5 de www NO coincide con el del worker porque el edge aplica Auto
+Minify (~10 KB menos). **Comparar por contenido (`rg -c`), no por md5.** Y los
+HTML se cachean distinto que los assets: tras un deploy hay que forzar
+revalidacion (`Cache-Control: no-cache` + query aleatoria) o se lee una copia
+vieja y parece que el deploy fallo.
