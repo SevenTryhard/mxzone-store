@@ -1,2 +1,7 @@
-/producto/:slug    /product.html?product=:slug    301
-/product/:slug     /product.html?product=:slug    301
+# Las URL lindas y el .html van a /product?product=<slug>, que es la ruta
+# canonica y la unica que atiende la Pages Function de preview social
+# (functions/product.js). Apuntando a /product.html los links compartidos
+# quedaban fuera del preview: la funcion no corre para esa ruta.
+/producto/:slug    /product?product=:slug    301
+/product/:slug     /product?product=:slug    301
+/product.html      /product                  301
