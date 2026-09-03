@@ -596,6 +596,114 @@ function initShopFiltersInternal() {
     return normalized;
   }
 
+  // "ÚNICA" y "UNICA" son la misma talla: el chip vale "Unica" y el CMS escribe
+  // "Única". Sin plegar el acento, el filtro de gafas/gorras/maletas no matchea.
+  function foldAccents(str) {
+    return str && str.normalize ? str.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : (str || '');
+  }
+
+  // FIX #021: getNormalizedFilterSizes devuelve un STRING, y compararlo con
+  // .includes() es coincidencia de SUBCADENA, no de talla:
+  //   "XL".includes("L") === true    → filtrar L devolvia cascos solo-XL
+  //   "YM".includes("M") === true    → filtrar M devolvia tallas de niño
+  //   "XXL".includes("XL") === true  → filtrar XL devolvia XXL
+  // Medido en produccion el 2026-09-03: Cascos+L daba 17 resultados y 9 eran XL.
+  // Se compara por TOKEN exacto. Se parte por "/", coma, punto y coma y espacio
+  // porque getNormalizedFilterSizes mezcla los dos separadores (las tallas EU de
+  // botas y los desdobles de protecciones los agrega separados por espacio).
+  // Abreviaturas que el CMS escribe pegadas y valen por dos tallas.
+  const TOKEN_ALIASES = {
+    'SM': ['S', 'M'],
+    'ML': ['M', 'L'],
+    'LXL': ['L', 'XL'],
+    'SML': ['S', 'M', 'L']
+  };
+
+  // "CONSULTAR" es un placeholder del CMS, no una talla. Lo escriben 93 productos.
+  const NON_SIZE_TOKENS = ['CONSULTAR'];
+
+  function getNormalizedFilterTokens(rawSizes) {
+    const normalized = getNormalizedFilterSizes(rawSizes);
+    if (!normalized) return [];
+
+    const base = foldAccents(normalized)
+      .split(/[\/,;\s]+/)
+      .map(t => t.trim())
+      .filter(t => t !== '' && NON_SIZE_TOKENS.indexOf(t) === -1);
+
+    const out = [];
+    const push = (t) => { if (t && out.indexOf(t) === -1) out.push(t); };
+
+    base.forEach(tok => {
+      push(tok);
+
+      // Compuestas "numero-letra": los uniformes se cargan como 30-S, 32-M,
+      // 34-L, 36-XL, 38-XXL y los de niño como 26-YL, 28-YXL. Hay que agregar
+      // las dos partes o el chip XL deja afuera a los 36-XL, que es justo lo que
+      // el chip dice en su label ("XL/36").
+      const compuesta = tok.match(/^(\d+)-([A-Z]+)$/);
+      if (compuesta) {
+        push(compuesta[1]);
+        // "US" no es una talla, es la unidad: 10-US ya suma sus EU en
+        // getNormalizedFilterSizes.
+        if (compuesta[2] !== 'US') push(compuesta[2]);
+      }
+
+      const alias = TOKEN_ALIASES[tok];
+      if (alias) alias.forEach(push);
+    });
+
+    return out;
+  }
+
+  // Orden canonico de tallas, en bandas. Una talla de niño y una de adulto no
+  // son comparables entre si, y una EU (42) tampoco lo es con una letra (L):
+  // ordenarlas en una sola lista plana daria un resultado arbitrario. Cada banda
+  // se ordena por dentro y las bandas van de menor a mayor.
+  const SIZE_BANDS = [
+    ['KIDS', 'YS', 'YM', 'YL', 'YXL'],
+    ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL']
+  ];
+  const SIZE_RANK_UNKNOWN = 9999;
+
+  // Rank numerico de UN token. Banda 0 = niño, 1 = letras, 2 = numericas (EU o
+  // "10-US"), 3 = Única / desconocida.
+  function getSizeTokenRank(token) {
+    if (!token) return SIZE_RANK_UNKNOWN;
+    const t = foldAccents(String(token).toUpperCase()).trim();
+    if (!t) return SIZE_RANK_UNKNOWN;
+
+    for (let band = 0; band < SIZE_BANDS.length; band++) {
+      const idx = SIZE_BANDS[band].indexOf(t);
+      if (idx !== -1) return band * 1000 + idx;
+    }
+
+    // Numericas puras (EU 33-46) y la forma "10-US". Se exige el patron completo
+    // a proposito: con parseInt, "2.5L" y "SPORT 7" pasaban por tallas.
+    const num = t.match(/^(\d+)(?:-US)?$/);
+    if (num) return 2000 + parseInt(num[1], 10);
+
+    if (t === 'UNICA') return 3000;
+    return SIZE_RANK_UNKNOWN;
+  }
+
+  // Rank de una CARD. Si hay tallas seleccionadas se rankea por la mas chica de
+  // las SELECCIONADAS que tenga la card: asi, con S+M+L marcadas, primero salen
+  // las S, despues las M y despues las L. Sin seleccion, por su talla mas chica.
+  function getCardSizeRank(rawSizes, selectedSizes) {
+    const tokens = getNormalizedFilterTokens(rawSizes);
+    if (!tokens.length) return SIZE_RANK_UNKNOWN;
+
+    let pool = tokens;
+    if (selectedSizes && selectedSizes.length) {
+      const wanted = selectedSizes.map(s => foldAccents(String(s).toUpperCase()));
+      const matched = tokens.filter(t => wanted.includes(t));
+      if (matched.length) pool = matched;
+    }
+
+    return pool.reduce((min, t) => Math.min(min, getSizeTokenRank(t)), SIZE_RANK_UNKNOWN);
+  }
+
   function getActiveCategories() {
     const chipsActive = Array.from(categoryChips)
       .filter(btn => btn.classList.contains('active'))
@@ -640,20 +748,27 @@ function initShopFiltersInternal() {
     });
   }
 
-  function hasSingleCategory(selectedCats) {
-    return selectedCats.length === 1;
-  }
-
   function renderSizeChips() {
     const selectedCats = getActiveCategories();
 
     if (!sizeFilterContainer) return;
 
-    // Default: no category selected or multiple → show placeholder
+    // FIX #021: sin categoria (o con varias) esto dejaba el cajon VACIO. En el
+    // celular, donde el filtro es lo primero que se abre, se veia como un filtro
+    // roto. Ahora se derivan las tallas reales de las cards presentes, que es
+    // exactamente lo que ya se hacia para categorias dinamicas mas abajo.
     if (selectedCats.length === 0 || selectedCats.length > 1) {
-      sizeFilterContainer.innerHTML = '';
-      sizeFilterContainer.classList.add('size-filter-chips--loading');
-      if (sizeAgeToggle) sizeAgeToggle.style.display = 'none';
+      const derivedAll = deriveSizesFromDOM(selectedCats, { soloConocidas: true });
+      if (sizeAgeToggle) { sizeAgeToggle.style.display = 'none'; sizeAgeToggle.classList.remove('visible'); }
+      if (derivedAll.length > 0) {
+        sizeFilterContainer.classList.remove('size-filter-chips--loading');
+        sizeFilterContainer.innerHTML = derivedAll.map(s =>
+          `<button class="size-chip" data-size="${s.value}">${s.label}</button>`
+        ).join('');
+      } else {
+        sizeFilterContainer.innerHTML = '';
+        sizeFilterContainer.classList.add('size-filter-chips--loading');
+      }
       return;
     }
 
@@ -718,38 +833,61 @@ function initShopFiltersInternal() {
       .map(c => c.dataset.size);
   }
 
-  // FIX #018: deriva las tallas disponibles de una categoria leyendo el data-sizes
-  // de sus product-card en el DOM. Consistente con el filtro (compara data-sizes
-  // en mayusculas con .includes()), asi que el value del chip es el token en upper.
-  function deriveSizesFromDOM(cat) {
-    let selector;
-    try {
-      selector = '.product-card[data-category="' + (window.CSS && CSS.escape ? CSS.escape(cat) : cat) + '"]';
-    } catch (e) {
-      selector = '.product-card[data-category="' + cat + '"]';
-    }
+  // FIX #018: deriva las tallas disponibles leyendo el data-sizes de las
+  // product-card del DOM. El value del chip queda plegado igual que los tokens
+  // del filtro, para que comparen.
+  // FIX #021: acepta una categoria, un array de categorias, o nada — sin
+  // categoria deriva de TODAS las cards, que es lo que necesita el cajon de
+  // filtros cuando todavia no elegiste categoria.
+  function deriveSizesFromDOM(cat, opts) {
+    const soloConocidas = !!(opts && opts.soloConocidas);
+    const cats = (Array.isArray(cat) ? cat : (cat ? [cat] : [])).filter(Boolean);
+    const escapeCat = (c) => {
+      try {
+        return window.CSS && CSS.escape ? CSS.escape(c) : c;
+      } catch (e) {
+        return c;
+      }
+    };
+    const selector = cats.length
+      ? cats.map(c => '.product-card[data-category="' + escapeCat(c) + '"]').join(',')
+      : '.product-card';
     const cards = document.querySelectorAll(selector);
-    const seen = new Map(); // value(upper) -> label(original)
+    const seen = new Map(); // clave -> { value(plegado), label(original) }
     cards.forEach(card => {
       const raw = card.getAttribute('data-sizes') || '';
       raw.split('/').forEach(tok => {
         const label = tok.trim();
         if (!label) return;
-        const value = label.toUpperCase();
-        if (!seen.has(value)) seen.set(value, label);
+        // El value tiene que quedar plegado igual que getNormalizedFilterTokens,
+        // si no "Única" (chip) nunca matchea "UNICA" (token) y el filtro no filtra.
+        const value = foldAccents(label.toUpperCase());
+        // Con soloConocidas se descartan los tokens que no son una talla del orden
+        // canonico. Derivando de TODO el catalogo aparecian 34 chips, entre ellos
+        // "CONSULTAR" (93 productos), "SPORT 7", "2.5L" y las compuestas "36-XL"
+        // —que igual matchean por el chip XL, porque getNormalizedFilterTokens las
+        // descompone. Una lista de 34 chips con basura no es un filtro usable.
+        if (soloConocidas) {
+          const rank = getSizeTokenRank(value);
+          if (rank === SIZE_RANK_UNKNOWN) return;
+          // "7" y "7-US" son la MISMA talla y salian como dos chips. Se deduplica
+          // por rank y gana la etiqueta mas corta. El chip "7" igual matchea a los
+          // productos "7-US", porque getNormalizedFilterTokens los descompone.
+          const previo = seen.get(rank);
+          if (!previo || value.length < previo.value.length) seen.set(rank, { value, label });
+          return;
+        }
+        if (!seen.has(value)) seen.set(value, { value, label });
       });
     });
 
-    const order = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'YS', 'YM', 'YL', 'YXL', 'KIDS'];
-    return Array.from(seen.entries())
-      .map(([value, label]) => ({ value, label }))
+    // Un solo orden canonico en todo el archivo (getSizeTokenRank), el mismo que
+    // usa "Ordenar por: Talla". Antes habia una lista de orden aparte aca y se
+    // podian desincronizar.
+    return Array.from(seen.values())
       .sort((a, b) => {
-        const ia = order.indexOf(a.value), ib = order.indexOf(b.value);
-        if (ia !== -1 && ib !== -1) return ia - ib;
-        if (ia !== -1) return -1;
-        if (ib !== -1) return 1;
-        const na = parseInt(a.value, 10), nb = parseInt(b.value, 10);
-        if (!isNaN(na) && !isNaN(nb)) return na - nb;
+        const ra = getSizeTokenRank(a.value), rb = getSizeTokenRank(b.value);
+        if (ra !== rb) return ra - rb;
         return a.value.localeCompare(b.value);
       });
   }
@@ -805,7 +943,6 @@ function initShopFiltersInternal() {
         const category = card.dataset.category;
         const brand = card.dataset.brand;
         const price = parseInt(card.dataset.price) || 0;
-        const cardSizes = (card.dataset.sizes || '').toUpperCase();
 
         // Search filter
         const matchesSearch = name.includes(searchTerm);
@@ -820,9 +957,9 @@ function initShopFiltersInternal() {
         // Price filter
         const matchesPrice = price >= minPrice && price <= maxPrice;
 
-        // Size filter — use normalized sizes for CMS compatibility
-        const normalizedCardSizes = getNormalizedFilterSizes(card.dataset.sizes);
-        const matchesSize = selectedSizes.length === 0 || (normalizedCardSizes && selectedSizes.some(s => normalizedCardSizes.includes(s)));
+        // Size filter — token exacto, NO subcadena (ver getNormalizedFilterTokens)
+        const cardSizeTokens = getNormalizedFilterTokens(card.dataset.sizes);
+        const matchesSize = selectedSizes.length === 0 || selectedSizes.some(s => cardSizeTokens.includes(foldAccents(String(s).toUpperCase())));
 
         const isVisible = matchesSearch && matchesCategory && matchesBrand && matchesPrice && matchesSize;
 
@@ -928,6 +1065,9 @@ function initShopFiltersInternal() {
     // Hide dividers during sort (they'll be repositioned after)
     dividers.forEach(d => d.remove());
 
+    // Se calcula una sola vez por tanda, no una por comparacion.
+    const sizeSelection = sortBy.startsWith('size-') ? getSelectedSizes() : null;
+
     productsArray.sort((a, b) => {
       try {
         const nameAEl = a.querySelector('.product-name');
@@ -946,6 +1086,18 @@ function initShopFiltersInternal() {
             return nameA.localeCompare(nameB);
           case 'name-desc':
             return nameB.localeCompare(nameA);
+          case 'size-asc':
+          case 'size-desc': {
+            const rankA = getCardSizeRank(a.dataset.sizes, sizeSelection);
+            const rankB = getCardSizeRank(b.dataset.sizes, sizeSelection);
+            // Las tallas desconocidas van SIEMPRE al final, en las dos direcciones:
+            // invertirlas las pondria arriba de todo y es ruido, no informacion.
+            if (rankA === SIZE_RANK_UNKNOWN && rankB === SIZE_RANK_UNKNOWN) return nameA.localeCompare(nameB);
+            if (rankA === SIZE_RANK_UNKNOWN) return 1;
+            if (rankB === SIZE_RANK_UNKNOWN) return -1;
+            if (rankA === rankB) return nameA.localeCompare(nameB);
+            return sortBy === 'size-asc' ? rankA - rankB : rankB - rankA;
+          }
           default:
             return 0;
         }
@@ -2337,17 +2489,24 @@ function initProductModalInternal() {
     if (!modalSizes || !modalSizeSelect || !modalSizesContainer) return;
 
     const requiresSize = shouldRequireSize(sizes);
-    const sizesArray = sizes.split('/').map(s => s.trim()).filter(s => s !== '');
+    const sizesArray = (sizes || '').split('/').map(s => s.trim()).filter(s => s !== '');
 
     if (!requiresSize || sizesArray.length <= 1) {
-      // Producto sin tallas reales: ocultar selector y mostrar "ÚNICA" como tag informativo
+      // Un solo tag informativo, sin dropdown.
+      //
+      // FIX #021: antes esta rama escribia el literal 'Única' SIEMPRE. Un producto
+      // con UNA talla real (ej. BOTAS LEATT 3.5 RED, "sizes": "10-US") entraba aca
+      // por la condicion `sizesArray.length <= 1` y perdia el dato. Y no era solo
+      // visual: getSelectedSize() lee el textContent de este tag, asi que "Única"
+      // viajaba al carrito y al mensaje de WhatsApp en vez de la talla real.
+      const tagText = requiresSize && sizesArray.length === 1 ? sizesArray[0] : 'Única';
       modalSizesContainer.style.display = 'block';
       modalSizes.style.display = 'flex';
       modalSizeSelect.style.display = 'none';
       modalSizes.innerHTML = '';
       const sizeTag = document.createElement('span');
       sizeTag.className = 'modal-size-tag active';
-      sizeTag.textContent = 'Única';
+      sizeTag.textContent = tagText;
       modalSizes.appendChild(sizeTag);
     } else {
       // Producto con tallas reales: mostrar dropdown

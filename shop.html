@@ -58,7 +58,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css?t=202608031523">
+  <link rel="stylesheet" href="css/styles.css?t=202609031027">
   <!-- Schema.org JSON-LD: WebPage + Organization -->
   <script type="application/ld+json">
   {
@@ -265,7 +265,7 @@
 
           <div class="sidebar-scrollable">
             <!-- Buscador (movido de la toolbar al sidebar; mismo id => mismos listeners) -->
-            <div class="filter-group">
+            <div class="filter-group" id="searchFilterGroup">
               <label class="filter-label">Buscar</label>
               <div class="search-box">
                 <input type="text" id="productSearch" class="search-input" placeholder="Buscar productos...">
@@ -341,8 +341,10 @@
               </div>
             </div>
 
-            <!-- TALLAS Section -->
-            <div class="filter-group">
+            <!-- TALLAS Section — en mobile el CSS la sube arriba de MARCAS (ver
+                 "TALLAS PRIMERO EN MOBILE" en styles.css): quedaba a 1500px de
+                 scroll dentro del cajon y no llegaba nadie. -->
+            <div class="filter-group" id="sizeFilterGroup">
               <div class="checkbox-group">
                 <div class="category-parent-wrapper">
                   <button class="category-parent-toggle filter-section-toggle" id="tallasToggle" type="button">
@@ -388,6 +390,8 @@
                   <option value="price-desc">Precio: Mayor a Menor</option>
                   <option value="name-asc">Nombre: A-Z</option>
                   <option value="name-desc">Nombre: Z-A</option>
+                  <option value="size-asc">Talla: Menor a Mayor</option>
+                  <option value="size-desc">Talla: Mayor a Menor</option>
                 </select>
               </div>
             </div>
@@ -822,11 +826,11 @@
 
 
   <!-- Scripts -->
-    <script src="js/utils.js?t=202608031523"></script>
-  <script src="js/cart.js?t=202608031523"></script>
-  <script src="js/main.js?t=202608031523"></script>
+    <script src="js/utils.js?t=202609031027"></script>
+  <script src="js/cart.js?t=202609031027"></script>
+  <script src="js/main.js?t=202609031027"></script>
 
-  <script src="js/products.js?t=202608031523"></script>
+  <script src="js/products.js?t=202609031027"></script>
   <!-- 4ULAB Analytics + Campaigns Tracking -->
   <script>
     window.__4ULAB_PROJECT_ID__ = 1;

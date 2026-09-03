@@ -9592,10 +9592,39 @@ a {
   }
 }
 
-/* En mobile, los category-chips se ocultan y sigue el legacy */
+/* En mobile, los category-chips se ocultan fuera del cajon: ahi manda la barra
+   de quick-filters horizontal. */
 @media (max-width: 768px) {
   .category-chips {
     display: none;
+  }
+
+  /* FIX #021: ...pero DENTRO del cajon de filtros tienen que verse. El "legacy"
+     que menciona el comentario original eran los .checkbox-label[data-category],
+     y ya no existen en el DOM (verificado en produccion el 2026-09-03: 0 nodos).
+     Sin esta regla, abrir "Filtros" en el celular mostraba CATEGORIAS como una
+     caja vacia, y sin categoria elegida el filtro de tallas tampoco se llenaba. */
+  .shop-sidebar .category-chips {
+    display: flex;
+  }
+
+  /* ---- TALLAS PRIMERO EN MOBILE ----
+     El cajon es un bottom sheet de 70vh. Con el orden del markup (Buscar,
+     Categorias, Marcas, Tallas), TALLAS caia a ~1500px de scroll porque MARCAS
+     sola mide ~700px. Nadie llegaba, y por eso "no se podia filtrar por talla en
+     el celular". Se reordena por CSS, sin tocar el orden del HTML —que es el
+     correcto para PC, donde entra todo a la vez. */
+  .shop-sidebar .sidebar-scrollable {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .shop-sidebar #searchFilterGroup {
+    order: -2;
+  }
+
+  .shop-sidebar #sizeFilterGroup {
+    order: -1;
   }
 }
 
