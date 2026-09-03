@@ -3358,51 +3358,25 @@ a {
   color: var(--orange-primary);
 }
 
-/* ---- BOTON "FILTROS" de la barra de categorias (mobile) ----
-   Reemplaza al engranaje que vivia dentro del buscador. Fijo, fuera del scroll
-   horizontal, y CON etiqueta: un icono solo en esa zona ya demostro que no se
-   lee como "filtros". */
-.quick-filter-open {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-left: 8px;
-  padding: 7px 11px;
-  min-height: 34px;
-  border: 1px solid var(--orange-primary);
-  border-radius: 999px;
-  background: rgba(255, 102, 0, 0.12);
-  color: var(--orange-primary);
-  font-family: inherit;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: var(--transition-base);
-}
-
-.quick-filter-open:active {
-  background: rgba(255, 102, 0, 0.28);
-  transform: scale(0.96);
-}
-
-/* El contador de filtros activos: contesta "por que veo 8 productos y no 274"
-   sin tener que abrir el cajon. */
-.quick-filter-open-count {
+/* Contador de filtros activos, encima del engranaje. Contesta "por que veo 8
+   productos y no 274" sin tener que abrir el cajon. */
+.search-filter-count {
+  position: absolute;
+  top: -3px;
+  right: -3px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 17px;
-  height: 17px;
-  padding: 0 4px;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 3px;
   border-radius: 999px;
   background: var(--orange-primary);
   color: #0d0d0d;
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   font-weight: 900;
   line-height: 1;
+  pointer-events: none;
 }
 
 .search-filter-btn:hover span,
@@ -3425,7 +3399,11 @@ a {
 .mobile-quick-filters {
   display: none; /* Solo en móvil */
   align-items: center;
-  justify-content: space-between;
+  /* Era `space-between`, que tenia sentido con las dos flechas de deslizar a los
+     costados. Sacadas esas, dejaba ~20px muertos contra el borde derecho: el
+     ultimo chip visible cortaba antes de llegar y se leia como un error de
+     maquetado. Ahora el contenedor de chips ocupa la barra entera. */
+  justify-content: flex-start;
   padding: 8px 0;
   background: rgba(26, 26, 26, 0.98);
   backdrop-filter: blur(30px) saturate(200%);
@@ -3544,7 +3522,13 @@ a {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   height: 44px;
-  min-width: 100px;
+  /* Era `min-width: 100px`. Con 10px 18px de padding, una palabra corta como
+     TODO (4 letras, ~36px de texto) quedaba nadando en una pildora de 100px:
+     el hueco a los costados se leia como un error de maquetado, no como diseno.
+     Y en una barra que se desliza, el ancho es el recurso escaso. El area tactil
+     ya la garantiza `height: 44px`, no el ancho. Queda un piso chico para
+     etiquetas de una o dos letras. */
+  min-width: 64px;
 }
 
 /* Parent Category Chip - with arrow */

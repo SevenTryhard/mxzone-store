@@ -58,7 +58,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css?t=202609031115">
+  <link rel="stylesheet" href="css/styles.css?t=202609031144">
   <!-- Schema.org JSON-LD: WebPage + Organization -->
   <script type="application/ld+json">
   {
@@ -176,11 +176,20 @@
       <!-- Mobile Search Bar with Filter Icon on Left -->
       <div class="mobile-search-bar">
         <div class="search-box">
-          <!-- El engranaje vivia ACA adentro, y no funcionaba como puerta de
-               entrada: una caja de busqueda se lee como "escribi aca", no como
-               "toca el icono de la izquierda". Se movio a la barra de categorias
-               de abajo, con la palabra FILTROS al lado. Un icono solo ya fallo
-               una vez en este mismo lugar. -->
+          <!-- Engranaje de filtros, a la izquierda del buscador. Es donde Seven
+               lo quiere y es donde estuvo siempre; lo que fallaba no era el lugar
+               sino que el <span> quedo VACIO en el refactor e8ae6b8 (2026-05-21).
+               Lleva el contador de filtros activos para que ver 8 productos de
+               274 tenga una explicacion visible sin abrir el cajon. -->
+          <button class="search-filter-btn" id="mobileFiltersTrigger" aria-label="Abrir filtros">
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </span>
+            <span class="search-filter-count" id="activeFilterCount" style="display:none;">0</span>
+          </button>
           <input type="text" id="mobileProductSearch" class="search-input" placeholder="Buscar...">
           <span class="search-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -193,28 +202,11 @@
 
       <!-- Mobile Quick Filters - Horizontal Scrollable Bar with Arrow Navigation -->
       <div class="mobile-quick-filters" id="mobileQuickFilters">
-        <!-- Puerta de entrada a TODOS los filtros (tallas, marcas, precio).
-             Va FUERA de .mobile-quick-filters-scroll a proposito: adentro se
-             deslizaria con las categorias y volveria a ser invisible, que es
-             exactamente el problema que se esta arreglando. Y lleva la palabra
-             FILTROS porque el icono solo ya demostro que no alcanza. -->
-        <button class="quick-filter-open" id="mobileFiltersTrigger" aria-label="Abrir filtros">
-          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="4" y1="6" x2="20" y2="6"></line>
-            <line x1="7" y1="12" x2="17" y2="12"></line>
-            <line x1="10" y1="18" x2="14" y2="18"></line>
-          </svg>
-          <span class="quick-filter-open-label">FILTROS</span>
-          <span class="quick-filter-open-count" id="activeFilterCount" style="display:none;">0</span>
-        </button>
-
         <!-- Las dos flechas de deslizar se sacaron el 2026-09-03. Se comian 72px
              de una barra de 375 —el 19%— en una superficie tactil donde el gesto
-             natural es arrastrar con el dedo. Al entrar el boton FILTROS, el area
-             de categorias bajaba a 125px y entraba UN chip de 13. Sin ellas
-             quedan ~260px, mas que los ~245 que habia antes de todo esto. El JS
-             de las flechas esta null-guarded (js/main.js:1651), asi que no hay
-             nada que romper. -->
+             natural es arrastrar con el dedo. Sin ellas las categorias tienen la
+             barra entera. El JS de las flechas esta null-guarded
+             (js/main.js:1651), asi que no hay nada que romper. -->
 
         <!-- Chips Scroll Container -->
         <div class="mobile-quick-filters-scroll" id="quickFiltersScroll">
@@ -856,11 +848,11 @@
 
 
   <!-- Scripts -->
-    <script src="js/utils.js?t=202609031115"></script>
-  <script src="js/cart.js?t=202609031115"></script>
-  <script src="js/main.js?t=202609031115"></script>
+    <script src="js/utils.js?t=202609031144"></script>
+  <script src="js/cart.js?t=202609031144"></script>
+  <script src="js/main.js?t=202609031144"></script>
 
-  <script src="js/products.js?t=202609031115"></script>
+  <script src="js/products.js?t=202609031144"></script>
   <!-- 4ULAB Analytics + Campaigns Tracking -->
   <script>
     window.__4ULAB_PROJECT_ID__ = 1;
