@@ -827,6 +827,13 @@ function initShopFiltersInternal() {
     ).join('');
   }
 
+  function updateActiveFilterCount(n) {
+    const badge = document.getElementById('activeFilterCount');
+    if (!badge) return;
+    badge.textContent = n;
+    badge.style.display = n > 0 ? 'inline-flex' : 'none';
+  }
+
   function getSelectedSizes() {
     if (!sizeFilterContainer) return [];
     return Array.from(sizeFilterContainer.querySelectorAll('.size-chip.active'))
@@ -929,6 +936,17 @@ function initShopFiltersInternal() {
     // Get price range
     const minPrice = parseInt(minPriceInput?.value) || 0;
     const maxPrice = parseInt(maxPriceInput?.value) || 3000000;
+
+    // Contador del boton FILTROS: cuantos criterios hay puestos ahora mismo.
+    // Sin esto, ver 8 productos de 274 no tiene explicacion visible desde afuera
+    // del cajon. Se cuenta por CRITERIO, no por chip: "3 tallas marcadas" es un
+    // solo filtro de talla.
+    updateActiveFilterCount(
+      (selectedCategories.length > 0 ? 1 : 0) +
+      (selectedBrands.length > 0 && !selectedBrands.includes('all') ? 1 : 0) +
+      (selectedSizes.length > 0 ? 1 : 0) +
+      (searchTerm ? 1 : 0)
+    );
 
     let visibleCount = 0;
     const categoryVisibility = {};

@@ -3352,12 +3352,57 @@ a {
   font-size: 1.1rem;
   filter: grayscale(0.3);
   transition: var(--transition-base);
-  /* El contenido pasó de emoji a SVG (ver shop.html): sin display:flex el svg
-     queda como caja inline y se descuelga de la linea base del input. */
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--orange-primary);
+}
+
+/* ---- BOTON "FILTROS" de la barra de categorias (mobile) ----
+   Reemplaza al engranaje que vivia dentro del buscador. Fijo, fuera del scroll
+   horizontal, y CON etiqueta: un icono solo en esa zona ya demostro que no se
+   lee como "filtros". */
+.quick-filter-open {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 8px;
+  padding: 7px 11px;
+  min-height: 34px;
+  border: 1px solid var(--orange-primary);
+  border-radius: 999px;
+  background: rgba(255, 102, 0, 0.12);
+  color: var(--orange-primary);
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.quick-filter-open:active {
+  background: rgba(255, 102, 0, 0.28);
+  transform: scale(0.96);
+}
+
+/* El contador de filtros activos: contesta "por que veo 8 productos y no 274"
+   sin tener que abrir el cajon. */
+.quick-filter-open-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--orange-primary);
+  color: #0d0d0d;
+  font-size: 0.62rem;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .search-filter-btn:hover span,
