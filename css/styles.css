@@ -2977,6 +2977,10 @@ a {
   transform: translateY(-50%);
   font-size: 1.1rem;
   opacity: 0.5;
+  /* Idem: el contenido ahora es un SVG, no un emoji. */
+  display: flex;
+  align-items: center;
+  pointer-events: none;
 }
 
 /* Checkbox Group */
@@ -3348,6 +3352,12 @@ a {
   font-size: 1.1rem;
   filter: grayscale(0.3);
   transition: var(--transition-base);
+  /* El contenido pasó de emoji a SVG (ver shop.html): sin display:flex el svg
+     queda como caja inline y se descuelga de la linea base del input. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--orange-primary);
 }
 
 .search-filter-btn:hover span,

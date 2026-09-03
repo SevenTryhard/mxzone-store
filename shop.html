@@ -58,7 +58,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css?t=202609031027">
+  <link rel="stylesheet" href="css/styles.css?t=202609031053">
   <!-- Schema.org JSON-LD: WebPage + Organization -->
   <script type="application/ld+json">
   {
@@ -176,11 +176,27 @@
       <!-- Mobile Search Bar with Filter Icon on Left -->
       <div class="mobile-search-bar">
         <div class="search-box">
+          <!-- El engranaje estuvo VACIO (`<span></span>`) desde el refactor
+               e8ae6b8 del 2026-05-21, que saco los emojis de todo el HTML. El
+               boton seguia ahi y seguia abriendo el cajon de filtros, pero medía
+               28x28 de nada: en el celular no habia forma de filtrar por talla
+               porque no habia nada que tocar. Va en SVG, como el carrito del
+               header, en vez de devolver el emoji que el refactor quiso sacar. -->
           <button class="search-filter-btn" id="mobileFiltersTrigger" aria-label="Abrir filtros">
-            <span></span>
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </span>
           </button>
           <input type="text" id="mobileProductSearch" class="search-input" placeholder="Buscar...">
-          <span class="search-icon"></span>
+          <span class="search-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+          </span>
         </div>
       </div>
 
@@ -269,7 +285,12 @@
               <label class="filter-label">Buscar</label>
               <div class="search-box">
                 <input type="text" id="productSearch" class="search-input" placeholder="Buscar productos...">
-                <span class="search-icon"></span>
+                <span class="search-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                  </svg>
+                </span>
               </div>
             </div>
 
@@ -367,7 +388,11 @@
 
             <!-- Clear Filters -->
             <button id="clearFilters" class="btn btn-clear-filters">
-              <span></span> Limpiar filtros
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+              Limpiar filtros
             </button>
           </div>
 
@@ -826,11 +851,11 @@
 
 
   <!-- Scripts -->
-    <script src="js/utils.js?t=202609031027"></script>
-  <script src="js/cart.js?t=202609031027"></script>
-  <script src="js/main.js?t=202609031027"></script>
+    <script src="js/utils.js?t=202609031053"></script>
+  <script src="js/cart.js?t=202609031053"></script>
+  <script src="js/main.js?t=202609031053"></script>
 
-  <script src="js/products.js?t=202609031027"></script>
+  <script src="js/products.js?t=202609031053"></script>
   <!-- 4ULAB Analytics + Campaigns Tracking -->
   <script>
     window.__4ULAB_PROJECT_ID__ = 1;
