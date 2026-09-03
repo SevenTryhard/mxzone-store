@@ -1428,6 +1428,13 @@ a {
   font-weight: bold;
 }
 
+/* El contenido paso de emoji a SVG: sin esto el svg se apoya en la linea base
+   del span y queda unos pixeles bajo del centro del boton. */
+.mobile-search-btn span {
+  display: flex;
+  align-items: center;
+}
+
 .mobile-search-btn:hover {
   background: var(--orange-hover);
   transform: scale(1.05);
@@ -2714,6 +2721,17 @@ a {
 
 .footer-contact li span:first-child {
   color: var(--orange-primary);
+}
+
+/* El icono paso de emoji a SVG (mismo motivo que el engranaje del buscador: el
+   refactor e8ae6b8 del 2026-05-21 vacio los <span>). El li es flex con
+   align-items: flex-start, asi que sin esto el svg se apoya en la linea base y
+   queda desalineado del texto cuando la direccion ocupa dos renglones. */
+.footer-contact-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 1.5em;
 }
 
 .footer-bottom {
