@@ -753,22 +753,27 @@ function initShopFiltersInternal() {
 
     if (!sizeFilterContainer) return;
 
-    // FIX #021: sin categoria (o con varias) esto dejaba el cajon VACIO. En el
-    // celular, donde el filtro es lo primero que se abre, se veia como un filtro
-    // roto. Ahora se derivan las tallas reales de las cards presentes, que es
-    // exactamente lo que ya se hacia para categorias dinamicas mas abajo.
+    // Sin categoria elegida NO se muestran tallas. Van dos intentos fallidos
+    // antes de llegar a esto:
+    //
+    //   1. Estaba VACIO. En el celular el cajon abre en TALLAS, y una caja sin
+    //      nada se lee como un filtro roto.
+    //   2. Se derivaban de TODAS las categorias (fix #021, 2026-09-03). Peor:
+    //      quedaban `10-US` de botas, `30-S` de uniformes y `S` de jerseys en la
+    //      misma fila. Eso no es un filtro, es una lista sin sentido — no existe
+    //      un casco talla 42 ni una bota talla S.
+    //
+    // La talla SOLO significa algo dentro de una categoria. Asi que se dice.
     if (selectedCats.length === 0 || selectedCats.length > 1) {
-      const derivedAll = deriveSizesFromDOM(selectedCats, { soloConocidas: true });
       if (sizeAgeToggle) { sizeAgeToggle.style.display = 'none'; sizeAgeToggle.classList.remove('visible'); }
-      if (derivedAll.length > 0) {
-        sizeFilterContainer.classList.remove('size-filter-chips--loading');
-        sizeFilterContainer.innerHTML = derivedAll.map(s =>
-          `<button class="size-chip" data-size="${s.value}">${s.label}</button>`
-        ).join('');
-      } else {
-        sizeFilterContainer.innerHTML = '';
-        sizeFilterContainer.classList.add('size-filter-chips--loading');
-      }
+      sizeFilterContainer.classList.remove('size-filter-chips--loading');
+      sizeFilterContainer.innerHTML =
+        '<p class="size-filter-aviso">' +
+        (selectedCats.length > 1
+          ? 'Elegí una sola categoría para ver sus tallas.'
+          : 'Elegí una categoría primero.') +
+        '<span>Cada categoría tiene sus propias tallas: los cascos van S a XXL y las botas por número.</span>' +
+        '</p>';
       return;
     }
 
@@ -1410,12 +1415,66 @@ function initShopFiltersInternal() {
   });
 
   // Dynamic size chips — event delegation
+  //
+  // UNA TALLA A LA VEZ. Antes cada clic sumaba, y filtrar "M + L + XL" a la vez
+  // no es algo que alguien busque: se busca LA talla propia. Peor todavia, era
+  // facil dejar dos marcadas sin querer y no entender por que aparecian cascos
+  // que no eran del talle.
+  //
+  // Multiples sigue siendo posible, pero hay que PEDIRLO: Ctrl/Cmd o Shift en PC,
+  // y mantener presionado en el celular, que es el gesto equivalente.
   if (sizeFilterContainer) {
+    let pulsacionLarga = false;
+    let temporizador = null;
+
+    const LARGO_MS = 450;
+
+    sizeFilterContainer.addEventListener('touchstart', (e) => {
+      const chip = e.target.closest('.size-chip');
+      if (!chip) return;
+      pulsacionLarga = false;
+      temporizador = setTimeout(() => {
+        pulsacionLarga = true;
+        // Vibrar avisa que cambio el modo. Sin eso, el usuario no tiene forma de
+        // saber que mantener presionado hace algo distinto.
+        if (navigator.vibrate) navigator.vibrate(15);
+      }, LARGO_MS);
+    }, { passive: true });
+
+    const cancelarTemporizador = () => { if (temporizador) { clearTimeout(temporizador); temporizador = null; } };
+    sizeFilterContainer.addEventListener('touchend', cancelarTemporizador, { passive: true });
+    sizeFilterContainer.addEventListener('touchmove', () => { cancelarTemporizador(); pulsacionLarga = false; }, { passive: true });
+
     sizeFilterContainer.addEventListener('click', (e) => {
       const chip = e.target.closest('.size-chip');
       if (!chip) return;
-      chip.classList.toggle('active');
+
+      const sumar = e.ctrlKey || e.metaKey || e.shiftKey || pulsacionLarga;
+      pulsacionLarga = false;
+
+      const yaEstaba = chip.classList.contains('active');
+
+      if (sumar) {
+        chip.classList.toggle('active');
+      } else {
+        // Clic simple: queda SOLO esta. Y si ya era la unica marcada, se apaga —
+        // si no, no habria forma de sacar el filtro sin ir a "Limpiar filtros".
+        const marcadas = sizeFilterContainer.querySelectorAll('.size-chip.active');
+        const eraLaUnica = yaEstaba && marcadas.length === 1;
+        marcadas.forEach(c => c.classList.remove('active'));
+        if (!eraLaUnica) chip.classList.add('active');
+      }
+
       filterProducts();
+
+      const activas = Array.from(sizeFilterContainer.querySelectorAll('.size-chip.active'));
+      if (activas.length === 0) {
+        showNotification('Filtro de talla quitado', 'info');
+      } else if (activas.length === 1) {
+        showNotification(`Filtro aplicado: talla ${activas[0].textContent.trim()}`, 'success');
+      } else {
+        showNotification(`Filtro aplicado: ${activas.length} tallas`, 'success');
+      }
     });
   }
 
@@ -2365,11 +2424,21 @@ function initProductModalInternal() {
     // Decidirlo aca con supportsHover() lo congelaba al primer render: un
     // iPad al que le enchufan o desenchufan un mouse quedaba con el texto
     // equivocado, y el modal se construye una sola vez por pagina.
+    // Era una frase larga —"Pasa el cursor para ampliar"— tapando la foto del
+    // producto, que es lo que la persona vino a mirar. Una lupa dice lo mismo en
+    // una fracción del espacio, y no hay que traducirla.
+    //
+    // El texto se conserva en `aria-label` y en `title`: quien usa lector de
+    // pantalla o deja el mouse quieto lo sigue teniendo.
     const hint = document.createElement('span');
     hint.className = 'modal-zoom-hint';
+    hint.setAttribute('aria-label', 'Ampliar la imagen');
+    hint.setAttribute('title', 'Ampliar');
     hint.innerHTML =
-      '<span class="mx-hint-hover">Pasa el cursor para ampliar</span>' +
-      '<span class="mx-hint-touch">Toca para ampliar</span>';
+      '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" ' +
+      'stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path>' +
+      '<path d="M11 8v6"></path><path d="M8 11h6"></path></svg>';
     viewport.appendChild(hint);
 
     return viewport;

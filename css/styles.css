@@ -10635,31 +10635,39 @@ a {
   transition: transform 0.2s ease-out, opacity var(--transition-fast);
 }
 
-/* Pista visual de que la foto se puede agrandar. */
+/* Pista de que la foto se puede agrandar. Ahora es SOLO una lupa.
+
+   Antes decía "Pasa el cursor para ampliar" y tapaba la foto del producto, que
+   es lo que la persona vino a mirar. Y estaba hardcodeado en oscuro —fondo
+   rgba(10,10,10) con texto blanco— así que en modo claro quedaba una pastilla
+   negra sobre la foto de fondo blanco del producto.
+
+   `--white` YA era sensible al tema —en claro vale #1A1A1A, o sea que el nombre
+   miente pero el comportamiento era correcto—. Lo que estaba mal era el fondo y
+   el borde, escritos a mano en oscuro. Ahora los tres salen de tokens que el
+   tema da vuelta. */
 #productModal .modal-zoom-hint {
   position: absolute;
   right: var(--spacing-sm);
   bottom: var(--spacing-sm);
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 10px;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
   border-radius: var(--radius-full);
-  background: rgba(10, 10, 10, 0.72);
+  background: var(--gray-medium);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid var(--gray-light);
   color: var(--white);
-  font-size: 0.7rem;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
   pointer-events: none;
-  opacity: 1;
+  opacity: 0.92;
   transition: opacity 0.2s ease;
 }
 
 /* El texto del hint lo decide la media query, NO el JS: asi un equipo
    que gana o pierde el mouse (iPad, 2-en-1) siempre lee lo correcto. */
-#productModal .mx-hint-hover { display: none; }
+#productModal .mx-hint-hover, #productModal .mx-hint-touch { display: none; }
 #productModal .mx-hint-touch { display: inline; }
 
 @media (hover: hover) and (pointer: fine) {
@@ -10682,13 +10690,38 @@ a {
   }
 }
 
-/* ── PC: la imagen ocupa el alto real del modal ─────────────────── */
+/* ── PC: la ficha también ocupa la pantalla ──────────────────────
+   En móvil el quickview ya abría a pantalla completa y en PC quedaba una caja
+   flotando en el medio. Pedido de Seven (2026-09-04): que se comporte igual.
+
+   Y no es solo consistencia. La foto del producto es la razón por la que alguien
+   abre esto, y en la caja chica competía con el catálogo difuminado de atrás.
+   A pantalla completa no hay nada más que mirar, que es el punto de un quickview. */
 @media (min-width: 901px) {
+  #productModal.product-modal {
+    padding: 0;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+
   #productModal .product-modal-content {
     grid-template-columns: 1.35fr 1fr;
-    height: min(88vh, 780px);
-    max-height: 88vh;
+    width: 100%;
+    max-width: none;
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
     overflow: hidden; /* el scroll pasa al panel de info, no al modal entero */
+    /* Sin scale, por lo mismo que en móvil: un ancestro transformado convierte
+       el position:fixed del botón cerrar en absolute contra ESTE elemento. */
+    transform: none;
+  }
+
+  #productModal.active .product-modal-content {
+    transform: none;
   }
 
   #productModal .modal-image-container {
@@ -11243,4 +11276,27 @@ a {
   .trust-panel { margin-top: 14px; padding: 16px; }
   /* 16px o iOS hace zoom al enfocar un input. Regla ya aprendida en la card. */
   .checkout-field input { font-size: 16px; }
+}
+
+/* ─── AVISO DEL FILTRO DE TALLAS ─────────────────────────────────────────
+   Sin categoría elegida no se muestran tallas, porque la talla solo significa
+   algo dentro de una categoría: no existe un casco talla 42 ni una bota talla S.
+   Antes esto estaba vacío (parecía roto) y después mezclaba las tallas de todas
+   las categorías (peor: una lista sin sentido). Ahora lo dice. */
+.size-filter-aviso {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--gray-medium);
+  border: 1px dashed var(--gray-light);
+  color: var(--gray-light-text);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.size-filter-aviso span {
+  display: block;
+  margin-top: 4px;
+  color: var(--gray-text);
+  font-size: 0.72rem;
 }
