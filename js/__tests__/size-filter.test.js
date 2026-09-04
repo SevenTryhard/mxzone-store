@@ -66,11 +66,20 @@ describe('getNormalizedFilterTokens', () => {
     assert.deepEqual(getNormalizedFilterTokens('Única'), ['UNICA']);
   });
 
-  it('conserva la talla US y le suma las EU equivalentes', () => {
+  // CAMBIO DE CONTRATO 2026-09-04: antes se le pegaban a "10-US" sus EU
+  // aproximadas, porque los chips de botas estaban en EU. Ahora los chips de
+  // calzado hablan US, asi que alcanza con el numero pelado — y la tabla de
+  // equivalencia dejo de estar duplicada adentro del normalizador.
+  it('de "10-US" saca el numero, que es el valor del chip de calzado', () => {
     const tokens = getNormalizedFilterTokens('10-US');
     assert.ok(tokens.includes('10-US'));
-    assert.ok(tokens.includes('42'));
-    assert.ok(tokens.includes('43'));
+    assert.ok(tokens.includes('10'));
+  });
+
+  it('ya NO inyecta tallas EU: esa tabla vive solo en CALZADO_US_EU', () => {
+    const tokens = getNormalizedFilterTokens('10-US');
+    assert.equal(tokens.includes('42'), false);
+    assert.equal(tokens.includes('43'), false);
   });
 
   it('devuelve lista vacia sin tallas', () => {
@@ -120,12 +129,37 @@ describe('matchesSize — REGRESION del bug de subcadena', () => {
     assert.equal(matchesSize('Consultar', ['Unica']), false);
   });
 
-  it('una bota 10-US matchea el chip EU 42', () => {
-    assert.equal(matchesSize('10-US', ['42']), true);
+  it('una bota 10-US matchea el chip US 10', () => {
+    assert.equal(matchesSize('10-US', ['10']), true);
   });
 
-  it('una bota 10-US NO matchea el chip EU 38', () => {
+  it('una bota 10-US NO matchea el chip US 9', () => {
+    assert.equal(matchesSize('10-US', ['9']), false);
+  });
+
+  // 🔴 REGRESION DEL BUG QUE REPORTO MAURO (2026-09-04).
+  // BOTAS PVC IMPERMEABLES GRIS DAKAR estan cargadas como "7/8/9/10/11/12",
+  // numeros pelados sin "-US" — el unico par del catalogo asi. Con los chips
+  // en EU (38..46) no aparecia en NINGUNO: un "Top Ventas" que se evaporaba
+  // apenas el cliente filtraba por talla. Con los chips en US entra sola, sin
+  // tocarle el dato al producto.
+  it('la DAKAR ("7/8/9/10/11/12", sin unidad) entra a los chips US', () => {
+    const dakar = '7/8/9/10/11/12';
+    ['7','8','9','10','11','12'].forEach(chip => {
+      assert.equal(matchesSize(dakar, [chip]), true, 'deberia matchear el chip ' + chip);
+    });
+  });
+
+  it('la DAKAR y una bota "-US" caen en el MISMO chip', () => {
+    assert.equal(matchesSize('7/8/9/10/11/12', ['10']), true);
+    assert.equal(matchesSize('10-US', ['10']), true);
+  });
+
+  it('el 38 dejo de ser un chip de calzado: no lo matchea nadie', () => {
+    // Los chips 38, 45 y 46 devolvian CERO SIEMPRE porque ningun producto esta
+    // cargado en EU. Ahora los chips son 7..13 y todos son alcanzables.
     assert.equal(matchesSize('10-US', ['38']), false);
+    assert.equal(matchesSize('7/8/9/10/11/12', ['38']), false);
   });
 });
 
@@ -203,6 +237,8 @@ describe('getSizeTokenRank', () => {
 
   it('reconoce la forma 10-US de las botas', () => {
     assert.equal(getSizeTokenRank('10-US'), getSizeTokenRank('10'));
+    // La DAKAR (numero pelado) ordena igual que su equivalente con unidad.
+    assert.equal(getSizeTokenRank('9'), getSizeTokenRank('9-US'));
   });
 });
 

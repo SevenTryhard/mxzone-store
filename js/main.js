@@ -479,6 +479,37 @@ function initShopFiltersInternal() {
   const sizeAgeToggle = document.getElementById('sizeAgeToggle');
   let currentSizeAge = 'adulto'; // 'adulto' | 'nino'
 
+  // ÚNICA tabla de equivalencia de calzado del proyecto. Fuente: la tabla
+  // publicada en sizes.html (~linea 305), que es la que el cliente lee.
+  //
+  // Antes habia DOS tablas y no coincidian: la de la guia y una `botasMapping`
+  // adentro de getNormalizedFilterSizes que corria una talla por debajo
+  // (11-US → 44 cuando la guia dice 45; 12-US → 45 cuando dice 46). La tienda
+  // le mostraba al cliente una conversion y le filtraba con otra. En calzado
+  // eso no es cosmetico: es una devolucion. Medido el 2026-09-04.
+  //
+  // La guia esta en medios puntos US (8.5=42, 9.5=43, 10.5=44) y el catalogo
+  // vende US enteras. Para el 9 y el 10 la guia NO da un EU exacto, asi que se
+  // deja el RANGO entre sus vecinas en vez de inventar un numero.
+  const CALZADO_US_EU = {
+    '7':  ['40'],
+    '8':  ['41'],
+    '9':  ['42', '43'],
+    '10': ['43', '44'],
+    '11': ['45'],
+    '12': ['46'],
+    '13': ['47']
+  };
+
+  // Los chips de calzado se DERIVAN de la tabla de arriba. Es a proposito: si
+  // se escribieran a mano, el chip y la guia podrian volver a desincronizarse,
+  // que es exactamente el bug que se esta arreglando.
+  const CALZADO_CHIPS = Object.keys(CALZADO_US_EU).map(us => ({
+    value: us,
+    label: us,
+    hint: CALZADO_US_EU[us].join('-')
+  }));
+
   // Canonical size definitions by category and age group
   const sizeMap = {
     cascos: {
@@ -513,18 +544,18 @@ function initShopFiltersInternal() {
       ]
     },
     jersey: { adulto: 'uniformes', nino: 'uniformes' },
+    // 🔴 EL CALZADO FILTRA EN US, NO EN EU. Dos hechos medidos el 2026-09-04
+    // sobre los 19 pares del catalogo:
+    //   1. 18 de 19 estan cargados como "N-US" ("10-US", "8-US/9-US/10-US").
+    //      El unico que no —BOTAS PVC DAKAR, "7/8/9/10/11/12" sin unidad— no
+    //      aparecia en NINGUN chip: sus tokens son 7..12 y los chips eran
+    //      38..46. Un "Top Ventas" que desaparecia al filtrar por talla.
+    //   2. Los chips 38, 45 y 46 devolvian CERO productos SIEMPRE: 3 de 9
+    //      opciones muertas, porque ningun producto esta cargado en EU.
+    // Ademas, en motocross el cliente pregunta por US (dato de Seven, 2026-09-04).
+    // El EU va como pista debajo del numero, no como valor del chip.
     botas: {
-      adulto: [
-        { value: '38', label: '38' },
-        { value: '39', label: '39' },
-        { value: '40', label: '40' },
-        { value: '41', label: '41' },
-        { value: '42', label: '42' },
-        { value: '43', label: '43' },
-        { value: '44', label: '44' },
-        { value: '45', label: '45' },
-        { value: '46', label: '46' }
-      ],
+      adulto: CALZADO_CHIPS,
       nino: [
         { value: '33', label: '33' },
         { value: '34', label: '34' },
@@ -574,20 +605,13 @@ function initShopFiltersInternal() {
     if (!rawSizes) return '';
     let normalized = rawSizes.toUpperCase();
 
-    // Botas: US sizes appended as approximate EU sizes
-    const botasMapping = {
-      '6-US': ' 38 39',
-      '7-US': ' 39 40',
-      '8-US': ' 40 41',
-      '9-US': ' 41 42',
-      '10-US': ' 42 43',
-      '11-US': ' 44',
-      '12-US': ' 45',
-      '13-US': ' 46'
-    };
-    Object.entries(botasMapping).forEach(([us, eu]) => {
-      if (normalized.includes(us.toUpperCase())) normalized += eu;
-    });
+    // Aca vivia `botasMapping`, que le pegaba a cada "N-US" sus EU aproximadas
+    // porque los chips de botas estaban en EU. Se fue el 2026-09-04:
+    //   1. Los chips de calzado ahora hablan US, asi que el token "10" de
+    //      "10-US" matchea directo y la traduccion no hace falta para filtrar.
+    //   2. Esa tabla contradecia a sizes.html, la guia que lee el cliente.
+    // La equivalencia sobrevive en UN solo lugar —CALZADO_US_EU— y se usa para
+    // la pista que el chip muestra debajo del numero. Una sola fuente.
 
     // Protecciones dual abbreviations
     if (normalized === 'SM') normalized += ' S M';
@@ -609,8 +633,8 @@ function initShopFiltersInternal() {
   //   "XXL".includes("XL") === true  → filtrar XL devolvia XXL
   // Medido en produccion el 2026-09-03: Cascos+L daba 17 resultados y 9 eran XL.
   // Se compara por TOKEN exacto. Se parte por "/", coma, punto y coma y espacio
-  // porque getNormalizedFilterSizes mezcla los dos separadores (las tallas EU de
-  // botas y los desdobles de protecciones los agrega separados por espacio).
+  // porque getNormalizedFilterSizes mezcla los dos separadores (los desdobles
+  // de protecciones los agrega separados por espacio).
   // Abreviaturas que el CMS escribe pegadas y valen por dos tallas.
   const TOKEN_ALIASES = {
     'SM': ['S', 'M'],
@@ -644,8 +668,8 @@ function initShopFiltersInternal() {
       const compuesta = tok.match(/^(\d+)-([A-Z]+)$/);
       if (compuesta) {
         push(compuesta[1]);
-        // "US" no es una talla, es la unidad: 10-US ya suma sus EU en
-        // getNormalizedFilterSizes.
+        // "US" no es una talla, es la unidad. De "10-US" se empuja el "10", que
+        // es justo el valor del chip de calzado.
         if (compuesta[2] !== 'US') push(compuesta[2]);
       }
 
@@ -748,6 +772,14 @@ function initShopFiltersInternal() {
     });
   }
 
+  // Un chip puede llevar una pista secundaria (`hint`): en calzado, el EU que
+  // corresponde al US. El comprador colombiano que sabe que calza 42 necesita
+  // verlo; el de motocross pregunta por el 9. Los dos entran por el mismo chip.
+  function sizeChipHtml(s) {
+    const hint = s.hint ? `<small>${s.hint}</small>` : '';
+    return `<button class="size-chip" data-size="${s.value}">${s.label}${hint}</button>`;
+  }
+
   function renderSizeChips() {
     const selectedCats = getActiveCategories();
 
@@ -790,9 +822,7 @@ function initShopFiltersInternal() {
       if (sizeAgeToggle) { sizeAgeToggle.style.display = 'none'; sizeAgeToggle.classList.remove('visible'); }
       if (derived.length > 0) {
         sizeFilterContainer.classList.remove('size-filter-chips--loading');
-        sizeFilterContainer.innerHTML = derived.map(s =>
-          `<button class="size-chip" data-size="${s.value}">${s.label}</button>`
-        ).join('');
+        sizeFilterContainer.innerHTML = derived.map(sizeChipHtml).join('');
       } else {
         sizeFilterContainer.innerHTML = '';
         sizeFilterContainer.classList.add('size-filter-chips--loading');
@@ -827,9 +857,7 @@ function initShopFiltersInternal() {
     }
 
     // Build chips
-    sizeFilterContainer.innerHTML = sizes.map(s =>
-      `<button class="size-chip" data-size="${s.value}">${s.label}</button>`
-    ).join('');
+    sizeFilterContainer.innerHTML = sizes.map(sizeChipHtml).join('');
   }
 
   function updateActiveFilterCount(n) {

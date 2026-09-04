@@ -7485,6 +7485,7 @@ a {
 
 .size-chip {
   padding: 6px 12px;
+  text-align: center;
   background: var(--gray-dark);
   border: 1.5px solid var(--gray-lighter);
   border-radius: var(--radius-md);
@@ -7493,6 +7494,20 @@ a {
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition-fast);
+}
+
+/* La pista secundaria del chip (el EU debajo del US, en calzado). */
+.size-chip small {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 500;
+  line-height: 1.15;
+  opacity: 0.6;
+  letter-spacing: 0.02em;
+}
+
+.size-chip.active small {
+  opacity: 0.92;
 }
 
 .size-chip:hover {
