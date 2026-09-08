@@ -101,14 +101,48 @@ describe('resolveSizeChips — alias de tallas', () => {
     assert.ok(nino.length > 0, 'jersey/nino no puede venir vacio');
   });
 
-  it('JERSEYS hereda exactamente las tallas de UNIFORMES', () => {
+  it('JERSEYS filtra por los MISMOS valores que UNIFORMES', () => {
+    // Lo que filtra es el `value` (va al `data-size` del chip). Tiene que seguir
+    // siendo identico al de uniformes: si se separaran, un jersey cargado como
+    // "M" dejaria de aparecer al marcar M.
     for (const edad of EDADES) {
       assert.deepEqual(
-        resolveSizeChips('jersey', edad),
-        resolveSizeChips('uniformes', edad),
-        'jersey/' + edad + ' tiene que ser igual a uniformes/' + edad
+        resolveSizeChips('jersey', edad).map((t) => t.value),
+        resolveSizeChips('uniformes', edad).map((t) => t.value),
+        'jersey/' + edad + ' tiene que filtrar igual que uniformes/' + edad
       );
     }
+  });
+
+  it('JERSEYS NO muestra la talla de pantalon', () => {
+    // El bug que reporto Seven el 2026-09-08: los chips de la categoria JERSEYS
+    // decian "S/30", "M/32". Ese numero es la talla del PANTALON y viene de que
+    // jersey era un alias de uniformes, que es el kit completo. Un jersey solo
+    // no tiene talla de pantalon.
+    for (const edad of EDADES) {
+      for (const talla of resolveSizeChips('jersey', edad)) {
+        assert.ok(
+          !/\d/.test(talla.label),
+          'la etiqueta de jersey/' + edad + ' no puede tener numeros: "' + talla.label + '"'
+        );
+        assert.equal(
+          talla.label,
+          talla.value,
+          'en jersey la etiqueta es la letra sola: "' + talla.label + '" vs "' + talla.value + '"'
+        );
+      }
+    }
+  });
+
+  it('UNIFORMES SI muestra los dos tallajes', () => {
+    // El complemento del anterior: el kit es jersey + pantalon, y ahi el numero
+    // es informacion que el comprador necesita. Sacarlo de los dos lados seria
+    // cambiar un bug por otro.
+    const etiquetas = resolveSizeChips('uniformes', 'adulto').map((t) => t.label);
+    assert.ok(
+      etiquetas.every((l) => /\//.test(l)),
+      'uniformes/adulto tiene que seguir mostrando letra/numero: ' + JSON.stringify(etiquetas)
+    );
   });
 
   it('NINGUNA categoria del mapa se queda sin tallas', () => {

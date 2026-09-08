@@ -586,7 +586,36 @@ function initShopFiltersInternal() {
         { value: 'YXL', label: 'YXL/28' }
       ]
     },
-    jersey: { adulto: 'uniformes', nino: 'uniformes' },
+    // 🔴 UN JERSEY NO TIENE TALLA DE PANTALON — 2026-09-08.
+    //
+    // `jersey` era un alias de `uniformes` y por eso los chips decian "S/30",
+    // "M/32", "L/34". Ese tallaje doble es CORRECTO para uniformes, que es el
+    // kit completo —jersey + pantalon, como dice la descripcion de la
+    // categoria—: la letra es la del jersey y el numero la del pantalon.
+    //
+    // Pero JERSEYS vende la pieza de arriba sola. No existe un jersey talla 30,
+    // y al comprador que busca su jersey el numero le sobra o, peor, lo hace
+    // dudar de si esta comprando el conjunto.
+    //
+    // Los `value` son EXACTAMENTE los mismos que antes: la letra sola siempre
+    // fue lo que filtra (el chip se arma con `data-size="${s.value}"` y el label
+    // es solo texto). Asi que ningun producto cambia de lado ni desaparece de
+    // ningun filtro. Lo unico que cambia es lo que se lee.
+    jersey: {
+      adulto: [
+        { value: 'S', label: 'S' },
+        { value: 'M', label: 'M' },
+        { value: 'L', label: 'L' },
+        { value: 'XL', label: 'XL' },
+        { value: 'XXL', label: 'XXL' }
+      ],
+      nino: [
+        { value: 'YS', label: 'YS' },
+        { value: 'YM', label: 'YM' },
+        { value: 'YL', label: 'YL' },
+        { value: 'YXL', label: 'YXL' }
+      ]
+    },
     // 🔴 EL CALZADO FILTRA EN US, NO EN EU. Dos hechos medidos el 2026-09-04
     // sobre los 19 pares del catalogo:
     //   1. 18 de 19 estan cargados como "N-US" ("10-US", "8-US/9-US/10-US").
@@ -745,8 +774,11 @@ function initShopFiltersInternal() {
 
       // Compuestas "numero-letra": los uniformes se cargan como 30-S, 32-M,
       // 34-L, 36-XL, 38-XXL y los de niño como 26-YL, 28-YXL. Hay que agregar
-      // las dos partes o el chip XL deja afuera a los 36-XL, que es justo lo que
-      // el chip dice en su label ("XL/36").
+      // las dos partes o el chip XL deja afuera a los 36-XL.
+      //
+      // Esto mira SOLO como esta cargado el producto, no lo que dice el chip. Es
+      // lo que permite que JERSEYS muestre "XL" a secas y UNIFORMES "XL/36" sin
+      // que ninguno de los dos pierda productos: los dos filtran por "XL".
       const compuesta = tok.match(/^(\d+)-([A-Z]+)$/);
       if (compuesta) {
         push(compuesta[1]);
