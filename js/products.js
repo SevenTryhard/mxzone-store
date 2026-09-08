@@ -106,13 +106,31 @@ function adaptProductFrom4ULAB(p) {
     image: image,
     images: p.images || (p.metaImageUrl ? [p.metaImageUrl] : []),
     // Usar stock real de 4ULAB: stock=0 o stock null => agotado
-    agotado: !(p.stock && Number(p.stock) > 0),
+    //
+    // 2026-09-08: se suma el caso "TODAS las tallas contadas en cero". Un
+    // producto asi esta agotado aunque el `stock` general diga otra cosa, y la
+    // tienda ya esconde lo agotado (ver createProductCard: `if (agotado) return ''`).
+    //
+    // Se ata corto a proposito: `todasLasTallasAgotadas` exige que TODAS las
+    // tallas tengan fila Y esten contadas. Con una sola sin contar devuelve
+    // false y el producto se sigue mostrando. Hoy las 314 filas estan en null,
+    // asi que esta linea no esconde absolutamente nada — recien empieza a
+    // actuar cuando el duenio termina de contar un producto entero.
+    agotado:
+      !(p.stock && Number(p.stock) > 0) ||
+      todasLasTallasAgotadas(
+        mapaDeStockPorTalla(p.variantes),
+        String(sizes || '').split('/').map(t => t.trim()).filter(Boolean)
+      ),
     // Campos adicionales de 4ULAB que pueden ser útiles
     _4ulabId: p.id,
     _4ulabSlug: p.slug,
     _4ulabAttributes: p.attributes || {},
     _4ulabPriceRaw: p.price,
-    _4ulabStock: p.stock
+    _4ulabStock: p.stock,
+    // Stock por talla. Las tiendas viejas del API no lo mandan: sin el, todo se
+    // comporta como antes y nada se rompe.
+    variantes: Array.isArray(p.variantes) ? p.variantes : []
   };
 }
 
@@ -356,11 +374,75 @@ function createProductCard(product) {
   const badgeHTML = product.badge ?
     `<span class="product-badge">${product.badge}</span>` : '';
 
+/**
+ * STOCK POR TALLA — 2026-09-08
+ *
+ * Hasta hoy la tienda recibia UN numero de stock para todo el producto. Con eso
+ * ofrecia la XL aunque la unica unidad fuera una S. Caso medido en produccion:
+ * RODILLERA LEATT 3DF HYBRID, stock 1, tallas S/M/L/XL.
+ *
+ * Ahora `/api/public/products` manda ademas `variantes: [{talla, stock, sku}]`.
+ *
+ * LA REGLA QUE NO SE PUEDE ROMPER: `null` es "no lo conte" y NO agota. El dia
+ * que se lleno esa tabla, las 314 filas nacieron en null; si null agotara, el
+ * catalogo entero de un comercio amaneceria vacio. Solo un numero contado que
+ * sea 0 o menos saca una talla de la venta.
+ */
+function claveDeTalla(talla) {
+  return String(talla == null ? '' : talla).trim().toUpperCase();
+}
+
+/** De la lista que manda el API a un objeto `{ TALLA: stock }`. */
+function mapaDeStockPorTalla(variantes) {
+  const mapa = {};
+  if (!Array.isArray(variantes)) return mapa;
+  variantes.forEach(v => {
+    if (!v) return;
+    const k = claveDeTalla(v.talla);
+    if (!k) return;
+    mapa[k] = (v.stock === null || v.stock === undefined) ? null : Number(v.stock);
+  });
+  return mapa;
+}
+
+/** Si una talla se puede vender. Sin dato => si, igual que antes de todo esto. */
+function hayStockDeTalla(mapa, talla) {
+  if (!mapa) return true;
+  const k = claveDeTalla(talla);
+  if (!(k in mapa)) return true;      // esa talla no tiene fila todavia
+  const n = mapa[k];
+  if (n === null || n === undefined) return true;  // contada nunca
+  return Number(n) > 0;
+}
+
+/**
+ * Si TODAS las tallas del producto estan contadas en cero. Solo entonces el
+ * producto entero se marca agotado: con una sola talla disponible se sigue
+ * vendiendo, y el selector se encarga del resto.
+ */
+function todasLasTallasAgotadas(mapa, tallas) {
+  if (!mapa || !Array.isArray(tallas) || tallas.length === 0) return false;
+  const conocidas = tallas.filter(t => claveDeTalla(t) in mapa);
+  if (conocidas.length === 0) return false;
+  if (conocidas.length !== tallas.length) return false;  // alguna sin fila: no se afirma
+  return conocidas.every(t => !hayStockDeTalla(mapa, t));
+}
+
   // Parsear tallas
   const requiresSize = shouldRequireSize(product.sizes);
   const sizesArray = product.sizes ? product.sizes.split('/').map(s => s.trim()).filter(s => s !== '') : ['Única'];
+  // El stock por talla llega en `variantes`. Se guarda tambien en la card para
+  // que `addProductToCart` pueda decidir sin volver a pedirle nada al servidor.
+  const stockTallas = mapaDeStockPorTalla(product.variantes);
+
+  // Una talla agotada se muestra pero NO se puede elegir. Esconderla seria
+  // peor: el cliente que busca su talla creeria que el producto nunca la tuvo,
+  // en vez de entender que hoy no hay y puede volver.
   const sizeOptions = requiresSize
-    ? `<option value="" disabled selected>TALLA</option>` + sizesArray.map(size => `<option value="${size}">${size}</option>`).join('')
+    ? `<option value="" disabled selected>TALLA</option>` + sizesArray.map(size => {
+        const sinStock = !hayStockDeTalla(stockTallas, size);
+        return `<option value="${size}"${sinStock ? ' disabled' : ''}>${size}${sinStock ? ' — agotada' : ''}</option>`;
+      }).join('')
     : `<option value="Única" selected>ÚNICA</option>`;
 
   return `
@@ -373,7 +455,8 @@ function createProductCard(product) {
          data-image="${mainImage}"
          data-images='${JSON.stringify(images).replace(/'/g, "&#39;")}'
          data-slug="${productSlug}"
-         data-sizes="${product.sizes || 'Única'}">
+         data-sizes="${product.sizes || 'Única'}"
+         data-stock-tallas='${JSON.stringify(stockTallas).replace(/'/g, "&#39;")}'>
       <div class="product-image">
         <img src="${mainImage}" alt="${product.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <span class="product-image-placeholder" style="display:none;">MX</span>
@@ -752,6 +835,30 @@ function addProductToCart(slug) {
   // FIX #007: solo exigir talla si el producto realmente tiene tallas configuradas
   if (shouldRequireSize(rawSizes) && (!selectedSize || selectedSize === '')) {
     showNotification('Selecciona una talla primero', 'error');
+    if (sizeSelect) {
+      sizeSelect.style.border = '2px solid var(--red-accent)';
+      setTimeout(() => { sizeSelect.style.border = ''; }, 1500);
+    }
+    return;
+  }
+
+  // BLOQUEO POR TALLA — 2026-09-08.
+  //
+  // El `<option>` de una talla agotada ya sale `disabled`, asi que por el camino
+  // normal ni se puede elegir. Este chequeo es la segunda puerta, y existe
+  // porque la primera es solo visual: un `disabled` se saca desde la consola en
+  // dos segundos, y ademas el stock pudo llegar a cero DESPUES de que esta
+  // pagina se cargara. Vender algo que no esta cuesta una devolucion y un
+  // cliente; el chequeo cuesta cuatro lineas.
+  let stockPorTalla = null;
+  try {
+    stockPorTalla = JSON.parse(card.dataset.stockTallas || 'null');
+  } catch (e) {
+    stockPorTalla = null;  // dato roto: se comporta como antes, no bloquea
+  }
+
+  if (stockPorTalla && !hayStockDeTalla(stockPorTalla, selectedSize)) {
+    showNotification(`No queda talla ${selectedSize} de este producto`, 'error');
     if (sizeSelect) {
       sizeSelect.style.border = '2px solid var(--red-accent)';
       setTimeout(() => { sizeSelect.style.border = ''; }, 1500);
