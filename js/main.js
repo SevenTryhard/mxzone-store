@@ -439,6 +439,49 @@ function initSmoothScroll() {
   });
 }
 
+// QUE EL COMPRADOR NO SE PIERDA — 2026-09-08.
+//
+// Al cambiar un filtro la lista se rearma entera. Si la vista se queda donde
+// estaba, el que venia mirando el producto 40 termina frente a un hueco blanco
+// y cree que no quedo nada. Despues de filtrar, la pantalla arranca justo donde
+// arrancan los productos.
+//
+// Habia tres formas distintas de hacer esto en el archivo: una descontaba 140px
+// a mano, otra no descontaba nada, y la de talla directamente no movia la
+// pantalla. Ahora es una sola, y en vez de adivinar cuanto tapan las barras de
+// arriba, se miden en vivo — en el celular son TRES pegadas una abajo de la
+// otra (logo, buscador y la fila de categorias) y suman 165px, no 61. Con un
+// numero fijo, el titulo de la seccion quedaba escondido detras de ellas.
+//
+// Vive en el nivel de arriba a proposito: la llaman los chips de talla y de
+// categoria (initShopFiltersInternal) y tambien los chips de movil, que estan
+// adentro de initPriceRangeSlider — otra funcion, otro scope.
+function altoDeLasBarrasDeArriba() {
+  // Solo las que la tienda pega arriba de todo. En PC varias no existen
+  // (display:none), y ahi miden 0 solas.
+  const BARRAS = ['.header', '.mobile-search-bar', '.mobile-quick-filters', '.shop-top-bar'];
+  let borde = 0;
+  BARRAS.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      const pos = window.getComputedStyle(el).position;
+      if (pos !== 'fixed' && pos !== 'sticky') return;
+      const r = el.getBoundingClientRect();
+      // Alto 0 = no esta en pantalla. Top > 200 = no esta tapando el borde de
+      // arriba, es un cajon cerrado o un panel que vive mas abajo.
+      if (r.height === 0 || r.top > 200) return;
+      if (r.bottom > borde) borde = r.bottom;
+    });
+  });
+  return borde;
+}
+
+function irAlComienzoDeProductos() {
+  const grid = document.getElementById('productsGrid');
+  if (!grid) return;
+  const destino = grid.getBoundingClientRect().top + window.scrollY - altoDeLasBarrasDeArriba() - 12;
+  window.scrollTo({ top: Math.max(destino, 0), behavior: 'smooth' });
+}
+
 /**
  * Advanced Shop Filters
  */
@@ -1064,24 +1107,42 @@ function initShopFiltersInternal() {
       }
     });
 
-    // Second pass: show/hide category dividers based on ACTUAL visible cards per category
-    const dividers = document.querySelectorAll('.category-divider');
-
-    dividers.forEach(divider => {
-      const category = divider.dataset.category;
-      const cardsForCategory = document.querySelectorAll(`.product-card[data-category="${category}"]`);
-      const hasVisibleProducts = Array.from(cardsForCategory).some(card => {
-        const style = window.getComputedStyle(card);
-        return style.display !== 'none';
-      });
-      // Use class-based toggle to override any CSS specificity/flex issues
-      divider.classList.toggle('category-divider--hidden', !hasVisibleProducts);
-    });
+    // Second pass: los divisores se deciden sobre lo que SE VE.
+    actualizarDivisores();
 
     // Update results count
     if (resultsCount) {
       resultsCount.textContent = visibleCount;
     }
+  }
+
+  /** Una card cuenta como visible si el filtro no la apago. */
+  // Se mira primero el estilo que escribio el filtro, que es lo que decide en el
+  // 99% de los casos. getComputedStyle solo entra cuando la card todavia no paso
+  // por un filtro: preguntarselo a las 288 cards obliga al navegador a recalcular
+  // la pagina entera y se nota en el celular.
+  function cardVisible(card) {
+    if (card.style.display) return card.style.display !== 'none';
+    return window.getComputedStyle(card).display !== 'none';
+  }
+
+  // UN SOLO LUGAR DECIDE QUE DIVISOR SE VE — 2026-09-08.
+  //
+  // El titulo de una seccion existe para separar productos que estan en
+  // pantalla. Si la seccion no tiene ni un producto visible, el titulo no separa
+  // nada: es ruido que hace mas larga la lista y le hace creer al comprador que
+  // abajo hay algo.
+  //
+  // Antes esta decision estaba escrita adentro de filterProducts y sortProducts
+  // la pisaba. Ahora vive aca sola y las dos la llaman.
+  function actualizarDivisores() {
+    document.querySelectorAll('.category-divider').forEach(divider => {
+      const category = divider.dataset.category;
+      const cardsForCategory = document.querySelectorAll(`.product-card[data-category="${category}"]`);
+      const hasVisibleProducts = Array.from(cardsForCategory).some(cardVisible);
+      // Use class-based toggle to override any CSS specificity/flex issues
+      divider.classList.toggle('category-divider--hidden', !hasVisibleProducts);
+    });
   }
 
   // Hide empty categories (no products)
@@ -1223,14 +1284,33 @@ function initShopFiltersInternal() {
 
     // Re-insert products with category dividers (only for default sort)
     if (sortBy === 'default') {
-      const categoryOrder = ['botas', 'cascos', 'uniformes', 'jersey', 'guantes', 'gorras', 'protecciones', 'accesorios', 'maletas', 'gafas', 'uniformes-ninos', 'cascos-ninos', 'botas-ninos', 'guantes-ninos', 'gafas-ninos', 'protecciones-ninos'];
-      let lastCategory = null;
+      // 🔴 FIX 2026-09-08 — el titulo de seccion se decide sobre lo VISIBLE.
+      //
+      // `productsArray` trae las 288 cards del catalogo, filtradas o no. Al
+      // preguntar por la categoria de TODAS, un filtro que dejaba 13 jerseys en
+      // pantalla igual repintaba los 15 titulos del catalogo entero (BOTAS,
+      // CASCOS, GORRAS...) uno abajo del otro, sobre la nada. Una card apagada
+      // no arrastra su titulo.
+      const catDe = (card) => card.dataset.category || 'sin-categoria';
+      const visibles = productsArray.filter(cardVisible);
 
+      // Y ademas: el titulo solo dice la verdad si la seccion es UN bloque
+      // seguido. Cuando manda el orden de una talla, un jersey posicionado
+      // puede quedar arriba de un casco posicionado y las secciones se parten.
+      // En ese caso no hay secciones que titular — se muestran los productos y
+      // listo, igual que cuando el comprador elige "menor precio".
+      const bloques = [];
+      visibles.forEach(card => {
+        const cat = catDe(card);
+        if (bloques[bloques.length - 1] !== cat) bloques.push(cat);
+      });
+      const hayBloquesLimpios = new Set(bloques).size === bloques.length;
+
+      let lastCategory = null;
       productsArray.forEach(card => {
         try {
-          const category = card.dataset.category;
-          // Insert divider if category changed
-          if (category !== lastCategory) {
+          const category = catDe(card);
+          if (hayBloquesLimpios && cardVisible(card) && category !== lastCategory) {
             const divider = createCategoryDivider(category);
             if (divider) grid.appendChild(divider);
             lastCategory = category;
@@ -1398,27 +1478,9 @@ function initShopFiltersInternal() {
         filterProducts();
         if (typeof updateResultsCount === 'function') updateResultsCount();
 
-        // Scroll to products section on mobile
-        if (window.innerWidth <= 768) {
-          clearTimeout(window._mxzoneCategoryScrollTimeout);
-          window._mxzoneCategoryScrollTimeout = setTimeout(() => {
-            const productsGrid = document.getElementById('productsGrid');
-            const productsTitle = document.querySelector('.shop-title, .section-title');
-            const target = productsTitle || productsGrid;
-
-            if (target) {
-              const headerOffset = 140;
-              const elementPosition = target.getBoundingClientRect().top;
-              const offsetPosition = elementPosition + window.scrollY - headerOffset;
-              if (offsetPosition > 0) {
-                window.scrollTo({
-                  top: offsetPosition,
-                  behavior: 'smooth'
-                });
-              }
-            }
-          }, 300);
-        }
+        // Arrancar donde arrancan los productos (ver irAlComienzoDeProductos).
+        clearTimeout(window._mxzoneCategoryScrollTimeout);
+        window._mxzoneCategoryScrollTimeout = setTimeout(irAlComienzoDeProductos, 300);
       });
     });
   };
@@ -1559,6 +1621,9 @@ function initShopFiltersInternal() {
       filterProducts();
       // Reordenar tambien: al cambiar de talla cambia cual es el orden que manda.
       sortProducts();
+      // Reordenar mueve las cards de lugar: sin esto el comprador se queda
+      // mirando el hueco donde estaba lo que ya no esta.
+      irAlComienzoDeProductos();
 
       const activas = Array.from(sizeFilterContainer.querySelectorAll('.size-chip.active'));
       if (activas.length === 0) {
@@ -2093,8 +2158,9 @@ function initPriceRangeSlider() {
         filterProducts();
         updateResultsCount();
 
-        // Scroll to products grid
-        document.getElementById('productsGrid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Scroll to products grid (descontando el header fijo, que si no tapa
+        // la primera fila y parece que la lista empieza en el segundo producto)
+        irAlComienzoDeProductos();
       });
     });
   };
