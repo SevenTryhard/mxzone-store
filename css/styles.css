@@ -11315,3 +11315,205 @@ a {
   color: var(--gray-text);
   font-size: 0.72rem;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CARTEL DE BIENVENIDA — 2026-09-08
+   ═══════════════════════════════════════════════════════════════════════════
+   Calcado del patron de .product-modal que ya existe: mismo overlay, mismo
+   gradiente de fondo, mismo borde naranja tenue, misma entrada con scale.
+   No se inventa ni un color: todo sale de los tokens de :root.
+
+   Decisiones que no son de gusto:
+   - z-index 2500, arriba del modal de producto (2000) y del menu movil, porque
+     aparece antes que nada. No compite con nada abierto.
+   - Los chips miden 44px de alto. Es el minimo tactil: mas chico se falla el
+     toque y el cliente se pelea con el cartel en vez de contestarlo.
+   - El boton de saltear NO es un link gris escondido en una esquina. Esta al
+     lado del principal y se lee. Un cartel del que no se puede salir facil es
+     el que hace cerrar la pestana entera.
+   - El panel scrollea por dentro (max-height 88vh): en un telefono chico las
+     tres filas de chips no entran, y un cartel cuyo boton quedo abajo del
+     borde es un cartel roto.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.bv-capa {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+  z-index: 2500;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition-base);
+  overflow-y: auto;
+}
+
+.bv-capa.bv-visible { opacity: 1; visibility: visible; }
+
+body.bv-abierto { overflow: hidden; }
+
+.bv-panel {
+  position: relative;
+  background: var(--gradient-card);
+  border: 1px solid rgba(255, 102, 0, 0.3);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl), 0 0 60px rgba(255, 102, 0, 0.18);
+  padding: var(--spacing-lg);
+  width: 100%;
+  max-width: 460px;
+  max-height: 88vh;
+  overflow-y: auto;
+  transform: scale(0.92);
+  transition: var(--transition-base);
+}
+
+.bv-capa.bv-visible .bv-panel { transform: scale(1); }
+
+.bv-cerrar {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  color: var(--gray-text);
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: var(--radius-full);
+  transition: var(--transition-fast);
+}
+
+.bv-cerrar:hover { color: var(--white); background: rgba(255, 255, 255, 0.08); }
+
+.bv-titulo {
+  margin: 0 var(--spacing-lg) var(--spacing-xs) 0;
+  color: var(--white);
+  font-size: 1.4rem;
+  line-height: 1.25;
+}
+
+.bv-bajada {
+  margin: 0 0 var(--spacing-md);
+  color: var(--gray-text);
+  font-size: 0.9rem;
+}
+
+.bv-grupo { margin-bottom: var(--spacing-md); }
+
+.bv-label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  color: var(--gray-light-text);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bv-label em { color: var(--gray-text); font-style: normal; text-transform: none; letter-spacing: 0; }
+
+.bv-chips { display: flex; flex-wrap: wrap; gap: var(--spacing-xs); }
+
+.bv-chip {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 var(--spacing-sm);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--gray-light);
+  border-radius: var(--radius-md);
+  color: var(--gray-light-text);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.bv-chip:hover { border-color: var(--orange-primary); color: var(--white); }
+
+.bv-chip.bv-activo {
+  background: var(--gradient-orange);
+  border-color: var(--orange-primary);
+  color: var(--white);
+  box-shadow: var(--glow-orange-sm);
+}
+
+.bv-acciones {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+.bv-btn-primario {
+  flex: 1;
+  min-height: 48px;
+  padding: 0 var(--spacing-md);
+  background: var(--gradient-orange);
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.bv-btn-primario:hover { box-shadow: var(--shadow-orange); transform: translateY(-1px); }
+
+.bv-btn-fantasma {
+  min-height: 48px;
+  padding: 0 var(--spacing-sm);
+  background: transparent;
+  border: none;
+  color: var(--gray-text);
+  font-size: 0.92rem;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.bv-btn-fantasma:hover { color: var(--white); }
+
+/* Tema claro: la tienda lo soporta y el cartel no puede ser el unico pedazo
+   que quede negro sobre blanco. */
+[data-theme="light"] .bv-capa { background: rgba(0, 0, 0, 0.55); }
+
+[data-theme="light"] .bv-panel {
+  background: var(--white);
+  border-color: rgba(255, 102, 0, 0.35);
+  box-shadow: var(--shadow-lg);
+}
+
+[data-theme="light"] .bv-titulo { color: var(--gray-dark); }
+[data-theme="light"] .bv-bajada,
+[data-theme="light"] .bv-label { color: var(--gray-lighter); }
+[data-theme="light"] .bv-cerrar { color: var(--gray-lighter); }
+[data-theme="light"] .bv-cerrar:hover { color: var(--gray-dark); background: rgba(0, 0, 0, 0.06); }
+
+[data-theme="light"] .bv-chip {
+  background: var(--white-off);
+  border-color: #D8D8D8;
+  color: var(--gray-dark);
+}
+
+[data-theme="light"] .bv-chip.bv-activo { color: var(--white); }
+[data-theme="light"] .bv-btn-fantasma { color: var(--gray-lighter); }
+[data-theme="light"] .bv-btn-fantasma:hover { color: var(--gray-dark); }
+
+/* Quien pidio menos movimiento no tiene por que ver el cartel entrar con
+   escala. Es una preferencia del sistema, no un gusto nuestro. */
+@media (prefers-reduced-motion: reduce) {
+  .bv-capa, .bv-panel { transition: opacity 0.01ms linear; }
+  .bv-panel { transform: none; }
+  .bv-capa.bv-visible .bv-panel { transform: none; }
+}
+
+@media (max-width: 480px) {
+  .bv-panel { padding: var(--spacing-md); }
+  .bv-titulo { font-size: 1.2rem; }
+  .bv-acciones { flex-direction: column-reverse; align-items: stretch; }
+  .bv-btn-fantasma { width: 100%; }
+}

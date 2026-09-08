@@ -18,6 +18,7 @@ $assets = @(
   'js/product-detail.js',
   'js/promotions.js',
   'js/cart.js',
+  'js/bienvenida.js',
   'css/styles.css'
 )
 
