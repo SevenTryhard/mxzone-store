@@ -1007,7 +1007,7 @@ function initShopFiltersInternal() {
   }
 
   // Enforce data-brand/price on cards when needed (cards rendered from 4ULAB already include it)
-  document.querySelectorAll('.product-card').forEach(card => {
+  document.querySelectorAll('.product-card').forEach((card, i) => {
     if (!card.dataset.brand) {
       const name = card.querySelector('.product-name')?.textContent || '';
       card.dataset.brand = normalizeBrandSlug(getBrand(name).name);
@@ -1018,6 +1018,17 @@ function initShopFiltersInternal() {
       const priceNum = parseInt(priceText.replace(/[^0-9]/g, ''));
       card.dataset.price = priceNum || 0;
     }
+
+    // EL ORDEN DE LA TIENDA, GUARDADO — 2026-09-08.
+    //
+    // Aca las cards estan como las dejo el catalogo: agrupadas por seccion y en
+    // el orden comercial. Se anota esa posicion ANTES de que cualquier
+    // reordenado la toque, porque despues ya no se puede reconstruir.
+    //
+    // Sin esto, "Ordenar por: normal" no volvia al orden normal — solo dejaba
+    // de reordenar, asi que la tienda se quedaba con el orden de precio y las
+    // secciones mezcladas para siempre, hasta recargar.
+    if (card.dataset.ordenOriginal === undefined) card.dataset.ordenOriginal = i;
   });
 
   // Filter function
@@ -1135,13 +1146,40 @@ function initShopFiltersInternal() {
   //
   // Antes esta decision estaba escrita adentro de filterProducts y sortProducts
   // la pisaba. Ahora vive aca sola y las dos la llaman.
+  //
+  // Los titulos se RECONSTRUYEN, no se prenden y apagan. La primera version de
+  // este arreglo solo escondia los que sobraban, y por eso al cambiar de
+  // categoria despues de una talla la tienda quedaba sin ningun titulo: el
+  // reordenado ya habia borrado los de las categorias que en ese momento no se
+  // veian, y esconder no sabe volver a crear. Tirarlos y dibujarlos de nuevo
+  // sobre lo que hay en pantalla no puede quedar desincronizado.
   function actualizarDivisores() {
-    document.querySelectorAll('.category-divider').forEach(divider => {
-      const category = divider.dataset.category;
-      const cardsForCategory = document.querySelectorAll(`.product-card[data-category="${category}"]`);
-      const hasVisibleProducts = Array.from(cardsForCategory).some(cardVisible);
-      // Use class-based toggle to override any CSS specificity/flex issues
-      divider.classList.toggle('category-divider--hidden', !hasVisibleProducts);
+    const grid = document.querySelector('.products-grid');
+    if (!grid) return;
+
+    grid.querySelectorAll('.category-divider').forEach(d => d.remove());
+
+    // Con cualquier otro orden (menor precio, A-Z...) las categorias se mezclan
+    // y las secciones dejan de existir. Ahi no se titula nada.
+    if ((sortSelect?.value || 'default') !== 'default') return;
+
+    // Las secciones tal como quedan en pantalla, en el orden real de la grilla.
+    const bloques = [];
+    Array.from(grid.querySelectorAll('.product-card')).forEach(card => {
+      if (!cardVisible(card)) return;
+      const cat = card.dataset.category || 'sin-categoria';
+      const ultimo = bloques[bloques.length - 1];
+      if (!ultimo || ultimo.cat !== cat) bloques.push({ cat: cat, primera: card });
+    });
+
+    // Un titulo solo dice la verdad si encabeza UN bloque seguido. Si el orden
+    // partio una categoria en dos pedazos separados, no se titula: mejor sin
+    // titulo que con uno que manda al comprador a la seccion equivocada.
+    if (new Set(bloques.map(b => b.cat)).size !== bloques.length) return;
+
+    bloques.forEach(b => {
+      const divider = createCategoryDivider(b.cat);
+      if (divider) grid.insertBefore(divider, b.primera);
     });
   }
 
@@ -1212,12 +1250,12 @@ function initShopFiltersInternal() {
     const sortBy = sortSelect?.value || 'default';
     const productsArray = Array.from(document.querySelectorAll('.product-card'));
     const grid = document.querySelector('.products-grid');
-    const dividers = document.querySelectorAll('.category-divider');
 
     if (!grid) return;
 
-    // Hide dividers during sort (they'll be repositioned after)
-    dividers.forEach(d => d.remove());
+    // Se sacan de en medio para reacomodar. Los vuelve a poner
+    // actualizarDivisores() al final de esta funcion.
+    document.querySelectorAll('.category-divider').forEach(d => d.remove());
 
     // Se calcula una sola vez por tanda, no una por comparacion.
     const sizeSelection = sortBy.startsWith('size-') ? getSelectedSizes() : null;
@@ -1258,22 +1296,30 @@ function initShopFiltersInternal() {
             return sortBy === 'size-asc' ? rankA - rankB : rankB - rankA;
           }
           default: {
-            // PRIORIDAD DENTRO DE LA TALLA — 2026-09-08.
+            // EL ORDEN NORMAL DE LA TIENDA.
             //
-            // El orden normal del catalogo es el comercial (`sortOrder` por
-            // producto) y llega ya ordenado desde el API: por eso este `default`
-            // devolvia 0, para no tocarlo. Se sigue respetando.
-            //
-            // Lo unico que se agrega: cuando el comprador esta mirando UNA sola
-            // talla, los productos que el duenio posiciono EN ESA TALLA van
-            // primero, en su orden. Los que no posiciono quedan detras en el
-            // orden comercial de siempre — `compararPorOrdenDeTalla` devuelve 0
-            // y `Array.sort` es estable, asi que no se inventa un orden nuevo.
-            if (!tallaUnica) return 0;
-            return compararPorOrdenDeTalla(
-              ordenDeCardEnTalla(a, tallaUnica),
-              ordenDeCardEnTalla(b, tallaUnica)
-            );
+            // Es el comercial (`sortOrder` por producto), agrupado por seccion,
+            // tal como llega del catalogo. Antes esto devolvia 0 —"no toques
+            // nada"— y funcionaba de casualidad: alcanzaba mientras nadie
+            // hubiera reordenado antes. Despues de pasar por "menor precio", el
+            // orden normal ya no volvia nunca. Ahora se vuelve al orden anotado
+            // en `data-orden-original`, que es el de verdad.
+            const ordenA = Number(a.dataset.ordenOriginal || 0);
+            const ordenB = Number(b.dataset.ordenOriginal || 0);
+
+            // Lo unico que se agrega encima: cuando el comprador esta mirando
+            // UNA sola talla, los productos que el duenio posiciono EN ESA
+            // TALLA van primero, en su orden. Los demas quedan detras en el
+            // orden de siempre.
+            if (tallaUnica) {
+              const porTalla = compararPorOrdenDeTalla(
+                ordenDeCardEnTalla(a, tallaUnica),
+                ordenDeCardEnTalla(b, tallaUnica)
+              );
+              if (porTalla !== 0) return porTalla;
+            }
+
+            return ordenA - ordenB;
           }
         }
       } catch (e) {
@@ -1282,54 +1328,19 @@ function initShopFiltersInternal() {
       }
     });
 
-    // Re-insert products with category dividers (only for default sort)
-    if (sortBy === 'default') {
-      // 🔴 FIX 2026-09-08 — el titulo de seccion se decide sobre lo VISIBLE.
-      //
-      // `productsArray` trae las 288 cards del catalogo, filtradas o no. Al
-      // preguntar por la categoria de TODAS, un filtro que dejaba 13 jerseys en
-      // pantalla igual repintaba los 15 titulos del catalogo entero (BOTAS,
-      // CASCOS, GORRAS...) uno abajo del otro, sobre la nada. Una card apagada
-      // no arrastra su titulo.
-      const catDe = (card) => card.dataset.category || 'sin-categoria';
-      const visibles = productsArray.filter(cardVisible);
+    // Se reacomodan las cards y nada mas. Los titulos de seccion los pone
+    // actualizarDivisores() mirando como quedo la pantalla: aca no se decide
+    // nada sobre ellos, que es justamente lo que hacia que este reordenado
+    // pisara al filtro.
+    productsArray.forEach(card => {
+      try {
+        grid.appendChild(card);
+      } catch (e) {
+        mxLog('Error appending sorted card:', e);
+      }
+    });
 
-      // Y ademas: el titulo solo dice la verdad si la seccion es UN bloque
-      // seguido. Cuando manda el orden de una talla, un jersey posicionado
-      // puede quedar arriba de un casco posicionado y las secciones se parten.
-      // En ese caso no hay secciones que titular — se muestran los productos y
-      // listo, igual que cuando el comprador elige "menor precio".
-      const bloques = [];
-      visibles.forEach(card => {
-        const cat = catDe(card);
-        if (bloques[bloques.length - 1] !== cat) bloques.push(cat);
-      });
-      const hayBloquesLimpios = new Set(bloques).size === bloques.length;
-
-      let lastCategory = null;
-      productsArray.forEach(card => {
-        try {
-          const category = catDe(card);
-          if (hayBloquesLimpios && cardVisible(card) && category !== lastCategory) {
-            const divider = createCategoryDivider(category);
-            if (divider) grid.appendChild(divider);
-            lastCategory = category;
-          }
-          grid.appendChild(card);
-        } catch (e) {
-          mxLog('Error appending sorted card:', e);
-        }
-      });
-    } else {
-      // For other sorts, just append products without dividers
-      productsArray.forEach(card => {
-        try {
-          grid.appendChild(card);
-        } catch (e) {
-          mxLog('Error appending sorted card:', e);
-        }
-      });
-    }
+    actualizarDivisores();
   }
 
   // Helper to create category divider element
