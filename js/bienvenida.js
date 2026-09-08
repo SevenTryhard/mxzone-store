@@ -154,6 +154,53 @@
   }
 
   /**
+   * PISO DE RESULTADOS — 2026-09-08.
+   *
+   * La talla y la marca se multiplican: Fox + Jerseys + talla M da UN producto
+   * sobre 288. Medido en produccion, no en teoria. Un cliente nuevo contesta un
+   * cuestionario amable y aterriza en una tienda vacia — se va, y con razon.
+   *
+   * Cuando eso pasa se suelta la MARCA y se queda la TALLA, en ese orden y no
+   * al reves: la talla es una restriccion real —no te podes poner la que no es—
+   * y la marca es un gusto. Antes de dejarlo sin nada, se le muestran otras
+   * marcas en su talla.
+   *
+   * El piso es 4 porque abajo de eso la grilla ni siquiera llena una fila.
+   */
+  var PISO_DE_RESULTADOS = 4;
+
+  function visibles() {
+    var todas = document.querySelectorAll('.product-card');
+    var n = 0;
+    for (var i = 0; i < todas.length; i++) {
+      if (todas[i].style.display !== 'none') n++;
+    }
+    return n;
+  }
+
+  function aflojarSiQuedoVacio(talla) {
+    setTimeout(function () {
+      var quedan = visibles();
+
+      var marcasActivas = document.querySelectorAll('.brand-chip.active:not([data-brand="all"])');
+      if (quedan >= PISO_DE_RESULTADOS || !marcasActivas.length) {
+        if (typeof showNotification === 'function') {
+          showNotification('Filtramos por tu talla ' + talla + '. Tocala de nuevo para ver todas.', 'info');
+        }
+        return;
+      }
+
+      var todas = document.querySelector('.brand-chip[data-brand="all"]');
+      if (todas) todas.click();
+
+      if (typeof showNotification === 'function') {
+        showNotification('Casi no hay talla ' + talla + ' de tus marcas. Te mostramos todas las marcas en tu talla.', 'info');
+      }
+      log('[bienvenida] piso de resultados: quedaban ' + quedan + ', se solto el filtro de marca');
+    }, 400);
+  }
+
+  /**
    * La talla se marca sola CUANDO aparecen los chips, no antes: recien existen
    * al elegir una categoria. Se vigila el contenedor en vez de engancharse a la
    * funcion que los dibuja, para no acoplarse a main.js.
@@ -183,9 +230,7 @@
         if (candidatas.indexOf(valor) !== -1) {
           yaAplicada = true;
           chip.click();
-          if (typeof showNotification === 'function') {
-            showNotification('Filtramos por tu talla ' + valor + '. Tocala de nuevo para ver todas.', 'info');
-          }
+          aflojarSiQuedoVacio(valor);
           return;
         }
       }
