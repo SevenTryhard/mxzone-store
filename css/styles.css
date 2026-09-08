@@ -9609,14 +9609,33 @@ a {
    Botones pill para categorías, con estado activo iluminado.
    ========================================================= */
 
+/* UNA GRILLA DE VERDAD — 2026-09-08.
+   El HTML decia "Grid de chips de categorias" desde el dia uno y esto era un
+   flex-wrap: los chips se acomodaban como caian, no como correspondia. En un
+   sidebar de 280px daba ONCE filas irregulares —dos chips, uno, dos, uno, dos,
+   dos, uno, uno, uno, uno, uno— con anchos de 64px a 165px. Nada se alineaba
+   con nada y encontrar una categoria era leer un texto desparejo, no recorrer
+   una lista. Ahora cada categoria tiene su casilla, todas del mismo ancho. */
 .category-chips {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   margin-top: var(--spacing-sm);
 }
 
+/* "Todo" y "Todas" no son una categoria mas: son el borron y cuenta nueva. Van
+   solas arriba, cruzando las dos columnas. De paso las que quedan abajo son un
+   numero par y no sobra ninguna suelta al final. */
+.category-chips > .category-chip[data-category="all"],
+.brand-chips > .brand-chip[data-brand="all"] {
+  grid-column: 1 / -1;
+}
+
 .category-chips--ninos {
+  /* Una sola columna: aca TODOS los nombres son largos ("Protecciones Ninos") y
+     en media casilla se cortaban. Es una sublista de detalle, no la grilla
+     principal — a lo ancho entran enteros y se leen de un vistazo. */
+  grid-template-columns: 1fr;
   padding-left: 0;
   margin-top: var(--spacing-xs);
 }
@@ -9625,12 +9644,26 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 14px;
+  /* La casilla es angosta: menos aire a los costados y el nombre largo
+     ("Protecciones Ninos") entra en dos renglones en vez de desbordar. El
+     min-height iguala el alto del que ocupa un renglon con el de dos. */
+  /* 8px a los costados y no 14: con 14 la palabra mas larga del sidebar
+     ("Protecciones") se pasaba 3px de la casilla y se cortaba la "s". */
+  padding: 8px 8px;
+  min-height: 40px;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: break-word;
+  line-height: 1.2;
   border-radius: var(--radius-full);
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.04);
   color: var(--gray-light-text);
-  font-size: 0.85rem;
+  /* 0.8 y no 0.85: la palabra mas larga del sidebar ("Protecciones") se pasaba
+     3px de su casilla y perdia la ultima letra. Se baja para TODOS los chips
+     —no solo para ese— porque una grilla con un boton de otro tamanio deja de
+     leerse como una grilla. */
+  font-size: 0.8rem;
   font-weight: 600;
   font-family: var(--font-primary);
   cursor: pointer;
@@ -9677,7 +9710,7 @@ a {
      Sin esta regla, abrir "Filtros" en el celular mostraba CATEGORIAS como una
      caja vacia, y sin categoria elegida el filtro de tallas tampoco se llenaba. */
   .shop-sidebar .category-chips {
-    display: flex;
+    display: grid;
   }
 
   /* ---- TALLAS PRIMERO EN MOBILE ----
@@ -9705,9 +9738,11 @@ a {
    BRAND CHIPS — PC sidebar redesign (v19)
    Botones pill para marcas, con estado activo iluminado.
    ========================================================= */
+/* Misma grilla que las categorias: si el sidebar tiene dos listas, las dos se
+   leen igual. Ver el comentario largo en .category-chips. */
 .brand-chips {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   margin-top: var(--spacing-sm);
 }
@@ -9716,12 +9751,23 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 14px;
+  /* 8px a los costados y no 14: con 14 la palabra mas larga del sidebar
+     ("Protecciones") se pasaba 3px de la casilla y se cortaba la "s". */
+  padding: 8px 8px;
+  min-height: 40px;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: break-word;
+  line-height: 1.2;
   border-radius: var(--radius-full);
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.04);
   color: var(--gray-light-text);
-  font-size: 0.85rem;
+  /* 0.8 y no 0.85: la palabra mas larga del sidebar ("Protecciones") se pasaba
+     3px de su casilla y perdia la ultima letra. Se baja para TODOS los chips
+     —no solo para ese— porque una grilla con un boton de otro tamanio deja de
+     leerse como una grilla. */
+  font-size: 0.8rem;
   font-weight: 600;
   font-family: var(--font-primary);
   cursor: pointer;
