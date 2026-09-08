@@ -641,7 +641,19 @@ function initShopFiltersInternal() {
         { value: 'S', label: 'S' },
         { value: 'M', label: 'M' },
         { value: 'L', label: 'L' },
-        { value: 'XL', label: 'XL' }
+        { value: 'XL', label: 'XL' },
+        // 🔴 FALTABA XXL — 2026-09-08.
+        //
+        // Hay guantes XXL cargados en el catalogo y no habia chip para ellos:
+        // un producto que existe, tiene stock, y NO se puede encontrar
+        // filtrando. Es una venta perdida silenciosa — el cliente que usa XXL
+        // ve "no hay nada de mi talla".
+        //
+        // El agujero de fondo sigue abierto y es mas grande que este chip: esta
+        // lista esta escrita a mano y el catalogo cambia sin avisarle. Ver
+        // GORRAS, donde 11 de 13 productos son inalcanzables por el mismo
+        // motivo.
+        { value: 'XXL', label: 'XXL' }
       ],
       nino: [
         { value: 'S', label: 'S' },
@@ -751,7 +763,15 @@ function initShopFiltersInternal() {
     'SM': ['S', 'M'],
     'ML': ['M', 'L'],
     'LXL': ['L', 'XL'],
-    'SML': ['S', 'M', 'L']
+    'SML': ['S', 'M', 'L'],
+    // La misma talla escrita de otra forma. Seven, 2026-09-08: «XXL, tambien
+    // conocida como 2X». Si mañana alguien carga un guante como "2X" o "2XL",
+    // el chip XXL lo tiene que encontrar igual — la talla es la misma, lo unico
+    // que cambia es como la escribio quien cargo el producto.
+    '2X': ['XXL'],
+    '2XL': ['XXL'],
+    '3X': ['XXXL'],
+    '3XL': ['XXXL']
   };
 
   // "CONSULTAR" es un placeholder del CMS, no una talla. Lo escriben 93 productos.

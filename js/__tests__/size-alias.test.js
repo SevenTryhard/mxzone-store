@@ -82,6 +82,7 @@ const extracted = [
   extractConstStatement(mainSource, 'CALZADO_CHIPS'),
   extractConstStatement(mainSource, 'sizeMap'),
   extractConstStatement(mainSource, 'MAX_SALTOS_ALIAS'),
+  extractConstStatement(mainSource, 'TOKEN_ALIASES'),
   extractFunction(mainSource, 'resolveSizeChips')
 ].join('\n\n').replace(/^const /gm, 'var ');
 
@@ -172,5 +173,54 @@ describe('resolveSizeChips — alias de tallas', () => {
 
   it('una categoria que no existe devuelve null, no explota', () => {
     assert.equal(resolveSizeChips('categoria-inventada', 'adulto'), null);
+  });
+
+  it('GUANTES ofrece XXL', () => {
+    // 2026-09-08, reportado por Seven: hay guantes XXL cargados y no habia chip
+    // para ellos. Un producto con stock que no se puede encontrar filtrando es
+    // una venta perdida que no deja rastro: el cliente se va creyendo que no
+    // hay nada de su talla.
+    const valores = resolveSizeChips('guantes', 'adulto').map((t) => t.value);
+    assert.ok(valores.includes('XXL'), 'guantes/adulto tiene que ofrecer XXL: ' + JSON.stringify(valores));
+  });
+
+  it('las tallas van de menor a mayor, no en cualquier orden', () => {
+    // Una lista "S, XXL, M, L" se lee como un error aunque esten todas. El
+    // comprador busca la suya recorriendo la escala, no leyendo cada chip.
+    const ESCALA = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+    for (const cat of Object.keys(sizeMap)) {
+      for (const edad of EDADES) {
+        const chips = resolveSizeChips(cat, edad) || [];
+        const posiciones = chips.map((t) => ESCALA.indexOf(t.value)).filter((i) => i !== -1);
+        for (let i = 1; i < posiciones.length; i++) {
+          assert.ok(
+            posiciones[i] > posiciones[i - 1],
+            cat + '/' + edad + ' tiene las tallas desordenadas: ' + JSON.stringify(chips.map((t) => t.value))
+          );
+        }
+      }
+    }
+  });
+});
+
+describe('TOKEN_ALIASES — la misma talla escrita de otra forma', () => {
+  it('2X y 2XL llegan a XXL', () => {
+    // Seven, 2026-09-08: «XXL, tambien conocida como 2X». Quien carga el
+    // producto escribe una u otra sin pensarlo; el filtro tiene que tratarlas
+    // como la misma talla, porque lo son.
+    assert.deepEqual(TOKEN_ALIASES['2X'], ['XXL']);
+    assert.deepEqual(TOKEN_ALIASES['2XL'], ['XXL']);
+  });
+
+  it('ningun alias apunta a si mismo ni se va en circulo', () => {
+    // Un alias que se apunta a si mismo no agrega nada y esconde el error de
+    // quien lo escribio.
+    for (const [origen, destinos] of Object.entries(TOKEN_ALIASES)) {
+      assert.ok(Array.isArray(destinos), origen + ': el alias tiene que ser una lista');
+      assert.ok(!destinos.includes(origen), origen + ': un alias no puede apuntarse a si mismo');
+      for (const d of destinos) {
+        assert.ok(!TOKEN_ALIASES[d], origen + ' -> ' + d + ': el destino es a su vez un alias, se resuelve una sola vuelta');
+      }
+    }
   });
 });
