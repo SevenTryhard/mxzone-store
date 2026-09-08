@@ -11440,11 +11440,24 @@ body.bv-abierto { overflow: hidden; }
   box-shadow: var(--glow-orange-sm);
 }
 
+/* 🔴 Corregido el 2026-09-08, mirandolo en un telefono de verdad.
+   La primera version tenia las acciones al final del flujo normal y, en movil,
+   con `column-reverse`. Resultado: en pantalla se veia "Ahora no" y el boton
+   principal quedaba DEBAJO del borde del panel. La accion de escape visible y
+   la principal escondida, exactamente al reves.
+   Ahora la barra queda pegada abajo del panel mientras el contenido scrollea,
+   asi "Ver mi tienda" esta SIEMPRE a la vista. */
 .bv-acciones {
+  position: sticky;
+  bottom: calc(var(--spacing-lg) * -1);
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  margin-top: var(--spacing-md);
+  margin: var(--spacing-md) calc(var(--spacing-lg) * -1) calc(var(--spacing-lg) * -1);
+  padding: var(--spacing-sm) var(--spacing-lg) var(--spacing-md);
+  background: var(--gray-dark);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 }
 
 .bv-btn-primario {
@@ -11511,9 +11524,24 @@ body.bv-abierto { overflow: hidden; }
   .bv-capa.bv-visible .bv-panel { transform: none; }
 }
 
+[data-theme="light"] .bv-acciones {
+  background: var(--white);
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+
 @media (max-width: 480px) {
   .bv-panel { padding: var(--spacing-md); }
-  .bv-titulo { font-size: 1.2rem; }
-  .bv-acciones { flex-direction: column-reverse; align-items: stretch; }
-  .bv-btn-fantasma { width: 100%; }
+  .bv-titulo { font-size: 1.15rem; }
+  .bv-grupo { margin-bottom: var(--spacing-sm); }
+  /* Los margenes negativos siguen al padding del panel, que en movil es mas
+     chico. Si no se ajustan, la barra se sale por los costados. */
+  .bv-acciones {
+    bottom: calc(var(--spacing-md) * -1);
+    margin: var(--spacing-sm) calc(var(--spacing-md) * -1) calc(var(--spacing-md) * -1);
+    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
+  }
+  /* Los dos botones en fila, con el principal ocupando lo que sobra. Apilarlos
+     hacia arriba fue el bug de arriba; apilarlos hacia abajo empuja el
+     principal fuera de la vista en pantallas cortas. En fila entran los dos. */
+  .bv-btn-fantasma { flex: 0 0 auto; padding: 0 var(--spacing-xs); font-size: 0.85rem; }
 }
