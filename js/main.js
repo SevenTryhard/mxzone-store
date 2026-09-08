@@ -883,6 +883,34 @@ function initShopFiltersInternal() {
       .filter(c => c !== 'all');
   }
 
+  // EL LINK SE LLEVA LA CATEGORIA — 2026-09-08, pedido de Mauro.
+  //
+  // Para que cuando un cliente escriba por WhatsApp "estoy interesado en cascos"
+  // se le pueda mandar un link que le abra la tienda YA filtrada en cascos.
+  //
+  // La tienda siempre supo LEER `?cat=`; lo que faltaba era ESCRIBIRLO. Uno
+  // tocaba Cascos y la barra de direcciones seguia diciendo /shop, asi que no
+  // habia ningun link que copiar: habia que saberse la URL de memoria.
+  //
+  // Va con replaceState y no con pushState porque filtrar no es navegar. Con
+  // pushState, mirar cinco categorias deja cinco entradas en el historial y
+  // salir de la tienda con el boton Atras del celular costaria cinco toques.
+  //
+  // Se toca SOLO el parametro `cat`: lo demas que traiga el link —una campaña,
+  // un utm— se conserva.
+  function sincronizarURLConCategorias() {
+    if (!window.history || typeof history.replaceState !== 'function') return;
+    try {
+      const url = new URL(window.location.href);
+      const activas = getActiveCategories();
+      if (activas.length) url.searchParams.set('cat', activas.join(','));
+      else url.searchParams.delete('cat');
+      history.replaceState(history.state, '', url.pathname + url.search + url.hash);
+    } catch (e) {
+      mxLog('No se pudo escribir la categoria en la URL:', e);
+    }
+  }
+
   function setActiveCategories(categories) {
     categoryChips.forEach(btn => {
       btn.classList.toggle('active', categories.includes(btn.dataset.category));
@@ -890,6 +918,7 @@ function initShopFiltersInternal() {
     categoryFilters.forEach(cb => {
       cb.checked = categories.includes(cb.dataset.category) || (categories.length === 0 && cb.dataset.category === 'all');
     });
+    sincronizarURLConCategorias();
   }
 
   function getActiveBrands() {
@@ -1961,10 +1990,17 @@ function initShopFiltersInternal() {
   const urlParams = new URLSearchParams(window.location.search);
   const urlCategory = urlParams.get('cat');
   if (urlCategory) {
-    setActiveCategories([urlCategory]);
-    renderSizeChips();
-    updateQuickFilterChips();
-    filterProducts();
+    // Se aceptan varias separadas por coma ("?cat=cascos,guantes") porque asi es
+    // como las escribe `sincronizarURLConCategorias` cuando alguien usa el
+    // Shift+click del sidebar. Si el link trae una sola, esto es una lista de
+    // uno y funciona igual.
+    const pedidas = urlCategory.split(',').map(c => c.trim()).filter(Boolean);
+    if (pedidas.length) {
+      setActiveCategories(pedidas);
+      renderSizeChips();
+      updateQuickFilterChips();
+      filterProducts();
+    }
   }
 
   // Category Parent Toggle - "Todo" (sidebar PC) — legacy, ignorar si no existe
