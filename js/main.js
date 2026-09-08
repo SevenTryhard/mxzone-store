@@ -720,8 +720,12 @@ function initShopFiltersInternal() {
     return Array.isArray(tallas) ? tallas : null;
   }
 
-  // Categories that support the Adulto/Niño toggle
-  const categoriesWithAgeToggle = ['cascos', 'uniformes', 'jersey', 'botas', 'guantes', 'protecciones'];
+  // Esta lista decidia que categorias mostraban el selector Adulto/Niño. Se
+  // borro el 2026-09-08: era otra lista escrita a mano que el catalogo podia
+  // desmentir —BOTAS estaba adentro y no tiene ni una talla de niño, y en
+  // cambio habia un casco YM en CASCOS que el selector nunca mostraba—. Ahora
+  // el selector aparece cuando la categoria tiene tallas de las dos clases, y
+  // eso se sabe mirando los productos: la "Y" es de "youth" (ver esTallaDeNino).
 
   // CMS raw size → filterable normalized sizes (extends the raw string so .includes() works)
   function getNormalizedFilterSizes(rawSizes) {
@@ -818,8 +822,12 @@ function initShopFiltersInternal() {
   // son comparables entre si, y una EU (42) tampoco lo es con una letra (L):
   // ordenarlas en una sola lista plana daria un resultado arbitrario. Cada banda
   // se ordena por dentro y las bandas van de menor a mayor.
+  // La "Y" es de "youth": YS, YM, YL, YLG, YXL son tallas de niño. Dato de
+  // Seven, 2026-09-08. Por eso van en su propia banda y salen antes que las de
+  // adulto — y por eso alcanza con mirar la primera letra para saber a que lado
+  // del selector Adulto/Niño va una talla, sin listas escritas a mano.
   const SIZE_BANDS = [
-    ['KIDS', 'YS', 'YM', 'YL', 'YXL'],
+    ['KIDS', 'YS', 'YM', 'YL', 'YLG', 'YXL'],
     ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL']
   ];
   const SIZE_RANK_UNKNOWN = 9999;
@@ -945,45 +953,68 @@ function initShopFiltersInternal() {
 
     sizeFilterContainer.classList.remove('size-filter-chips--loading');
     const cat = selectedCats[0];
-    const catMap = sizeMap[cat];
 
-    if (!catMap) {
-      // FIX #018: categoria dinamica (administrada desde 4ULAB) sin mapa estatico.
-      // En vez de dejar el filtro vacio, derivamos las tallas REALES desde las
-      // product-card ya renderizadas de esa categoria. Robusto para cualquier
-      // categoria nueva sin tener que hardcodear su mapa.
-      const derived = deriveSizesFromDOM(cat);
-      if (sizeAgeToggle) { sizeAgeToggle.style.display = 'none'; sizeAgeToggle.classList.remove('visible'); }
-      if (derived.length > 0) {
-        sizeFilterContainer.classList.remove('size-filter-chips--loading');
-        sizeFilterContainer.innerHTML = derived.map(sizeChipHtml).join('');
-      } else {
-        sizeFilterContainer.innerHTML = '';
-        sizeFilterContainer.classList.add('size-filter-chips--loading');
-      }
-      return;
-    }
+    // Las tallas que esta categoria tiene DE VERDAD, leidas de los productos con
+    // la MISMA funcion que usa el filtro para decidir si una card entra o no
+    // (`getNormalizedFilterTokens`). Que sea la misma es el punto: mientras
+    // fueran dos, podian —y solian— no coincidir.
+    const escapeCat = (c) => {
+      try { return window.CSS && CSS.escape ? CSS.escape(c) : c; } catch (e) { return c; }
+    };
+    const cards = document.querySelectorAll('.product-card[data-category="' + escapeCat(cat) + '"]');
 
-    // Show/hide age toggle
-    if (sizeAgeToggle) {
-      if (categoriesWithAgeToggle.includes(cat)) {
-        sizeAgeToggle.style.display = 'flex';
-        sizeAgeToggle.classList.add('visible');
-      } else {
-        sizeAgeToggle.style.display = 'none';
-        sizeAgeToggle.classList.remove('visible');
-      }
-    }
-
-    const sizes = resolveSizeChips(cat, currentSizeAge);
-    if (!sizes || !Array.isArray(sizes) || sizes.length === 0) {
+    // Todavia no se renderizaron los productos: no se sabe nada, y decir "sin
+    // tallaje" seria mentir. Se espera.
+    if (!cards.length) {
       sizeFilterContainer.innerHTML = '';
-      if (sizeAgeToggle) sizeAgeToggle.style.display = 'none';
+      sizeFilterContainer.classList.add('size-filter-chips--loading');
+      if (sizeAgeToggle) { sizeAgeToggle.style.display = 'none'; sizeAgeToggle.classList.remove('visible'); }
       return;
     }
 
-    // Build chips
-    sizeFilterContainer.innerHTML = sizes.map(sizeChipHtml).join('');
+    const productos = Array.from(cards).map(card => ({
+      tokens: getNormalizedFilterTokens(card.getAttribute('data-sizes') || '')
+    }));
+
+    // El selector Adulto/Niño ya no se decide por una lista de categorias: se
+    // decide por lo que hay. Si esta categoria tiene tallas de las dos clases,
+    // el selector sirve; si no, sobra y se esconde.
+    const relaciones = relacionesDeCompuestos(productos);
+    const deNino = (t) => esTallaDeNino(t, relaciones);
+    const hayDeNino = productos.some(p => p.tokens.some(deNino));
+    const hayDeAdulto = productos.some(p => p.tokens.some(t => !deNino(t)));
+    const usaSelector = hayDeNino && hayDeAdulto;
+
+    if (sizeAgeToggle) {
+      if (usaSelector) { sizeAgeToggle.style.display = 'flex'; sizeAgeToggle.classList.add('visible'); }
+      else { sizeAgeToggle.style.display = 'none'; sizeAgeToggle.classList.remove('visible'); }
+    }
+
+    const paraLaEdad = usaSelector
+      ? productos.map(p => ({
+          tokens: p.tokens.filter(t => (currentSizeAge === 'nino' ? deNino(t) : !deNino(t)))
+        }))
+      : productos;
+
+    // El mapa ya no es la lista: aporta el ORDEN y la ETIQUETA ("S/30" en
+    // uniformes, la pista de EU en botas). Quien decide QUE chips hay es el
+    // catalogo.
+    const mapa = resolveSizeChips(cat, currentSizeAge);
+    const { chips, sinTallaje } = construirChipsDeTalla(paraLaEdad, mapa, TOKEN_ALIASES);
+
+    if (sinTallaje) {
+      // Pedido de Seven, 2026-09-08: cuando una categoria no maneja tallas, que
+      // lo diga. Antes se ofrecia un chip "Única" que daba CERO resultados
+      // siempre —porque el codigo borra "Consultar" de los productos pero
+      // ofrecia "Única" como chip: la misma idea escrita de dos formas—. Un
+      // filtro que promete y no cumple es peor que uno que no esta.
+      sizeFilterContainer.innerHTML =
+        '<p class="size-filter-aviso">Producto sin tallaje.' +
+        '<span>En esta categoría los productos vienen en talla única o se consultan al comprar.</span></p>';
+      return;
+    }
+
+    sizeFilterContainer.innerHTML = chips.map(sizeChipHtml).join('');
   }
 
   function updateActiveFilterCount(n) {
@@ -1005,6 +1036,182 @@ function initShopFiltersInternal() {
   // FIX #021: acepta una categoria, un array de categorias, o nada — sin
   // categoria deriva de TODAS las cards, que es lo que necesita el cajon de
   // filtros cuando todavia no elegiste categoria.
+  /**
+   * Las tallas compuestas que el catalogo REALMENTE tiene: "30-S" dice que el
+   * 30 y la S son la misma talla escrita de dos formas.
+   *
+   * Se lee del catalogo y no de una tabla escrita a mano porque cada categoria
+   * usa la suya —uniformes 30-S, uniformes de niño 26-YL— y mañana puede
+   * aparecer otra. Devuelve numero -> letras.
+   *
+   * "10-US" NO cuenta: ahi el "US" es la unidad, no una talla equivalente.
+   */
+  function relacionesDeCompuestos(productos) {
+    const deNumero = new Map();
+    (productos || []).forEach(p => {
+      ((p && p.tokens) || []).forEach(t => {
+        const m = /^(\d+)-([A-Z]+)$/.exec(t);
+        if (!m || m[2] === 'US') return;
+        if (!deNumero.has(m[1])) deNumero.set(m[1], new Set());
+        deNumero.get(m[1]).add(m[2]);
+      });
+    });
+    return deNumero;
+  }
+
+  /**
+   * ¿Talla de niño? La "Y" es de "youth" (dato de Seven, 2026-09-08).
+   *
+   * El numero solo no dice nada por si mismo: el "26" de un uniforme de niño se
+   * escribe "26-YL", asi que se pregunta por su pareja. Sin esto, UNIFORMES NIÑOS
+   * mostraba "22 24 26 28" del lado de ADULTO —numeros sin Y— y las tallas de
+   * niño de verdad no aparecian en ningun lado.
+   */
+  function esTallaDeNino(valor, relaciones) {
+    const esLetraDeNino = (x) => x === 'KIDS' || /^Y/.test(x);
+    const t = foldAccents(String(valor || '').toUpperCase()).trim();
+
+    if (esLetraDeNino(t)) return true;
+
+    // La forma compuesta entera: "26-YL" es de niño aunque empiece con un 2.
+    // Sin esta linea el compuesto caia del lado ADULTO y UNIFORMES NIÑOS se
+    // quedaba con el filtro VACIO: en adulto solo sobrevivian los compuestos,
+    // que no se muestran como chip, y las tallas de niño no se llegaban a mirar.
+    const compuesta = /^\d+-([A-Z]+)$/.exec(t);
+    if (compuesta && esLetraDeNino(compuesta[1])) return true;
+
+    // El numero suelto: el "26" de "26-YL" es de niño, pero eso solo se sabe
+    // mirando con quien viene emparejado en ESTE catalogo.
+    if (relaciones && relaciones.has(t)) {
+      for (const letra of relaciones.get(t)) if (esLetraDeNino(letra)) return true;
+    }
+    return false;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // LOS CHIPS SALEN DEL CATALOGO, NO DE UNA LISTA ESCRITA A MANO — 2026-09-08
+  // ═══════════════════════════════════════════════════════════════════════
+  //
+  // EL PROBLEMA QUE CIERRA. Hasta hoy, si una categoria tenia entrada en
+  // `sizeMap`, los chips salian de ahi y el catalogo no opinaba. La lista estaba
+  // escrita a mano y el inventario cambia desde el CMS sin avisarle. Resultado
+  // medido en produccion el 2026-09-08, sobre 295 productos:
+  //
+  //   - GORRAS: 11 de 13 productos IMPOSIBLES de encontrar filtrando. Los chips
+  //     ofrecian "Unica" y las gorras estan cargadas "SM" y "L/XL".
+  //   - GUANTES: los XXL no tenian chip.
+  //   - MALETAS: la "GRANDE" no tenia chip.
+  //   - Cinco categorias con un chip "Unica" que daba CERO resultados siempre.
+  //
+  // Un producto con stock que no se puede encontrar es una venta perdida que no
+  // deja rastro: el cliente se va creyendo que no hay nada de su talla.
+  //
+  // LA REGLA NUEVA, en una linea: si existe un producto en una talla, esa talla
+  // tiene chip; y si no existe, no lo tiene.
+  //
+  // El `sizeMap` no desaparece: deja de ser la LISTA y pasa a ser el ORDEN y la
+  // ETIQUETA. Es lo que conserva "S/30" en uniformes y la pista de EU en botas.
+  //
+  // Es una funcion pura a proposito: recibe listas de tokens y devuelve chips.
+  // Asi se puede probar sin navegador, que es lo que faltaba para que estos bugs
+  // se cazaran solos en vez de aparecer en la tienda.
+  function construirChipsDeTalla(productos, mapa, aliasConocidos) {
+    const alias = aliasConocidos || {};
+    const relaciones = relacionesDeCompuestos(productos);
+    const conTalla = [];
+    const porToken = new Map();
+
+    productos.forEach((p, i) => {
+      const tokens = (p && p.tokens) || [];
+      if (!tokens.length) return;
+      conTalla.push(i);
+      tokens.forEach(t => {
+        if (!porToken.has(t)) porToken.set(t, new Set());
+        porToken.get(t).add(i);
+      });
+    });
+
+    // Ni un producto con talla: la categoria no maneja tallaje. Se dice, en vez
+    // de ofrecer un chip que no va a encontrar nada nunca.
+    if (!porToken.size) return { chips: [], sinTallaje: true };
+
+    const elegidos = [];
+    const yaEsta = new Set();
+    const agregar = (value, label) => {
+      if (yaEsta.has(value)) return;
+      yaEsta.add(value);
+      elegidos.push({ value: value, label: label || value });
+    };
+
+    // 1) Lo que el mapa conoce Y el catalogo tiene. El mapa aporta la etiqueta.
+    (mapa || []).forEach(t => { if (porToken.has(t.value)) agregar(t.value, t.label); });
+
+    // 2) Lo que el catalogo tiene y el mapa no conocia. Este paso es el arreglo:
+    //    antes esto simplemente no existia y el producto quedaba invisible.
+    //    Se saltean las formas crudas compuestas ("30-S", "10-US"): sus dos
+    //    mitades ya viajan sueltas y el chip suelto las encuentra igual.
+    const esCompuesto = (t) => /^\d+-[A-Z]+$/.test(t);
+    Array.from(porToken.keys())
+      .filter(t => !esCompuesto(t))
+      .sort((a, b) => getSizeTokenRank(a) - getSizeTokenRank(b))
+      .forEach(t => agregar(t));
+
+    // 3) Sacar lo que SOBRA — y solo lo que sobra.
+    //
+    //    Sobra un chip cuando dice LA MISMA talla que otro que ya esta, escrita
+    //    de otra forma. Hay exactamente dos casos, y los dos se comprueban
+    //    contra el catalogo, no se adivinan:
+    //
+    //      a) un numero cuya pareja en un compuesto ya es chip: el "30" de
+    //         "30-S" cuando la S esta. En uniformes son la misma talla.
+    //      b) una talla combinada cuyas partes ya son chips: "SM" cuando estan
+    //         la S y la M. En gorras es la misma talla.
+    //
+    //    🔴 LO QUE NO SE PUEDE HACER, y me lo comi en el primer intento: sacar
+    //    un chip solo porque los productos que lo tienen ya se encuentran por
+    //    otro lado. Con esa regla el "12" de BOTAS desaparecia —lo tenia un solo
+    //    par, cargado "7/8/9/10/11/12", que igual se encontraba por el 7— y el
+    //    cliente que calza 12 se quedaba sin poder filtrar su talla. Un producto
+    //    encontrable no es lo mismo que una talla encontrable.
+    const esNumeroRedundante = (v, chipsActuales) => {
+      if (!/^\d+$/.test(v)) return false;
+      const parejas = relaciones.get(v);
+      if (!parejas) return false;
+      for (const letra of parejas) if (chipsActuales.has(letra)) return true;
+      return false;
+    };
+
+    const esCombinadaRedundante = (v, chipsActuales) => {
+      const partes = alias[v];
+      if (!partes || !partes.length) return false;
+      return partes.every(p => chipsActuales.has(p));
+    };
+
+    // Y aun cumpliendo lo de arriba, nunca se saca si eso deja a un producto sin
+    // ningun chip que lo encuentre.
+    const cubreATodos = (lista) => {
+      const s = new Set(lista.map(c => c.value));
+      return conTalla.every(i => productos[i].tokens.some(t => s.has(t)));
+    };
+
+    const finales = elegidos.slice();
+    for (let i = finales.length - 1; i >= 0; i--) {
+      const v = finales[i].value;
+      const restantes = new Set(finales.filter((_, j) => j !== i).map(c => c.value));
+      if (!esNumeroRedundante(v, restantes) && !esCombinadaRedundante(v, restantes)) continue;
+      const prueba = finales.slice(0, i).concat(finales.slice(i + 1));
+      if (cubreATodos(prueba)) finales.splice(i, 1);
+    }
+
+    finales.sort((a, b) => {
+      const ra = getSizeTokenRank(a.value), rb = getSizeTokenRank(b.value);
+      if (ra !== rb) return ra - rb;
+      return a.value.localeCompare(b.value);
+    });
+
+    return { chips: finales, sinTallaje: false };
+  }
+
   function deriveSizesFromDOM(cat, opts) {
     const soloConocidas = !!(opts && opts.soloConocidas);
     const cats = (Array.isArray(cat) ? cat : (cat ? [cat] : [])).filter(Boolean);
