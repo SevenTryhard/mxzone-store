@@ -1136,6 +1136,17 @@ function initShopFiltersInternal() {
   window.filterProducts = filterProducts;
 
   // Sort function
+  /** Lee del atributo de la card la posicion que tiene en una talla. */
+  function ordenDeCardEnTalla(card, talla) {
+    try {
+      const mapa = JSON.parse(card.getAttribute('data-orden-tallas') || '{}');
+      const k = String(talla || '').trim().toUpperCase();
+      return (k in mapa) ? mapa[k] : null;
+    } catch (e) {
+      return null;  // atributo roto: se comporta como sin posicionar
+    }
+  }
+
   function sortProducts() {
     const sortBy = sortSelect?.value || 'default';
     const productsArray = Array.from(document.querySelectorAll('.product-card'));
@@ -1149,6 +1160,11 @@ function initShopFiltersInternal() {
 
     // Se calcula una sola vez por tanda, no una por comparacion.
     const sizeSelection = sortBy.startsWith('size-') ? getSelectedSizes() : null;
+
+    // La prioridad por talla solo significa algo con UNA talla marcada: con dos
+    // no existe "el orden de los S y los M a la vez".
+    const tallasMarcadas = getSelectedSizes();
+    const tallaUnica = tallasMarcadas.length === 1 ? tallasMarcadas[0] : null;
 
     productsArray.sort((a, b) => {
       try {
@@ -1180,8 +1196,24 @@ function initShopFiltersInternal() {
             if (rankA === rankB) return nameA.localeCompare(nameB);
             return sortBy === 'size-asc' ? rankA - rankB : rankB - rankA;
           }
-          default:
-            return 0;
+          default: {
+            // PRIORIDAD DENTRO DE LA TALLA — 2026-09-08.
+            //
+            // El orden normal del catalogo es el comercial (`sortOrder` por
+            // producto) y llega ya ordenado desde el API: por eso este `default`
+            // devolvia 0, para no tocarlo. Se sigue respetando.
+            //
+            // Lo unico que se agrega: cuando el comprador esta mirando UNA sola
+            // talla, los productos que el duenio posiciono EN ESA TALLA van
+            // primero, en su orden. Los que no posiciono quedan detras en el
+            // orden comercial de siempre — `compararPorOrdenDeTalla` devuelve 0
+            // y `Array.sort` es estable, asi que no se inventa un orden nuevo.
+            if (!tallaUnica) return 0;
+            return compararPorOrdenDeTalla(
+              ordenDeCardEnTalla(a, tallaUnica),
+              ordenDeCardEnTalla(b, tallaUnica)
+            );
+          }
         }
       } catch (e) {
         mxLog('Error sorting products:', e);
@@ -1525,6 +1557,8 @@ function initShopFiltersInternal() {
       }
 
       filterProducts();
+      // Reordenar tambien: al cambiar de talla cambia cual es el orden que manda.
+      sortProducts();
 
       const activas = Array.from(sizeFilterContainer.querySelectorAll('.size-chip.active'));
       if (activas.length === 0) {

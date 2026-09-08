@@ -221,3 +221,74 @@ describe('adaptProductFrom4ULAB — que las piezas esten CONECTADAS', () => {
     assert.deepEqual(r.variantes, [{ talla: 'S', stock: 2 }]);
   });
 });
+
+// ═══════════════════════════════════════════════════════════════════════════
+// TANDA 3 — la prioridad DENTRO de cada talla
+// ═══════════════════════════════════════════════════════════════════════════
+// El catalogo ya tiene un orden comercial por producto. Esto agrega el segundo
+// nivel: dentro de una talla, cual va primero.
+//
+// Lo que hay que proteger: que cuando NADIE posiciono nada, no se invente un
+// orden. El comparador tiene que devolver 0 para que Array.sort —que es
+// estable— deje el orden comercial que ya venia del API.
+describe('orden dentro de la talla', () => {
+  const ordenar = new Function(
+    extractFunction(source, 'claveDeTalla') + '\n' +
+    extractFunction(source, 'ordenDeTallaDe') + '\n' +
+    extractFunction(source, 'compararPorOrdenDeTalla') + '\n' +
+    'return { ordenDeTallaDe, compararPorOrdenDeTalla };'
+  )();
+
+  const { ordenDeTallaDe, compararPorOrdenDeTalla } = ordenar;
+
+  it('lee la posicion de la talla que le pidan', () => {
+    const v = [{ talla: 'S', sortOrder: 2 }, { talla: 'M', sortOrder: 0 }];
+    assert.equal(ordenDeTallaDe(v, 'S'), 2);
+    assert.equal(ordenDeTallaDe(v, 'M'), 0, 'el 0 es una posicion valida, no "sin poner"');
+  });
+
+  it('sin posicionar da null, no 0', () => {
+    // Si esto devolviera 0, "sin posicionar" se colaria al primer puesto.
+    assert.equal(ordenDeTallaDe([{ talla: 'S', sortOrder: null }], 'S'), null);
+    assert.equal(ordenDeTallaDe([{ talla: 'S' }], 'S'), null);
+    assert.equal(ordenDeTallaDe([{ talla: 'S', sortOrder: 1 }], 'XXL'), null);
+    assert.equal(ordenDeTallaDe(null, 'S'), null);
+  });
+
+  it('no importa la mayuscula', () => {
+    assert.equal(ordenDeTallaDe([{ talla: 's', sortOrder: 5 }], 'S'), 5);
+  });
+
+  it('LA REGLA: si nadie posiciono, NO se toca el orden', () => {
+    // Devolver 0 hace que Array.sort (estable) deje el orden comercial del API.
+    assert.equal(compararPorOrdenDeTalla(null, null), 0);
+    assert.equal(compararPorOrdenDeTalla(undefined, undefined), 0);
+  });
+
+  it('lo posicionado va ANTES que lo no posicionado', () => {
+    assert.ok(compararPorOrdenDeTalla(3, null) < 0);
+    assert.ok(compararPorOrdenDeTalla(null, 3) > 0);
+    // incluso el 0, que es la primera posicion
+    assert.ok(compararPorOrdenDeTalla(0, null) < 0);
+  });
+
+  it('entre dos posicionados manda el numero', () => {
+    assert.ok(compararPorOrdenDeTalla(1, 2) < 0);
+    assert.ok(compararPorOrdenDeTalla(2, 1) > 0);
+    assert.equal(compararPorOrdenDeTalla(2, 2), 0);
+    assert.ok(compararPorOrdenDeTalla(0, 1) < 0, 'el 0 va primero de todos');
+  });
+
+  it('ordena una lista entera como se espera', () => {
+    const cards = [
+      { n: 'sin poner A', o: null },
+      { n: 'tercero', o: 2 },
+      { n: 'sin poner B', o: null },
+      { n: 'primero', o: 0 },
+      { n: 'segundo', o: 1 },
+    ];
+    const r = [...cards].sort((a, b) => compararPorOrdenDeTalla(a.o, b.o)).map(c => c.n);
+    assert.deepEqual(r, ['primero', 'segundo', 'tercero', 'sin poner A', 'sin poner B'],
+      'los posicionados en orden, y los demas detras SIN alterar su orden relativo');
+  });
+});

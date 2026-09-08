@@ -77,6 +77,48 @@ function hayStockDeTalla(mapa, talla) {
  * producto entero se marca agotado: con una sola talla disponible se sigue
  * vendiendo, y el selector se encarga del resto.
  */
+/**
+ * PRIORIDAD DENTRO DE LA TALLA — 2026-09-08
+ *
+ * El catalogo ya tiene un orden comercial por PRODUCTO (`sortOrder`, que la
+ * tienda respeta desde el 2026-08-23). Esto agrega el segundo nivel que pidio
+ * Seven: dentro de una misma talla, que se pueda decir cual va primero.
+ *
+ * Para que signifique algo tienen que pasar dos cosas a la vez: que el
+ * comprador este mirando UNA sola talla, y que el duenio haya posicionado algo
+ * en esa talla. Si no, no se toca nada y manda el orden de siempre.
+ *
+ * `null` = "no lo posicione" y va al final, detras de todo lo posicionado.
+ * `0` es una posicion valida y significa "primero de todos", igual que en
+ * products.sortOrder. Por eso no se puede usar 0 como "sin poner".
+ */
+function ordenDeTallaDe(variantes, talla) {
+  if (!Array.isArray(variantes)) return null;
+  const k = claveDeTalla(talla);
+  for (let i = 0; i < variantes.length; i++) {
+    const v = variantes[i];
+    if (v && claveDeTalla(v.talla) === k) {
+      const n = v.sortOrder;
+      return (n === null || n === undefined) ? null : Number(n);
+    }
+  }
+  return null;
+}
+
+/**
+ * Compara dos cards para ordenarlas dentro de una talla. Devuelve 0 cuando
+ * ninguna esta posicionada, para que quien llama deje el orden que ya tenia —
+ * el comercial del catalogo— en vez de inventar uno.
+ */
+function compararPorOrdenDeTalla(ordenA, ordenB) {
+  const a = (ordenA === null || ordenA === undefined) ? null : Number(ordenA);
+  const b = (ordenB === null || ordenB === undefined) ? null : Number(ordenB);
+  if (a === null && b === null) return 0;   // ninguna posicionada: no se toca
+  if (a === null) return 1;                 // sin posicionar va DESPUES
+  if (b === null) return -1;
+  return a - b;
+}
+
 function todasLasTallasAgotadas(mapa, tallas) {
   if (!mapa || !Array.isArray(tallas) || tallas.length === 0) return false;
   const conocidas = tallas.filter(t => claveDeTalla(t) in mapa);
@@ -443,6 +485,14 @@ function createProductCard(product) {
   // que `addProductToCart` pueda decidir sin volver a pedirle nada al servidor.
   const stockTallas = mapaDeStockPorTalla(product.variantes);
 
+  // Orden por talla, para que main.js pueda reordenar sin volver a pedir nada.
+  const ordenTallas = {};
+  (Array.isArray(product.variantes) ? product.variantes : []).forEach(v => {
+    if (!v) return;
+    const k = claveDeTalla(v.talla);
+    if (k) ordenTallas[k] = (v.sortOrder === null || v.sortOrder === undefined) ? null : Number(v.sortOrder);
+  });
+
   // Una talla agotada se muestra pero NO se puede elegir. Esconderla seria
   // peor: el cliente que busca su talla creeria que el producto nunca la tuvo,
   // en vez de entender que hoy no hay y puede volver.
@@ -464,7 +514,8 @@ function createProductCard(product) {
          data-images='${JSON.stringify(images).replace(/'/g, "&#39;")}'
          data-slug="${productSlug}"
          data-sizes="${product.sizes || 'Única'}"
-         data-stock-tallas='${JSON.stringify(stockTallas).replace(/'/g, "&#39;")}'>
+         data-stock-tallas='${JSON.stringify(stockTallas).replace(/'/g, "&#39;")}'
+         data-orden-tallas='${JSON.stringify(ordenTallas).replace(/'/g, "&#39;")}'>
       <div class="product-image">
         <img src="${mainImage}" alt="${product.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <span class="product-image-placeholder" style="display:none;">MX</span>
