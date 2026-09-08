@@ -678,12 +678,37 @@ async function renderShopProducts() {
 }
 
 // Actualizar contador de resultados
+//
+// 🔴 FIX 2026-09-07 — entrando por un link con categoria (shop?cat=jersey, que
+// es como se llega desde el menu del inicio) el encabezado decia "0 productos
+// encontrados" con 34 jerseys listados abajo. Tocando la categoria con el mouse
+// el numero salia bien, asi que el bug SOLO se veia por el camino por el que
+// entra la gente desde afuera.
+//
+// Son dos archivos escribiendo el mismo numero. filterProducts() de main.js lo
+// deja bien, y 100ms despues renderShopProducts llama a esta funcion, que lo
+// pisa. El pisoton daba 0 por como contaba:
+//
+//   '.product-card[style="display: block"]'
+//
+// Eso compara el ATRIBUTO style como texto exacto. Cuando el JS hace
+// `card.style.display = 'block'`, el navegador escribe `style="display: block;"`
+// —con punto y coma— y la comparacion exacta no matchea NINGUNA. La segunda
+// mitad del selector, `:not([style*="display"])`, tampoco: a esa altura todas
+// las cards tienen display puesto. Cero de 288.
+//
+// Ahora se mide la realidad —que la card no este oculta— en vez de adivinarla
+// desde la forma del atributo. Da lo mismo que filterProducts, asi que los dos
+// escritores coinciden y ya no importa cual va ultimo.
 function updateResultsCount() {
   const resultsCount = document.getElementById('resultsCount');
-  const visibleCards = document.querySelectorAll('.product-card[style="display: block"], .product-card:not([style*="display"])').length;
-  if (resultsCount) {
-    resultsCount.textContent = visibleCards;
-  }
+  if (!resultsCount) return;
+
+  const visibleCards = Array.from(document.querySelectorAll('.product-card'))
+    .filter(card => card.style.display !== 'none')
+    .length;
+
+  resultsCount.textContent = visibleCards;
 }
 
 // Inicializar cuando el DOM esté listo
