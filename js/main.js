@@ -597,6 +597,45 @@ function initShopFiltersInternal() {
     accesorios: { adulto: [{ value: 'Unica', label: 'Única' }], nino: [{ value: 'Unica', label: 'Única' }] }
   };
 
+  // Devuelve los chips de talla de una categoria+edad, resolviendo alias.
+  //
+  // 🔴 FIX 2026-09-07 — JERSEYS no mostraba NINGUNA talla en la tienda. Un
+  // cliente que entraba a Jerseys veia la fila de tallas vacia, que se lee como
+  // "no hay nada de mi talla". Venta perdida, en produccion, desde que existe
+  // la categoria.
+  //
+  // La causa: un alias se puede escribir en DOS niveles y solo se resolvia uno.
+  //   a) categoria entera:  jersey: 'uniformes'
+  //   b) por edad:          jersey: { adulto: 'uniformes', nino: 'uniformes' }
+  // `jersey` esta escrito en la forma (b), asi que el valor de la categoria era
+  // un OBJETO: el bucle que resolvia alias no corria ni una vez y las tallas
+  // terminaban siendo el string 'uniformes' en vez de un array. El
+  // `Array.isArray()` de renderSizeChips daba false y vaciaba la fila.
+  // El comentario que estaba ahi prometia resolver "el alias anidado"; el
+  // codigo nunca lo hizo.
+  //
+  // Vive aca afuera y no adentro de renderSizeChips a proposito: renderSizeChips
+  // toca el DOM y no se puede testear, y esto SI —lo cubre size-alias.test.js,
+  // que recorre TODAS las categorias y las dos edades. Un alias mal escrito en
+  // el futuro rompe el test, no la tienda.
+  const MAX_SALTOS_ALIAS = 5; // tope: un alias circular no cuelga la pagina
+  function resolveSizeChips(cat, edad) {
+    let mapa = sizeMap[cat];
+    let saltos = 0;
+    while (typeof mapa === 'string' && saltos++ < MAX_SALTOS_ALIAS) {
+      mapa = sizeMap[mapa];
+    }
+
+    let tallas = mapa ? mapa[edad] : null;
+    saltos = 0;
+    while (typeof tallas === 'string' && saltos++ < MAX_SALTOS_ALIAS) {
+      const destino = sizeMap[tallas];
+      tallas = destino ? destino[edad] : null;
+    }
+
+    return Array.isArray(tallas) ? tallas : null;
+  }
+
   // Categories that support the Adulto/Niño toggle
   const categoriesWithAgeToggle = ['cascos', 'uniformes', 'jersey', 'botas', 'guantes', 'protecciones'];
 
@@ -841,15 +880,7 @@ function initShopFiltersInternal() {
       }
     }
 
-    // Resolve alias (e.g., jersey → use uniformes map)
-    // Defensa: si catMap es un objeto cuyos valores son strings (alias anidado),
-    // seguir resolviendo hasta obtener el mapa real de tallas.
-    let resolvedMap = catMap;
-    while (typeof resolvedMap === 'string') {
-      resolvedMap = sizeMap[resolvedMap];
-    }
-
-    const sizes = resolvedMap ? resolvedMap[currentSizeAge] : null;
+    const sizes = resolveSizeChips(cat, currentSizeAge);
     if (!sizes || !Array.isArray(sizes) || sizes.length === 0) {
       sizeFilterContainer.innerHTML = '';
       if (sizeAgeToggle) sizeAgeToggle.style.display = 'none';
