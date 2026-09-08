@@ -151,3 +151,73 @@ describe('todasLasTallasAgotadas — esconder el producto entero', () => {
     assert.equal(todasLasTallasAgotadas({ S: 0 }, []), false);
   });
 });
+
+// ═══════════════════════════════════════════════════════════════════════════
+// LA PRUEBA QUE FALTABA — 2026-09-08
+// ═══════════════════════════════════════════════════════════════════════════
+// Todo lo de arriba pasaba en verde con la tienda ROTA en produccion.
+//
+// Las cuatro funciones habian quedado declaradas ADENTRO de createProductCard,
+// asi que `adaptProductFrom4ULAB` —que esta mas arriba en el archivo y corre
+// antes— tiraba "todasLasTallasAgotadas is not defined" en CADA producto. El
+// adaptador entero fallaba, la carga desde 4ULAB se iba por el catch y la
+// tienda caia al catalogo viejo de respaldo: 22 jerseys en vez de 33.
+//
+// Probar las piezas sueltas no prueba que esten conectadas. Esta corre el
+// adaptador de verdad, que es lo unico que lo habria cazado.
+describe('adaptProductFrom4ULAB — que las piezas esten CONECTADAS', () => {
+  const adaptador = new Function(
+    extractFunction(source, 'claveDeTalla') + '\n' +
+    extractFunction(source, 'mapaDeStockPorTalla') + '\n' +
+    extractFunction(source, 'hayStockDeTalla') + '\n' +
+    extractFunction(source, 'todasLasTallasAgotadas') + '\n' +
+    extractFunction(source, 'adaptProductFrom4ULAB') + '\n' +
+    'return adaptProductFrom4ULAB;'
+  )();
+
+  const PRODUCTO = {
+    id: 1, name: 'JERSEY FOX 180 IMAGEPRINT ORNG', slug: 'jersey-fox-180',
+    price: '189000', stock: 1, category: 'jersey',
+    attributes: { tallas: ['S', 'M', 'XL'], marca: 'Fox' },
+    images: ['a.jpg'],
+  };
+
+  it('no explota con un producto real del API', () => {
+    assert.doesNotThrow(() => adaptador({ ...PRODUCTO, variantes: [] }));
+  });
+
+  it('no explota cuando el API NO manda variantes', () => {
+    // Una tienda vieja, o el API antes de este cambio.
+    assert.doesNotThrow(() => adaptador(PRODUCTO));
+    assert.equal(adaptador(PRODUCTO).agotado, false);
+  });
+
+  it('EL CASO DE HOY: todas sin contar, el producto se sigue mostrando', () => {
+    const r = adaptador({
+      ...PRODUCTO,
+      variantes: [{ talla: 'S', stock: null }, { talla: 'M', stock: null }, { talla: 'XL', stock: null }],
+    });
+    assert.equal(r.agotado, false, 'con todo sin contar NO se puede esconder');
+  });
+
+  it('con una talla contada y las otras no, se sigue mostrando', () => {
+    const r = adaptador({
+      ...PRODUCTO,
+      variantes: [{ talla: 'S', stock: 0 }, { talla: 'M', stock: null }, { talla: 'XL', stock: null }],
+    });
+    assert.equal(r.agotado, false);
+  });
+
+  it('con TODAS contadas en cero, recien ahi se esconde', () => {
+    const r = adaptador({
+      ...PRODUCTO,
+      variantes: [{ talla: 'S', stock: 0 }, { talla: 'M', stock: 0 }, { talla: 'XL', stock: 0 }],
+    });
+    assert.equal(r.agotado, true);
+  });
+
+  it('las variantes llegan al producto adaptado', () => {
+    const r = adaptador({ ...PRODUCTO, variantes: [{ talla: 'S', stock: 2 }] });
+    assert.deepEqual(r.variantes, [{ talla: 'S', stock: 2 }]);
+  });
+});

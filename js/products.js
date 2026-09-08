@@ -23,6 +23,68 @@ function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
+// 🔴 2026-09-08: este bloque nacio ADENTRO de createProductCard y por eso
+// `adaptProductFrom4ULAB` —que corre antes y esta mas arriba— tiraba
+// "todasLasTallasAgotadas is not defined" en CADA producto. El adaptador
+// entero fallaba, `loadProductsFrom4ULAB` se iba por el catch y la tienda
+// caia al catalogo viejo de respaldo: 22 jerseys en vez de 33. Una funcion
+// declarada adentro de otra solo existe adentro de esa otra.
+// Vive aca arriba, en el tope del archivo, porque la usan los dos.
+
+/**
+ * STOCK POR TALLA — 2026-09-08
+ *
+ * Hasta hoy la tienda recibia UN numero de stock para todo el producto. Con eso
+ * ofrecia la XL aunque la unica unidad fuera una S. Caso medido en produccion:
+ * RODILLERA LEATT 3DF HYBRID, stock 1, tallas S/M/L/XL.
+ *
+ * Ahora `/api/public/products` manda ademas `variantes: [{talla, stock, sku}]`.
+ *
+ * LA REGLA QUE NO SE PUEDE ROMPER: `null` es "no lo conte" y NO agota. El dia
+ * que se lleno esa tabla, las 314 filas nacieron en null; si null agotara, el
+ * catalogo entero de un comercio amaneceria vacio. Solo un numero contado que
+ * sea 0 o menos saca una talla de la venta.
+ */
+function claveDeTalla(talla) {
+  return String(talla == null ? '' : talla).trim().toUpperCase();
+}
+
+/** De la lista que manda el API a un objeto `{ TALLA: stock }`. */
+function mapaDeStockPorTalla(variantes) {
+  const mapa = {};
+  if (!Array.isArray(variantes)) return mapa;
+  variantes.forEach(v => {
+    if (!v) return;
+    const k = claveDeTalla(v.talla);
+    if (!k) return;
+    mapa[k] = (v.stock === null || v.stock === undefined) ? null : Number(v.stock);
+  });
+  return mapa;
+}
+
+/** Si una talla se puede vender. Sin dato => si, igual que antes de todo esto. */
+function hayStockDeTalla(mapa, talla) {
+  if (!mapa) return true;
+  const k = claveDeTalla(talla);
+  if (!(k in mapa)) return true;      // esa talla no tiene fila todavia
+  const n = mapa[k];
+  if (n === null || n === undefined) return true;  // contada nunca
+  return Number(n) > 0;
+}
+
+/**
+ * Si TODAS las tallas del producto estan contadas en cero. Solo entonces el
+ * producto entero se marca agotado: con una sola talla disponible se sigue
+ * vendiendo, y el selector se encarga del resto.
+ */
+function todasLasTallasAgotadas(mapa, tallas) {
+  if (!mapa || !Array.isArray(tallas) || tallas.length === 0) return false;
+  const conocidas = tallas.filter(t => claveDeTalla(t) in mapa);
+  if (conocidas.length === 0) return false;
+  if (conocidas.length !== tallas.length) return false;  // alguna sin fila: no se afirma
+  return conocidas.every(t => !hayStockDeTalla(mapa, t));
+}
+
 // ═════════════════════════════════════════════════════════════
 // ADAPTADOR 4ULAB CMS → FORMATO MXZONESTORE
 // ═════════════════════════════════════════════════════════════
@@ -373,60 +435,6 @@ function createProductCard(product) {
   const mainImage = images.length > 0 ? images[0] : '';
   const badgeHTML = product.badge ?
     `<span class="product-badge">${product.badge}</span>` : '';
-
-/**
- * STOCK POR TALLA — 2026-09-08
- *
- * Hasta hoy la tienda recibia UN numero de stock para todo el producto. Con eso
- * ofrecia la XL aunque la unica unidad fuera una S. Caso medido en produccion:
- * RODILLERA LEATT 3DF HYBRID, stock 1, tallas S/M/L/XL.
- *
- * Ahora `/api/public/products` manda ademas `variantes: [{talla, stock, sku}]`.
- *
- * LA REGLA QUE NO SE PUEDE ROMPER: `null` es "no lo conte" y NO agota. El dia
- * que se lleno esa tabla, las 314 filas nacieron en null; si null agotara, el
- * catalogo entero de un comercio amaneceria vacio. Solo un numero contado que
- * sea 0 o menos saca una talla de la venta.
- */
-function claveDeTalla(talla) {
-  return String(talla == null ? '' : talla).trim().toUpperCase();
-}
-
-/** De la lista que manda el API a un objeto `{ TALLA: stock }`. */
-function mapaDeStockPorTalla(variantes) {
-  const mapa = {};
-  if (!Array.isArray(variantes)) return mapa;
-  variantes.forEach(v => {
-    if (!v) return;
-    const k = claveDeTalla(v.talla);
-    if (!k) return;
-    mapa[k] = (v.stock === null || v.stock === undefined) ? null : Number(v.stock);
-  });
-  return mapa;
-}
-
-/** Si una talla se puede vender. Sin dato => si, igual que antes de todo esto. */
-function hayStockDeTalla(mapa, talla) {
-  if (!mapa) return true;
-  const k = claveDeTalla(talla);
-  if (!(k in mapa)) return true;      // esa talla no tiene fila todavia
-  const n = mapa[k];
-  if (n === null || n === undefined) return true;  // contada nunca
-  return Number(n) > 0;
-}
-
-/**
- * Si TODAS las tallas del producto estan contadas en cero. Solo entonces el
- * producto entero se marca agotado: con una sola talla disponible se sigue
- * vendiendo, y el selector se encarga del resto.
- */
-function todasLasTallasAgotadas(mapa, tallas) {
-  if (!mapa || !Array.isArray(tallas) || tallas.length === 0) return false;
-  const conocidas = tallas.filter(t => claveDeTalla(t) in mapa);
-  if (conocidas.length === 0) return false;
-  if (conocidas.length !== tallas.length) return false;  // alguna sin fila: no se afirma
-  return conocidas.every(t => !hayStockDeTalla(mapa, t));
-}
 
   // Parsear tallas
   const requiresSize = shouldRequireSize(product.sizes);
