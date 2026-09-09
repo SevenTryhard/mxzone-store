@@ -333,31 +333,12 @@
               </div>
             </div>
 
-            <!-- MARCAS Section — PC: botones pill; mobile: legacy checkboxes -->
-            <div class="filter-group" id="brandFilterGroup">
-              <button class="category-parent-toggle filter-section-toggle" id="marcasToggle" type="button">
-                <span class="toggle-icon">▼</span>
-                <span class="toggle-label">MARCAS</span>
-              </button>
-              <div class="category-children" id="marcasChildren">
-                <!-- Grid de chips de marcas (PC) -->
-                <div class="brand-chips" id="brandChips">
-                  <button class="brand-chip active" data-brand="all" type="button">Todas</button>
-                  <button class="brand-chip" data-brand="fox" type="button">Fox</button>
-                  <button class="brand-chip" data-brand="fly" type="button">Fly</button>
-                  <button class="brand-chip" data-brand="alpinestars" type="button">Alpinestars</button>
-                  <button class="brand-chip" data-brand="leatt" type="button">Leatt</button>
-                  <button class="brand-chip" data-brand="troy-lee" type="button">Troy Lee</button>
-                  <button class="brand-chip" data-brand="oneal" type="button">O'Neal</button>
-                  <button class="brand-chip" data-brand="airoh" type="button">Airoh</button>
-                  <button class="brand-chip" data-brand="acerbis" type="button">Acerbis</button>
-                  <button class="brand-chip" data-brand="gaerne" type="button">Gaerne</button>
-                  <button class="brand-chip" data-brand="fxr" type="button">FXR</button>
-                  <button class="brand-chip" data-brand="thor" type="button">Thor</button>
-                  <button class="brand-chip" data-brand="ktm" type="button">KTM</button>
-                </div>
-              </div>
-            </div>
+            <!-- El filtro por MARCAS se saco del sidebar el 2026-09-09.
+                 Pedido de Seven junto con centrar el sidebar: en una tienda de
+                 motocross el comprador llega buscando QUE necesita (un casco,
+                 unas botas) y recien despues mira de que marca. Trece marcas
+                 arriba de las tallas empujaban lo que si se usa hacia abajo.
+                 La busqueda por texto sigue encontrando por marca. -->
 
             <!-- TALLAS Section — en mobile el CSS la sube arriba de MARCAS (ver
                  "TALLAS PRIMERO EN MOBILE" en styles.css): quedaba a 1500px de
@@ -853,7 +834,14 @@
   <script src="js/main.js?t=202609090833"></script>
 
   <script src="js/products.js?t=202609090833"></script>
-  <script src="js/bienvenida.js?t=202609090833"></script>
+  <!-- EL CUESTIONARIO DE BIENVENIDA ESTA APAGADO — 2026-09-09.
+       Decision de Seven: la idea NO se descarta, se posterga hasta tenerle un
+       diseño grafico a la altura. Se apaga ahora por dos motivos concretos:
+       preguntaba por MARCAS, que es un filtro que dejamos de ofrecer, y era
+       sospechoso de ensuciar el link para compartir aplicando filtros por su
+       cuenta.
+       El codigo queda intacto en js/bienvenida.js: para volver a prenderlo
+       alcanza con devolver esta linea de script. -->
   <!-- 4ULAB Analytics + Campaigns Tracking -->
   <script>
     window.__4ULAB_PROJECT_ID__ = 1;

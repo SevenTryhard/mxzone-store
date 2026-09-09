@@ -898,12 +898,35 @@ function initShopFiltersInternal() {
   //
   // Se toca SOLO el parametro `cat`: lo demas que traiga el link —una campaña,
   // un utm— se conserva.
+  // 🔴 SE LLAMA DESDE `filterProducts`, NO SOLO DESDE LOS BOTONES — 2026-09-09.
+  //
+  // La primera version se enganchaba solo en `setActiveCategories`. Andaba casi
+  // siempre, y "casi siempre" es lo peor que puede pasar con un link que se
+  // manda por WhatsApp: nadie revisa la URL antes de pegarla, asi que el error
+  // se descubre del lado del cliente, que abre la tienda sin filtrar.
+  //
+  // El problema de fondo es que dependia de que CADA camino se acordara de
+  // avisar, y los caminos son varios: los chips del sidebar, la barra del
+  // celular, el cajon de filtros, el chip padre de Niños, los checkbox viejos y
+  // lo que se agregue mañana. Uno que se olvide y el link sale mudo.
+  //
+  // Ahora la URL se calcula desde el estado REAL del filtro, en el mismo lugar
+  // donde ese filtro se aplica. Si la tienda esta filtrada, la URL lo dice —
+  // sin importar quien la filtro ni como.
+  let ultimaCatEscrita = null;
   function sincronizarURLConCategorias() {
     if (!window.history || typeof history.replaceState !== 'function') return;
     try {
-      const url = new URL(window.location.href);
       const activas = getActiveCategories();
-      if (activas.length) url.searchParams.set('cat', activas.join(','));
+      const valor = activas.length ? activas.join(',') : '';
+
+      // `filterProducts` corre en cada tecla del buscador. Sin este corte,
+      // escribir "casco" dispara cinco replaceState identicos.
+      if (valor === ultimaCatEscrita) return;
+      ultimaCatEscrita = valor;
+
+      const url = new URL(window.location.href);
+      if (valor) url.searchParams.set('cat', valor);
       else url.searchParams.delete('cat');
       history.replaceState(history.state, '', url.pathname + url.search + url.hash);
     } catch (e) {
@@ -1413,6 +1436,11 @@ function initShopFiltersInternal() {
     if (resultsCount) {
       resultsCount.textContent = visibleCount;
     }
+
+    // El link para compartir sale de aca y no de los botones: ver el comentario
+    // largo en sincronizarURLConCategorias. Si la tienda esta filtrada, la URL
+    // lo dice, no importa quien la filtro.
+    sincronizarURLConCategorias();
   }
 
   /** Una card cuenta como visible si el filtro no la apago. */

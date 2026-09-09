@@ -206,6 +206,32 @@
   border-color: var(--orange-primary) !important;
 }
 
+/* 🔴 EN MODO CLARO LAS CATEGORIAS NO SE VEIAN COMO BOTONES — 2026-09-09.
+   Los chips de TALLA tenian su version clara (justo arriba) y los de CATEGORIA
+   nunca la tuvieron. Como el estilo base los pinta con blanco translucido
+   —borde `rgba(255,255,255,0.15)` y fondo `rgba(255,255,255,0.04)`—, sobre
+   fondo blanco quedaban INVISIBLES: se veia el texto flotando sin caja.
+   Y ese es el motivo por el que la grilla se leia "desordenada" aunque las
+   casillas estuvieran perfectamente alineadas: sin borde no se ven las
+   columnas, solo palabras sueltas a distintas alturas. */
+[data-theme="light"] .category-chip {
+  background: #FFFFFF !important;
+  border-color: #CCCCCC !important;
+  color: #1A1A1A !important;
+}
+
+[data-theme="light"] .category-chip:hover {
+  border-color: var(--orange-primary) !important;
+  background: rgba(255, 102, 0, 0.08) !important;
+  color: #1A1A1A !important;
+}
+
+[data-theme="light"] .category-chip.active {
+  background: var(--gradient-orange) !important;
+  color: #FFFFFF !important;
+  border-color: var(--orange-primary) !important;
+}
+
 [data-theme="light"] .search-input {
   background: #FFFFFF !important;
   border-color: #CCCCCC !important;
