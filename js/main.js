@@ -952,17 +952,22 @@ function initShopFiltersInternal() {
    * cliente que llego por un mensaje personal, y porque un canonical con basura
    * adentro es peor que no tenerlo.
    */
-  function linkParaCompartir(activas) {
+  function linkParaCompartir(activas, tallas) {
     const cats = activas || getActiveCategories();
+    // LA TALLA TAMBIEN VIAJA — 2026-09-09, pedido de Mauro. El caso real: un
+    // cliente escribe "quiero un casco talla S" y se le manda el link de eso
+    // mismo, no el de todos los cascos para que busque el suyo.
+    const sizes = tallas || getSelectedSizes();
     const limpia = new URL(window.location.origin + window.location.pathname);
     if (cats.length) limpia.searchParams.set('cat', cats.join(','));
+    if (sizes.length) limpia.searchParams.set('talla', sizes.join(','));
     return limpia.href;
   }
   window.linkParaCompartir = linkParaCompartir;
 
-  function sincronizarEtiquetasDeCompartir(activas) {
+  function sincronizarEtiquetasDeCompartir(activas, tallas) {
     try {
-      const absoluta = linkParaCompartir(activas);
+      const absoluta = linkParaCompartir(activas, tallas);
 
       const poner = (sel, attr) => {
         const el = document.querySelector(sel);
@@ -975,8 +980,15 @@ function initShopFiltersInternal() {
       poner('meta[property="og:url"]', 'content');
       poner('meta[name="twitter:url"]', 'content');
 
+      // "Cascos · Talla S | MXZONE STORE". Lo que ve el cliente en la vista
+      // previa del mensaje antes de tocar: a que categoria y a que talla lo
+      // mandan. Es la diferencia entre un link y un link que da ganas de abrir.
       const nombres = textoDeCategorias(activas);
-      const titulo = nombres ? nombres + ' | MXZONE STORE' : tituloOriginal;
+      const tallasTxt = (tallas || getSelectedSizes());
+      const partes = [];
+      if (nombres) partes.push(nombres);
+      if (tallasTxt.length) partes.push('Talla ' + tallasTxt.join('/'));
+      const titulo = partes.length ? partes.join(' · ') + ' | MXZONE STORE' : tituloOriginal;
       document.title = titulo;
       const ogT = document.querySelector('meta[property="og:title"]');
       if (ogT) ogT.setAttribute('content', titulo);
@@ -987,27 +999,36 @@ function initShopFiltersInternal() {
     }
   }
 
-  let ultimaCatEscrita = null;
+  let ultimoFiltroEscrito = null;
   function sincronizarURLConCategorias() {
     if (!window.history || typeof history.replaceState !== 'function') return;
     try {
       const activas = getActiveCategories();
-      const valor = activas.length ? activas.join(',') : '';
+      const tallas = getSelectedSizes();
+      const valorCat = activas.length ? activas.join(',') : '';
+      const valorTalla = tallas.length ? tallas.join(',') : '';
 
       // `filterProducts` corre en cada tecla del buscador. Sin este corte,
       // escribir "casco" dispara cinco replaceState identicos.
-      if (valor === ultimaCatEscrita) return;
-      ultimaCatEscrita = valor;
+      //
+      // La clave incluye la TALLA: si comparara solo la categoria, cambiar de
+      // talla sin cambiar de categoria saldria por el corte y el link se
+      // quedaria con la talla vieja — que es peor que no tenerla.
+      const clave = valorCat + '|' + valorTalla;
+      if (clave === ultimoFiltroEscrito) return;
+      ultimoFiltroEscrito = clave;
 
       const url = new URL(window.location.href);
-      if (valor) url.searchParams.set('cat', valor);
+      if (valorCat) url.searchParams.set('cat', valorCat);
       else url.searchParams.delete('cat');
+      if (valorTalla) url.searchParams.set('talla', valorTalla);
+      else url.searchParams.delete('talla');
       history.replaceState(history.state, '', url.pathname + url.search + url.hash);
 
       // La barra de direcciones ya quedo bien. Pero compartir no lee la barra:
       // lee lo que la pagina declara. Se actualiza JUNTO, en la misma funcion, a
       // proposito — si fueran dos lugares, volverian a separarse.
-      sincronizarEtiquetasDeCompartir(activas);
+      sincronizarEtiquetasDeCompartir(activas, tallas);
     } catch (e) {
       mxLog('No se pudo escribir la categoria en la URL:', e);
     }
@@ -1146,6 +1167,35 @@ function initShopFiltersInternal() {
     }
 
     sizeFilterContainer.innerHTML = chips.map(sizeChipHtml).join('');
+
+    // 🔴 LA TALLA DEL LINK SE MARCA ACA, Y NO ANTES — 2026-09-09.
+    //
+    // Los chips de talla no existen hasta que hay una categoria elegida, y
+    // ADEMAS esta funcion vuelve a correr cuando terminan de renderizarse los
+    // productos. Marcando la talla afuera pasaba esto: el filtro quedaba bien
+    // —9 cascos— pero el chip S aparecia SIN marcar, porque este `innerHTML`
+    // corria despues y se llevaba la marca puesta. El cliente veia 9 productos
+    // y ninguna pista de por que, ni como sacar el filtro.
+    //
+    // Se consume UNA sola vez: despues de eso mandan los clics del usuario, no
+    // el link con el que entro.
+    const pendientes = window.__mxTallasPendientes;
+    if (pendientes && pendientes.length) {
+      let marcadas = 0;
+      sizeFilterContainer.querySelectorAll('.size-chip').forEach(chip => {
+        const valor = foldAccents(String(chip.dataset.size || '').toUpperCase());
+        if (pendientes.indexOf(valor) !== -1) { chip.classList.add('active'); marcadas++; }
+      });
+      window.__mxTallasPendientes = null;
+      if (marcadas) {
+        filterProducts();
+      } else {
+        // Que el link pida una talla que esta categoria no tiene no rompe nada:
+        // se ignora y se ve la categoria completa. Peor seria dejar al cliente
+        // con cero productos y sin entender por que.
+        mxLog('El link pedia tallas que esta categoria no tiene:', pendientes);
+      }
+    }
   }
 
   function updateActiveFilterCount(n) {
@@ -2157,8 +2207,18 @@ function initShopFiltersInternal() {
       setActiveCategories(pedidas);
       renderSizeChips();
       updateQuickFilterChips();
+      aplicarTallasDeLaURL();
       filterProducts();
     }
+  }
+
+  function aplicarTallasDeLaURL() {
+    // Se deja anotado y lo consume `renderSizeChips` cuando los chips existan.
+    // Ver el comentario de `tallasPendientesDeLaURL`.
+    const crudo = urlParams.get('talla');
+    if (!crudo) return;
+    const pedidas = crudo.split(',').map(t => foldAccents(t.trim().toUpperCase())).filter(Boolean);
+    if (pedidas.length) window.__mxTallasPendientes = pedidas;
   }
 
   // Category Parent Toggle - "Todo" (sidebar PC) — legacy, ignorar si no existe
