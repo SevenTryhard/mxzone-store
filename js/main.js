@@ -943,16 +943,26 @@ function initShopFiltersInternal() {
       .join(', ');
   }
 
+  /**
+   * EL LINK DE LO QUE SE ESTA VIENDO. Una sola definicion, para todos los usos.
+   *
+   * Se arma LIMPIO: origen + pagina + la categoria, y nada mas. No arrastra lo
+   * que la sesion de quien comparte haya juntado —un `utm_source` de una
+   * campaña, un parametro de prueba—, porque eso le atribuiria a una campaña un
+   * cliente que llego por un mensaje personal, y porque un canonical con basura
+   * adentro es peor que no tenerlo.
+   */
+  function linkParaCompartir(activas) {
+    const cats = activas || getActiveCategories();
+    const limpia = new URL(window.location.origin + window.location.pathname);
+    if (cats.length) limpia.searchParams.set('cat', cats.join(','));
+    return limpia.href;
+  }
+  window.linkParaCompartir = linkParaCompartir;
+
   function sincronizarEtiquetasDeCompartir(activas) {
     try {
-      // El link que se comparte se arma LIMPIO: origen + pagina + la categoria,
-      // y nada mas. No arrastra lo que la sesion de quien comparte haya juntado
-      // —un `utm_source` de una campaña, un parametro de prueba—, porque eso le
-      // atribuiria a una campaña un cliente que llego por un mensaje personal,
-      // y porque un canonical con basura adentro es peor que no tenerlo.
-      const limpia = new URL(window.location.origin + window.location.pathname);
-      if (activas.length) limpia.searchParams.set('cat', activas.join(','));
-      const absoluta = limpia.href;
+      const absoluta = linkParaCompartir(activas);
 
       const poner = (sel, attr) => {
         const el = document.querySelector(sel);
@@ -1618,6 +1628,57 @@ function initShopFiltersInternal() {
 
   // Expose filterProducts globally for price slider
   window.filterProducts = filterProducts;
+
+  // ── EL BOTON DE COMPARTIR DE LA TIENDA ────────────────────────────────────
+  //
+  // 🔴 POR QUE EXISTE — 2026-09-09.
+  //
+  // El boton de compartir del NAVEGADOR no es confiable y no hay forma de
+  // hacerlo confiable desde acá: cada navegador decide por su cuenta de donde
+  // saca la URL —unos la barra de direcciones, otros la etiqueta `canonical`—
+  // y esa decision cambia entre versiones. Arreglar los cuatro canales que un
+  // navegador PUEDE leer (barra, canonical, og:url, twitter:url) es lo maximo
+  // que se puede hacer, y aun asi queda a merced de cual elija cada uno.
+  //
+  // Este boton no le pregunta a nadie: arma el link el mismo y lo manda. Es la
+  // unica forma de cumplir "tiene que funcionar de cualquier manera".
+  //
+  // Usa `navigator.share` si existe (celular: abre el menu de compartir con
+  // WhatsApp adentro) y si no copia al portapapeles (computadora). En los dos
+  // casos, el link es EXACTAMENTE el mismo.
+  const btnCompartir = document.getElementById('btnCompartirVista');
+  if (btnCompartir) {
+    btnCompartir.addEventListener('click', async () => {
+      const url = linkParaCompartir();
+      const cats = getActiveCategories();
+      const nombres = textoDeCategorias(cats);
+      const titulo = nombres ? nombres + ' | MXZONE STORE' : 'MXZONE STORE';
+
+      try {
+        if (navigator.share) {
+          await navigator.share({ title: titulo, url: url });
+          return;
+        }
+      } catch (e) {
+        // El usuario cerro el menu de compartir. No es un error y no se avisa
+        // nada: avisar "fallo" cuando alguien dijo que no es mentirle.
+        if (e && e.name === 'AbortError') return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(url);
+        if (typeof showNotification === 'function') {
+          showNotification(nombres ? 'Link de ' + nombres + ' copiado' : 'Link de la tienda copiado', 'success');
+        }
+      } catch (e) {
+        // Sin permiso de portapapeles (pasa en http:// y en navegadores viejos):
+        // se muestra el link para que se pueda copiar a mano. Peor que copiarlo
+        // solo, pero mucho mejor que no dar nada.
+        if (typeof showNotification === 'function') showNotification('Copiá este link: ' + url, 'info');
+        else window.prompt('Copiá este link:', url);
+      }
+    });
+  }
 
   // Sort function
   /** Lee del atributo de la card la posicion que tiene en una talla. */

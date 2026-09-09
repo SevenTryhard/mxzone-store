@@ -11617,3 +11617,55 @@ body.bv-abierto { overflow: hidden; }
      principal fuera de la vista en pantallas cortas. En fila entran los dos. */
   .bv-btn-fantasma { flex: 0 0 auto; padding: 0 var(--spacing-xs); font-size: 0.85rem; }
 }
+
+/* ── BOTON COMPARTIR DE LA TIENDA — 2026-09-09 ─────────────────────────────
+   Discreto a proposito: no compite con "Agregar al carrito", que es la accion
+   que da plata. Lo usan Seven y Mauro para mandarle a un cliente el link de la
+   categoria que pidio por WhatsApp; no es una accion de compra. */
+.btn-compartir-vista {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 12px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--gray-light-text);
+  font-family: var(--font-primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-compartir-vista:hover {
+  border-color: var(--orange-primary);
+  background: rgba(255, 102, 0, 0.12);
+  color: var(--white);
+}
+
+.btn-compartir-vista svg { flex-shrink: 0; }
+
+/* Mismo motivo que los chips de categoria: sobre fondo blanco, un borde blanco
+   translucido no se ve y el boton parece texto suelto. */
+[data-theme="light"] .btn-compartir-vista {
+  /* !important como TODAS las reglas de modo claro de este archivo: hay estilos
+     genericos de boton en la barra superior que si no ganan por especificidad. */
+  background: #FFFFFF !important;
+  border-color: #CCCCCC !important;
+  color: #1A1A1A !important;
+}
+
+[data-theme="light"] .btn-compartir-vista:hover {
+  border-color: var(--orange-primary) !important;
+  background: rgba(255, 102, 0, 0.08) !important;
+  color: #1A1A1A !important;
+}
+
+/* En el celular la barra ya va apretada: queda el icono solo. */
+@media (max-width: 480px) {
+  .btn-compartir-vista span { display: none; }
+  .btn-compartir-vista { padding: 6px 10px; margin-left: 8px; }
+}
