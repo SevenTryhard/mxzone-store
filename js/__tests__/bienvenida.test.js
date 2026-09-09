@@ -103,26 +103,44 @@ describe('las preguntas que hace', () => {
     assert.ok(!/data-grupo="color"/.test(sinComentarios));
   });
 
-  it('las marcas que ofrece existen como chips en la tienda', () => {
-    const shop = fs.readFileSync(path.join(__dirname, '..', '..', 'shop.html'), 'utf8');
-    const slugs = [...source.matchAll(/\{ slug: '([a-z-]+)'/g)].map(m => m[1]);
-    assert.ok(slugs.length >= 5, 'esperaba al menos 5 marcas, hay ' + slugs.length);
-    slugs.forEach(slug => {
-      assert.ok(shop.includes('data-brand="' + slug + '"'),
-        'la marca "' + slug + '" no tiene chip en shop.html: al elegirla no pasaria nada');
-    });
-  });
+  // La prueba "las marcas que ofrece existen como chips en la tienda" se borro
+  // el 2026-09-09 junto con el filtro por marcas del sidebar. Comprobaba algo
+  // real —que elegir una marca en el cartel hiciera algo— pero ya no hay chips
+  // de marca contra los cuales comprobarlo. Cuando se revive el cartel con su
+  // diseño nuevo, esta prueba vuelve si vuelve el filtro.
 });
 
-describe('esta enchufado donde corresponde', () => {
-  it('shop.html carga el script', () => {
+describe('esta APAGADO, y es a proposito', () => {
+  // 🔴 EL CARTEL SE APAGO EL 2026-09-09 — decision de Seven.
+  //
+  // Antes esta prueba exigia lo contrario: que shop.html cargara el script. La
+  // doy vuelta en vez de borrarla porque el riesgo cambio de lado. Ahora lo que
+  // hay que atajar es que alguien lo vuelva a prender sin querer —copiando una
+  // linea de otro branch, resolviendo un conflicto a lo bruto— y que el cartel
+  // reaparezca en produccion preguntando por marcas que ya no existen.
+  //
+  // Para prenderlo de verdad hay que venir aca y borrar esta prueba a mano. Ese
+  // es el punto: que sea una decision, no un accidente.
+  it('shop.html NO carga el script', () => {
     const shop = fs.readFileSync(path.join(__dirname, '..', '..', 'shop.html'), 'utf8');
-    assert.ok(/js\/bienvenida\.js\?t=\d{12}/.test(shop), 'falta el <script> en shop.html');
+    const sinComentariosHtml = shop.replace(/<!--[\s\S]*?-->/g, '');
+    assert.ok(
+      !/<script[^>]+js\/bienvenida\.js/.test(sinComentariosHtml),
+      'el cartel de bienvenida volvio a shop.html. Si fue a proposito, borra esta prueba; si no, saca el <script>.'
+    );
   });
 
-  it('el script de cache conoce el archivo', () => {
-    // Sin esto su ?t= nunca se actualiza y los navegadores sirven la version
-    // vieja para siempre. Ya paso con product-detail.js y promotions.js.
+  it('el archivo sigue existiendo: se apago, no se tiro', () => {
+    // La idea no se descarta, se posterga hasta tenerle un diseño a la altura.
+    // Si alguien borra el archivo, se pierde el trabajo hecho.
+    assert.ok(fs.existsSync(path.join(__dirname, '..', 'bienvenida.js')),
+      'js/bienvenida.js desaparecio: estaba apagado, no de mas');
+  });
+
+  it('el script de cache lo sigue conociendo', () => {
+    // Sin esto su ?t= nunca se actualiza y, el dia que se vuelva a prender, los
+    // navegadores servirian la version vieja para siempre. Ya paso con
+    // product-detail.js y promotions.js.
     const bump = fs.readFileSync(path.join(__dirname, '..', '..', 'bump-cache-timestamp.ps1'), 'utf8');
     assert.ok(bump.includes("'js/bienvenida.js'"),
       'bienvenida.js no esta en la lista $assets de bump-cache-timestamp.ps1');
