@@ -913,6 +913,70 @@ function initShopFiltersInternal() {
   // Ahora la URL se calcula desde el estado REAL del filtro, en el mismo lugar
   // donde ese filtro se aplica. Si la tienda esta filtrada, la URL lo dice —
   // sin importar quien la filtro ni como.
+  /**
+   * 🔴 COMPARTIR NO LEE LA BARRA DE DIRECCIONES — 2026-09-09.
+   *
+   * La barra decia `?cat=cascos` y el link compartido salia sin la categoria.
+   * El motivo: el boton de compartir de Safari (y el de casi cualquier app, y
+   * el que arma la vista previa de WhatsApp) no mira la barra. Mira lo que la
+   * PAGINA declara sobre si misma: `<link rel="canonical">`, `og:url` y
+   * `twitter:url`. Las tres estaban escritas a mano en el HTML, fijas en
+   * "shop.html", y ninguna se enteraba del filtro.
+   *
+   * Por eso "a veces funcionaba": copiar la URL a mano de la barra andaba;
+   * apretar Compartir, no. Y compartir es justo lo que se hace con este link.
+   *
+   * De paso se actualiza el TITULO. Cuando Mauro le manda el link a un cliente
+   * por WhatsApp, la vista previa dice "Cascos | MXZONE STORE" en vez del
+   * titulo generico de la tienda: el cliente ve a donde lo mandan antes de
+   * tocar.
+   */
+  const tituloOriginal = document.title;
+  function textoDeCategorias(activas) {
+    if (!activas.length) return null;
+    return activas
+      .map(slug => {
+        const chip = document.querySelector('.category-chip[data-category="' + slug + '"]');
+        const label = chip && chip.textContent.trim();
+        return label || slug;
+      })
+      .join(', ');
+  }
+
+  function sincronizarEtiquetasDeCompartir(activas) {
+    try {
+      // El link que se comparte se arma LIMPIO: origen + pagina + la categoria,
+      // y nada mas. No arrastra lo que la sesion de quien comparte haya juntado
+      // —un `utm_source` de una campaña, un parametro de prueba—, porque eso le
+      // atribuiria a una campaña un cliente que llego por un mensaje personal,
+      // y porque un canonical con basura adentro es peor que no tenerlo.
+      const limpia = new URL(window.location.origin + window.location.pathname);
+      if (activas.length) limpia.searchParams.set('cat', activas.join(','));
+      const absoluta = limpia.href;
+
+      const poner = (sel, attr) => {
+        const el = document.querySelector(sel);
+        if (el) el.setAttribute(attr, absoluta);
+      };
+      // Las tres que leen las apps al compartir. La canonical apunta a la URL
+      // real de esta vista —que es lo que corresponde: la pagina EXISTE en esa
+      // direccion y es a donde queremos que llegue quien recibe el link—.
+      poner('link[rel="canonical"]', 'href');
+      poner('meta[property="og:url"]', 'content');
+      poner('meta[name="twitter:url"]', 'content');
+
+      const nombres = textoDeCategorias(activas);
+      const titulo = nombres ? nombres + ' | MXZONE STORE' : tituloOriginal;
+      document.title = titulo;
+      const ogT = document.querySelector('meta[property="og:title"]');
+      if (ogT) ogT.setAttribute('content', titulo);
+      const twT = document.querySelector('meta[name="twitter:title"]');
+      if (twT) twT.setAttribute('content', titulo);
+    } catch (e) {
+      mxLog('No se pudieron actualizar las etiquetas para compartir:', e);
+    }
+  }
+
   let ultimaCatEscrita = null;
   function sincronizarURLConCategorias() {
     if (!window.history || typeof history.replaceState !== 'function') return;
@@ -929,6 +993,11 @@ function initShopFiltersInternal() {
       if (valor) url.searchParams.set('cat', valor);
       else url.searchParams.delete('cat');
       history.replaceState(history.state, '', url.pathname + url.search + url.hash);
+
+      // La barra de direcciones ya quedo bien. Pero compartir no lee la barra:
+      // lee lo que la pagina declara. Se actualiza JUNTO, en la misma funcion, a
+      // proposito — si fueran dos lugares, volverian a separarse.
+      sincronizarEtiquetasDeCompartir(activas);
     } catch (e) {
       mxLog('No se pudo escribir la categoria en la URL:', e);
     }
