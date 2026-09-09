@@ -4,7 +4,7 @@
  */
 
 // Usar window.WHATSAPP_NUMBER para evitar redeclaración entre scripts
-window.WHATSAPP_NUMBER = window.WHATSAPP_NUMBER || '573186467646';
+window.WHATSAPP_NUMBER = window.WHATSAPP_NUMBER || '573176692997';
 
 // Obtener descripción por categoría
 function getCategoryDescription(category, productName) {

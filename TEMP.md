@@ -344,7 +344,7 @@ de 4ULAB. Confirmado: la tienda le presta su card al CMS de verdad. Dos condicio
   292px -> 242px (50px mas de catalogo visible); contador de unidades en el titulo y junto
   al total; precio unitario por linea cuando la cantidad es mayor a 1; nota de que el pago
   se coordina por WhatsApp; "vaciar carrito" degradado a link.
-- **WhatsApp nuevo: +57 318 6467646.** 350 reemplazos en 41 archivos (3 formatos). Unico
+- **WhatsApp nuevo: +57 317 6692997.** 350 reemplazos en 41 archivos (3 formatos). Unico
   residual: `OLD_CMS/products.js.backup`, que no se deploya. Tambien cambiado en
   `4ULAB/APP/scripts/mxzone-cms.js`.
 - **Verificado en produccion** (www.mxzonestore.com, PC y movil 375x812): step1 computed

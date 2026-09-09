@@ -6,7 +6,7 @@
 
 const CART_STORAGE_KEY = 'mxzone_cart';
 // Usar window.WHATSAPP_NUMBER para evitar redeclaración entre scripts
-window.WHATSAPP_NUMBER = window.WHATSAPP_NUMBER || '573186467646';
+window.WHATSAPP_NUMBER = window.WHATSAPP_NUMBER || '573176692997';
 
 // Verificar si es URL de CloudCannon
 function isCloudCannonUrl(url) {
