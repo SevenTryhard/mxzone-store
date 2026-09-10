@@ -12157,7 +12157,11 @@ body.bv-abierto { overflow: hidden; }
   /* La foto pasa de columna lateral a franja de arriba: en 375px de
      ancho, 190px de foto al costado dejarian el texto en un hilo. */
   .bv-cuerpo { flex-direction: column; }
-  .bv-columna-foto { flex: 0 0 132px; background-position: center 25%; }
+  /* 12% y no 25%: en escritorio la foto es una columna alta y entra el
+     piloto entero, pero en celular es una franja ancha y baja, o sea un
+     recorte mucho mas cerrado. Con 25% el encuadre arrancaba en el pecho y
+     le cortaba la cabeza — el casco, que es justo lo que vende la tienda. */
+  .bv-columna-foto { flex: 0 0 132px; background-position: center 12%; }
 
   .bv-columna-texto { padding: var(--spacing-md); }
   .bv-titulo { font-size: 1.7rem; }
