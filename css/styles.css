@@ -11440,238 +11440,11 @@ a {
   font-size: 0.72rem;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   CARTEL DE BIENVENIDA — 2026-09-08
-   ═══════════════════════════════════════════════════════════════════════════
-   Calcado del patron de .product-modal que ya existe: mismo overlay, mismo
-   gradiente de fondo, mismo borde naranja tenue, misma entrada con scale.
-   No se inventa ni un color: todo sale de los tokens de :root.
+/* El panel de bienvenida viejo vivia aca. Se reemplazo entero el
+   2026-09-10 por la version por pasos, que esta al final del archivo.
+   No se dejaron las dos: dos disenios del mismo cartel en la misma hoja
+   es como la tienda termino con botones de 10px y casillas en capsula. */
 
-   Decisiones que no son de gusto:
-   - z-index 2500, arriba del modal de producto (2000) y del menu movil, porque
-     aparece antes que nada. No compite con nada abierto.
-   - Los chips miden 44px de alto. Es el minimo tactil: mas chico se falla el
-     toque y el cliente se pelea con el cartel en vez de contestarlo.
-   - El boton de saltear NO es un link gris escondido en una esquina. Esta al
-     lado del principal y se lee. Un cartel del que no se puede salir facil es
-     el que hace cerrar la pestana entera.
-   - El panel scrollea por dentro (max-height 88vh): en un telefono chico las
-     tres filas de chips no entran, y un cartel cuyo boton quedo abajo del
-     borde es un cartel roto.
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.bv-capa {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-md);
-  z-index: 2500;
-  opacity: 0;
-  visibility: hidden;
-  transition: var(--transition-base);
-  overflow-y: auto;
-}
-
-.bv-capa.bv-visible { opacity: 1; visibility: visible; }
-
-body.bv-abierto { overflow: hidden; }
-
-.bv-panel {
-  position: relative;
-  background: var(--gradient-card);
-  border: 1px solid rgba(255, 102, 0, 0.3);
-  border-radius: var(--radius-surface);
-  box-shadow: var(--shadow-xl), 0 0 60px rgba(255, 102, 0, 0.18);
-  padding: var(--spacing-lg);
-  width: 100%;
-  max-width: 460px;
-  max-height: 88vh;
-  overflow-y: auto;
-  transform: scale(0.92);
-  transition: var(--transition-base);
-}
-
-.bv-capa.bv-visible .bv-panel { transform: scale(1); }
-
-.bv-cerrar {
-  position: absolute;
-  top: var(--spacing-sm);
-  right: var(--spacing-sm);
-  width: 44px;
-  height: 44px;
-  background: transparent;
-  border: none;
-  color: var(--gray-text);
-  font-size: 1.75rem;
-  line-height: 1;
-  cursor: pointer;
-  border-radius: var(--radius-full);
-  transition: var(--transition-fast);
-}
-
-.bv-cerrar:hover { color: var(--white); background: rgba(255, 255, 255, 0.08); }
-
-.bv-titulo {
-  margin: 0 var(--spacing-lg) var(--spacing-xs) 0;
-  color: var(--white);
-  font-size: 1.4rem;
-  line-height: 1.25;
-}
-
-.bv-bajada {
-  margin: 0 0 var(--spacing-md);
-  color: var(--gray-text);
-  font-size: 0.9rem;
-}
-
-.bv-grupo { margin-bottom: var(--spacing-md); }
-
-.bv-label {
-  display: block;
-  margin-bottom: var(--spacing-xs);
-  color: var(--gray-light-text);
-  font-size: 0.82rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.bv-label em { color: var(--gray-text); font-style: normal; text-transform: none; letter-spacing: 0; }
-
-.bv-chips { display: flex; flex-wrap: wrap; gap: var(--spacing-xs); }
-
-.bv-chip {
-  min-height: 44px;
-  min-width: 44px;
-  padding: 0 var(--spacing-sm);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--gray-light);
-  border-radius: var(--radius-control);
-  color: var(--gray-light-text);
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: var(--transition-fast);
-}
-
-.bv-chip:hover { border-color: var(--orange-primary); color: var(--white); }
-
-.bv-chip.bv-activo {
-  background: var(--gradient-orange);
-  border-color: var(--orange-primary);
-  color: var(--white);
-  box-shadow: var(--glow-orange-sm);
-}
-
-/* 🔴 Corregido el 2026-09-08, mirandolo en un telefono de verdad.
-   La primera version tenia las acciones al final del flujo normal y, en movil,
-   con `column-reverse`. Resultado: en pantalla se veia "Ahora no" y el boton
-   principal quedaba DEBAJO del borde del panel. La accion de escape visible y
-   la principal escondida, exactamente al reves.
-   Ahora la barra queda pegada abajo del panel mientras el contenido scrollea,
-   asi "Ver mi tienda" esta SIEMPRE a la vista. */
-.bv-acciones {
-  position: sticky;
-  bottom: calc(var(--spacing-lg) * -1);
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  margin: var(--spacing-md) calc(var(--spacing-lg) * -1) calc(var(--spacing-lg) * -1);
-  padding: var(--spacing-sm) var(--spacing-lg) var(--spacing-md);
-  background: var(--gray-dark);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: var(--radius-surface);
-}
-
-.bv-btn-primario {
-  flex: 1;
-  min-height: 48px;
-  padding: 0 var(--spacing-md);
-  background: var(--orange-primary);
-  border: none;
-  border-radius: var(--radius-control);
-  color: #0A0A0A;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition:
-    background-color var(--transition-fast),
-    transform var(--transition-fast);
-}
-
-.bv-btn-primario:hover { background: var(--orange-hover); transform: translateY(-1px); }
-.bv-btn-primario:active { background: var(--orange-dark); transform: translateY(0); }
-
-.bv-btn-fantasma {
-  min-height: 48px;
-  padding: 0 var(--spacing-sm);
-  background: transparent;
-  border: none;
-  color: var(--gray-text);
-  font-size: 0.92rem;
-  text-decoration: underline;
-  cursor: pointer;
-  transition: var(--transition-fast);
-}
-
-.bv-btn-fantasma:hover { color: var(--white); }
-
-/* Tema claro: la tienda lo soporta y el cartel no puede ser el unico pedazo
-   que quede negro sobre blanco. */
-[data-theme="light"] .bv-capa { background: rgba(0, 0, 0, 0.55); }
-
-[data-theme="light"] .bv-panel {
-  background: var(--white);
-  border-color: rgba(255, 102, 0, 0.35);
-  box-shadow: var(--shadow-lg);
-}
-
-[data-theme="light"] .bv-titulo { color: var(--gray-dark); }
-[data-theme="light"] .bv-bajada,
-[data-theme="light"] .bv-label { color: var(--gray-lighter); }
-[data-theme="light"] .bv-cerrar { color: var(--gray-lighter); }
-[data-theme="light"] .bv-cerrar:hover { color: var(--gray-dark); background: rgba(0, 0, 0, 0.06); }
-
-[data-theme="light"] .bv-chip {
-  background: var(--white-off);
-  border-color: #D8D8D8;
-  color: var(--gray-dark);
-}
-
-[data-theme="light"] .bv-chip.bv-activo { color: var(--white); }
-[data-theme="light"] .bv-btn-fantasma { color: var(--gray-lighter); }
-[data-theme="light"] .bv-btn-fantasma:hover { color: var(--gray-dark); }
-
-/* Quien pidio menos movimiento no tiene por que ver el cartel entrar con
-   escala. Es una preferencia del sistema, no un gusto nuestro. */
-@media (prefers-reduced-motion: reduce) {
-  .bv-capa, .bv-panel { transition: opacity 0.01ms linear; }
-  .bv-panel { transform: none; }
-  .bv-capa.bv-visible .bv-panel { transform: none; }
-}
-
-[data-theme="light"] .bv-acciones {
-  background: var(--white);
-  border-top-color: rgba(0, 0, 0, 0.08);
-}
-
-@media (max-width: 480px) {
-  .bv-panel { padding: var(--spacing-md); }
-  .bv-titulo { font-size: 1.15rem; }
-  .bv-grupo { margin-bottom: var(--spacing-sm); }
-  /* Los margenes negativos siguen al padding del panel, que en movil es mas
-     chico. Si no se ajustan, la barra se sale por los costados. */
-  .bv-acciones {
-    bottom: calc(var(--spacing-md) * -1);
-    margin: var(--spacing-sm) calc(var(--spacing-md) * -1) calc(var(--spacing-md) * -1);
-    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
-  }
-  /* Los dos botones en fila, con el principal ocupando lo que sobra. Apilarlos
-     hacia arriba fue el bug de arriba; apilarlos hacia abajo empuja el
-     principal fuera de la vista en pantallas cortas. En fila entran los dos. */
-  .bv-btn-fantasma { flex: 0 0 auto; padding: 0 var(--spacing-xs); font-size: 0.85rem; }
-}
 
 /* ── BOTON COMPARTIR DE LA TIENDA — 2026-09-09 ─────────────────────────────
    Discreto a proposito: no compite con "Agregar al carrito", que es la accion
@@ -12030,3 +11803,371 @@ body.bv-abierto { overflow: hidden; }
           mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7.5v5'/%3E%3Cpath d='M12 16.2h.01'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 /* <<< ICONOS-CATEGORIA-FIN */
+
+
+/* ================================================================
+   PANEL DE BIENVENIDA — 2026-09-10
+   ================================================================
+   La version anterior se apago porque rompia el modo claro. Esta NO
+   PUEDE romperlo, y no es cuidado: es que no tiene un solo color
+   propio. Todo sale de los tokens —--gray-dark, --white, --orange-
+   primary, --radius-surface, --radius-control—, que ya cambian solos
+   con el tema. Un color escrito a mano aca seria el unico modo de
+   volver a romperlo.
+
+   Radios: el panel es una SUPERFICIE (10px) y todo lo que se toca
+   adentro es un CONTROL (6px). La esquina de adentro nunca es mayor
+   que la de afuera.
+   ================================================================ */
+
+.bv-capa {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm);
+  background: rgba(0, 0, 0, 0.72);
+  /* El catalogo se ve detras, apenas desenfocado: el cliente no pierde
+     de vista que abajo hay una tienda esperandolo. */
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  /* NACE VISIBLE, y esto NO es un detalle de estilo.
+
+     La primera version nacia en opacity:0 y una animacion la mostraba.
+     Pero esa animacion no corre si la pestania esta en SEGUNDO PLANO
+     —el navegador la congela—, y entonces el panel quedaba invisible
+     con pointer-events:auto tapando la pantalla entera: la tienda se
+     veia y no respondia a ningun clic. Pasa siempre que alguien abre
+     un link en una pestania nueva y recien despues la mira, que es
+     como llega la mitad del trafico de WhatsApp e Instagram.
+
+     La regla es: si la animacion no corre, tiene que quedar BIEN, no
+     roto. Por eso el estado final es el que esta escrito, y la
+     animacion solo agrega la entrada. */
+  opacity: 1;
+  /* SIN `both`: ese fill-mode deja pegado el fotograma inicial (opacity 0)
+     mientras la animacion no corre, que es justo lo que pasa en una pestania
+     en segundo plano. Sin fill-mode, hasta que la animacion arranca de verdad
+     manda el estilo escrito arriba, que es visible. */
+  /* La animacion NO va aca: va en .bv-anima, que la agrega el JS solo si la
+     pestania esta a la vista. Una animacion pausada en el cuadro cero deja
+     pegado ese cuadro —opacity 0— aunque no se use fill-mode, y en una
+     pestania de segundo plano el navegador la pausa justo ahi. El resultado
+     era un panel invisible tapando la tienda entera. La entrada es un lujo;
+     quedar tapado es una tienda muerta. */
+}
+
+.bv-capa.bv-anima { animation: bvEntrar 0.26s ease-out; }
+.bv-capa.bv-anima .bv-panel { animation: bvSubir 0.26s cubic-bezier(0.2, 0, 0, 1); }
+
+@keyframes bvEntrar {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Al cerrar si se anima, pero el elemento se saca por JS con un
+   temporizador, asi que tampoco depende de que la animacion corra. */
+.bv-capa.bv-cerrando { opacity: 0; transition: opacity 0.22s ease-out; }
+
+[data-theme="light"] .bv-capa {
+  background: rgba(20, 20, 20, 0.45);
+}
+
+
+
+/* Mientras esta abierto, la pagina de atras no scrollea. */
+body.bv-abierto { overflow: hidden; }
+
+.bv-panel {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100dvh - 2 * var(--spacing-sm));
+  overflow: hidden;
+  flex-direction: column;
+  background: var(--gray-dark);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-surface);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+  /* Mismo criterio que la capa: la posicion final es la escrita. */
+  transform: translateY(0);
+
+}
+
+@keyframes bvSubir {
+  from { transform: translateY(10px); }
+  to   { transform: translateY(0); }
+}
+
+[data-theme="light"] .bv-panel {
+  border-color: rgba(0, 0, 0, 0.10);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
+}
+
+
+
+/* En pantallas grandes el paso 2 y el 3 necesitan mas aire: las tallas
+   son cuatro filas de casillas. */
+.bv-panel:has(.bv-ancho) { max-width: 640px; }
+
+.bv-cerrar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--gray-text);
+  background: rgba(0, 0, 0, 0.35);
+  border: none;
+  border-radius: var(--radius-round);
+  cursor: pointer;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.bv-cerrar:hover { color: var(--white); background: rgba(0, 0, 0, 0.55); }
+
+/* La barra de progreso reemplaza al "01/03" como senial principal: se
+   entiende sin leer. El numero queda igual, para quien lo quiera. */
+.bv-progreso {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.10);
+  flex: 0 0 auto;
+}
+
+.bv-progreso-barra {
+  display: block;
+  height: 100%;
+  background: var(--orange-primary);
+  transition: width 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.bv-cuerpo {
+  display: flex;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.bv-columna-foto {
+  flex: 0 0 190px;
+  background-image: image-set(
+    url("../assets/images/bienvenida/bienvenida.webp") 1x,
+    url("../assets/images/bienvenida/bienvenida.webp") 2x
+  );
+  background-image: url("../assets/images/bienvenida/bienvenida.webp");
+  background-size: cover;
+  background-position: center 30%;
+}
+
+.bv-columna-texto {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.bv-centrado { align-items: center; text-align: center; }
+
+.bv-paso {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray-text);
+}
+
+.bv-titulo {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1.02;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--white);
+}
+
+.bv-titulo em {
+  font-style: normal;
+  color: var(--orange-primary);
+}
+
+.bv-bajada {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--gray-light-text);
+}
+
+.bv-bajada strong { color: var(--white); font-weight: 700; }
+
+.bv-nota {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--gray-text);
+}
+
+.bv-label {
+  margin: var(--spacing-xs) 0 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray-text);
+}
+
+.bv-filas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.bv-fila { display: flex; flex-direction: column; gap: 6px; }
+
+.bv-fila-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gray-light-text);
+}
+
+.bv-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.bv-chips-anchos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.bv-chip {
+  /* 40px de alto: es un control chico dentro de un panel, pero sigue
+     siendo tocable con el dedo. */
+  min-height: 40px;
+  padding: 0 14px;
+  font-family: var(--font-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-light-text);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+[data-theme="light"] .bv-chip {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.14);
+}
+
+.bv-chip:hover {
+  border-color: rgba(255, 102, 0, 0.6);
+  color: var(--white);
+}
+
+/* Doble clase a proposito: `[data-theme="light"] .bv-chip` pesa mas que
+   `.bv-chip-on` y le pisaba el naranja, asi que en modo claro la casilla
+   elegida se veia igual que las demas — no habia forma de saber que habias
+   contestado. Es la misma familia de error que apago el panel anterior por
+   "romper el modo claro": una regla de tema ganandole a una de estado.
+   `.bv-chip.bv-chip-on` empata en peso y gana por venir despues. */
+.bv-chip.bv-chip-on {
+  background: var(--orange-primary);
+  border-color: var(--orange-primary);
+  /* Negro sobre naranja: 7,2:1 de contraste. Blanco daria 2,9:1 y no
+     pasa el minimo accesible. Misma regla que los botones de la tienda. */
+  color: #0A0A0A;
+}
+
+.bv-chip:focus-visible,
+.bv-btn:focus-visible,
+.bv-cerrar:focus-visible {
+  outline: 2px solid var(--orange-hover);
+  outline-offset: 2px;
+}
+
+.bv-acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: var(--spacing-sm);
+}
+
+.bv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 48px: es la accion principal de la pantalla y se toca con el pulgar. */
+  min-height: 48px;
+  padding: 0 var(--spacing-md);
+  font-family: var(--font-primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.bv-btn-primario { background: var(--orange-primary); color: #0A0A0A; }
+.bv-btn-primario:hover { background: var(--orange-hover); transform: translateY(-1px); }
+.bv-btn-primario:active { background: var(--orange-dark); transform: translateY(0); }
+
+.bv-btn-fantasma {
+  background: transparent;
+  color: var(--gray-text);
+  min-height: 40px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+.bv-btn-fantasma:hover { color: var(--white); }
+
+.bv-tilde {
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--orange-primary);
+}
+
+/* ---- Celular ---- */
+@media (max-width: 560px) {
+  .bv-panel { max-width: 100%; }
+
+  /* La foto pasa de columna lateral a franja de arriba: en 375px de
+     ancho, 190px de foto al costado dejarian el texto en un hilo. */
+  .bv-cuerpo { flex-direction: column; }
+  .bv-columna-foto { flex: 0 0 132px; background-position: center 25%; }
+
+  .bv-columna-texto { padding: var(--spacing-md); }
+  .bv-titulo { font-size: 1.7rem; }
+  .bv-chips-anchos { grid-template-columns: 1fr; }
+}
+
+/* Quien pidio que no se le muevan las cosas, no se le mueven. */
+@media (prefers-reduced-motion: reduce) {
+  .bv-capa,
+  .bv-panel,
+  .bv-progreso-barra,
+  .bv-btn { transition: none; }
+}

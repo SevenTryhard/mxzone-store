@@ -1,52 +1,70 @@
 /**
- * MXZONE — Cartel de bienvenida al catalogo.
+ * MXZONE — Panel de bienvenida al catalogo.
  *
- * Aparece UNA sola vez, solo para quien nunca lo contesto, al entrar a la
- * tienda. Pregunta la talla y las marcas, y con eso la tienda deja de ser un
- * catalogo de 250 productos y pasa a mostrarle a cada uno lo suyo.
+ * Reescrito el 2026-09-10. La version anterior se apago el 2026-09-09 por dos
+ * motivos que quedaron anotados en shop.html, y los dos eran el MISMO problema:
  *
- * ---------------------------------------------------------------------------
- * POR QUE PREGUNTA ESTO Y NO OTRA COSA
- * ---------------------------------------------------------------------------
- * Se midio el catalogo antes de escribir nada (2026-09-08):
+ *     "preguntaba por MARCAS, que es un filtro que dejamos de ofrecer, y era
+ *      sospechoso de ensuciar el link para compartir aplicando filtros por su
+ *      cuenta."
  *
- *   - PRESUPUESTO quedo AFUERA. No porque no sirva: porque la tienda NO TIENE
- *     filtro de precio. No esta escondido, no existe en shop.html —`main.js`
- *     busca #minPrice y encuentra null—. Preguntar un presupuesto que despues
- *     no se puede aplicar es pedirle trabajo al cliente a cambio de nada.
- *     Las bandas ya estan medidas para cuando el filtro exista: hasta 150k
- *     (81 productos), 150k-400k (65), 400k-900k (68), mas de 900k (35).
- *
- *   - COLOR quedo afuera por lo mismo: 10 de 250 productos tienen color
- *     cargado. Se puede deducir del nombre en el 44% de los casos, pero eso es
- *     otra tanda.
- *
- *   - MARCA entra, pero SUMA en vez de restar: el 27% del catalogo no tiene
- *     marca cargada. Si filtrara duro, 67 productos serian invisibles para
- *     todo el que conteste.
+ * Aquella version FILTRABA: le hacia clic a los chips de marca del cliente. De
+ * ahi salia todo lo demas. Filtrar por talla Y marca a la vez multiplica dos
+ * restricciones, y estaba medido en produccion que "Fox + Jerseys + talla M"
+ * dejaba UN producto sobre 288. Para tapar eso habia un piso de emergencia que
+ * SOLTABA los filtros solos cuando la tienda quedaba vacia. Un cartel que pone
+ * filtros que despues tiene que sacar no esta ayudando a nadie.
  *
  * ---------------------------------------------------------------------------
- * LA RESTRICCION QUE DEFINE EL DISENO
+ * LA REGLA QUE DEFINE ESTA VERSION
  * ---------------------------------------------------------------------------
- * Una talla SOLO significa algo dentro de una categoria: no existe un casco
- * talla 42 ni una bota talla S. Por eso en /shop, sin categoria elegida, la
- * tienda no muestra ni un chip de talla — dice "Elegi una categoria primero".
+ * ESTE PANEL NO FILTRA. ORDENA.
  *
- * O sea que este cartel NO PUEDE dejar el filtro de talla puesto al cerrarse.
- * Lo que hace es recordarla y marcarla sola en el momento en que el cliente
- * entra a una categoria, que es cuando esa talla recien existe. Se avisa
- * cuando pasa, y se puede desmarcar con un clic.
+ * Nunca esconde un producto, nunca toca un chip, nunca escribe en la URL. Lo
+ * unico que hace es guardar un perfil que `sortProducts()` en main.js lee para
+ * subir lo que le sirve a ese cliente. Todo lo demas sigue ahi, abajo.
+ *
+ * Es de Seven, y su ejemplo es el que lo prueba: alguien elige talla M, y tres
+ * semanas despues quiere comprarle un uniforme a la novia. Si el panel hubiera
+ * FILTRADO, esa venta no existe y el cliente ni se entera de por que no
+ * encuentra nada. Un filtro invisible que el cliente no sabe que puso es una
+ * tienda que le miente.
+ *
+ * Consecuencia directa: el piso de emergencia ya no hace falta. No se puede
+ * quedar sin resultados algo que nunca saca resultados.
+ *
+ * ---------------------------------------------------------------------------
+ * CUANDO NO APARECE
+ * ---------------------------------------------------------------------------
+ * No le aparece NUNCA a quien llego con una intencion.
+ *
+ * Si el cliente entra con `?cat=botas&talla=42` —un link que le mandaron por
+ * WhatsApp— ya contesto la pregunta al hacer clic. Preguntarle la talla ahi no
+ * es un cartel mal programado: es el unico momento en que ofende.
+ *
+ * ---------------------------------------------------------------------------
+ * LO QUE SE APRENDIO MIDIENDO EL CATALOGO (2026-09-08) Y SIGUE VALIENDO
+ * ---------------------------------------------------------------------------
+ *   - MARCA no se pregunta mas: es un filtro que la tienda dejo de ofrecer.
+ *   - PRESUPUESTO si se pregunta, pero NO como filtro —la tienda no tiene
+ *     filtro de precio, `main.js` busca #minPrice y encuentra null—. Se usa
+ *     como senial de orden: lo que entra en su rango sube. Preguntar algo que
+ *     despues no se puede aplicar seria pedirle trabajo al cliente a cambio de
+ *     nada; aplicarlo ordenando si se puede, hoy, sin backend nuevo.
+ *   - COLOR sigue afuera: 10 de 250 productos lo tienen cargado.
+ *   - Una talla SOLO significa algo dentro de una categoria: no existe un casco
+ *     talla 42 ni una bota talla S. Por eso se guardan por separado.
  */
 (function () {
   'use strict';
 
-  var CLAVE = 'mxzone_perfil_v1';
+  var CLAVE = 'mxzone_perfil_v2';
   var log = (typeof mxLog === 'function') ? mxLog : function () {};
 
   // ── Guardado ──────────────────────────────────────────────────────────────
-  // Todo va en try/catch: en incognito o con las cookies bloqueadas,
-  // localStorage TIRA al escribir. Un cartel de bienvenida no puede ser el
-  // motivo de que la tienda no cargue.
+  // Todo en try/catch: en incognito o con las cookies bloqueadas localStorage
+  // TIRA al escribir. Un cartel de bienvenida no puede ser el motivo de que la
+  // tienda no cargue.
   function leerPerfil() {
     try {
       var crudo = localStorage.getItem(CLAVE);
@@ -59,310 +77,302 @@
   function guardarPerfil(perfil) {
     try {
       localStorage.setItem(CLAVE, JSON.stringify(perfil));
-      return true;
     } catch (e) {
       log('[bienvenida] no se pudo guardar el perfil:', e && e.message);
-      return false;
     }
+    // Aunque el guardado falle, la tienda tiene que ordenar en ESTA visita.
+    window.MXZONE_PERFIL = perfil;
+    if (typeof window.mxAplicarPrioridad === 'function') window.mxAplicarPrioridad();
   }
 
   /**
-   * Si corresponde mostrar el cartel.
+   * Si corresponde mostrarlo.
    *
-   * Se muestra una sola vez por navegador. "Ahora no" TAMBIEN cuenta como
-   * contestado: insistirle a alguien que ya dijo que no es exactamente la
-   * forma de gastar la paciencia que el cliente trae al entrar.
+   * Tres portones, y el del medio es el importante.
    */
-  function debeMostrarse(perfil) {
-    return !perfil;
+  function debeMostrarse() {
+    // 1. Ya contesto alguna vez. "Ahora no" TAMBIEN cuenta: insistirle a quien
+    //    ya dijo que no es la forma mas rapida de gastar la paciencia que el
+    //    cliente trae puesta al entrar.
+    if (leerPerfil()) return false;
+
+    // 2. LLEGO CON UNA INTENCION. Cualquier cosa en la URL que diga que este
+    //    visitante no vino a mirar sino a buscar algo puntual.
+    var p = new URLSearchParams(window.location.search);
+    var seniales = ['cat', 'talla', 'marca', 'q', 'search', 'producto', 'slug', 'promo'];
+    for (var i = 0; i < seniales.length; i++) {
+      if (p.get(seniales[i])) return false;
+    }
+
+    // 3. Tiene que haber una tienda abajo. Si la grilla no existe, esto no es
+    //    /shop y no hay nada que ordenar.
+    return !!document.querySelector('.products-grid');
   }
 
   // ── Las preguntas ─────────────────────────────────────────────────────────
-  // Tres filas cortas y una opcional. Un cartel de bienvenida compite con las
-  // ganas de ver productos: cada pregunta de mas es gente que cierra.
-  var TALLAS_ROPA = ['S', 'M', 'L', 'XL', 'XXL'];
-  var TALLAS_BOTA = ['7', '8', '9', '10', '11', '12', '13'];
-  var MARCAS = [
-    { slug: 'fly', label: 'Fly' },
-    { slug: 'fox', label: 'Fox' },
-    { slug: 'alpinestars', label: 'Alpinestars' },
-    { slug: 'acerbis', label: 'Acerbis' },
-    { slug: 'leatt', label: 'Leatt' }
+  var TALLAS = [
+    { clave: 'casco',    etiqueta: 'Casco',    ico: 'cascos',       valores: ['XS', 'S', 'M', 'L', 'XL', 'XXL'] },
+    { clave: 'jersey',   etiqueta: 'Jersey',   ico: 'jersey',       valores: ['XS', 'S', 'M', 'L', 'XL', 'XXL'] },
+    { clave: 'pantalon', etiqueta: 'Pantalón', ico: 'uniformes',    valores: ['28', '30', '32', '34', '36', '38', '40'] },
+    { clave: 'bota',     etiqueta: 'Botas',    ico: 'botas',        valores: ['38', '39', '40', '41', '42', '43', '44', '45'] }
   ];
 
-  function chips(nombre, valores, etiqueta) {
+  // Las bandas salen de medir el catalogo, no de numeros redondos inventados:
+  // hasta 150k (81 productos), 150k-400k (65), 400k-900k (68), +900k (35).
+  var PRESUPUESTOS = [
+    { clave: 'bajo',  etiqueta: 'Hasta $150.000',       min: 0,       max: 150000 },
+    { clave: 'medio', etiqueta: '$150.000 – $400.000',  min: 150000,  max: 400000 },
+    { clave: 'alto',  etiqueta: '$400.000 – $900.000',  min: 400000,  max: 900000 },
+    { clave: 'top',   etiqueta: 'Más de $900.000',      min: 900000,  max: Infinity },
+    { clave: 'nose',  etiqueta: 'Todavía no sé',        min: 0,       max: Infinity }
+  ];
+
+  var INTERESES = [
+    { clave: 'cascos', etiqueta: 'Cascos' },
+    { clave: 'botas', etiqueta: 'Botas' },
+    { clave: 'jersey', etiqueta: 'Jerseys' },
+    { clave: 'uniformes', etiqueta: 'Uniformes' },
+    { clave: 'protecciones', etiqueta: 'Protecciones' },
+    { clave: 'guantes', etiqueta: 'Guantes' },
+    { clave: 'gafas', etiqueta: 'Gafas' },
+    { clave: 'todo', etiqueta: 'Todo el equipo' }
+  ];
+
+  // ── Estado del formulario ─────────────────────────────────────────────────
+  var paso = 1;
+  var TOTAL_PASOS = 3;
+  var respuestas = { tallas: {}, presupuesto: null, intereses: [] };
+
+  function ico(nombre) {
+    return '<i class="ico" data-ico="' + nombre + '" aria-hidden="true"></i>';
+  }
+
+  function chips(grupo, valores, seleccionado) {
     return valores.map(function (v) {
-      var texto = etiqueta ? etiqueta(v) : v;
-      return '<button type="button" class="bv-chip" data-grupo="' + nombre +
-             '" data-valor="' + v + '">' + texto + '</button>';
+      var valor = typeof v === 'string' ? v : v.clave;
+      var texto = typeof v === 'string' ? v : v.etiqueta;
+      var activo = Array.isArray(seleccionado)
+        ? seleccionado.indexOf(valor) !== -1
+        : seleccionado === valor;
+      return '<button type="button" class="bv-chip' + (activo ? ' bv-chip-on' : '') +
+             '" data-grupo="' + grupo + '" data-valor="' + valor + '">' + texto + '</button>';
     }).join('');
   }
 
-  function plantilla() {
+  // ── Las pantallas ─────────────────────────────────────────────────────────
+
+  function pantallaBienvenida() {
     return '' +
-      '<div class="bv-panel" role="dialog" aria-modal="true" aria-labelledby="bvTitulo">' +
-        '<button type="button" class="bv-cerrar" aria-label="Cerrar">&times;</button>' +
-
-        '<h2 class="bv-titulo" id="bvTitulo">Te armamos la tienda a tu medida</h2>' +
-        '<p class="bv-bajada">Dos toques y ves lo tuyo primero. Podes saltearlo.</p>' +
-
-        '<div class="bv-grupo">' +
-          '<span class="bv-label">Tu talla de ropa</span>' +
-          '<div class="bv-chips">' + chips('ropa', TALLAS_ROPA) + '</div>' +
-        '</div>' +
-
-        '<div class="bv-grupo">' +
-          '<span class="bv-label">Tu numero de bota</span>' +
-          '<div class="bv-chips">' + chips('bota', TALLAS_BOTA, function (n) { return n + ' US'; }) + '</div>' +
-        '</div>' +
-
-        '<div class="bv-grupo">' +
-          '<span class="bv-label">Marcas que te gustan <em>(opcional)</em></span>' +
-          '<div class="bv-chips">' +
-            MARCAS.map(function (m) {
-              return '<button type="button" class="bv-chip" data-grupo="marca" data-valor="' +
-                     m.slug + '">' + m.label + '</button>';
-            }).join('') +
-          '</div>' +
-        '</div>' +
-
+      '<div class="bv-columna-foto" aria-hidden="true"></div>' +
+      '<div class="bv-columna-texto">' +
+        '<p class="bv-paso">01 / 0' + TOTAL_PASOS + '</p>' +
+        '<h2 class="bv-titulo" id="bvTitulo">Encontrá tu <em>equipo ideal</em></h2>' +
+        '<p class="bv-bajada">Contanos tu talla y qué estás buscando, y ponemos lo tuyo ' +
+          'primero. <strong>No se esconde nada</strong>: el catálogo completo sigue ahí.</p>' +
+        '<p class="bv-nota">' + ico('alerta') + ' Son dos pasos y se contesta una sola vez.</p>' +
         '<div class="bv-acciones">' +
-          '<button type="button" class="bv-btn-primario" id="bvListo">Ver mi tienda</button>' +
-          '<button type="button" class="bv-btn-fantasma" id="bvSaltar">Ahora no</button>' +
+          '<button type="button" class="bv-btn bv-btn-primario" data-accion="siguiente">Continuar</button>' +
+          '<button type="button" class="bv-btn bv-btn-fantasma" data-accion="saltar">Ahora no</button>' +
         '</div>' +
       '</div>';
   }
 
-  // ── Aplicar lo contestado ─────────────────────────────────────────────────
+  function pantallaTallas() {
+    var filas = TALLAS.map(function (t) {
+      return '' +
+        '<div class="bv-fila">' +
+          '<span class="bv-fila-label">' + ico(t.ico) + ' ' + t.etiqueta + '</span>' +
+          '<div class="bv-chips">' + chips('talla:' + t.clave, t.valores, respuestas.tallas[t.clave]) + '</div>' +
+        '</div>';
+    }).join('');
 
-  /**
-   * Las marcas SI se pueden aplicar al toque: sus chips existen en /shop sin
-   * necesidad de elegir categoria. Se usan los mismos botones que usaria el
-   * cliente a mano, asi que no hace falta duplicar nada de la logica del filtro.
-   */
-  function aplicarMarcas(marcas) {
-    if (!marcas || !marcas.length) return 0;
-    var aplicadas = 0;
-    marcas.forEach(function (slug) {
-      var chip = document.querySelector('.brand-chip[data-brand="' + slug + '"]');
-      if (chip && !chip.classList.contains('active')) {
-        chip.click();
-        aplicadas++;
-      }
-    });
-    return aplicadas;
+    return '' +
+      '<div class="bv-columna-texto bv-ancho">' +
+        '<p class="bv-paso">02 / 0' + TOTAL_PASOS + '</p>' +
+        '<h2 class="bv-titulo" id="bvTitulo">¿Qué <em>talla</em> usás?</h2>' +
+        '<p class="bv-bajada">Elegí las que sepas. Las que no, dejalas en blanco.</p>' +
+        '<div class="bv-filas">' + filas + '</div>' +
+        '<div class="bv-acciones">' +
+          '<button type="button" class="bv-btn bv-btn-primario" data-accion="siguiente">Siguiente</button>' +
+          '<button type="button" class="bv-btn bv-btn-fantasma" data-accion="siguiente">No sé / Omitir</button>' +
+        '</div>' +
+      '</div>';
   }
 
-  /**
-   * PISO DE RESULTADOS — 2026-09-08.
-   *
-   * La talla y la marca se multiplican: Fox + Jerseys + talla M da UN producto
-   * sobre 288. Medido en produccion, no en teoria. Un cliente nuevo contesta un
-   * cuestionario amable y aterriza en una tienda vacia — se va, y con razon.
-   *
-   * Cuando eso pasa se suelta la MARCA y se queda la TALLA, en ese orden y no
-   * al reves: la talla es una restriccion real —no te podes poner la que no es—
-   * y la marca es un gusto. Antes de dejarlo sin nada, se le muestran otras
-   * marcas en su talla.
-   *
-   * El piso es 4 porque abajo de eso la grilla ni siquiera llena una fila.
-   */
-  var PISO_DE_RESULTADOS = 4;
-
-  function visibles() {
-    var todas = document.querySelectorAll('.product-card');
-    var n = 0;
-    for (var i = 0; i < todas.length; i++) {
-      if (todas[i].style.display !== 'none') n++;
-    }
-    return n;
+  function pantallaPresupuesto() {
+    return '' +
+      '<div class="bv-columna-texto bv-ancho">' +
+        '<p class="bv-paso">03 / 0' + TOTAL_PASOS + '</p>' +
+        '<h2 class="bv-titulo" id="bvTitulo">¿Cuánto querés <em>invertir</em>?</h2>' +
+        '<p class="bv-bajada">Lo usamos para ordenar, no para esconder precios.</p>' +
+        '<div class="bv-chips bv-chips-anchos">' + chips('presupuesto', PRESUPUESTOS, respuestas.presupuesto) + '</div>' +
+        '<p class="bv-label">¿Qué estás buscando?</p>' +
+        '<div class="bv-chips">' + chips('interes', INTERESES, respuestas.intereses) + '</div>' +
+        '<div class="bv-acciones">' +
+          '<button type="button" class="bv-btn bv-btn-primario" data-accion="terminar">Ver productos</button>' +
+          '<button type="button" class="bv-btn bv-btn-fantasma" data-accion="saltar">Ahora no</button>' +
+        '</div>' +
+      '</div>';
   }
 
-  function aflojarSiQuedoVacio(talla) {
-    setTimeout(function () {
-      var quedan = visibles();
-
-      var marcasActivas = document.querySelectorAll('.brand-chip.active:not([data-brand="all"])');
-      if (quedan >= PISO_DE_RESULTADOS || !marcasActivas.length) {
-        if (typeof showNotification === 'function') {
-          showNotification('Filtramos por tu talla ' + talla + '. Tocala de nuevo para ver todas.', 'info');
-        }
-        return;
-      }
-
-      var todas = document.querySelector('.brand-chip[data-brand="all"]');
-      if (todas) todas.click();
-
-      if (typeof showNotification === 'function') {
-        showNotification('Casi no hay talla ' + talla + ' de tus marcas. Te mostramos todas las marcas en tu talla.', 'info');
-      }
-      log('[bienvenida] piso de resultados: quedaban ' + quedan + ', se solto el filtro de marca');
-    }, 400);
+  function pantallaListo() {
+    return '' +
+      '<div class="bv-columna-texto bv-centrado">' +
+        '<div class="bv-tilde">' + ico('explorar') + '</div>' +
+        '<h2 class="bv-titulo" id="bvTitulo">¡Listo!</h2>' +
+        '<p class="bv-bajada">Ordenamos la tienda con lo tuyo adelante. ' +
+          '<strong>Todo el catálogo sigue disponible</strong> — nada quedó oculto.</p>' +
+        '<div class="bv-acciones">' +
+          '<button type="button" class="bv-btn bv-btn-primario" data-accion="cerrar">Ver mi tienda</button>' +
+        '</div>' +
+      '</div>';
   }
 
-  /**
-   * La talla se marca sola CUANDO aparecen los chips, no antes: recien existen
-   * al elegir una categoria. Se vigila el contenedor en vez de engancharse a la
-   * funcion que los dibuja, para no acoplarse a main.js.
-   *
-   * Se aplica UNA vez por carga de pagina y solo si el cliente no marco ninguna
-   * talla el mismo. Insistir en cada cambio de categoria seria pelearle al
-   * cliente por el control de su propio filtro.
-   */
-  function vigilarTallas(perfil) {
-    var contenedor = document.getElementById('sizeFilterContainer');
-    if (!contenedor || !window.MutationObserver) return;
-    if (!perfil || (!perfil.ropa && !perfil.bota)) return;
-
-    var yaAplicada = false;
-
-    function intentar() {
-      if (yaAplicada) return;
-
-      var chipsTalla = contenedor.querySelectorAll('.size-chip');
-      if (!chipsTalla.length) return;
-      if (contenedor.querySelector('.size-chip.active')) return; // el cliente ya eligio
-
-      var candidatas = [perfil.ropa, perfil.bota].filter(Boolean);
-      for (var i = 0; i < chipsTalla.length; i++) {
-        var chip = chipsTalla[i];
-        var valor = String(chip.dataset.size || '').trim().toUpperCase();
-        if (candidatas.indexOf(valor) !== -1) {
-          yaAplicada = true;
-          chip.click();
-          aflojarSiQuedoVacio(valor);
-          return;
-        }
-      }
-    }
-
-    new MutationObserver(intentar).observe(contenedor, { childList: true });
-    intentar();
+  function pantalla() {
+    if (paso === 1) return pantallaBienvenida();
+    if (paso === 2) return pantallaTallas();
+    if (paso === 3) return pantallaPresupuesto();
+    return pantallaListo();
   }
 
-  // ── El cartel ─────────────────────────────────────────────────────────────
+  // ── Montaje ───────────────────────────────────────────────────────────────
+
   function mostrar() {
     var capa = document.createElement('div');
     capa.className = 'bv-capa';
-    capa.innerHTML = plantilla();
+    capa.innerHTML =
+      '<div class="bv-panel" role="dialog" aria-modal="true" aria-labelledby="bvTitulo">' +
+        '<button type="button" class="bv-cerrar" aria-label="Cerrar" data-accion="saltar">&times;</button>' +
+        '<div class="bv-progreso"><span class="bv-progreso-barra" style="width:33%"></span></div>' +
+        '<div class="bv-cuerpo">' + pantalla() + '</div>' +
+      '</div>';
     document.body.appendChild(capa);
+    document.body.classList.add('bv-abierto');
+    // La entrada animada SOLO si la pestania esta a la vista. Ver el comentario
+    // de .bv-capa en styles.css: en segundo plano la animacion queda pausada en
+    // el primer cuadro y el panel se vuelve invisible pero sigue tapando todo.
+    if (!document.hidden) capa.classList.add('bv-anima');
 
-    // Un frame despues, para que la transicion de entrada corra.
-    requestAnimationFrame(function () { capa.classList.add('bv-visible'); });
+    var cuerpo = capa.querySelector('.bv-cuerpo');
+    var barra = capa.querySelector('.bv-progreso-barra');
 
-    var elegido = { ropa: null, bota: null, marca: [] };
-
-    capa.addEventListener('click', function (e) {
-      var chip = e.target.closest('.bv-chip');
-      if (!chip) return;
-
-      var grupo = chip.dataset.grupo;
-      var valor = chip.dataset.valor;
-
-      if (grupo === 'marca') {
-        // Multiple: son preferencias, no una eleccion excluyente.
-        chip.classList.toggle('bv-activo');
-        var i = elegido.marca.indexOf(valor);
-        if (i === -1) elegido.marca.push(valor); else elegido.marca.splice(i, 1);
-        return;
-      }
-
-      // Talla: una sola por grupo, y volver a tocarla la desmarca — si no, no
-      // hay forma de arrepentirse sin recargar.
-      var hermanos = capa.querySelectorAll('.bv-chip[data-grupo="' + grupo + '"]');
-      var estaba = chip.classList.contains('bv-activo');
-      hermanos.forEach(function (h) { h.classList.remove('bv-activo'); });
-      if (!estaba) {
-        chip.classList.add('bv-activo');
-        elegido[grupo] = valor;
-      } else {
-        elegido[grupo] = null;
-      }
-    });
+    function repintar() {
+      cuerpo.innerHTML = pantalla();
+      var pct = paso > TOTAL_PASOS ? 100 : Math.round((paso / TOTAL_PASOS) * 100);
+      barra.style.width = pct + '%';
+      var foco = cuerpo.querySelector('.bv-btn-primario');
+      if (foco) foco.focus();
+    }
 
     function cerrar(perfil) {
       guardarPerfil(perfil);
-      capa.classList.remove('bv-visible');
+      cerrarCapa();
+    }
+
+    // Sacar el panel de la pantalla. Se le agrega la clase para que se
+    // desvanezca, pero el que lo SACA es el temporizador: si la animacion no
+    // corre —pestania en segundo plano, o el sistema con las animaciones
+    // apagadas— el panel se va igual. Nunca puede quedar tapando la tienda.
+    function cerrarCapa() {
+      capa.classList.add('bv-cerrando');
       document.body.classList.remove('bv-abierto');
-      setTimeout(function () { capa.remove(); }, 300);
-      return perfil;
+      setTimeout(function () { if (capa.parentNode) capa.remove(); }, 260);
+      document.removeEventListener('keydown', enEscape);
     }
 
-    function saltar() {
-      // Se guarda igual, con `salteado`, para no volver a molestar.
-      cerrar({ salteado: true, fecha: Date.now() });
+    function enEscape(e) {
+      if (e.key === 'Escape') cerrar({ contestado: false, en: Date.now() });
     }
+    document.addEventListener('keydown', enEscape);
 
-    capa.querySelector('#bvSaltar').addEventListener('click', saltar);
-    capa.querySelector('.bv-cerrar').addEventListener('click', saltar);
-    capa.addEventListener('click', function (e) { if (e.target === capa) saltar(); });
-    document.addEventListener('keydown', function esc(e) {
-      if (e.key === 'Escape' && document.body.contains(capa)) { saltar(); document.removeEventListener('keydown', esc); }
-    });
+    capa.addEventListener('click', function (e) {
+      // Clic afuera del panel = "ahora no". No se pierde nada: vuelve a
+      // aparecer solo si nunca contesto, y esto cuenta como haber contestado.
+      if (e.target === capa) { cerrar({ contestado: false, en: Date.now() }); return; }
 
-    capa.querySelector('#bvListo').addEventListener('click', function () {
-      var perfil = {
-        ropa: elegido.ropa,
-        bota: elegido.bota,
-        marca: elegido.marca,
-        fecha: Date.now()
-      };
-      cerrar(perfil);
+      var chip = e.target.closest('.bv-chip');
+      if (chip) {
+        var grupo = chip.dataset.grupo;
+        var valor = chip.dataset.valor;
 
-      var marcasAplicadas = aplicarMarcas(perfil.marca);
-      vigilarTallas(perfil);
-
-      if (typeof showNotification === 'function') {
-        if (perfil.ropa || perfil.bota) {
-          showNotification('Listo. Al entrar a una categoria te marcamos tu talla.', 'success');
-        } else if (marcasAplicadas) {
-          showNotification('Listo, filtramos por tus marcas.', 'success');
+        if (grupo === 'interes') {
+          // Varios a la vez.
+          var i = respuestas.intereses.indexOf(valor);
+          if (i === -1) respuestas.intereses.push(valor);
+          else respuestas.intereses.splice(i, 1);
+          chip.classList.toggle('bv-chip-on');
+          return;
         }
+
+        // Uno solo por grupo, y volver a tocarlo lo desmarca: si no, quien se
+        // equivoca de talla no tiene forma de arrepentirse.
+        var hermanos = chip.parentElement.querySelectorAll('.bv-chip');
+        var yaEstaba = chip.classList.contains('bv-chip-on');
+        hermanos.forEach(function (h) { h.classList.remove('bv-chip-on'); });
+        if (!yaEstaba) chip.classList.add('bv-chip-on');
+
+        if (grupo === 'presupuesto') {
+          respuestas.presupuesto = yaEstaba ? null : valor;
+        } else if (grupo.indexOf('talla:') === 0) {
+          var cual = grupo.slice(6);
+          if (yaEstaba) delete respuestas.tallas[cual];
+          else respuestas.tallas[cual] = valor;
+        }
+        return;
+      }
+
+      var boton = e.target.closest('[data-accion]');
+      if (!boton) return;
+      var accion = boton.dataset.accion;
+
+      if (accion === 'saltar') { cerrar({ contestado: false, en: Date.now() }); return; }
+      if (accion === 'cerrar') { cerrarCapa(); return; }
+      if (accion === 'siguiente') { paso++; repintar(); return; }
+      if (accion === 'terminar') {
+        paso = TOTAL_PASOS + 1;
+        // Se guarda ACA, no al cerrar: si el cliente cierra la pestania en la
+        // pantalla de "listo", lo que contesto ya quedo puesto igual.
+        cerrarGuardando();
+        repintar();
       }
     });
 
-    document.body.classList.add('bv-abierto');
+    function cerrarGuardando() {
+      guardarPerfil({
+        contestado: true,
+        en: Date.now(),
+        tallas: respuestas.tallas,
+        presupuesto: respuestas.presupuesto,
+        intereses: respuestas.intereses
+      });
+    }
   }
 
   // ── Arranque ──────────────────────────────────────────────────────────────
-  function iniciar() {
-    if (!document.getElementById('productsGrid')) return;  // solo en la tienda
+  function arrancar() {
+    // El perfil se publica SIEMPRE, aunque el panel no se muestre: quien ya
+    // contesto tiene que seguir viendo la tienda ordenada a su medida.
+    window.MXZONE_PERFIL = leerPerfil();
 
-    var perfil = leerPerfil();
+    if (!debeMostrarse()) return;
 
-    if (!debeMostrarse(perfil)) {
-      // Ya contesto en otra visita: no se muestra nada, pero su talla se sigue
-      // usando. Ese es el pago de haber contestado.
-      if (perfil && !perfil.salteado) vigilarTallas(perfil);
-      return;
-    }
-
-    // Se espera a que la grilla tenga productos: un cartel sobre una pagina
-    // todavia vacia se lee como un anuncio, no como una ayuda.
-    var intentos = 0;
-    var esperar = setInterval(function () {
-      intentos++;
-      if (document.querySelectorAll('.product-card').length > 0) {
-        clearInterval(esperar);
-        setTimeout(mostrar, 600);
-      } else if (intentos > 40) {
-        clearInterval(esperar);  // 8s sin productos: algo anda mal, no se molesta
-      }
-    }, 200);
+    // Se espera a que la tienda pinte. Un cartel que aparece sobre una pantalla
+    // en blanco parece un error de carga, no una bienvenida.
+    setTimeout(function () {
+      if (debeMostrarse()) mostrar();
+    }, 900);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', iniciar);
+    document.addEventListener('DOMContentLoaded', arrancar);
   } else {
-    iniciar();
+    arrancar();
   }
 
-  // Para las pruebas y para poder reabrirlo a mano desde la consola.
-  window.MXZONE_BIENVENIDA = {
-    leerPerfil: leerPerfil,
-    guardarPerfil: guardarPerfil,
-    debeMostrarse: debeMostrarse,
-    mostrar: mostrar,
-    CLAVE: CLAVE
+  // Para poder probarlo sin borrar el navegador a mano.
+  window.mxBienvenidaReset = function () {
+    try { localStorage.removeItem(CLAVE); } catch (e) {}
+    window.MXZONE_PERFIL = null;
+    location.reload();
   };
 })();
