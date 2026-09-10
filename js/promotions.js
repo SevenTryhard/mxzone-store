@@ -88,7 +88,7 @@ function createPromoCard(promo) {
       <div class="promo-card-content">
         <span class="promo-card-category">${getCategoryLabel(promo.category || 'general')}</span>
         <h3 class="promo-card-name">${promo.name}</h3>
-        <p class="promo-card-products-count">📦 ${productsCount} productos incluidos</p>
+        <p class="promo-card-products-count"><i class="ico" data-ico="caja" aria-hidden="true"></i> ${productsCount} productos incluidos</p>
 
         <div class="promo-card-pricing">
           <span class="promo-regular-price">$${promo.regularTotal?.toLocaleString('es-CO') || '0'}</span>
@@ -121,7 +121,7 @@ async function renderPromotions(filter = 'all') {
   if (filteredPromos.length === 0) {
     container.innerHTML = `
       <div class="promos-empty">
-        <span class="empty-icon">📦</span>
+        <span class="empty-icon"><i class="ico" data-ico="caja" aria-hidden="true"></i></span>
         <p>No hay promociones disponibles en esta categoría</p>
       </div>
     `;

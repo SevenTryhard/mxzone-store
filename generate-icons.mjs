@@ -37,7 +37,39 @@ const reglas = Object.entries(ICONOS).map(([slug, cuerpo]) => {
   return `.category-chip[data-category="${slug}"]::before,\n.category-icon[data-category="${slug}"] {\n  -webkit-mask-image: ${u};\n          mask-image: ${u};\n}`;
 }).join('\n\n');
 
-const INICIO = '/* >>> ICONOS-CATEGORIA-INICIO (generado por generate-category-icons.mjs) */';
+// ---------------------------------------------------------------------
+// ICONOS DE INTERFAZ
+// ---------------------------------------------------------------------
+// Los de arriba son las CATEGORIAS de producto. Estos son los de la
+// interfaz: el aviso de error de un campo, el medio de pago, los pasos
+// de "como funciona", las estadisticas de promociones.
+//
+// Estaban puestos como emoji del teclado, con dos agravantes sobre el
+// caso de las categorias: las limpiezas anteriores dejaron elementos
+// VACIOS a medio camino (<span class="stat-icon"></span>), y un paso
+// tenia la palabra "WA" escrita como si fuera un dibujo. O sea que la
+// pagina no tenia un criterio: tenia tres.
+const ICONOS_UI = {
+  alerta:    `<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5"/><path d="M12 16.2h.01"/>`,
+  pago:      `<rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 10h19"/><path d="M6 14.5h4"/>`,
+  caja:      `<path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5Z"/><path d="m3 7.5 9 4.5 9-4.5"/><path d="M12 12v9"/>`,
+  whatsapp:  `<path d="M3.5 20.5 5 16.2a8.5 8.5 0 1 1 3.3 3.2Z"/><path d="M9 9.2c0 3 2.4 5.4 5.3 5.4.6 0 1-.4 1-.9v-.7l-1.6-.7-.8 1a5.4 5.4 0 0 1-2.3-2.3l1-.8-.7-1.6h-.8c-.5 0-.9.4-.9 1Z"/>`,
+  moto:      `<circle cx="5.5" cy="16.5" r="3.5"/><circle cx="18.5" cy="16.5" r="3.5"/><path d="M5.5 16.5 9 10h5l2.5 6.5"/><path d="M9 10 8 7H6"/><path d="M14 10h4"/>`,
+  descuento: `<path d="M3.5 12.8V4.5a1 1 0 0 1 1-1h8.3a1 1 0 0 1 .7.3l6.7 6.7a1 1 0 0 1 0 1.4l-8.3 8.3a1 1 0 0 1-1.4 0L3.8 13.5a1 1 0 0 1-.3-.7Z"/><path d="M8 8h.01"/><path d="m11.5 15 4-4"/>`,
+  clientes:  `<circle cx="9" cy="8" r="3.2"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 5.4a3.2 3.2 0 0 1 0 5.2"/><path d="M18 14.4a6.5 6.5 0 0 1 3.5 5.6"/>`,
+  envio:     `<path d="M2.5 6.5h11v10h-11Z"/><path d="M13.5 10h4l4 3.2v3.3h-8Z"/><circle cx="7" cy="18.5" r="2"/><circle cx="17.5" cy="18.5" r="2"/>`,
+  explorar:  `<path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/>`,
+  detalles:  `<circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/><path d="M7.8 10.5h5.4"/>`,
+  carrito:   `<path d="M2.5 3.5h2.6l2.3 11h10.2"/><path d="M6.4 6.5h14.3l-1.6 6.4H7.7"/><circle cx="9" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/>`,
+  regla:     `<rect x="2.5" y="8" width="19" height="8" rx="1.5"/><path d="M7 8v3"/><path d="M11 8v4.5"/><path d="M15 8v3"/><path d="M19 8v4.5"/>`,
+};
+
+const reglasUI = Object.entries(ICONOS_UI).map(([slug, cuerpo]) => {
+  const u = uri(cuerpo);
+  return `.ico[data-ico="${slug}"] {\n  -webkit-mask-image: ${u};\n          mask-image: ${u};\n}`;
+}).join('\n\n');
+
+const INICIO = '/* >>> ICONOS-INICIO (generado por generate-icons.mjs) */';
 const FIN = '/* <<< ICONOS-CATEGORIA-FIN */';
 
 const bloque = `
@@ -115,20 +147,86 @@ ${INICIO}
 }
 
 ${reglas}
+
+
+/* ----------------------------------------------------------------
+   ICONOS DE INTERFAZ
+   ----------------------------------------------------------------
+   Se usan asi:  <i class="ico" data-ico="alerta" aria-hidden="true"></i>
+
+   Miden 1em y toman el color del texto, o sea que se adaptan solos al
+   tamano y al color de donde caigan: en un aviso de error salen rojos y
+   chicos, en el encabezado del checkout salen grandes y naranjas, sin
+   una sola regla extra. Un emoji no puede hacer eso — tiene sus propios
+   colores y su propio tamano, y por eso nunca terminaba de encajar.
+
+   aria-hidden porque son decoracion: al lado siempre hay texto que dice
+   lo mismo. Un lector de pantalla que los anuncie repite todo dos veces.
+   ---------------------------------------------------------------- */
+.ico {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  vertical-align: -0.125em;
+  background-color: currentColor;
+  -webkit-mask-position: center;
+          mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+}
+
+${reglasUI}
+
+/* Los avisos de error de cada campo del checkout llevaban un emoji de
+   advertencia escrito DENTRO del texto, repetido en cinco campos y en
+   dos archivos: diez copias del mismo caracter. Ahora el dibujo lo pone
+   el CSS una sola vez y el texto vuelve a ser solo texto — que ademas
+   es lo que necesita un lector de pantalla para leerlo bien. */
+.field-error {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.field-error::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask: ${uri(ICONOS_UI.alerta)} center / contain no-repeat;
+          mask: ${uri(ICONOS_UI.alerta)} center / contain no-repeat;
+}
 ${FIN}
 `;
 
 let css = fs.readFileSync(FILE, 'utf8');
 
+// El repo alterna LF y CRLF segun quien lo toco ultimo (git normaliza al
+// mergear). Se busca sobre LF y se devuelve el final de linea original,
+// porque si no los reemplazos por texto exacto fallan EN SILENCIO: el
+// script dice que hizo 0 cambios y no da error.
+const CR = String.fromCharCode(13);
+const LF = String.fromCharCode(10);
+const CRLF = css.includes(CR + LF);
+if (CRLF) css = css.split(CR + LF).join(LF);
+
 // Idempotente: si ya hay un bloque generado, se reemplaza en vez de
 // apilar otro debajo. Correr el generador dos veces no puede dejar la
 // hoja con dos versiones del mismo icono.
-const i = css.indexOf(INICIO);
+// Se acepta tambien el marcador viejo (ICONOS-CATEGORIA-INICIO), de
+// cuando este generador solo hacia las categorias.
+const INICIO_VIEJO = '/* >>> ICONOS-CATEGORIA-INICIO (generado por generate-category-icons.mjs) */';
+const i = css.includes(INICIO) ? css.indexOf(INICIO) : css.indexOf(INICIO_VIEJO);
 const f = css.indexOf(FIN);
 if (i !== -1 && f !== -1) {
   css = css.slice(0, i).replace(/\s+$/, '\n') + css.slice(f + FIN.length);
   console.log('bloque anterior encontrado y reemplazado');
 }
 
-fs.writeFileSync(FILE, css + bloque);
-console.log(`OK — ${Object.keys(ICONOS).length} iconos escritos`);
+const salida = css + bloque;
+fs.writeFileSync(FILE, CRLF ? salida.split(LF).join(CR + LF) : salida);
+console.log(`OK — ${Object.keys(ICONOS).length} de categoria + ${Object.keys(ICONOS_UI).length} de interfaz`);

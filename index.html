@@ -59,7 +59,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@400;500&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css?t=202609101619">
+  <link rel="stylesheet" href="css/styles.css?t=202609101628">
 
   <!-- Netlify Identity Widget -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
@@ -700,7 +700,7 @@
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm);">
             <h4 style="margin: 0;">TALLA</h4>
             <button type="button" class="size-guide-btn" id="openSizeGuide" style="background: none; border: 1px solid var(--orange-primary); color: var(--orange-primary); padding: 4px 12px; border-radius: var(--radius-md); font-size: 0.75rem; cursor: pointer; transition: var(--transition-fast);">
-              📏 Guía de Tallas
+              <i class="ico" data-ico="regla" aria-hidden="true"></i> Guía de Tallas
             </button>
           </div>
           <div class="modal-sizes-list" id="modalSizes"></div>
@@ -734,7 +734,7 @@
       <button class="modal-close" id="closeSizeGuide">&times;</button>
       <div class="modal-product-info" style="max-width: 600px; margin: 0 auto;">
         <h2 class="modal-product-name" style="font-size: 1.8rem; margin-bottom: var(--spacing-md);">
-          📏 Guía de Tallas
+          <i class="ico" data-ico="regla" aria-hidden="true"></i> Guía de Tallas
         </h2>
 
         <!-- Cascos -->
@@ -908,7 +908,7 @@
         <div class="checkout-panel" id="checkoutPanel">
           <!-- Header -->
           <div class="checkout-header">
-            <div class="checkout-header-icon">📦</div>
+            <div class="checkout-header-icon"><i class="ico" data-ico="caja" aria-hidden="true"></i></div>
             <div class="checkout-header-text">
               <h3 class="checkout-title">Finalizar Pedido</h3>
               <p class="checkout-subtitle">Completa tus datos para enviar el pedido por WhatsApp</p>
@@ -922,14 +922,14 @@
             <div class="checkout-field" id="fieldName">
               <label for="checkoutName">Nombre completo <span class="required">*</span></label>
               <input type="text" id="checkoutName" placeholder="Tu nombre completo" required>
-              <span class="field-error" id="errorName">⚠️ Ingresa tu nombre</span>
+              <span class="field-error" id="errorName">Ingresa tu nombre</span>
             </div>
 
             <!-- Teléfono -->
             <div class="checkout-field" id="fieldPhone">
               <label for="checkoutPhone">Teléfono <span class="required">*</span></label>
               <input type="tel" id="checkoutPhone" placeholder="Ej: 317 669 2997" required>
-              <span class="field-error" id="errorPhone">⚠️ Ingresa tu número de teléfono</span>
+              <span class="field-error" id="errorPhone">Ingresa tu número de teléfono</span>
             </div>
 
             <!-- Email -->
@@ -942,19 +942,19 @@
             <div class="checkout-field" id="fieldCity">
               <label for="checkoutCity">Ciudad <span class="required">*</span></label>
               <input type="text" id="checkoutCity" placeholder="Ej: Bogotá, Medellín, Cali" required>
-              <span class="field-error" id="errorCity">⚠️ Ingresa tu ciudad</span>
+              <span class="field-error" id="errorCity">Ingresa tu ciudad</span>
             </div>
 
             <!-- Dirección -->
             <div class="checkout-field" id="fieldAddress">
               <label for="checkoutAddress">Dirección de envío <span class="required">*</span></label>
               <input type="text" id="checkoutAddress" placeholder="Calle, número, barrio, torre/apto" required>
-              <span class="field-error" id="errorAddress">⚠️ Ingresa tu dirección</span>
+              <span class="field-error" id="errorAddress">Ingresa tu dirección</span>
             </div>
 
             <!-- Payment Methods -->
             <div class="checkout-payment" id="fieldPayment">
-              <p class="checkout-payment-title">💳 Método de pago</p>
+              <p class="checkout-payment-title"><i class="ico" data-ico="pago" aria-hidden="true"></i> Método de pago</p>
               <div class="checkout-payment-grid">
                 <button class="checkout-payment-btn" type="button" data-method="nequi" onclick="selectPaymentMethod('nequi')">
                   <span class="cp-icon" style="--c:#FF0082">N</span>
@@ -973,14 +973,14 @@
                   <span class="cp-name">Efectivo</span>
                 </button>
               </div>
-              <span class="field-error" id="errorPayment">⚠️ Selecciona un método de pago</span>
+              <span class="field-error" id="errorPayment">Selecciona un método de pago</span>
             </div>
           </div>
 
           <!-- Footer (fixed) -->
           <div class="checkout-footer">
             <button class="checkout-submit" id="checkoutSubmit">
-              <span class="submit-icon">📱</span>
+              <span class="submit-icon"><i class="ico" data-ico="whatsapp" aria-hidden="true"></i></span>
               <span class="submit-text">Enviar pedido por WhatsApp</span>
             </button>
             <button class="checkout-back" id="checkoutBack">
@@ -991,11 +991,11 @@
       </div>
 
   <!-- Scripts -->
-    <script src="js/utils.js?t=202609101619"></script>
-  <script src="js/cart.js?t=202609101619"></script>
-  <script src="js/main.js?t=202609101619"></script>
+    <script src="js/utils.js?t=202609101628"></script>
+  <script src="js/cart.js?t=202609101628"></script>
+  <script src="js/main.js?t=202609101628"></script>
   <script src="cms/config.js?v=27"></script>
-  <script src="js/products.js?t=202609101619"></script>
+  <script src="js/products.js?t=202609101628"></script>
   <script>
     // 4ULAB Analytics + Campaigns Tracking
     window.__4ULAB_PROJECT_ID__ = 1;
