@@ -1375,7 +1375,30 @@ a {
   z-index: 10000;
   transition: right var(--transition-base);
   box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+
+  /* Este es el UNICO scroll del menu. Antes habia tres encimados y el
+     de aqui adentro se comia 10px del ancho con una barra gris del
+     sistema: esa era la franja negra a la derecha que se veia como si
+     el panel no llegara al borde. */
   overflow-y: auto;
+
+  /* Al llegar al final del menu, la rueda seguia moviendo la pagina de
+     atras. El cliente cerraba el menu y aparecia en otro punto de la
+     tienda sin haber tocado nada. */
+  overscroll-behavior: contain;
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+
+.mobile-menu-panel::-webkit-scrollbar { width: 6px; }
+.mobile-menu-panel::-webkit-scrollbar-track { background: transparent; }
+.mobile-menu-panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-full);
+}
+.mobile-menu-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .mobile-menu-panel.active {
@@ -1514,36 +1537,57 @@ a {
   border-bottom: 1px solid var(--gray-lighter);
 }
 
+/* "CATEGORIAS" pesaba casi lo mismo que "MENU" —los dos en la
+   condensada, los dos en blanco, uno a 20px y el otro a 16—, y dos
+   titulos que compiten se leen como dos pedazos pegados en vez de un
+   panel. Baja a etiqueta: mas chica, mas espaciada y en gris. Sigue
+   ordenando la seccion sin disputarle el mando al titulo del menu. */
 .mobile-menu-section-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--white);
-  margin-bottom: var(--spacing-md);
+  font-family: var(--font-primary);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--gray-text);
+  margin-bottom: var(--spacing-sm);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.14em;
 }
 
+/* Las categorias del menu — reescritas el 2026-09-10.
+
+   Antes esta caja estaba clavada en 200px de alto con 353px de
+   contenido adentro, asi que tenia SU PROPIO scroll con una barrita
+   naranja a la vista, dentro de un panel que ya scrolleaba (1384px de
+   contenido en 812 de pantalla), dentro de una pagina que tambien.
+   Tres scrolls encimados.
+
+   El cliente no cuenta scrolls: intenta bajar, se le mueve la caja de
+   adentro en vez del menu, y la tienda se siente rota aunque funcione.
+   Ahora la caja fluye y el UNICO que scrollea es el panel.
+
+   Y las casillas pasan de amontonarse a una grilla de dos columnas
+   parejas: con flex-wrap cada una tomaba el ancho de su palabra y las
+   filas quedaban desparejas, que es leer un texto en vez de recorrer
+   una lista. Es el mismo arreglo que ya se hizo en la barra lateral de
+   la tienda, por la misma razon. */
 .mobile-menu-category-scroll {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--spacing-sm);
-  max-height: 200px;
-  overflow-y: auto;
-  padding-right: var(--spacing-sm);
 }
 
-.mobile-menu-category-scroll::-webkit-scrollbar {
-  width: 6px;
-}
+/* Alineadas a la izquierda, y es lo que hace que la lista se recorra
+   de un vistazo. Centradas, el icono de cada casilla cae en un punto
+   distinto —el de "Cascos" en un lado, el de "Protecciones" en otro— y
+   el ojo tiene que ir a buscarlo casilla por casilla. Alineados forman
+   una columna: se barren de arriba a abajo sin leer.
 
-.mobile-menu-category-scroll::-webkit-scrollbar-track {
-  background: var(--gray-dark);
-  border-radius: var(--radius-full);
-}
-
-.mobile-menu-category-scroll::-webkit-scrollbar-thumb {
-  background: var(--orange-primary);
-  border-radius: var(--radius-full);
+   Va con selector propio porque la regla generica de .category-chip
+   que las centra vive mas abajo en el archivo (es la de la barra
+   lateral de la tienda, donde centrar SI corresponde porque ahi el
+   nombre se parte en dos renglones y no hay icono). */
+.mobile-menu-category-scroll .category-chip {
+  justify-content: flex-start;
+  padding-left: var(--spacing-sm);
 }
 
 .category-chip {
@@ -1576,7 +1620,12 @@ a {
   font-weight: 700;
 }
 
+/* El separador que anuncia la seccion Ninos. Al pasar las casillas
+   a grilla se convirtio en UNA celda de la grilla: ocupaba media fila,
+   dejaba un hueco al lado y empujaba "Ninos" a su propio renglon. Un
+   separador tiene que cruzar de lado a lado o no separa nada. */
 .category-chip-divider {
+  grid-column: 1 / -1;
   width: 100%;
   height: 1px;
   background: linear-gradient(to right, transparent, rgba(255, 102, 0, 0.4), transparent);
@@ -1594,17 +1643,30 @@ a {
   margin: 0;
 }
 
+/* El ritmo estaba invertido, y se podia medir: cada link de aqui
+   ocupaba 75px de alto mientras cada categoria ocupaba 39. Los links
+   respiraban como carteles de autopista y las categorias iban
+   apretadas — al reves de lo que importa, porque el que abre el menu
+   viene a buscar un producto, no la pagina de Nosotros.
+
+   52px: sigue arriba de los 44 que necesita un dedo para no fallar, y
+   deja de comerse la pantalla. Con esto entran dos secciones mas sin
+   tener que bajar. */
 .mobile-menu-links a {
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
-  padding: var(--spacing-md) var(--spacing-lg);
+  gap: var(--spacing-sm);
+  min-height: 52px;
+  padding: 0 var(--spacing-lg);
   color: var(--white);
   text-decoration: none;
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 600;
-  transition: var(--transition-fast);
-  border-left: 3px solid transparent;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+  border-left: 2px solid transparent;
 }
 
 .mobile-menu-links a:hover {
@@ -1613,9 +1675,9 @@ a {
   color: var(--orange-primary);
 }
 
-.mobile-menu-links span {
-  font-size: 1.3rem;
-}
+/* Esta regla existia para agrandar el emoji que iba delante de cada
+   link. Ya no hay emoji; si se deja, cualquier <span> que entre a un
+   link del menu sale 30% mas grande sin motivo. */
 
 /* ================================
    HERO SECTION - 3D ENHANCED
@@ -11867,4 +11929,40 @@ body.bv-abierto { overflow: hidden; }
     letter-spacing: 1px;
     padding: 0.4rem 0.9rem;
   }
+}
+
+
+/* ================================================================
+   EL DESPLEGABLE DE ESCRITORIO NO ENTRA AL MENU DEL CELULAR
+   ================================================================
+   Encontrado el 2026-09-10 midiendo por que el menu dejaba bajar
+   hasta un vacio de medio metro.
+
+   El mismo HTML de la barra de navegacion se reusa dentro del panel
+   del celular, y con el viene .nav-dropdown-menu: el mega-menu de
+   escritorio, cuatro columnas, 720px de ancho MINIMO y 813px de alto.
+   Metido en un panel de 375px.
+
+   Estaba "oculto" con transparencia y visibility, que esconde pero NO
+   saca del espacio: le sumaba ~550px de scroll muerto al panel. El
+   cliente bajaba el menu y despues de Contacto seguia habiendo media
+   pantalla de nada, que se lee como que la tienda esta rota.
+
+   Peor: se abre con :focus-within, asi que en un telefono bastaba que
+   un link de adentro tomara el foco para desplegar 720px de ancho
+   dentro de 375.
+
+   No se pierde nada escondiendolo: para eso esta la grilla de
+   categorias del propio menu, que hace lo mismo y entra en pantalla.
+   ================================================================ */
+.mobile-menu-panel .nav-dropdown-menu {
+  display: none;
+}
+
+/* Y con el se va la flechita. Es un ::after del CSS de escritorio que
+   anuncia "aca se despliega algo": en el celular ya no despliega nada,
+   asi que prometia una cosa que no pasa. "Tienda" en el menu movil es
+   un link comun que lleva a la tienda, y ahora se ve como lo que es. */
+.mobile-menu-panel .nav-dropdown > a::after {
+  content: none;
 }
