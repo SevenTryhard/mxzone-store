@@ -1742,6 +1742,84 @@ function initShopFiltersInternal() {
     }
   }
 
+  /**
+   * Cuanto le sirve una tarjeta al cliente, segun lo que contesto en el panel
+   * de bienvenida. Mas alto = mas arriba.
+   *
+   * NUNCA devuelve "escondelo". El peor puntaje posible es 0, que significa
+   * "no tengo motivo para subirlo", y un producto con 0 se muestra igual, en
+   * el orden de siempre. Es la regla entera del panel metida en una funcion:
+   * ordena, no filtra.
+   *
+   * Los pesos estan elegidos para que no se pisen entre si: el interes (4)
+   * pesa mas que la talla (2) porque alguien que dijo "busco botas" quiere ver
+   * botas aunque no sepa su numero; y la talla pesa mas que el presupuesto (1)
+   * porque una talla que no es no te la podes poner, y un precio incomodo se
+   * negocia.
+   */
+  function puntajeDePerfil(card) {
+    const perfil = window.MXZONE_PERFIL;
+    if (!perfil || !perfil.contestado) return 0;
+
+    let puntos = 0;
+
+    try {
+      const categoria = (card.dataset.category || '').toLowerCase();
+
+      // 1. Lo que dijo que estaba buscando.
+      const intereses = perfil.intereses || [];
+      if (intereses.length && intereses.indexOf('todo') === -1) {
+        for (let i = 0; i < intereses.length; i++) {
+          if (categoria.indexOf(intereses[i]) !== -1) { puntos += 4; break; }
+        }
+      }
+
+      // 2. Su talla, PERO solo la que corresponde a esta categoria: no existe
+      //    un casco talla 42 ni una bota talla S, asi que comparar la talla de
+      //    bota contra un jersey daria un puntaje inventado.
+      const tallas = perfil.tallas || {};
+      const cual =
+        categoria.indexOf('casco') !== -1 ? 'casco' :
+        categoria.indexOf('bota') !== -1 ? 'bota' :
+        categoria.indexOf('jersey') !== -1 ? 'jersey' :
+        categoria.indexOf('pantalon') !== -1 || categoria.indexOf('uniforme') !== -1 ? 'pantalon' :
+        null;
+
+      if (cual && tallas[cual]) {
+        const disponibles = (card.dataset.sizes || '').toUpperCase();
+        if (disponibles && disponibles.split(',').some(s => s.trim() === String(tallas[cual]).toUpperCase())) {
+          puntos += 2;
+        }
+      }
+
+      // 3. El presupuesto. La tienda NO tiene filtro de precio —#minPrice no
+      //    existe en shop.html— asi que preguntarlo solo se justifica si se
+      //    aplica ordenando, que es lo que pasa aca.
+      const rangos = {
+        bajo:  [0, 150000],
+        medio: [150000, 400000],
+        alto:  [400000, 900000],
+        top:   [900000, Infinity]
+      };
+      const rango = rangos[perfil.presupuesto];
+      if (rango) {
+        const precio = parseInt(card.dataset.price) || 0;
+        if (precio >= rango[0] && precio < rango[1]) puntos += 1;
+      }
+    } catch (e) {
+      // Un atributo roto no puede tirar el orden de toda la tienda.
+      return 0;
+    }
+
+    return puntos;
+  }
+
+  // El panel llama a esto al terminar, para que la tienda se reacomode sin
+  // recargar la pagina.
+  window.mxAplicarPrioridad = function () {
+    try { sortProducts(); } catch (e) { mxLog('[prioridad] no se pudo reordenar:', e); }
+  };
+
   function sortProducts() {
     const sortBy = sortSelect?.value || 'default';
     const productsArray = Array.from(document.querySelectorAll('.product-card'));
@@ -1814,6 +1892,20 @@ function initShopFiltersInternal() {
               );
               if (porTalla !== 0) return porTalla;
             }
+
+            // Y encima de todo eso, el perfil del panel de bienvenida.
+            //
+            // ES UN DESEMPATE, NO UN FILTRO, y esa es toda la diferencia: lo
+            // que le sirve al cliente sube, y lo que no le sirve queda ABAJO,
+            // no afuera. El que puso talla M sigue pudiendo comprarle un
+            // uniforme a la novia — lo va a encontrar mas abajo, no nunca.
+            //
+            // Va ultimo a proposito: la prioridad comercial que el duenio
+            // configuro en el CMS le gana al gusto del visitante. Si Seven
+            // fijo un casco como el numero 1 de la tienda, sale primero.
+            const puntoA = puntajeDePerfil(a);
+            const puntoB = puntajeDePerfil(b);
+            if (puntoA !== puntoB) return puntoB - puntoA;
 
             return ordenA - ordenB;
           }
