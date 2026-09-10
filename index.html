@@ -56,10 +56,10 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@400;500&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css?t=202609091849">
+  <link rel="stylesheet" href="css/styles.css?t=202609101557">
 
   <!-- Netlify Identity Widget -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
@@ -235,20 +235,20 @@
 
       <!-- Categories Scroll Section -->
       <div class="mobile-menu-categories">
-        <h4 class="mobile-menu-section-title"> Categorías</h4>
+        <h4 class="mobile-menu-section-title">Categorías</h4>
         <div class="mobile-menu-category-scroll">
-          <a href="shop.html?cat=cascos" class="category-chip">⛑️ Cascos</a>
-          <a href="shop.html?cat=uniformes" class="category-chip">👕 Uniformes</a>
-          <a href="shop.html?cat=botas" class="category-chip">👢 Botas</a>
-          <a href="shop.html?cat=jersey" class="category-chip">👕 Jerseys</a>
-          <a href="shop.html?cat=guantes" class="category-chip">🧤 Guantes</a>
-          <a href="shop.html?cat=gafas" class="category-chip">👓 Gafas</a>
-          <a href="shop.html?cat=protecciones" class="category-chip"> Protecciones</a>
-          <a href="shop.html?cat=gorras" class="category-chip">🧢 Gorras</a>
-          <a href="shop.html?cat=maletas" class="category-chip">🎒 Maletas</a>
-          <a href="shop.html?cat=accesorios" class="category-chip">🔧 Accesorios</a>
+          <a href="shop.html?cat=cascos" class="category-chip" data-category="cascos">Cascos</a>
+          <a href="shop.html?cat=uniformes" class="category-chip" data-category="uniformes">Uniformes</a>
+          <a href="shop.html?cat=botas" class="category-chip" data-category="botas">Botas</a>
+          <a href="shop.html?cat=jersey" class="category-chip" data-category="jersey">Jerseys</a>
+          <a href="shop.html?cat=guantes" class="category-chip" data-category="guantes">Guantes</a>
+          <a href="shop.html?cat=gafas" class="category-chip" data-category="gafas">Gafas</a>
+          <a href="shop.html?cat=protecciones" class="category-chip" data-category="protecciones">Protecciones</a>
+          <a href="shop.html?cat=gorras" class="category-chip" data-category="gorras">Gorras</a>
+          <a href="shop.html?cat=maletas" class="category-chip" data-category="maletas">Maletas</a>
+          <a href="shop.html?cat=accesorios" class="category-chip" data-category="accesorios">Accesorios</a>
           <div class="category-chip-divider"></div>
-          <a href="shop.html?cat=ninos" class="category-chip ninos-chip">🧒 Niños</a>
+          <a href="shop.html?cat=ninos" class="category-chip ninos-chip" data-category="ninos">Niños</a>
         </div>
       </div>
 
@@ -385,7 +385,7 @@
       <div class="categories-grid">
         <a href="shop.html?cat=cascos" class="category-card">
           <div class="category-bg">
-            <span class="category-icon">⛑️</span>
+            <span class="category-icon" data-category="cascos" aria-hidden="true"></span>
           </div>
           <div class="category-content">
             <h3 class="category-name">Cascos</h3>
@@ -395,7 +395,7 @@
 
         <a href="shop.html?cat=uniformes" class="category-card">
           <div class="category-bg">
-            <span class="category-icon">👕</span>
+            <span class="category-icon" data-category="uniformes" aria-hidden="true"></span>
           </div>
           <div class="category-content">
             <h3 class="category-name">Uniformes</h3>
@@ -405,7 +405,7 @@
 
         <a href="shop.html?cat=botas" class="category-card">
           <div class="category-bg">
-            <span class="category-icon">👢</span>
+            <span class="category-icon" data-category="botas" aria-hidden="true"></span>
           </div>
           <div class="category-content">
             <h3 class="category-name">Botas</h3>
@@ -415,7 +415,7 @@
 
         <a href="shop.html?cat=protecciones" class="category-card">
           <div class="category-bg">
-            <span class="category-icon"></span>
+            <span class="category-icon" data-category="protecciones" aria-hidden="true"></span>
           </div>
           <div class="category-content">
             <h3 class="category-name">Protecciones</h3>
@@ -991,11 +991,11 @@
       </div>
 
   <!-- Scripts -->
-    <script src="js/utils.js?t=202609091849"></script>
-  <script src="js/cart.js?t=202609091849"></script>
-  <script src="js/main.js?t=202609091849"></script>
+    <script src="js/utils.js?t=202609101557"></script>
+  <script src="js/cart.js?t=202609101557"></script>
+  <script src="js/main.js?t=202609101557"></script>
   <script src="cms/config.js?v=27"></script>
-  <script src="js/products.js?t=202609091849"></script>
+  <script src="js/products.js?t=202609101557"></script>
   <script>
     // 4ULAB Analytics + Campaigns Tracking
     window.__4ULAB_PROJECT_ID__ = 1;
