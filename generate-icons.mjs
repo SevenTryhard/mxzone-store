@@ -34,7 +34,10 @@ const uri = (cuerpo) => {
 // grande de la tarjeta de categoria. Una definicion, dos tamanos.
 const reglas = Object.entries(ICONOS).map(([slug, cuerpo]) => {
   const u = uri(cuerpo);
-  return `.category-chip[data-category="${slug}"]::before,\n.category-icon[data-category="${slug}"] {\n  -webkit-mask-image: ${u};\n          mask-image: ${u};\n}`;
+  // El tercer selector deja usar cualquier categoria como icono suelto
+  // (<i class="ico" data-ico="botas">), que es lo que necesita el panel de
+  // bienvenida para poner un casco al lado de "Casco".
+  return `.category-chip[data-category="${slug}"]::before,\n.category-icon[data-category="${slug}"],\n.ico[data-ico="${slug}"] {\n  -webkit-mask-image: ${u};\n          mask-image: ${u};\n  background-color: currentColor;\n}`;
 }).join('\n\n');
 
 // ---------------------------------------------------------------------
@@ -66,7 +69,7 @@ const ICONOS_UI = {
 
 const reglasUI = Object.entries(ICONOS_UI).map(([slug, cuerpo]) => {
   const u = uri(cuerpo);
-  return `.ico[data-ico="${slug}"] {\n  -webkit-mask-image: ${u};\n          mask-image: ${u};\n}`;
+  return `.ico[data-ico="${slug}"] {\n  -webkit-mask-image: ${u};\n          mask-image: ${u};\n  background-color: currentColor;\n}`;
 }).join('\n\n');
 
 const INICIO = '/* >>> ICONOS-INICIO (generado por generate-icons.mjs) */';
@@ -169,7 +172,12 @@ ${reglas}
   height: 1em;
   flex: 0 0 auto;
   vertical-align: -0.125em;
-  background-color: currentColor;
+  /* SIN color de fondo aca. El color lo enciende cada dibujo.
+     Si estuviera en la base, un data-ico que no existe —un nombre mal
+     escrito, un icono que se borro— pintaria un CUADRADO SOLIDO, porque
+     una mascara vacia no recorta nada. Y un cuadrado blanco al lado de
+     un texto se lee como que la pagina esta rota. Asi, lo peor que puede
+     pasar es que no se vea el icono. */
   -webkit-mask-position: center;
           mask-position: center;
   -webkit-mask-repeat: no-repeat;

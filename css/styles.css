@@ -11548,263 +11548,6 @@ a {
 
 
 
-/* >>> ICONOS-INICIO (generado por generate-icons.mjs) */
-
-/* ================================================================
-   ICONOS DE CATEGORIA — 2026-09-10
-   ================================================================
-   Antes cada categoria llevaba un emoji del sistema delante del
-   nombre. Tres problemas, no uno:
-
-     1. Cada telefono los dibuja distinto (el casco de Android no es
-        el de iPhone), asi que la tienda se veia diferente en cada
-        pantalla y no habia forma de controlarlo.
-     2. Sus colores —verde, azul, morado— peleaban contra el naranja
-        y el negro de la marca.
-     3. La lista esta escrita en TRES lugares (la home, el menu
-        desplegable y la tienda) y los emojis no coincidian entre si:
-        "Uniformes" y "Jerseys" usaban exactamente el mismo.
-
-   La solucion no es cambiar un emoji por otro: es que el icono deje
-   de ser TEXTO. Estos son dibujos, definidos UNA sola vez aca, y se
-   pintan con mascara para que tomen el color del chip solos —claro
-   en reposo, negro cuando esta elegido— sin que nadie tenga que
-   mantener una segunda lista de colores en paralelo.
-
-   PARA AGREGAR UNA CATEGORIA: se suma su dibujo al mapa ICONOS del
-   generador y se le pone data-category="su-slug" al chip. Nada mas.
-   ================================================================ */
-
-.category-chip::before {
-  content: '';
-  flex: 0 0 auto;
-  width: 18px;
-  height: 18px;
-  background-color: currentColor;
-  -webkit-mask-position: center;
-          mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-  -webkit-mask-size: contain;
-          mask-size: contain;
-}
-
-/* Un chip cuyo slug no esta en la lista no muestra un cuadrado vacio:
-   no muestra nada. Es preferible que falte el icono a que aparezca un
-   hueco que el cliente lee como imagen rota. */
-.category-chip:not([data-category])::before,
-.category-chip[data-category=""]::before { display: none; }
-
-/* La barra lateral de la tienda NO lleva icono, y es a proposito.
-   Ahi las casillas van en una grilla de dos columnas donde el nombre
-   mas largo ("Protecciones") ya se parte en dos renglones: meterle un
-   dibujo de 18px al lado desarma la grilla y vuelve a pasar lo que ese
-   bloque arreglo en su momento. El icono es para donde hay aire —el
-   menu desplegable y la home—, no para donde no lo hay. */
-.category-chips .category-chip::before { display: none; }
-
-/* El icono grande de la tarjeta de categoria. Antes era un emoji de
-   5rem al 20% de opacidad detras del titulo; ahora es el mismo dibujo
-   de la casilla, en grande, y en naranja apagado. */
-.category-icon[data-category] {
-  display: block;
-  width: 84px;
-  height: 84px;
-  background-color: var(--orange-primary);
-  opacity: 0.22;
-  -webkit-mask-position: center;
-          mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-  -webkit-mask-size: contain;
-          mask-size: contain;
-}
-
-.category-chip[data-category="cascos"]::before,
-.category-icon[data-category="cascos"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 14a9 9 0 0 1 18 0v2H8.5A5.5 5.5 0 0 1 3 10.5Z'/%3E%3Cpath d='M3 16h18'/%3E%3Cpath d='M12 5v9'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 14a9 9 0 0 1 18 0v2H8.5A5.5 5.5 0 0 1 3 10.5Z'/%3E%3Cpath d='M3 16h18'/%3E%3Cpath d='M12 5v9'/%3E%3C/svg%3E");
-}
-
-.category-chip[data-category="uniformes"]::before,
-.category-icon[data-category="uniformes"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5.5a2 2 0 1 1 2 2c-1.1 0-2 .9-2 2v.5'/%3E%3Cpath d='M12 10 3.6 16.4A1 1 0 0 0 4.2 18h15.6a1 1 0 0 0 .6-1.6L12 10Z'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5.5a2 2 0 1 1 2 2c-1.1 0-2 .9-2 2v.5'/%3E%3Cpath d='M12 10 3.6 16.4A1 1 0 0 0 4.2 18h15.6a1 1 0 0 0 .6-1.6L12 10Z'/%3E%3C/svg%3E");
-}
-
-.category-chip[data-category="botas"]::before,
-.category-icon[data-category="botas"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 3h4v9l7 4v5H8Z'/%3E%3Cpath d='M8 8h4'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 3h4v9l7 4v5H8Z'/%3E%3Cpath d='M8 8h4'/%3E%3C/svg%3E");
-}
-
-.category-chip[data-category="jersey"]::before,
-.category-icon[data-category="jersey"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 4 4 6.5 6 11l2-1v10h8V10l2 1 2-4.5L15 4a3 3 0 0 1-6 0Z'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 4 4 6.5 6 11l2-1v10h8V10l2 1 2-4.5L15 4a3 3 0 0 1-6 0Z'/%3E%3C/svg%3E");
-}
-
-.category-chip[data-category="guantes"]::before,
-.category-icon[data-category="guantes"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 12V6.5a1.5 1.5 0 0 1 3 0V12m0 0V4.8a1.5 1.5 0 0 1 3 0V12m0 0V6.5a1.5 1.5 0 0 1 3 0V13a8 8 0 0 1-8 8 5 5 0 0 1-4-8l1-1.5'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 12V6.5a1.5 1.5 0 0 1 3 0V12m0 0V4.8a1.5 1.5 0 0 1 3 0V12m0 0V6.5a1.5 1.5 0 0 1 3 0V13a8 8 0 0 1-8 8 5 5 0 0 1-4-8l1-1.5'/%3E%3C/svg%3E");
-}
-
-.category-chip[data-category="gafas"]::before,
-.category-icon[data-category="gafas"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9h18v4a4 4 0 0 1-4 4h-1l-2-3h-4l-2 3H7a4 4 0 0 1-4-4Z'/%3E%3Cpath d='M6 9V7h12v2'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9h18v4a4 4 0 0 1-4 4h-1l-2-3h-4l-2 3H7a4 4 0 0 1-4-4Z'/%3E%3Cpath d='M6 9V7h12v2'/%3E%3C/svg%3E");
-}
-
-.category-chip[data-category="protecciones"]::before,
-.category-icon[data-category="protecciones"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l7 3v5.5c0 4.3-2.9 7.8-7 9.5-4.1-1.7-7-5.2-7-9.5V6Z'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l7 3v5.5c0 4.3-2.9 7.8-7 9.5-4.1-1.7-7-5.2-7-9.5V6Z'/%3E%3C/svg%3E");
-}
-
-.category-chip[data-category="gorras"]::before,
-.category-icon[data-category="gorras"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 15a8 8 0 0 1 16 0Z'/%3E%3Cpath d='M20 15h1.5a1.75 1.75 0 0 1 0 3.5H13'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 15a8 8 0 0 1 16 0Z'/%3E%3Cpath d='M20 15h1.5a1.75 1.75 0 0 1 0 3.5H13'/%3E%3C/svg%3E");
-}
-
-.category-chip[data-category="maletas"]::before,
-.category-icon[data-category="maletas"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9.5a6 6 0 0 1 12 0V20H6Z'/%3E%3Cpath d='M9 20v-5.5h6V20'/%3E%3Cpath d='M9 9.5V7.5a3 3 0 0 1 6 0v2'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9.5a6 6 0 0 1 12 0V20H6Z'/%3E%3Cpath d='M9 20v-5.5h6V20'/%3E%3Cpath d='M9 9.5V7.5a3 3 0 0 1 6 0v2'/%3E%3C/svg%3E");
-}
-
-.category-chip[data-category="accesorios"]::before,
-.category-icon[data-category="accesorios"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='8' width='18' height='12' rx='2'/%3E%3Cpath d='M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2'/%3E%3Cpath d='M3 13h18'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='8' width='18' height='12' rx='2'/%3E%3Cpath d='M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2'/%3E%3Cpath d='M3 13h18'/%3E%3C/svg%3E");
-}
-
-.category-chip[data-category="ninos"]::before,
-.category-icon[data-category="ninos"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='5' r='2.5'/%3E%3Cpath d='M8.5 21v-5H7l1.9-5.2A2 2 0 0 1 10.8 9.5h2.4a2 2 0 0 1 1.9 1.3L17 16h-1.5v5'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='5' r='2.5'/%3E%3Cpath d='M8.5 21v-5H7l1.9-5.2A2 2 0 0 1 10.8 9.5h2.4a2 2 0 0 1 1.9 1.3L17 16h-1.5v5'/%3E%3C/svg%3E");
-}
-
-.category-chip[data-category="all"]::before,
-.category-icon[data-category="all"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='7' height='7' rx='1'/%3E%3Crect x='13' y='4' width='7' height='7' rx='1'/%3E%3Crect x='4' y='13' width='7' height='7' rx='1'/%3E%3Crect x='13' y='13' width='7' height='7' rx='1'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='7' height='7' rx='1'/%3E%3Crect x='13' y='4' width='7' height='7' rx='1'/%3E%3Crect x='4' y='13' width='7' height='7' rx='1'/%3E%3Crect x='13' y='13' width='7' height='7' rx='1'/%3E%3C/svg%3E");
-}
-
-
-/* ----------------------------------------------------------------
-   ICONOS DE INTERFAZ
-   ----------------------------------------------------------------
-   Se usan asi:  <i class="ico" data-ico="alerta" aria-hidden="true"></i>
-
-   Miden 1em y toman el color del texto, o sea que se adaptan solos al
-   tamano y al color de donde caigan: en un aviso de error salen rojos y
-   chicos, en el encabezado del checkout salen grandes y naranjas, sin
-   una sola regla extra. Un emoji no puede hacer eso — tiene sus propios
-   colores y su propio tamano, y por eso nunca terminaba de encajar.
-
-   aria-hidden porque son decoracion: al lado siempre hay texto que dice
-   lo mismo. Un lector de pantalla que los anuncie repite todo dos veces.
-   ---------------------------------------------------------------- */
-.ico {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  flex: 0 0 auto;
-  vertical-align: -0.125em;
-  background-color: currentColor;
-  -webkit-mask-position: center;
-          mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-  -webkit-mask-size: contain;
-          mask-size: contain;
-}
-
-.ico[data-ico="alerta"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7.5v5'/%3E%3Cpath d='M12 16.2h.01'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7.5v5'/%3E%3Cpath d='M12 16.2h.01'/%3E%3C/svg%3E");
-}
-
-.ico[data-ico="pago"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='5' width='19' height='14' rx='2'/%3E%3Cpath d='M2.5 10h19'/%3E%3Cpath d='M6 14.5h4'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='5' width='19' height='14' rx='2'/%3E%3Cpath d='M2.5 10h19'/%3E%3Cpath d='M6 14.5h4'/%3E%3C/svg%3E");
-}
-
-.ico[data-ico="caja"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7.5 12 3l9 4.5v9L12 21l-9-4.5Z'/%3E%3Cpath d='m3 7.5 9 4.5 9-4.5'/%3E%3Cpath d='M12 12v9'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7.5 12 3l9 4.5v9L12 21l-9-4.5Z'/%3E%3Cpath d='m3 7.5 9 4.5 9-4.5'/%3E%3Cpath d='M12 12v9'/%3E%3C/svg%3E");
-}
-
-.ico[data-ico="whatsapp"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 20.5 5 16.2a8.5 8.5 0 1 1 3.3 3.2Z'/%3E%3Cpath d='M9 9.2c0 3 2.4 5.4 5.3 5.4.6 0 1-.4 1-.9v-.7l-1.6-.7-.8 1a5.4 5.4 0 0 1-2.3-2.3l1-.8-.7-1.6h-.8c-.5 0-.9.4-.9 1Z'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 20.5 5 16.2a8.5 8.5 0 1 1 3.3 3.2Z'/%3E%3Cpath d='M9 9.2c0 3 2.4 5.4 5.3 5.4.6 0 1-.4 1-.9v-.7l-1.6-.7-.8 1a5.4 5.4 0 0 1-2.3-2.3l1-.8-.7-1.6h-.8c-.5 0-.9.4-.9 1Z'/%3E%3C/svg%3E");
-}
-
-.ico[data-ico="moto"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='5.5' cy='16.5' r='3.5'/%3E%3Ccircle cx='18.5' cy='16.5' r='3.5'/%3E%3Cpath d='M5.5 16.5 9 10h5l2.5 6.5'/%3E%3Cpath d='M9 10 8 7H6'/%3E%3Cpath d='M14 10h4'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='5.5' cy='16.5' r='3.5'/%3E%3Ccircle cx='18.5' cy='16.5' r='3.5'/%3E%3Cpath d='M5.5 16.5 9 10h5l2.5 6.5'/%3E%3Cpath d='M9 10 8 7H6'/%3E%3Cpath d='M14 10h4'/%3E%3C/svg%3E");
-}
-
-.ico[data-ico="descuento"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 12.8V4.5a1 1 0 0 1 1-1h8.3a1 1 0 0 1 .7.3l6.7 6.7a1 1 0 0 1 0 1.4l-8.3 8.3a1 1 0 0 1-1.4 0L3.8 13.5a1 1 0 0 1-.3-.7Z'/%3E%3Cpath d='M8 8h.01'/%3E%3Cpath d='m11.5 15 4-4'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 12.8V4.5a1 1 0 0 1 1-1h8.3a1 1 0 0 1 .7.3l6.7 6.7a1 1 0 0 1 0 1.4l-8.3 8.3a1 1 0 0 1-1.4 0L3.8 13.5a1 1 0 0 1-.3-.7Z'/%3E%3Cpath d='M8 8h.01'/%3E%3Cpath d='m11.5 15 4-4'/%3E%3C/svg%3E");
-}
-
-.ico[data-ico="clientes"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='8' r='3.2'/%3E%3Cpath d='M2.5 20a6.5 6.5 0 0 1 13 0'/%3E%3Cpath d='M16 5.4a3.2 3.2 0 0 1 0 5.2'/%3E%3Cpath d='M18 14.4a6.5 6.5 0 0 1 3.5 5.6'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='8' r='3.2'/%3E%3Cpath d='M2.5 20a6.5 6.5 0 0 1 13 0'/%3E%3Cpath d='M16 5.4a3.2 3.2 0 0 1 0 5.2'/%3E%3Cpath d='M18 14.4a6.5 6.5 0 0 1 3.5 5.6'/%3E%3C/svg%3E");
-}
-
-.ico[data-ico="envio"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.5h11v10h-11Z'/%3E%3Cpath d='M13.5 10h4l4 3.2v3.3h-8Z'/%3E%3Ccircle cx='7' cy='18.5' r='2'/%3E%3Ccircle cx='17.5' cy='18.5' r='2'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.5h11v10h-11Z'/%3E%3Cpath d='M13.5 10h4l4 3.2v3.3h-8Z'/%3E%3Ccircle cx='7' cy='18.5' r='2'/%3E%3Ccircle cx='17.5' cy='18.5' r='2'/%3E%3C/svg%3E");
-}
-
-.ico[data-ico="explorar"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z'/%3E%3Ccircle cx='12' cy='12' r='2.6'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z'/%3E%3Ccircle cx='12' cy='12' r='2.6'/%3E%3C/svg%3E");
-}
-
-.ico[data-ico="detalles"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='m15.5 15.5 5 5'/%3E%3Cpath d='M7.8 10.5h5.4'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='m15.5 15.5 5 5'/%3E%3Cpath d='M7.8 10.5h5.4'/%3E%3C/svg%3E");
-}
-
-.ico[data-ico="carrito"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 3.5h2.6l2.3 11h10.2'/%3E%3Cpath d='M6.4 6.5h14.3l-1.6 6.4H7.7'/%3E%3Ccircle cx='9' cy='19' r='1.6'/%3E%3Ccircle cx='17.5' cy='19' r='1.6'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 3.5h2.6l2.3 11h10.2'/%3E%3Cpath d='M6.4 6.5h14.3l-1.6 6.4H7.7'/%3E%3Ccircle cx='9' cy='19' r='1.6'/%3E%3Ccircle cx='17.5' cy='19' r='1.6'/%3E%3C/svg%3E");
-}
-
-.ico[data-ico="regla"] {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='8' width='19' height='8' rx='1.5'/%3E%3Cpath d='M7 8v3'/%3E%3Cpath d='M11 8v4.5'/%3E%3Cpath d='M15 8v3'/%3E%3Cpath d='M19 8v4.5'/%3E%3C/svg%3E");
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='8' width='19' height='8' rx='1.5'/%3E%3Cpath d='M7 8v3'/%3E%3Cpath d='M11 8v4.5'/%3E%3Cpath d='M15 8v3'/%3E%3Cpath d='M19 8v4.5'/%3E%3C/svg%3E");
-}
-
-/* Los avisos de error de cada campo del checkout llevaban un emoji de
-   advertencia escrito DENTRO del texto, repetido en cinco campos y en
-   dos archivos: diez copias del mismo caracter. Ahora el dibujo lo pone
-   el CSS una sola vez y el texto vuelve a ser solo texto — que ademas
-   es lo que necesita un lector de pantalla para leerlo bien. */
-.field-error {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4em;
-}
-
-.field-error::before {
-  content: '';
-  flex: 0 0 auto;
-  width: 1em;
-  height: 1em;
-  background-color: currentColor;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7.5v5'/%3E%3Cpath d='M12 16.2h.01'/%3E%3C/svg%3E") center / contain no-repeat;
-          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7.5v5'/%3E%3Cpath d='M12 16.2h.01'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-/* <<< ICONOS-CATEGORIA-FIN */
-
-
 /* ================================================================
    PANEL DE BIENVENIDA — 2026-09-10
    ================================================================
@@ -12175,3 +11918,302 @@ body.bv-abierto { overflow: hidden; }
   .bv-progreso-barra,
   .bv-btn { transition: none; }
 }
+
+
+
+/* >>> ICONOS-INICIO (generado por generate-icons.mjs) */
+
+/* ================================================================
+   ICONOS DE CATEGORIA — 2026-09-10
+   ================================================================
+   Antes cada categoria llevaba un emoji del sistema delante del
+   nombre. Tres problemas, no uno:
+
+     1. Cada telefono los dibuja distinto (el casco de Android no es
+        el de iPhone), asi que la tienda se veia diferente en cada
+        pantalla y no habia forma de controlarlo.
+     2. Sus colores —verde, azul, morado— peleaban contra el naranja
+        y el negro de la marca.
+     3. La lista esta escrita en TRES lugares (la home, el menu
+        desplegable y la tienda) y los emojis no coincidian entre si:
+        "Uniformes" y "Jerseys" usaban exactamente el mismo.
+
+   La solucion no es cambiar un emoji por otro: es que el icono deje
+   de ser TEXTO. Estos son dibujos, definidos UNA sola vez aca, y se
+   pintan con mascara para que tomen el color del chip solos —claro
+   en reposo, negro cuando esta elegido— sin que nadie tenga que
+   mantener una segunda lista de colores en paralelo.
+
+   PARA AGREGAR UNA CATEGORIA: se suma su dibujo al mapa ICONOS del
+   generador y se le pone data-category="su-slug" al chip. Nada mas.
+   ================================================================ */
+
+.category-chip::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  background-color: currentColor;
+  -webkit-mask-position: center;
+          mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+}
+
+/* Un chip cuyo slug no esta en la lista no muestra un cuadrado vacio:
+   no muestra nada. Es preferible que falte el icono a que aparezca un
+   hueco que el cliente lee como imagen rota. */
+.category-chip:not([data-category])::before,
+.category-chip[data-category=""]::before { display: none; }
+
+/* La barra lateral de la tienda NO lleva icono, y es a proposito.
+   Ahi las casillas van en una grilla de dos columnas donde el nombre
+   mas largo ("Protecciones") ya se parte en dos renglones: meterle un
+   dibujo de 18px al lado desarma la grilla y vuelve a pasar lo que ese
+   bloque arreglo en su momento. El icono es para donde hay aire —el
+   menu desplegable y la home—, no para donde no lo hay. */
+.category-chips .category-chip::before { display: none; }
+
+/* El icono grande de la tarjeta de categoria. Antes era un emoji de
+   5rem al 20% de opacidad detras del titulo; ahora es el mismo dibujo
+   de la casilla, en grande, y en naranja apagado. */
+.category-icon[data-category] {
+  display: block;
+  width: 84px;
+  height: 84px;
+  background-color: var(--orange-primary);
+  opacity: 0.22;
+  -webkit-mask-position: center;
+          mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+}
+
+.category-chip[data-category="cascos"]::before,
+.category-icon[data-category="cascos"],
+.ico[data-ico="cascos"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 14a9 9 0 0 1 18 0v2H8.5A5.5 5.5 0 0 1 3 10.5Z'/%3E%3Cpath d='M3 16h18'/%3E%3Cpath d='M12 5v9'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 14a9 9 0 0 1 18 0v2H8.5A5.5 5.5 0 0 1 3 10.5Z'/%3E%3Cpath d='M3 16h18'/%3E%3Cpath d='M12 5v9'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.category-chip[data-category="uniformes"]::before,
+.category-icon[data-category="uniformes"],
+.ico[data-ico="uniformes"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5.5a2 2 0 1 1 2 2c-1.1 0-2 .9-2 2v.5'/%3E%3Cpath d='M12 10 3.6 16.4A1 1 0 0 0 4.2 18h15.6a1 1 0 0 0 .6-1.6L12 10Z'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5.5a2 2 0 1 1 2 2c-1.1 0-2 .9-2 2v.5'/%3E%3Cpath d='M12 10 3.6 16.4A1 1 0 0 0 4.2 18h15.6a1 1 0 0 0 .6-1.6L12 10Z'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.category-chip[data-category="botas"]::before,
+.category-icon[data-category="botas"],
+.ico[data-ico="botas"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 3h4v9l7 4v5H8Z'/%3E%3Cpath d='M8 8h4'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 3h4v9l7 4v5H8Z'/%3E%3Cpath d='M8 8h4'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.category-chip[data-category="jersey"]::before,
+.category-icon[data-category="jersey"],
+.ico[data-ico="jersey"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 4 4 6.5 6 11l2-1v10h8V10l2 1 2-4.5L15 4a3 3 0 0 1-6 0Z'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 4 4 6.5 6 11l2-1v10h8V10l2 1 2-4.5L15 4a3 3 0 0 1-6 0Z'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.category-chip[data-category="guantes"]::before,
+.category-icon[data-category="guantes"],
+.ico[data-ico="guantes"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 12V6.5a1.5 1.5 0 0 1 3 0V12m0 0V4.8a1.5 1.5 0 0 1 3 0V12m0 0V6.5a1.5 1.5 0 0 1 3 0V13a8 8 0 0 1-8 8 5 5 0 0 1-4-8l1-1.5'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 12V6.5a1.5 1.5 0 0 1 3 0V12m0 0V4.8a1.5 1.5 0 0 1 3 0V12m0 0V6.5a1.5 1.5 0 0 1 3 0V13a8 8 0 0 1-8 8 5 5 0 0 1-4-8l1-1.5'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.category-chip[data-category="gafas"]::before,
+.category-icon[data-category="gafas"],
+.ico[data-ico="gafas"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9h18v4a4 4 0 0 1-4 4h-1l-2-3h-4l-2 3H7a4 4 0 0 1-4-4Z'/%3E%3Cpath d='M6 9V7h12v2'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9h18v4a4 4 0 0 1-4 4h-1l-2-3h-4l-2 3H7a4 4 0 0 1-4-4Z'/%3E%3Cpath d='M6 9V7h12v2'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.category-chip[data-category="protecciones"]::before,
+.category-icon[data-category="protecciones"],
+.ico[data-ico="protecciones"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l7 3v5.5c0 4.3-2.9 7.8-7 9.5-4.1-1.7-7-5.2-7-9.5V6Z'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l7 3v5.5c0 4.3-2.9 7.8-7 9.5-4.1-1.7-7-5.2-7-9.5V6Z'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.category-chip[data-category="gorras"]::before,
+.category-icon[data-category="gorras"],
+.ico[data-ico="gorras"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 15a8 8 0 0 1 16 0Z'/%3E%3Cpath d='M20 15h1.5a1.75 1.75 0 0 1 0 3.5H13'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 15a8 8 0 0 1 16 0Z'/%3E%3Cpath d='M20 15h1.5a1.75 1.75 0 0 1 0 3.5H13'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.category-chip[data-category="maletas"]::before,
+.category-icon[data-category="maletas"],
+.ico[data-ico="maletas"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9.5a6 6 0 0 1 12 0V20H6Z'/%3E%3Cpath d='M9 20v-5.5h6V20'/%3E%3Cpath d='M9 9.5V7.5a3 3 0 0 1 6 0v2'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9.5a6 6 0 0 1 12 0V20H6Z'/%3E%3Cpath d='M9 20v-5.5h6V20'/%3E%3Cpath d='M9 9.5V7.5a3 3 0 0 1 6 0v2'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.category-chip[data-category="accesorios"]::before,
+.category-icon[data-category="accesorios"],
+.ico[data-ico="accesorios"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='8' width='18' height='12' rx='2'/%3E%3Cpath d='M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2'/%3E%3Cpath d='M3 13h18'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='8' width='18' height='12' rx='2'/%3E%3Cpath d='M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2'/%3E%3Cpath d='M3 13h18'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.category-chip[data-category="ninos"]::before,
+.category-icon[data-category="ninos"],
+.ico[data-ico="ninos"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='5' r='2.5'/%3E%3Cpath d='M8.5 21v-5H7l1.9-5.2A2 2 0 0 1 10.8 9.5h2.4a2 2 0 0 1 1.9 1.3L17 16h-1.5v5'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='5' r='2.5'/%3E%3Cpath d='M8.5 21v-5H7l1.9-5.2A2 2 0 0 1 10.8 9.5h2.4a2 2 0 0 1 1.9 1.3L17 16h-1.5v5'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.category-chip[data-category="all"]::before,
+.category-icon[data-category="all"],
+.ico[data-ico="all"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='7' height='7' rx='1'/%3E%3Crect x='13' y='4' width='7' height='7' rx='1'/%3E%3Crect x='4' y='13' width='7' height='7' rx='1'/%3E%3Crect x='13' y='13' width='7' height='7' rx='1'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='7' height='7' rx='1'/%3E%3Crect x='13' y='4' width='7' height='7' rx='1'/%3E%3Crect x='4' y='13' width='7' height='7' rx='1'/%3E%3Crect x='13' y='13' width='7' height='7' rx='1'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+
+/* ----------------------------------------------------------------
+   ICONOS DE INTERFAZ
+   ----------------------------------------------------------------
+   Se usan asi:  <i class="ico" data-ico="alerta" aria-hidden="true"></i>
+
+   Miden 1em y toman el color del texto, o sea que se adaptan solos al
+   tamano y al color de donde caigan: en un aviso de error salen rojos y
+   chicos, en el encabezado del checkout salen grandes y naranjas, sin
+   una sola regla extra. Un emoji no puede hacer eso — tiene sus propios
+   colores y su propio tamano, y por eso nunca terminaba de encajar.
+
+   aria-hidden porque son decoracion: al lado siempre hay texto que dice
+   lo mismo. Un lector de pantalla que los anuncie repite todo dos veces.
+   ---------------------------------------------------------------- */
+.ico {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  vertical-align: -0.125em;
+  /* SIN color de fondo aca. El color lo enciende cada dibujo.
+     Si estuviera en la base, un data-ico que no existe —un nombre mal
+     escrito, un icono que se borro— pintaria un CUADRADO SOLIDO, porque
+     una mascara vacia no recorta nada. Y un cuadrado blanco al lado de
+     un texto se lee como que la pagina esta rota. Asi, lo peor que puede
+     pasar es que no se vea el icono. */
+  -webkit-mask-position: center;
+          mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+}
+
+.ico[data-ico="alerta"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7.5v5'/%3E%3Cpath d='M12 16.2h.01'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7.5v5'/%3E%3Cpath d='M12 16.2h.01'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.ico[data-ico="pago"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='5' width='19' height='14' rx='2'/%3E%3Cpath d='M2.5 10h19'/%3E%3Cpath d='M6 14.5h4'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='5' width='19' height='14' rx='2'/%3E%3Cpath d='M2.5 10h19'/%3E%3Cpath d='M6 14.5h4'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.ico[data-ico="caja"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7.5 12 3l9 4.5v9L12 21l-9-4.5Z'/%3E%3Cpath d='m3 7.5 9 4.5 9-4.5'/%3E%3Cpath d='M12 12v9'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7.5 12 3l9 4.5v9L12 21l-9-4.5Z'/%3E%3Cpath d='m3 7.5 9 4.5 9-4.5'/%3E%3Cpath d='M12 12v9'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.ico[data-ico="whatsapp"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 20.5 5 16.2a8.5 8.5 0 1 1 3.3 3.2Z'/%3E%3Cpath d='M9 9.2c0 3 2.4 5.4 5.3 5.4.6 0 1-.4 1-.9v-.7l-1.6-.7-.8 1a5.4 5.4 0 0 1-2.3-2.3l1-.8-.7-1.6h-.8c-.5 0-.9.4-.9 1Z'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 20.5 5 16.2a8.5 8.5 0 1 1 3.3 3.2Z'/%3E%3Cpath d='M9 9.2c0 3 2.4 5.4 5.3 5.4.6 0 1-.4 1-.9v-.7l-1.6-.7-.8 1a5.4 5.4 0 0 1-2.3-2.3l1-.8-.7-1.6h-.8c-.5 0-.9.4-.9 1Z'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.ico[data-ico="moto"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='5.5' cy='16.5' r='3.5'/%3E%3Ccircle cx='18.5' cy='16.5' r='3.5'/%3E%3Cpath d='M5.5 16.5 9 10h5l2.5 6.5'/%3E%3Cpath d='M9 10 8 7H6'/%3E%3Cpath d='M14 10h4'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='5.5' cy='16.5' r='3.5'/%3E%3Ccircle cx='18.5' cy='16.5' r='3.5'/%3E%3Cpath d='M5.5 16.5 9 10h5l2.5 6.5'/%3E%3Cpath d='M9 10 8 7H6'/%3E%3Cpath d='M14 10h4'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.ico[data-ico="descuento"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 12.8V4.5a1 1 0 0 1 1-1h8.3a1 1 0 0 1 .7.3l6.7 6.7a1 1 0 0 1 0 1.4l-8.3 8.3a1 1 0 0 1-1.4 0L3.8 13.5a1 1 0 0 1-.3-.7Z'/%3E%3Cpath d='M8 8h.01'/%3E%3Cpath d='m11.5 15 4-4'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 12.8V4.5a1 1 0 0 1 1-1h8.3a1 1 0 0 1 .7.3l6.7 6.7a1 1 0 0 1 0 1.4l-8.3 8.3a1 1 0 0 1-1.4 0L3.8 13.5a1 1 0 0 1-.3-.7Z'/%3E%3Cpath d='M8 8h.01'/%3E%3Cpath d='m11.5 15 4-4'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.ico[data-ico="clientes"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='8' r='3.2'/%3E%3Cpath d='M2.5 20a6.5 6.5 0 0 1 13 0'/%3E%3Cpath d='M16 5.4a3.2 3.2 0 0 1 0 5.2'/%3E%3Cpath d='M18 14.4a6.5 6.5 0 0 1 3.5 5.6'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='8' r='3.2'/%3E%3Cpath d='M2.5 20a6.5 6.5 0 0 1 13 0'/%3E%3Cpath d='M16 5.4a3.2 3.2 0 0 1 0 5.2'/%3E%3Cpath d='M18 14.4a6.5 6.5 0 0 1 3.5 5.6'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.ico[data-ico="envio"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.5h11v10h-11Z'/%3E%3Cpath d='M13.5 10h4l4 3.2v3.3h-8Z'/%3E%3Ccircle cx='7' cy='18.5' r='2'/%3E%3Ccircle cx='17.5' cy='18.5' r='2'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.5h11v10h-11Z'/%3E%3Cpath d='M13.5 10h4l4 3.2v3.3h-8Z'/%3E%3Ccircle cx='7' cy='18.5' r='2'/%3E%3Ccircle cx='17.5' cy='18.5' r='2'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.ico[data-ico="explorar"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z'/%3E%3Ccircle cx='12' cy='12' r='2.6'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z'/%3E%3Ccircle cx='12' cy='12' r='2.6'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.ico[data-ico="detalles"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='m15.5 15.5 5 5'/%3E%3Cpath d='M7.8 10.5h5.4'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='m15.5 15.5 5 5'/%3E%3Cpath d='M7.8 10.5h5.4'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.ico[data-ico="carrito"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 3.5h2.6l2.3 11h10.2'/%3E%3Cpath d='M6.4 6.5h14.3l-1.6 6.4H7.7'/%3E%3Ccircle cx='9' cy='19' r='1.6'/%3E%3Ccircle cx='17.5' cy='19' r='1.6'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 3.5h2.6l2.3 11h10.2'/%3E%3Cpath d='M6.4 6.5h14.3l-1.6 6.4H7.7'/%3E%3Ccircle cx='9' cy='19' r='1.6'/%3E%3Ccircle cx='17.5' cy='19' r='1.6'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+.ico[data-ico="regla"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='8' width='19' height='8' rx='1.5'/%3E%3Cpath d='M7 8v3'/%3E%3Cpath d='M11 8v4.5'/%3E%3Cpath d='M15 8v3'/%3E%3Cpath d='M19 8v4.5'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='8' width='19' height='8' rx='1.5'/%3E%3Cpath d='M7 8v3'/%3E%3Cpath d='M11 8v4.5'/%3E%3Cpath d='M15 8v3'/%3E%3Cpath d='M19 8v4.5'/%3E%3C/svg%3E");
+  background-color: currentColor;
+}
+
+/* Los avisos de error de cada campo del checkout llevaban un emoji de
+   advertencia escrito DENTRO del texto, repetido en cinco campos y en
+   dos archivos: diez copias del mismo caracter. Ahora el dibujo lo pone
+   el CSS una sola vez y el texto vuelve a ser solo texto — que ademas
+   es lo que necesita un lector de pantalla para leerlo bien. */
+.field-error {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.field-error::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7.5v5'/%3E%3Cpath d='M12 16.2h.01'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7.5v5'/%3E%3Cpath d='M12 16.2h.01'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+/* <<< ICONOS-CATEGORIA-FIN */
