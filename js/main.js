@@ -870,17 +870,52 @@ function initShopFiltersInternal() {
     return pool.reduce((min, t) => Math.min(min, getSizeTokenRank(t)), SIZE_RANK_UNKNOWN);
   }
 
+  /**
+   * Las categorias elegidas, SIN REPETIR.
+   *
+   * 🔴 EL FILTRO DE TALLAS NUNCA APARECIA — 2026-09-11, reportado por Seven.
+   *
+   * Tocabas "Cascos" y la tienda contestaba "Elegi una sola categoria para ver
+   * sus tallas" — habiendo elegido una sola. La barra de direcciones lo
+   * confesaba: `?cat=cascos,cascos`. Y el titulo que veia el cliente en la
+   * vista previa de WhatsApp decia "Cascos, Cascos | MXZONE STORE".
+   *
+   * La causa: CADA categoria existe DOS VECES en la pagina, y esta bien que
+   * asi sea. Hay un chip en la barra lateral (`.category-chips`) y otro en el
+   * menu del celular (`.mobile-menu-category-scroll`); tocar uno marca los dos,
+   * para que las dos vistas digan lo mismo. Eso es sincronizacion correcta.
+   *
+   * El error estaba ACA, al leer: esta funcion devolvia un elemento por cada
+   * BOTON encendido en vez de una entrada por CATEGORIA. Dos vistas de una cosa
+   * se contaban como dos cosas. Y `renderSizeChips` corta cuando hay mas de
+   * una categoria —con razon: no existe un casco talla 42 ni una bota talla S—,
+   * asi que el filtro se apagaba solo.
+   *
+   * Se arregla al LEER y no al escribir, a proposito: este es el unico embudo
+   * por donde pasan el filtro de tallas, la URL que se comparte, el canonical y
+   * el titulo. Deduplicar aca los arregla a los cuatro. Perseguir cada camino
+   * que marca un chip es la carrera que ya se perdio dos veces —ver el
+   * comentario de "EL LINK SE LLEVA LA CATEGORIA", que cuenta exactamente eso.
+   *
+   * `[...new Set()]` conserva el ORDEN de aparicion, que importa: la URL que se
+   * comparte tiene que salir siempre igual para la misma seleccion.
+   */
   function getActiveCategories() {
     const chipsActive = Array.from(categoryChips)
       .filter(btn => btn.classList.contains('active'))
       .map(btn => btn.dataset.category)
       .filter(c => c !== 'all');
-    if (chipsActive.length > 0) return chipsActive;
+    if (chipsActive.length > 0) return Array.from(new Set(chipsActive));
 
-    return Array.from(categoryFilters)
-      .filter(cb => cb.checked)
-      .map(cb => cb.dataset.category)
-      .filter(c => c !== 'all');
+    // Los checkbox viejos: mismo tratamiento, por el mismo motivo.
+    return Array.from(
+      new Set(
+        Array.from(categoryFilters)
+          .filter(cb => cb.checked)
+          .map(cb => cb.dataset.category)
+          .filter(c => c !== 'all')
+      )
+    );
   }
 
   // EL LINK SE LLEVA LA CATEGORIA — 2026-09-08, pedido de Mauro.
