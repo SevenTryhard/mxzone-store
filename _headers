@@ -14,6 +14,31 @@
 /*.html
   Cache-Control: public, max-age=3600
 
+# 🔴 EL ORDEN DE ESTAS DOS REGLAS ES EL ARREGLO — 2026-09-11.
+#
+# Estaban al reves: primero los archivos sueltos con `max-age=0` y DESPUES el
+# comodin `/js/*` con un ANIO. En Cloudflare gana la regla de mas abajo, asi
+# que `main.js` salia servido con:
+#
+#     Cache-Control: public, max-age=31536000, must-revalidate
+#
+# O sea: UN ANIO de cache sobre el archivo que mas cambia del sitio. El `?t=`
+# de los HTML lo tapaba casi siempre —URL nueva, entrada nueva— y por eso el
+# problema no se veia. Pero alcanza con que ALGUIEN pida la URL nueva antes de
+# que el deploy termine de subir el .js para que el edge guarde el archivo
+# VIEJO bajo el nombre NUEVO... por un anio. Ahi el deploy sale verde, el HTML
+# es el nuevo, y el navegador ejecuta el codigo viejo.
+#
+# Paso el 2026-09-11 y se pudo ver en vivo: el arreglo del filtro de tallas
+# estaba desplegado y `www` lo servia viejo en `?t=202609110135`, pero nuevo en
+# cualquier otra query.
+#
+# Ahora el comodin va PRIMERO y los archivos editables lo pisan. La cache larga
+# sigue valiendo para el resto de `/js/`, que es de lo que se trataba.
+
+/js/*
+  Cache-Control: public, max-age=31536000
+
 /js/utils.js
   Cache-Control: public, max-age=0, must-revalidate
 
@@ -26,8 +51,14 @@
 /js/cart.js
   Cache-Control: public, max-age=0, must-revalidate
 
-/js/*
-  Cache-Control: public, max-age=31536000
+/js/product-detail.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/js/promotions.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/js/bienvenida.js
+  Cache-Control: public, max-age=0, must-revalidate
 
 /assets/*
   Cache-Control: public, max-age=31536000
